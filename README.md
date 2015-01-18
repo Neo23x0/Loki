@@ -6,17 +6,17 @@ Scanner for simple Indicators of Compromise
 Detection is based on four detection methods:
 
     1. File Name IOC
-       Regex on file Path
+       Regex match on full file path/name
 
     2. Yara Rule Check
-       On File data and memory
+       Yara signature match on file data and process memory
 
     3. Hash check
        Compares known malicious hashes (MD5, SHA1, SHA256) with scanned files
 
 The Windows binary is compiled with PyInstaller 2.1 and should run as x86 application on both x86 and x64 based systems.
 
-## Included IOCs
+### Included IOCs
 
 Loki currently includes the following IOCs:
 
@@ -24,7 +24,7 @@ Loki currently includes the following IOCs:
   - Regin Malware (GCHQ)
   - Skeleton Key Malware (other state-sponsored Malware)
 
-## Requirements
+### Requirements
 
 No requirements if you use the compiled EXE. 
 
@@ -34,7 +34,7 @@ If you want to build it yourself:
 - [scandir](https://github.com/benhoyt/scandir) : faster alternative to os.walk()
 - [colorama](https://pypi.python.org/pypi/colorama) : to color it up
 
-## Usage
+### Usage
 
     usage: loki.exe [-h] [-p path] [-s kilobyte] [--printAll] [--noprocscan]
                     [--nofilescan] [--noindicator] [--debug]
@@ -51,7 +51,7 @@ If you want to build it yourself:
       --noindicator  Do not show a progress indicator
       --debug        Debug output
 
-## Screenshots
+### Screenshots
 
 Loki Scan
 
@@ -73,7 +73,7 @@ File Name based IOCs
 
 ![Screen](/screens/lokiconf2.png?raw=true)
 
-## Contact
+### Contact
 
 Profile on Company Homepage
 http://www.bsk-consulting.de/author/froth/
@@ -81,10 +81,10 @@ http://www.bsk-consulting.de/author/froth/
 Twitter
 @MalwrSignatures
 
-If you are interested in a corporate solution for APT scanning, check:
+If you are interested in a corporate solution for APT scanning, check out Loki's big brother THOR:
 http://www.bsk-consulting.de/apt-scanner-thor/
 
-## Antivirus - False Positives
+# Antivirus - False Positives
 
 The compiled scanner may be detected by antivirus engines. This may be caused by the fact that the scanner is a compiled python script that implement some file system and process scanning features that are also used in compiled malware code. 
 
@@ -104,7 +104,7 @@ To include the msvcr100.dll to improve the target os compatibility change the li
 
     a.binaries + [('msvcr100.dll', 'C:\Windows\System32\msvcr100.dll', 'BINARY')],
 
-## License
+# License
 
 Loki - Simple IOC Scanner
 Copyright (C) 2015 Florian Roth
