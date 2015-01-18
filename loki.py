@@ -22,7 +22,7 @@
 # Florian Roth
 # BSK Consulting GmbH
 # January 2015
-# v0.1
+# v0.2
 # 
 # DISCLAIMER - USE AT YOUR OWN RISK.
 
@@ -160,12 +160,12 @@ def scanProcesses(rules, filename_iocs):
 			log("INFO", "[INFO] Skipping Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
 			continue
 
-		log("INFO", "Scanning Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+		log("NOTICE", "Scanning Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
 
 		# Psexec command check
 		# Skeleton Key Malware Process
 		if re.search(r'psexec .* [a-fA-F0-9]{32}', cmd, re.IGNORECASE):
-			log("ALERT", "Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd))
+			log("WARNING", "Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd))
 			compromised = True
 
 		# Yara rule match
@@ -286,15 +286,17 @@ def log(mes_type, message):
 		if mes_type == "ERROR":
 			color = Fore.MAGENTA
 		if mes_type == "INFO":
-			color = Fore.CYAN
+			color = Fore.GREEN + Style.BRIGHT
 		if mes_type == "ALERT":
 			color = Fore.RED
 		if mes_type == "DEBUG":
 			color = Fore.WHITE
 		if mes_type == "WARNING":
 			color = Fore.YELLOW
+		if mes_type == "NOTICE":
+			color = Fore.CYAN
 
-		print color, "\b[%s] %s" % (mes_type, message), Fore.WHITE
+		print color, "\b[%s] %s" % (mes_type, message), Fore.WHITE, Style.NORMAL
 
 		# Write to file
 		with open(args.l, "a") as logfile:
@@ -314,23 +316,21 @@ def getSyslogTimestamp():
 
 
 def printWelcome():
-	print Back.CYAN, "                                                                    ", Back.BLACK
-	print Fore.CYAN
-	print "   _     ___  _  _____"
-	print "  | |   / _ \| |/ /_ _|"
-	print "  | |  | | | | ' / | |"
-	print "  | |__| |_| | . \ | |"
-	print "  |_____\___/|_|\_\___|"
+	print Back.GREEN, "                                                                    ", Back.BLACK
+	print "  "
+	print "   " + Back.GREEN + "  " + Back.BLACK + "      " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK
+	print "   " + Back.GREEN + "  " + Back.BLACK + "      " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "    " + Back.BLACK + "    " + Back.GREEN + "  " + Back.BLACK
+	print "   " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK
 	print "  "
 	print "  Simple IOC Scanner"
 	print "  "
 	print "  (C) Florian Roth - BSK Consulting GmbH"
 	print "  Jan 2015"
-	print "  Version 0.1"
+	print "  Version 0.2"
 	print "  "
 	print "  DISCLAIMER - USE AT YOUR OWN RISK"
 	print "  "
-	print Back.CYAN, "                                                                    ", Back.BLACK
+	print Back.GREEN, "                                                                    ", Back.BLACK
 	print Fore.WHITE+''+Back.BLACK
 
 
