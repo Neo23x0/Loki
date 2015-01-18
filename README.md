@@ -100,11 +100,11 @@ Download PyInstaller, switch to the pyinstaller program directory and execute:
 
     python ./pyinstaller.py -F C:\path\to\loki.py
 
-This will create a "loki.exe" in the subfolder "./loki/dist".
+This will create a `loki.exe` in the subfolder `./loki/dist`.
 
 ### Pro Tip (optional)
 
-To include the msvcr100.dll to improve the target os compatibility change the line in the file "./loki/loki.spec" that contains `a.bianries,` to the following:
+To include the msvcr100.dll to improve the target os compatibility change the line in the file `./loki/loki.spec` that contains `a.bianries,` to the following:
 
     a.binaries + [('msvcr100.dll', 'C:\Windows\System32\msvcr100.dll', 'BINARY')],
 
