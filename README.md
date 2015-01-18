@@ -24,6 +24,8 @@ Loki currently includes the following IOCs:
   - Regin Malware (GCHQ)
   - Skeleton Key Malware (other state-sponsored Malware)
 
+Loki is the new generic scanner that combines most of the features from my recently published scanners: [ReginScanner](https://github.com/Neo23x0/ReginScanner) and [SkeletonKeyScanner](https://github.com/Neo23x0/SkeletonKeyScanner).
+
 ### Requirements
 
 No requirements if you use the compiled EXE. 
