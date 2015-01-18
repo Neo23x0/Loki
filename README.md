@@ -1,7 +1,7 @@
 ![Logo](/lokiicon.jpg)
 # Loki - Simple IOC Scanner
 
-Scanner for simple Indicators of Compromise
+Scanner for Simple Indicators of Compromise
 
 Detection is based on four detection methods:
 
@@ -55,23 +55,27 @@ If you want to build it yourself:
 
 Loki Scan
 
-![Screen](/screens/lokiscan1.png?raw=true)
+![Screen](/screens/lokiscan1.png)
 
 Regin Matches
 
-![Screen](/screens/lokiscan2.png?raw=true)
+![Screen](/screens/lokiscan2.png)
 
 Regin False Positives
 
-![Screen](/screens/lokiscan3.png?raw=true)
+![Screen](/screens/lokiscan3.png)
 
 Hash based IOCs
 
-![Screen](/screens/lokiconf1.png?raw=true)
+![Screen](/screens/lokiconf1.png)
 
 File Name based IOCs
 
-![Screen](/screens/lokiconf2.png?raw=true)
+![Screen](/screens/lokiconf2.png)
+
+Generated log file
+
+![Screen](/screens/lokilog1.png)
 
 ### Contact
 
