@@ -90,7 +90,7 @@ http://www.bsk-consulting.de/apt-scanner-thor/
 
 # Antivirus - False Positives
 
-The compiled scanner may be detected by antivirus engines. This may be caused by the fact that the scanner is a compiled python script that implement some file system and process scanning features that are also used in compiled malware code. 
+The compiled scanner may be detected by antivirus engines. This is caused by the fact that the scanner is a compiled python script that implement some file system and process scanning features that are also used in compiled malware code. 
 
 If you don't trust the compiled executable, please compile it yourself. 
 
