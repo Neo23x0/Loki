@@ -1,3 +1,4 @@
+![Logo](/screens/lokiicon.jpg)
 # Loki - Simple IOC Scanner
 
 Scanner for simple Indicators of Compromise
