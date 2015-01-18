@@ -16,6 +16,14 @@ Detection is based on four detection methods:
 
 The Windows binary is compiled with PyInstaller 2.1 and should run as x86 application on both x86 and x64 based systems.
 
+## Included IOCs
+
+Loki currently includes the following IOCs:
+
+  - Five Eyes QUERTY Malware (GCHQ / NSA and other government agencies)
+  - Regin Malware (GCHQ)
+  - Skeleton Key Malware (other state-sponsored Malware)
+
 ## Requirements
 
 No requirements if you use the compiled EXE. 
@@ -64,14 +72,6 @@ Hash based IOCs
 File Name based IOCs
 
 ![Screen](/screens/lokiconf2.png?raw=true)
-
-## Notice
-
-Current IOCs included:
-
-  - Five Eyes QUERTY Malware (GCHQ/NSA)
-  - Regin Malware (GCHQ)
-  - Skeleton Key Malware (other state-sponsored Malware)
 
 ## Contact
 
