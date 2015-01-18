@@ -45,7 +45,7 @@ def scanPath(path, yara_rules, filename_iocs, hashes, false_hashes):
 	# Compromised marker
 	compromised = False
 	c = 0
-	
+
 	for root, directories, files in scandir.walk(path, onerror=walkError, followlinks=False):
 
 			# Loop through files
@@ -117,7 +117,7 @@ def scanPath(path, yara_rules, filename_iocs, hashes, false_hashes):
 					# Yara Check -------------------------------------------------------
 					if 'yara_rules' in locals():
 						try:
-							matches = yara_rules.match(filePath)
+							matches = yara_rules.match(data=fileData)
 							if matches:
 								for match in matches:
 									print Fore.RED, "\b[FOUND] Yara Rule MATCH: %s FILE: %s" % ( match.rule, filePath), Fore.WHITE
@@ -129,7 +129,7 @@ def scanPath(path, yara_rules, filename_iocs, hashes, false_hashes):
 				except Exception, e:
 					if args.debug:
 						traceback.print_exc()
-	
+
 	# Return result
 	return compromised
 
@@ -140,10 +140,10 @@ def scanProcesses(rules, filename_iocs):
 	processes = c.Win32_Process()
 
 	compromised = False
-	
+
 	for process in processes:
 
-		try:	
+		try:
 			pid = process.ProcessId
 			name = process.Name
 			cmd = process.CommandLine
@@ -166,14 +166,14 @@ def scanProcesses(rules, filename_iocs):
 		if re.search(r'psexec .* [a-fA-F0-9]{32}', cmd, re.IGNORECASE):
 			print Fore.RED, "\b[MATCH] Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd), Fore.WHITE
 			compromised = True
-		
+
 		# Yara rule match
 		try:
 			matches = rules.match(pid=pid)
 			if matches:
 				for match in matches:
 					print Fore.RED, "\b[MATCH] Yara Rule MATCH: %s PID: %s NAME: %s CMD:%" % ( match.rule, pid, name, cmd), Fore.WHITE
-					compromised = True			
+					compromised = True
 		except Exception, e:
 			print Fore.MAGENTA, "[ERROR] Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name), Fore.WHITE
 
@@ -192,8 +192,8 @@ def generateHashes(filedata):
 	except Exception, e:
 		traceback.print_exc()
 		return 0, 0, 0
-	
-					
+
+
 def walkError(err):
 	if args.debug:
 		traceback.print_exc()
@@ -271,11 +271,11 @@ def printProgress(i):
 		sys.stdout.write('\b-')
 	elif (i%4) == 2:
 		sys.stdout.write('\b\\')
-	elif (i%4) == 3: 
+	elif (i%4) == 3:
 		sys.stdout.write('\b|')
 	sys.stdout.flush()
 
-				
+
 def printWelcome():
 	print Back.CYAN, "                                                                    ", Back.BLACK
 	print Fore.CYAN
@@ -284,7 +284,7 @@ def printWelcome():
 	print "  | |  | | | | ' / | |"
 	print "  | |__| |_| | . \ | |"
 	print "  |_____\___/|_|\_\___|"
-
+	print "  "
 	print "  Simple IOC Scanner"
 	print "  "
 	print "  (C) Florian Roth - BSK Consulting GmbH"
@@ -294,12 +294,12 @@ def printWelcome():
 	print "  DISCLAIMER - USE AT YOUR OWN RISK"
 	print "  "
 	print Back.CYAN, "                                                                    ", Back.BLACK
-	print Fore.WHITE+''+Back.BLACK	
+	print Fore.WHITE+''+Back.BLACK
 
 
 # MAIN ################################################################
 if __name__ == '__main__':
-	
+
 	# Parse Arguments
 	parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
 	parser.add_argument('-p', help='Path to scan', metavar='path', default='C:\\')
@@ -309,12 +309,12 @@ if __name__ == '__main__':
 	parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
 	parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
 	parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
-	
+
 	args = parser.parse_args()
-	
+
 	# Colorization ----------------------------------------------------
 	init()
-	
+
 	# Print Welcome ---------------------------------------------------
 	printWelcome()
 
@@ -331,7 +331,7 @@ if __name__ == '__main__':
 	# Compile Yara Rules
 	if os.path.exists('yara_rules.yar'):
 		yara_rules = yara.compile('yara_rules.yar')
-	else: 
+	else:
 		print Fore.CYAN,"[INFO] Place the yara rule file 'yara_rules.yar' in the program folder to enable Yara scanning.", Fore.WHITE
 
 	# Scan Processes --------------------------------------------------
