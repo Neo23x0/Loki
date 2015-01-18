@@ -57,11 +57,11 @@ If you want to build it yourself:
 
 Loki Scan
 
-![Screen](/screens/lokiscan1.png)
+![Screen](/screens/lokiscan2.png)
 
 Regin Matches
 
-![Screen](/screens/lokiscan2.png)
+![Screen](/screens/lokiscan1.png)
 
 Regin False Positives
 
