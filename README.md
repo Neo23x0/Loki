@@ -111,7 +111,7 @@ To include the msvcr100.dll to improve the target os compatibility change the li
 # License
 
 Loki - Simple IOC Scanner
-Copyright (C) 2015 Florian Roth
+Copyright (c) 2015 Florian Roth
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
