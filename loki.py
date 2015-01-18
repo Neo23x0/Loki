@@ -35,13 +35,14 @@ import yara
 import hashlib
 import wmi
 import re
+import datetime
 from colorama import Fore, Back, Style
 from colorama import init
 
 def scanPath(path, yara_rules, filename_iocs, hashes, false_hashes):
 	
 	# Startup
-	print Fore.CYAN,"[INFO] Scanning %s ...  " % path, Fore.WHITE
+	log("INFO","Scanning %s ...  " % path)
 	# Compromised marker
 	compromised = False
 	c = 0
@@ -57,7 +58,7 @@ def scanPath(path, yara_rules, filename_iocs, hashes, false_hashes):
 
 					# Print files
 					if args.printAll:
-						print "[DEBUG] Scanning %s" % filePath
+						log("DEBUG", "Scanning %s" % filePath)
 
 					# Counter
 					c += 1
@@ -73,7 +74,7 @@ def scanPath(path, yara_rules, filename_iocs, hashes, false_hashes):
 						match = re.search(r'%s' % regex, filePath)
 						if match:
 							description = filename_iocs[regex]
-							print Fore.RED, "\b[FOUND] File Name PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath), Fore.WHITE
+							log("ALERT", "File Name PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
 							compromised = True
 
 					# Hash Check -------------------------------------------------------
@@ -87,7 +88,7 @@ def scanPath(path, yara_rules, filename_iocs, hashes, false_hashes):
 					md5, sha1, sha256 = generateHashes(fileData)
 
 					if args.debug:
-						print "[DEBUG] MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath )
+						log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
 
 					# False Positive Hash
 					if md5 in false_hashes.keys() or sha1 in false_hashes.keys() or sha256 in false_hashes.keys():
@@ -111,7 +112,7 @@ def scanPath(path, yara_rules, filename_iocs, hashes, false_hashes):
 						matchHash = sha256
 
 					if matchType:
-						print Fore.RED, "\b[FOUND] Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc), Fore.WHITE
+						log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
 						compromised = True
 
 					# Yara Check -------------------------------------------------------
@@ -120,7 +121,7 @@ def scanPath(path, yara_rules, filename_iocs, hashes, false_hashes):
 							matches = yara_rules.match(data=fileData)
 							if matches:
 								for match in matches:
-									print Fore.RED, "\b[FOUND] Yara Rule MATCH: %s FILE: %s" % ( match.rule, filePath), Fore.WHITE
+									log("ALERT", "Yara Rule MATCH: %s FILE: %s" % ( match.rule, filePath))
 									compromised = True
 						except Exception, e:
 							if args.debug:
@@ -152,19 +153,19 @@ def scanProcesses(rules, filename_iocs):
 			if not name:
 				name = "N/A"
 		except Exception, e:
-			print Fore.MAGENTA, "[ERROR] Error getting all process information. Did you run the scanner 'As Administrator'?", Fore.WHITE
+			log("ALERT", "Error getting all process information. Did you run the scanner 'As Administrator'?")
 			continue
 
 		if pid == 0 or pid == 4:
-			print Fore.CYAN, "[INFO] Skipping Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ), Fore.WHITE
+			log("INFO", "[INFO] Skipping Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
 			continue
 
-		print Fore.GREEN, "[INFO] Scanning Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ), Fore.WHITE
+		log("INFO", "Scanning Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
 
 		# Psexec command check
 		# Skeleton Key Malware Process
 		if re.search(r'psexec .* [a-fA-F0-9]{32}', cmd, re.IGNORECASE):
-			print Fore.RED, "\b[MATCH] Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd), Fore.WHITE
+			log("ALERT", "Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd))
 			compromised = True
 
 		# Yara rule match
@@ -172,10 +173,10 @@ def scanProcesses(rules, filename_iocs):
 			matches = rules.match(pid=pid)
 			if matches:
 				for match in matches:
-					print Fore.RED, "\b[MATCH] Yara Rule MATCH: %s PID: %s NAME: %s CMD:%" % ( match.rule, pid, name, cmd), Fore.WHITE
+					log("ALERT", "Yara Rule MATCH: %s PID: %s NAME: %s CMD:%" % ( match.rule, pid, name, cmd))
 					compromised = True
 		except Exception, e:
-			print Fore.MAGENTA, "[ERROR] Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name), Fore.WHITE
+			log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
 
 	return compromised
 
@@ -222,11 +223,11 @@ def getFileNameIOCs(ioc_file):
 					regex = line
 				filenames[regex] = desc
 			except Exception, e:
-				print "[ERROR] Error reading line: %s" % line
+				log("ERROR", "Error reading line: %s" % line)
 
 	except Exception, e:
 		traceback.print_exc()
-		print "[ERROR] Error reading File IOC file: %s" % ioc_file
+		log("ERROR", "Error reading File IOC file: %s" % ioc_file)
 
 	return filenames
 
@@ -255,11 +256,11 @@ def getHashes(hash_file):
 				if len(hash) == 32 or len(hash) == 40 or len(hash) == 64:
 					hashes[hash.lower()] = comment
 			except Exception,e:
-				print "[ERROR] Cannot read line: %s" % line
+				log("ERROR", "Cannot read line: %s" % line)
 
 	except Exception, e:
 		traceback.print_exc()
-		print "[ERROR] Error reading Hash file: %s" % hash_file
+		log("ERROR", "Error reading Hash file: %s" % hash_file)
 
 	return hashes
 
@@ -274,6 +275,42 @@ def printProgress(i):
 	elif (i%4) == 3:
 		sys.stdout.write('\b|')
 	sys.stdout.flush()
+
+
+def log(mes_type, message):
+
+	try:
+		# Default
+		color = Fore.WHITE
+		# Print to console
+		if mes_type == "ERROR":
+			color = Fore.MAGENTA
+		if mes_type == "INFO":
+			color = Fore.CYAN
+		if mes_type == "ALERT":
+			color = Fore.RED
+		if mes_type == "DEBUG":
+			color = Fore.WHITE
+		if mes_type == "WARNING":
+			color = Fore.YELLOW
+
+		print color, "\b[%s] %s" % (mes_type, message), Fore.WHITE
+
+		# Write to file
+		with open(args.l, "a") as logfile:
+			logfile.write("%s %s LOKI: %s\n" % (getSyslogTimestamp(), t_hostname, message))
+
+	except Exception, e:
+		traceback.print_exc()
+		print "Cannot print log file"
+
+
+def getSyslogTimestamp():
+	date_obj = datetime.datetime.now()
+	date_str = date_obj.strftime("%b %d %H:%M:%S")
+	daymod = re.compile('^([A-Z][a-z][a-z]) 0([0-9])')
+	date_str_mod = daymod.sub(r"\1  \2", date_str)
+	return date_str_mod
 
 
 def printWelcome():
@@ -304,10 +341,12 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
 	parser.add_argument('-p', help='Path to scan', metavar='path', default='C:\\')
 	parser.add_argument('-s', help='Maximum file site to check in KB (default 2000 KB)', metavar='kilobyte', default=2048)
+	parser.add_argument('-l', help='Log file', metavar='log-file', default='loki.log')
 	parser.add_argument('--printAll', action='store_true', help='Print all files that are scanned', default=False)
 	parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
 	parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
 	parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
+	parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
 	parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
 	args = parser.parse_args()
@@ -315,24 +354,30 @@ if __name__ == '__main__':
 	# Colorization ----------------------------------------------------
 	init()
 
+	# Remove old log file
+	if os.path.exists(args.l):
+		os.remove(args.l)
+
 	# Print Welcome ---------------------------------------------------
 	printWelcome()
+	t_hostname = os.environ['COMPUTERNAME']
+	log("INFO", "LOKI - Starting Loki Scan on %s" % t_hostname)
 
 	# Read IOCs -------------------------------------------------------
 	# File Name IOCs
 	filename_iocs = getFileNameIOCs('filename-iocs.txt')
-	print Fore.CYAN,"[INFO] File Name Characteristics initialized with %s hashes" % len(filename_iocs.keys()), Fore.WHITE
+	log("INFO","File Name Characteristics initialized with %s regex patterns" % len(filename_iocs.keys()))
 	# Hash based IOCs
 	hashes = getHashes('hash-iocs.txt')
-	print Fore.CYAN,"[INFO] Malware Hashes initialized with %s hashes" % len(hashes.keys()), Fore.WHITE
+	log("INFO","Malware Hashes initialized with %s hashes" % len(hashes.keys()))
 	# Hash based False Positives
 	false_hashes = getHashes('falsepositive-hashes.txt')
-	print Fore.CYAN,"[INFO] False Positive Hashes initialized with %s hashes" % len(false_hashes.keys()), Fore.WHITE
+	log("INFO","False Positive Hashes initialized with %s hashes" % len(false_hashes.keys()))
 	# Compile Yara Rules
 	if os.path.exists('yara_rules.yar'):
 		yara_rules = yara.compile('yara_rules.yar')
 	else:
-		print Fore.CYAN,"[INFO] Place the yara rule file 'yara_rules.yar' in the program folder to enable Yara scanning.", Fore.WHITE
+		log("INFO","Place the yara rule file 'yara_rules.yar' in the program folder to enable Yara scanning.")
 
 	# Scan Processes --------------------------------------------------
 	result_proc = False
@@ -346,13 +391,10 @@ if __name__ == '__main__':
 
 	# Result ----------------------------------------------------------
 	if result_path or result_proc:
-		print Fore.RED+''+Back.BLACK
-		print "\b[RESULT] INDICATORS DETECTED!"
-		print Fore.WHITE+''+Back.BLACK
+		log("INFO", "INDICATORS DETECTED!")
 	else:
-		print Fore.GREEN+''+Back.BLACK
-		print "\b[RESULT] SYSTEM SEEMS TO BE CLEAN. :)"
-		print Fore.WHITE+''+Back.BLACK
+		log("INFO", "SYSTEM SEEMS TO BE CLEAN.")
 
 	print " "
-	raw_input("Press Enter to exit ...")
+	if not args.dontwait:
+		raw_input("Press Enter to exit ...")
