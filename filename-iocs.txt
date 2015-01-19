@@ -63,3 +63,7 @@ ystem32\\pciclass\.sys;File name known from REGIN malware
 \\20120\.dll;Five Eyes QUERTY Malware Name
 \\20121\.dll;Five Eyes QUERTY Malware Name
 \\20123\.sys;Five Eyes QUERTY Malware Name
+
+# Skeleton Key File Names
+\\msuta64\.dll;Skeleton Key Malware
+\\ole64\.dll;Skeleton Key Malware (False positives are unknown)
