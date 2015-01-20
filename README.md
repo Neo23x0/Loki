@@ -87,8 +87,7 @@ http://www.bsk-consulting.de/author/froth/
 Twitter
 @MalwrSignatures
 
-If you are interested in a corporate solution for APT scanning, check out Loki's big brother THOR:
-http://www.bsk-consulting.de/apt-scanner-thor/
+If you are interested in a corporate solution for APT scanning, check out Loki's big brother [THOR](http://www.bsk-consulting.de/apt-scanner-thor/).
 
 # Antivirus - False Positives
 
