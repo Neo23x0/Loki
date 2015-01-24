@@ -10,6 +10,7 @@
 # SHA256;COMMENT
 #
 
+5cfbe1fb8df52bfba6d021319b0da899;Yara Rules of v0.2
 6e5ebbc8b70c1d593634daf0c190deadfda18c3cbc8f552a76f156f3869ef05b;REGIN False Positive - Microsoft USB Scanner Driver
 7565e7de9532c75b3a16e3ed0103bc092dbca63c6bdc19053dfef01250029e59;REGIN False Positive - NSRL listed
 a26db2eb9f3e2509b4eba949db97595cc32332d9321df68283bfc102e66d766f;REGIN False Positive - Windows Serial Driver
