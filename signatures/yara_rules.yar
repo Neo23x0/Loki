@@ -1,3 +1,6 @@
+
+import "pe"
+
 /* FIVE EYES ------------------------------------------------------------------------------- */
 
 rule FiveEyes_QUERTY_Malwareqwerty_20121 {
@@ -563,3 +566,528 @@ rule Regin_Sample_Set_2 {
 	condition:
 		( $hd at 0 ) and all of ($s*) and filesize < 450KB and filesize > 360KB
 }
+
+rule apt_regin_legspin {
+	meta:
+	    copyright = "Kaspersky Lab"
+	    description = "Rule to detect Regin's Legspin module"
+	    version = "1.0"
+	    last_modified = "2015-01-22"
+	    reference = "https://securelist.com/blog/research/68438/an-analysis-of-regins-hopscotch-and-legspin/"
+	    md5 = "29105f46e4d33f66fee346cfd099d1cc"
+	strings:
+	    $mz="MZ"
+	    $a1="sharepw"
+	    $a2="reglist"
+	    $a3="logdump"
+	    $a4="Name:" wide
+	    $a5="Phys Avail:"
+	    $a6="cmd.exe" wide
+	    $a7="ping.exe" wide
+	    $a8="millisecs"
+	condition:
+	    ($mz at 0) and all of ($a*)
+}
+
+rule apt_regin_hopscotch {
+	meta:
+	    copyright = "Kaspersky Lab"
+	    description = "Rule to detect Regin's Hopscotch module"
+	    version = "1.0"
+	    last_modified = "2015-01-22"
+	    reference = "https://securelist.com/blog/research/68438/an-analysis-of-regins-hopscotch-and-legspin/"
+	    md5 = "6c34031d7a5fc2b091b623981a8ae61c"
+	strings:
+
+	    $mz="MZ"
+
+	    $a1="AuthenticateNetUseIpc"
+	    $a2="Failed to authenticate to"
+	    $a3="Failed to disconnect from"
+	    $a4="%S\\ipc$" wide
+	    $a5="Not deleting..."
+	    $a6="CopyServiceToRemoteMachine"
+	    $a7="DH Exchange failed"
+	    $a8="ConnectToNamedPipes"
+	condition:
+	    ($mz at 0) and all of ($a*)
+}
+
+/* Op Cleaver -------------------------------------------------------------- */
+
+rule OPCLEAVER_BackDoorLogger
+{
+	meta:
+		description = "Keylogger used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "BackDoorLogger"
+		$s2 = "zhuAddress"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_Jasus
+{
+	meta:
+		description = "ARP cache poisoner used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "pcap_dump_open"
+		$s2 = "Resolving IPs to poison..."
+		$s3 = "WARNNING: Gateway IP can not be found"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_LoggerModule
+{
+	meta:
+		description = "Keylogger used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "%s-%02d%02d%02d%02d%02d.r"
+		$s2 = "C:\\Users\\%s\\AppData\\Cookies\\"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_NetC
+{
+	meta:
+		description = "Net Crawler used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "NetC.exe" wide
+		$s2 = "Net Service"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_ShellCreator2
+{
+	meta:
+		description = "Shell Creator used by attackers in Operation Cleaver to create ASPX web shells"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "ShellCreator2.Properties"
+		$s2 = "set_IV"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_SmartCopy2
+{
+	meta:
+		description = "Malware or hack tool used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "SmartCopy2.Properties"
+		$s2 = "ZhuFrameWork"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_SynFlooder
+{
+	meta:
+		description = "Malware or hack tool used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "Unable to resolve [ %s ]. ErrorCode %d"
+		$s2 = "your target’s IP is : %s"
+		$s3 = "Raw TCP Socket Created successfully."
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_TinyZBot
+{
+	meta:
+		description = "Tiny Bot used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "NetScp" wide
+		$s2 = "TinyZBot.Properties.Resources.resources"
+		$s3 = "Aoao WaterMark"
+		$s4 = "Run_a_exe"
+		$s5 = "netscp.exe"
+		$s6 = "get_MainModule_WebReference_DefaultWS"
+		$s7 = "remove_CheckFileMD5Completed"
+		$s8 = "http://tempuri.org/"
+		$s9 = "Zhoupin_Cleaver"
+	condition:
+		(($s1 and $s2) or ($s3 and $s4 and $s5) or ($s6 and $s7 and $s8) or $s9)
+}
+
+rule OPCLEAVER_ZhoupinExploitCrew
+{
+	meta:
+		description = "Keywords used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "zhoupin exploit crew" nocase
+		$s2 = "zhopin exploit crew" nocase
+	condition:
+		1 of them
+}
+
+rule OPCLEAVER_antivirusdetector
+{
+	meta:
+		description = "Hack tool used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "getShadyProcess"
+		$s2 = "getSystemAntiviruses"
+		$s3 = "AntiVirusDetector"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_csext
+{
+	meta:
+		description = "Backdoor used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "COM+ System Extentions"
+		$s2 = "csext.exe"
+		$s3 = "COM_Extentions_bin"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_kagent
+{
+	meta:
+		description = "Backdoor used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "kill command is in last machine, going back"
+		$s2 = "message data length in B64: %d Bytes"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_mimikatzWrapper
+{
+	meta:
+		description = "Mimikatz Wrapper used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "mimikatzWrapper"
+		$s2 = "get_mimikatz"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_pvz_in
+{
+	meta:
+		description = "Parviz tool used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "LAST_TIME=00/00/0000:00:00PM$"
+		$s2 = "if %%ERRORLEVEL%% == 1 GOTO line"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_pvz_out
+{
+	meta:
+		description = "Parviz tool used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "Network Connectivity Module" wide
+		$s2 = "OSPPSVC" wide
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_wndTest
+{
+	meta:
+		description = "Backdoor used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "[Alt]" wide
+		$s2 = "<< %s >>:" wide
+		$s3 = "Content-Disposition: inline; comp=%s; account=%s; product=%d;"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_zhCat
+{
+	meta:
+		description = "Network tool used by Iranian hackers and used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "Mozilla/4.0 ( compatible; MSIE 7.0; AOL 8.0 )" ascii fullword
+		$s2 = "ABC ( A Big Company )" wide fullword
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_zhLookUp
+{
+	meta:
+		description = "Hack tool used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "zhLookUp.Properties"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_zhmimikatz
+{
+	meta:
+		description = "Mimikatz wrapper used by attackers in Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Cylance Inc."
+		score = "70"
+	strings:
+		$s1 = "MimikatzRunner"
+		$s2 = "zhmimikatz"
+	condition:
+		all of them
+}
+
+rule OPCLEAVER_Parviz_Developer
+{
+	meta:
+		description = "Parviz developer known from Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Florian Roth"
+		score = "70"
+	strings:
+		$s1 = "Users\\parviz\\documents\\" nocase
+	condition:
+		$s1 
+}
+
+rule OPCLEAVER_CCProxy_Config
+{
+	meta:
+		description = "CCProxy config known from Operation Cleaver"
+		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+		date = "2014/12/02"
+		author = "Florian Roth"
+		score = "70"
+	strings:
+		$s1 = "UserName=User-001" fullword ascii
+		$s2 = "Web=1" fullword ascii
+		$s3 = "Mail=1" fullword ascii
+		$s4 = "FTP=0" fullword ascii
+		$x1 = "IPAddressLow=78.109.194.114" fullword ascii
+	condition:
+		all of ($s*) or $x1 
+}
+
+/* WATERBUG ----------------------------------------------------------------- */
+
+rule WaterBug_wipbot_2013_core_PDF {
+	meta:
+		description = "Symantec Waterbug Attack - Trojan.Wipbot 2014 core PDF"
+		author = "Symantec Security Response"
+		date = "22.01.2015"
+		reference = "http://t.co/rF35OaAXrl"
+	strings:
+		$PDF = "%PDF-"
+		$a = /\+[A-Za-z]{1}\. _ _ \$\+[A-Za-z]{1}\. _ \$ _ \+/ 
+		$b = /\+[A-Za-z]{1}\.\$\$\$ _ \+/
+	condition:
+		($PDF at 0) and #a > 150 and #b > 200
+}
+
+rule WaterBug_wipbot_2013_dll {
+	meta:
+		description = "Symantec Waterbug Attack - Trojan.Wipbot 2014 Down.dll component"
+		author = "Symantec Security Response"
+		date = "22.01.2015"
+		reference = "http://t.co/rF35OaAXrl"		
+	strings:
+		$string1 = "/%s?rank=%s"
+		$string2 = "ModuleStart\x00ModuleStop\x00start"
+		$string3 = "1156fd22-3443-4344-c4ffff"
+		//read file... error..
+		$string4 = "read\x20file\x2E\x2E\x2E\x20error\x00\x00"
+	condition:
+		2 of them
+}
+
+rule WaterBug_wipbot_2013_core {
+	meta:
+		description = "Symantec Waterbug Attack - Trojan.Wipbot core + core; garbage appended data (PDF Exploit leftovers) + wipbot dropper; fake AdobeRd32 Error"
+		author = "Symantec Security Response"
+		date = "22.01.2015"
+		reference = "http://t.co/rF35OaAXrl"			
+	strings:
+		$mz = "MZ"
+		$code1 = { 89 47 0C C7 47 10 90 C2 04 00 C7 47 14 90 C2 10 00 C7 47 18 90 90 60 68 89 4F 1C C7 47 20 90 90 90 B8 89 4F 24 C7 47 28 90 FF D0 61 C7 47 2C 90 C2 04 00}
+		$code2 = { 85 C0 75 25 8B 0B BF ?? ?? ?? ?? EB 17 69 D7 0D 66 19 00 8D BA 5F F3 6E 3C 89 FE C1 EE 10 89 F2 30 14 01 40 3B 43 04 72 E4}
+		$code3 = {90 90 90 ?? B9 00 4D 5A 90 00 03 00 00 00 82 04} $code4 = {55 89 E5 5D C3 55 89 E5 83 EC 18 8B 45 08 85 C0}
+	condition:
+		$mz at 0 and (($code1 or $code2) or ($code3 and $code4))
+}
+
+rule WaterBug_turla_dropper {
+	meta:
+		description = "Symantec Waterbug Attack - Trojan Turla Dropper"
+		author = "Symantec Security Response"
+		date = "22.01.2015"
+		reference = "http://t.co/rF35OaAXrl"
+	strings: 
+		$a = {0F 31 14 31 20 31 3C 31 85 31 8C 31 A8 31 B1 31 D1 31 8B 32 91 32 B6 32 C4 32 6C 33 AC 33 10 34}
+		$b = {48 41 4C 2E 64 6C 6C 00 6E 74 64 6C 6C 00 00 00 57 8B F9 8B 0D ?? ?? ?? ?? ?? C9 75 26 56 0F 20 C6 8B C6 25 FF FF FE FF 0F 22 C0 E8}
+	condition: 
+		all of them
+}
+
+rule WaterBug_turla_dll {
+	meta: 
+		description = "Symantec Waterbug Attack - Trojan Turla DLL"
+		author = "Symantec Security Response"
+		date = "22.01.2015"
+		reference = "http://t.co/rF35OaAXrl"	
+	strings:
+		$a = /([A-Za-z0-9]{2,10}_){,2}Win32\.dll\x00/
+	condition:
+		pe.exports("ee") and $a
+}
+
+rule WaterBug_fa_malware { 
+	meta: 
+		description = "Symantec Waterbug Attack - FA malware variant"
+		author = "Symantec Security Response"
+		date = "22.01.2015"
+		reference = "http://t.co/rF35OaAXrl"
+	strings:
+		$mz = "MZ"
+		$string1 = "C:\\proj\\drivers\\fa _ 2009\\objfre\\i386\\atmarpd.pdb"
+		$string2 = "d:\\proj\\cn\\fa64\\"
+		$string3 = "sengoku_Win32.sys\x00"
+		$string4 = "rk_ntsystem.c"
+		$string5 = "\\uroboros\\"
+		$string6 = "shell.{F21EDC09-85D3-4eb9-915F-1AFA2FF28153}"
+	condition:
+		($mz at 0) and (any of ($string*))
+}
+
+rule WaterBug_sav_dropper {
+	meta: 
+		description = "Symantec Waterbug Attack - SAV Dropper"
+		author = "Symantec Security Response"
+		date = "22.01.2015"
+		reference = "http://t.co/rF35OaAXrl" 
+	strings:
+		$mz = "MZ"
+		$a = /[a-z]{,10}_x64.sys\x00hMZ\x00/
+	condition:
+		($mz at 0) and uint32(0x400) == 0x000000c3 and pe.number_of_sections == 6 and $a 
+}
+
+rule WaterBug_sav {
+	meta: 
+		description = "Symantec Waterbug Attack - SAV Malware"
+		author = "Symantec Security Response"
+		date = "22.01.2015"
+		reference = "http://t.co/rF35OaAXrl" 	
+	strings:
+		$mz = "MZ"
+		$code1a = { 8B 75 18 31 34 81 40 3B C2 72 F5 33 F6 39 7D 14 76 
+					1B 8A 04 0E 88 04 0F 6A 0F 33 D2 8B C7 5B F7 F3 85 D2 75 01 }
+		$code1b = { 8B 45 F8 40 89 45 F8 8B 45 10 C1 E8 02 39 45 F8 73 
+					17 8B 45 F8 8B 4D F4 8B 04 81 33 45 20 8B 4D F8 8B
+					55 F4 89 04 8A EB D7 83 65 F8 00 83 65 EC 00 EB 0E
+					8B 45 F8 40 89 45 F8 8B 45 EC 40 89 45 EC 8B 45 EC
+					3B 45 10 73 27 8B 45 F4 03 45 F8 8B 4D F4 03 4D EC
+					8A 09 88 08 8B 45 F8 33 D2 6A 0F 59 F7 F1 85 D2 75
+					07 }
+		$code1c = { 8A 04 0F 88 04 0E 6A 0F 33 D2 8B C6 5B F7 F3 85 D2 
+					75 01 47 8B 45 14 46 47 3B F8 72 E3 EB 04 C6 04 08
+					00 48 3B C6 73 F7 33 C0 C1 EE 02 74 0B 8B 55 18 31 
+					14 81 40 3B C6 72 F5 }
+		$code2 =  { 29 5D 0C 8B D1 C1 EA 05 2B CA 8B 55 F4 2B C3 3D 00 
+					00 00 01 89 0F 8B 4D 10 8D 94 91 00 03 00 00 73 17 
+					8B 7D F8 8B 4D 0C 0F B6 3F C1 E1 08 0B CF C1 E0 08 
+					FF 45 F8 89 4D 0C 8B 0A 8B F8 C1 EF 0B}
+	condition:
+		($mz at 0) and (($code1a or $code1b or $code1c) and $code2) 
+}
+
+rule WaterBug_ComRat {
+	meta:
+		description = "Symantec Waterbug Attack - ComRat Trojan"
+		author = "Symantec Security Response"
+		date = "22.01.2015"
+		reference = "http://t.co/rF35OaAXrl" 	
+	strings:
+		$mz = "MZ"
+		$b = { C6 45 ?? ?? }
+		$c = { C6 85 ?? FE FF FF ?? }
+		$d = { FF A0 ?? 0? 00 00 }
+		$e = { 89 A8 ?? 00 00 00 68 ?? 00 00 00 56 FF D7 8B } 
+		$f = { 00 00 48 89 ?? ?? 03 00 00 48 8B }
+	condition:
+		($mz at 0) and ((#c > 200 and #b > 200 ) or (#d > 40) and (#e > 15 or #f > 30)) 
+}			

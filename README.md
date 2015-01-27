@@ -20,9 +20,13 @@ The Windows binary is compiled with PyInstaller 2.1 and should run as x86 applic
 
 Loki currently includes the following IOCs:
 
-  - Five Eyes QUERTY Malware (GCHQ / NSA and other government agencies)
-  - Regin Malware (GCHQ)
-  - Skeleton Key Malware (other state-sponsored Malware)
+  - Regin Malware (GCHQ / NSA / FiveEyes) (incl. Legspin and Hopscotch)
+  - Five Eyes QUERTY Malware (Regin Keylogger Module - see: [Kaspesky Report](https://securelist.com/blog/research/68525/comparing-the-regin-module-50251-and-the-qwerty-keylogger/))
+  - Skeleton Key Malware (other state-sponsored Malware) - Source: [Dell SecureWorks Counter Threat Unit(TM)](http://www.secureworks.com/cyber-threat-intelligence/threats/skeleton-key-malware-analysis/)
+  - OpCleaver (Iranian APT campaign) - Source: [Cylance](http://www.cylance.com/operation-cleaver/)
+  - More than 300 hack tool Yara rules - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
+  - More than 700 web shell Yara rules - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
+  - Numerous suspicious file name regex signatures - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
 
 Loki is the new generic scanner that combines most of the features from my recently published scanners: [ReginScanner](https://github.com/Neo23x0/ReginScanner) and [SkeletonKeyScanner](https://github.com/Neo23x0/SkeletonKeyScanner).
 

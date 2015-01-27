@@ -1,0 +1,92 @@
+#
+# LOKI Suspicious File Name Characteristics
+# This file contains regex definitions and a description
+#
+# APPLICATION ------------------------------------------------------------------
+#
+# Every line is treated as REGEX case sensitive.
+# Every line includes a description that gives information about the file name
+# based IOC
+#
+# FORMAT -----------------------------------------------------------------------
+#
+# # COMMENT
+# REGEX;DESCRIPTION
+#
+# EXAMPLES ---------------------------------------------------------------------
+#
+
+# ThreatExpert Statistics
+\\winsvc\.exe$;ThreatExpert Statistics - filename known for malware
+\\blaah\.exe;ThreatExpert Statistics - filename known for malware
+\\ldr\.exe$;ThreatExpert Statistics - filename known for malware
+\\t\.exe$;ThreatExpert Statistics - filename known for malware
+\\user0\.exe;ThreatExpert Statistics - filename known for malware
+\\mxplay_installer\.exe;ThreatExpert Statistics - filename known for malware
+\\pak\-[0-9]{3,}.exe$;ThreatExpert Statistics - filename known for malware
+\\rundll\.exe$;ThreatExpert Statistics - filename known for malware
+\\windows\.exe$;ThreatExpert Statistics - filename known for malware
+\\windowsservice\\starter\.exe$;ThreatExpert Statistics - filename known for malware
+\\starter\.exe$;ThreatExpert Statistics - filename known for malware
+\\wrar[0-9a-z]+\\.exe$;ThreatExpert Statistics - filename known for malware
+\\av[0-9]+\.exe$;ThreatExpert Statistics - filename known for malware
+\\eixplorer\.exe;ThreatExpert Statistics - filename known for malware
+\\win\.exe$;ThreatExpert Statistics - filename known for malware
+\\cleanup\.exe$;ThreatExpert Statistics - filename known for malware
+\\winsystem\.exe;ThreatExpert Statistics - filename known for malware
+Fonts\\[\w]+\.exe$;ThreatExpert Statistics - filename known for malware
+\\(temp|tmp)\\server\.exe;ThreatExpert Statistics - filename known for malware
+\\interxpoler\.exe;ThreatExpert Statistics - filename known for malware
+\\networkservice\.exe;ThreatExpert Statistics - filename known for malware
+\\favorites\.exe;ThreatExpert Statistics - filename known for malware
+\\microsoft\.exe$;ThreatExpert Statistics - filename known for malware
+\\adobe\.exe$;ThreatExpert Statistics - filename known for malware
+\\cncdown\.exe$;ThreatExpert Statistics - filename known for malware
+\\ntcom\.dll$;ThreatExpert Statistics - filename known for malware
+\\nthead\.dll$;ThreatExpert Statistics - filename known for malware
+\\services32\.exe;ThreatExpert Statistics - filename known for malware
+\\recycled\.exe;ThreatExpert Statistics - filename known for malware
+\\sofware.exe;ThreatExpert Statistics - filename known for malware
+\\explorer[0-9]\.exe;ThreatExpert Statistics - filename known for malware
+\\criptor\.exe;ThreatExpert Statistics - filename known for malware
+\\crypt3r\.exe;ThreatExpert Statistics - filename known for malware
+\\temp\\copy\.exe;ThreatExpert Statistics - filename known for malware
+\\cuda\.exe;ThreatExpert Statistics - filename known for malware
+
+# Typical
+[\s]{7,}\.(exe|com|dll|bat|scr|vbs);Suspicious File Name
+\\[0-9]\.(exe|dll)$;Suspicious File Name
+\\[a-zA-Z]\.exe$;Suspicious File Name
+\.(doc|docx|pdf|txt)\.(exe|bat|com|scr|vbs)$;Suspicious File Name
+\\\.tmp$;Suspicious File Name
+(temp|tmp)\\[a-z]\.(zip|exe|txt)$;Suspicious File Name
+(temp|tmp)\\[a-z]\.rar;Suspicious File Name
+\\32\.exe;Suspicious File Name
+\\64\.exe;Suspicious File Name
+\\d\.exe;Suspicious File Name
+\\s\.exe;Suspicious File Name
+\\ss\.exe;Suspicious File Name
+\\sss\.exe;Suspicious File Name
+
+# Malware locations
+AppData\\[\w]+\.exe;Executable in AppData directory
+[Tt]emp\\[\w]{1,2}\.(exe|com|scr);Short named executable in temp directory
+[Cc]:\\[\w]{1,2}\.(exe|com|scr);Short named executable in root directory
+
+# Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\tcpdump32c\.exe;80
+\\typecli\.exe;60
+\\msc32\.exe;60
+\\dxsnd32x\.exe;70
+\\msnetsrv\.exe;60
+\\mswme32\.exe;55
+\\msnetserv\.exe;60
+\\msnet32\.exe;60
+\\rpcsrv\.exe;40
+\\charmap32\.exe;60
+\\mqsvc32\.exe;50
+\\msrss\.exe;60
+\\dc1\.exe;70
+\\svcmgr\.exe;35
+\\msx32\.exe;60
+\.XOR;50
