@@ -24,8 +24,8 @@ Loki currently includes the following IOCs:
   - Five Eyes QUERTY Malware (Regin Keylogger Module - see: [Kaspesky Report](https://securelist.com/blog/research/68525/comparing-the-regin-module-50251-and-the-qwerty-keylogger/))
   - Skeleton Key Malware (other state-sponsored Malware) - Source: [Dell SecureWorks Counter Threat Unit(TM)](http://www.secureworks.com/cyber-threat-intelligence/threats/skeleton-key-malware-analysis/)
   - OpCleaver (Iranian APT campaign) - Source: [Cylance](http://www.cylance.com/operation-cleaver/)
-  - More than 300 hack tool Yara rules - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
-  - More than 700 web shell Yara rules - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
+  - More than 180 hack tool Yara rules - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
+  - More than 600 web shell Yara rules - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
   - Numerous suspicious file name regex signatures - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
 
 Loki is the new generic scanner that combines most of the features from my recently published scanners: [ReginScanner](https://github.com/Neo23x0/ReginScanner) and [SkeletonKeyScanner](https://github.com/Neo23x0/SkeletonKeyScanner).
@@ -39,6 +39,7 @@ If you want to build it yourself:
 - [yara](http://goo.gl/PQjmsf) : It's recommended to use the most recent version of the compiled packages for Windows (x86) - Download it from here: http://goo.gl/PQjmsf
 - [scandir](https://github.com/benhoyt/scandir) : faster alternative to os.walk()
 - [colorama](https://pypi.python.org/pypi/colorama) : to color it up
+- [psutil](https://pypi.python.org/pypi/psutil) : process checks
 
 ### Usage
 
@@ -85,11 +86,12 @@ Generated log file
 
 ### Contact
 
-Profile on Company Homepage
-http://www.bsk-consulting.de/author/froth/
+LOKI scanner on our company homepage
+[http://www.bsk-consulting.de/loki-free-ioc-scanner/](http://www.bsk-consulting.de/loki-free-ioc-scanner/)
 
 Twitter
-@MalwrSignatures
+[@MalwrSignatures](https://twitter.com/malwrsignatures)
+[@Thor_irs](https://twitter.com/thor_irs)
 
 If you are interested in a corporate solution for APT scanning, check out Loki's big brother [THOR](http://www.bsk-consulting.de/apt-scanner-thor/).
 
