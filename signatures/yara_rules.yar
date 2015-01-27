@@ -1075,6 +1075,8 @@ rule WaterBug_sav {
 		($mz at 0) and (($code1a or $code1b or $code1c) and $code2) 
 }
 
+/* too many false positives
+
 rule WaterBug_ComRat {
 	meta:
 		description = "Symantec Waterbug Attack - ComRat Trojan"
@@ -1090,4 +1092,6 @@ rule WaterBug_ComRat {
 		$f = { 00 00 48 89 ?? ?? 03 00 00 48 8B }
 	condition:
 		($mz at 0) and ((#c > 200 and #b > 200 ) or (#d > 40) and (#e > 15 or #f > 30)) 
-}			
+}
+
+*/			
