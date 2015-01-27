@@ -2759,38 +2759,7 @@ rule webshell_404_data_in_JFolder_jfolder01_jsp_suiyue_warn {
 	condition:
 		all of them
 }
-rule webshell_generic_r57shell_r57shell127_SnIpEr_SA_xxx {
-	meta:
-		description = "Signature - matches on functions used in many web shells: False positives are often related to ZIP functions"
-		author = "Florian Roth"
-		date = "2014/01/28"
-		score = 45
-		super_rule = 1
-		hash0 = "ef43fef943e9df90ddb6257950b3538f"
-		hash1 = "ae025c886fbe7f9ed159f49593674832"
-		hash2 = "911195a9b7c010f61b66439d9048f400"
-		hash3 = "697dae78c040150daff7db751fc0c03c"
-		hash4 = "e5b2131dd1db0dbdb43b53c5ce99016a"
-		hash5 = "4108f28a9792b50d95f95b9e5314fa1e"
-		hash6 = "b68bfafc6059fd26732fa07fb6f7f640"
-		hash7 = "40a1f840111996ff7200d18968e42cfe"
-		hash8 = "e0202adff532b28ef1ba206cf95962f2"
-		hash9 = "41af6fd253648885c7ad2ed524e0692d"
-		hash10 = "6fcc283470465eed4870bcc3e2d7f14d"
-		hash11 = "802f5cae46d394b297482fd0c27cb2fc"
-	strings:
-		$s0 = "$this -> datasec[] = $fr;" fullword
-		$s4 = "$name     = str_replace('\\\\', '/', $name);" fullword
-		$s5 = "$this -> eof_ctrl_dir ." fullword
-		$s6 = "$hexdtime = '\\x' . $dtime[6] . $dtime[7]" fullword
-		$s9 = "$c_len   = strlen($zdata);" fullword
-		
-		$fp1 = "filename: phpzip"
-		$fp2 = "filename: zip"
-		$fp3 = "filename: class"
-	condition:
-		all of ($s*) and not $fp1 and not $fp2 and not $fp3
-}
+
 rule webshell_phpspy_2005_full_phpspy_2005_lite_phpspy_2006_PHPSPY {
 	meta:
 		description = "Web Shell - from files phpspy_2005_full.php, phpspy_2005_lite.php, phpspy_2006.php, PHPSPY.php"
