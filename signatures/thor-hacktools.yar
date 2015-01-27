@@ -156,8 +156,13 @@ rule Mimikatz_SampleSet_1 : APT {
 		$s3 = "64\\kelloworld.dll"
 		$s4 = "32/kelloworld.dll"
 		$s5 = "64/kelloworld.dll"
+		$s6 = "mimidrv.sys" fullword
+		$s7 = "sekurlsa.lib" fullword
+		$s8 = "mimilib.dll" fullword
+		$s9 = "mimikatz.exe" fullword
+		$s10 = "mimilib.dll" fullword
 	condition:
-		1 of them
+		3 of them
 }
 rule Mimikatz_SampleSet_2 : APT {
 	meta:

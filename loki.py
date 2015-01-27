@@ -22,7 +22,7 @@
 # Florian Roth
 # BSK Consulting GmbH
 # January 2015
-# v0.3.0
+# v0.3.1
 # 
 # DISCLAIMER - USE AT YOUR OWN RISK.
 
@@ -210,11 +210,17 @@ def scanProcesses(rule_sets, filename_iocs):
 
 		# Yara rule match
 		try:
+			alerts = []
 			for rules in rule_sets:
 				matches = rules.match(pid=pid)
 				if matches:
 					for match in matches:
-						log("ALERT", "Yara Rule MATCH: %s PID: %s NAME: %s CMD: %s" % ( match.rule, pid, name, cmd))
+						alerts.append("Yara Rule MATCH: %s PID: %s NAME: %s CMD: %s" % ( match.rule, pid, name, cmd))
+			if len(alerts) > 3:
+				log("INFO", "Too many matches on process memory - most likely a false positive PID: %s NAME: %s CMD: %s" % (pid, name, cmd))
+			elif len(alerts) > 1:
+				for alert in alerts:
+					log("ALERT", alert)
 		except Exception, e:
 			log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
 						
@@ -608,7 +614,7 @@ def printWelcome():
 	print "  "
 	print "  (C) Florian Roth - BSK Consulting GmbH"
 	print "  Jan 2015"
-	print "  Version 0.3.0"
+	print "  Version 0.3.1"
 	print "  "
 	print "  DISCLAIMER - USE AT YOUR OWN RISK"
 	print "  "
