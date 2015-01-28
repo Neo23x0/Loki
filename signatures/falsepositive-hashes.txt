@@ -19,3 +19,4 @@ a26db2eb9f3e2509b4eba949db97595cc32332d9321df68283bfc102e66d766f;REGIN False Pos
 b04a85ef2edbc5ac7b312e9d57b533d9d355d0c7cbbd24a8085c6873baf9411f;REGIN False Positive - SCSI Driver Windows
 581730d7cce49af90efad5f904ce205ee7123e6c0d206867fb8ad22559fa0556;REGIN False Positive - Windows Media Component Setup Application
 519a0d7ebc75dcf65c80d61f952768e49c33c5c7c320a4cc4b4a12a0e9f3337d;REGIN False Positive - SP1.CAB MSDN Disc 3498 (Microsoft)
+5d7509ee8bf1c3c14c10b9c2be3d58d56acedfb08444f9c774e5d8caa8659043;REGIN False Positive - Client.exe

@@ -122,7 +122,7 @@ rule HackTool_Producers {
 
 /* Mimikatz */
 
-rule Mimikatz_Memory_Rule {
+rule Mimikatz_Memory_Rule_1 : APT {
 	meta: 
 		author = "Florian Roth"
 		date = "12/22/2014"
@@ -130,14 +130,39 @@ rule Mimikatz_Memory_Rule {
 		type = "memory"
 		description = "Detects password dumper mimikatz in memory"
 	strings:
-		$s1 = "sekurlsa::logonpasswords" fullword ascii
-		$s2 = "sekurlsa::kerberos" fullword ascii
-		$s3 = "sekurlsa::msv" fullword ascii
+		$s1 = "sekurlsa::msv" fullword ascii
+	    $s2 = "sekurlsa::wdigest" fullword ascii
+	    $s4 = "sekurlsa::kerberos" fullword ascii
+	    $s5 = "sekurlsa::tspkg" fullword ascii
+	    $s6 = "sekurlsa::livessp" fullword ascii
+	    $s7 = "sekurlsa::ssp" fullword ascii
+	    $s8 = "sekurlsa::logonPasswords" fullword ascii
+	    $s9 = "sekurlsa::process" fullword ascii
+	    $s10 = "ekurlsa::minidump" fullword ascii
+	    $s11 = "sekurlsa::pth" fullword ascii
+	    $s12 = "sekurlsa::tickets" fullword ascii
+	    $s13 = "sekurlsa::ekeys" fullword ascii
+	    $s14 = "sekurlsa::dpapi" fullword ascii
+	    $s15 = "sekurlsa::credman" fullword ascii
 	condition:
 		1 of them
 }
 
-/* Mimikatz sample sets */
+rule Mimikatz_Memory_Rule_2 : APT {
+	meta:
+		description = "Mimikatz Rule generated from a memory dump"
+		author = "Florian Roth - Florian Roth"
+		type = "memory"
+		score = 80
+	strings:
+		$s0 = "sekurlsa::" ascii
+		$s1 = "cryptprimitives.pdb" ascii
+		$s2 = "Now is t1O" ascii fullword
+		$s4 = "ALICE123" ascii
+		$s5 = "BOBBY456" ascii
+	condition:
+		4 of them
+}
 
 rule Mimikatz_SampleSet_1 : APT {
 	meta:
@@ -160,7 +185,6 @@ rule Mimikatz_SampleSet_1 : APT {
 		$s7 = "sekurlsa.lib" fullword
 		$s8 = "mimilib.dll" fullword
 		$s9 = "mimikatz.exe" fullword
-		$s10 = "mimilib.dll" fullword
 	condition:
 		3 of them
 }
@@ -3053,26 +3077,6 @@ rule Mimikatz_Samples_2014b_2 {
 		$s18 = "mimilib.dll" fullword wide
 		$s19 = "%p - lsasrv!InitializationVector" fullword ascii
 		$s20 = "lsasrv!LogonSessionListCount" fullword ascii
-	condition:
-		all of them
-}
-
-rule Mimikatz_Samples_2014b_Family_1 {
-	meta:
-		description = "Mimikatz pwassword dumper samples from the second half of 2014"
-		author = "Florian Roth with the help of YarGen Rule Generator"
-		reference = "not set"
-		date = "2014/12/23"
-		super_rule = 1
-		score = 80		
-		hash0 = "61001a32c5388e629dd0441a77974200057816ef"
-		hash1 = "46df272cecb541aebca3c863802c0d0a0dc5fcb4"
-		hash2 = "c3307bb70efa19fc5049dfd829d07ea52a65bb74"
-		hash3 = "29d9bfc4e4884bc7b2f3cd01960b727c17fb50cb"
-	strings:
-		$s0 = "ERROR kuhl_m_lsadump_getUsersAndSamKey ; pre - kull_m_registry_RegQueryV" wide
-		$s11 = "ERROR kuhl_m_kernel_processProtect ; Argument /process:program.exe or /p" wide
-		$s12 = "ERROR kuhl_m_sekurlsa_acquireLSA ; Minidump pInfos->ProcessorArchitectur" wide
 	condition:
 		all of them
 }

@@ -22,7 +22,7 @@
 # Florian Roth
 # BSK Consulting GmbH
 # January 2015
-# v0.3.1
+# v0.3.2
 # 
 # DISCLAIMER - USE AT YOUR OWN RISK.
 
@@ -146,7 +146,7 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
 						traceback.print_exc()
 
 
-def scanProcesses(rule_sets, filename_iocs):
+def scanProcesses(rule_sets, filename_iocs, filename_suspicious_iocs):
 	# WMI Handler
 	c = wmi.WMI()
 	processes = c.Win32_Process()
@@ -172,6 +172,7 @@ def scanProcesses(rule_sets, filename_iocs):
 			path = "none"
 			parent_pid = process.ParentProcessId
 			priority = process.Priority
+			ws_size = process.VirtualSize
 			if process.ExecutablePath:
 				path = process.ExecutablePath
 			# Owner
@@ -203,26 +204,48 @@ def scanProcesses(rule_sets, filename_iocs):
 		log("NOTICE", "Scanning Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
 
 		# Special Checks ------------------------------------------------------
+		# better executable path
+		if not "\\" in cmd and path != "none":
+			cmd = path
 
 		# Skeleton Key Malware Process
 		if re.search(r'psexec .* [a-fA-F0-9]{32}', cmd, re.IGNORECASE):
 			log("WARNING", "Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd))
 
+		# File Name Checks -------------------------------------------------
+		for regex in filename_iocs.keys():
+			match = re.search(r'%s' % regex, cmd)
+			if match:
+				description = filename_iocs[regex]
+				log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
+
+		# File Name Suspicious Checks --------------------------------------
+		for regex in filename_suspicious_iocs.keys():
+			match = re.search(r'%s' % regex, cmd)
+			if match:
+				description = filename_suspicious_iocs[regex]
+				log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
+
 		# Yara rule match
-		try:
-			alerts = []
-			for rules in rule_sets:
-				matches = rules.match(pid=pid)
-				if matches:
-					for match in matches:
-						alerts.append("Yara Rule MATCH: %s PID: %s NAME: %s CMD: %s" % ( match.rule, pid, name, cmd))
-			if len(alerts) > 3:
-				log("INFO", "Too many matches on process memory - most likely a false positive PID: %s NAME: %s CMD: %s" % (pid, name, cmd))
-			elif len(alerts) > 1:
-				for alert in alerts:
-					log("ALERT", alert)
-		except Exception, e:
-			log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
+		# only on processes with a small working set size
+		if int(ws_size) < ( 100 * 1048576 ): # 100 MB
+			try:
+				alerts = []
+				for rules in rule_sets:
+					matches = rules.match(pid=pid)
+					if matches:
+						for match in matches:
+							# print match.rule
+							alerts.append("Yara Rule MATCH: %s PID: %s NAME: %s CMD: %s" % ( match.rule, pid, name, cmd))
+				if len(alerts) > 3:
+					log("INFO", "Too many matches on process memory - most likely a false positive PID: %s NAME: %s CMD: %s" % (pid, name, cmd))
+				elif len(alerts) > 0:
+					for alert in alerts:
+						log("ALERT", alert)
+			except Exception, e:
+				log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
+		else:
+			log("DEBUG", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
 						
 		###############################################################
 		# THOR Process Anomaly Checks
@@ -614,7 +637,7 @@ def printWelcome():
 	print "  "
 	print "  (C) Florian Roth - BSK Consulting GmbH"
 	print "  Jan 2015"
-	print "  Version 0.3.1"
+	print "  Version 0.3.2"
 	print "  "
 	print "  DISCLAIMER - USE AT YOUR OWN RISK"
 	print "  "
@@ -677,7 +700,7 @@ if __name__ == '__main__':
 	# Scan Processes --------------------------------------------------
 	resultProc = False
 	if not args.noprocscan:
-		scanProcesses(yaraRules, filenameIOCs)
+		scanProcesses(yaraRules, filenameIOCs, filenameSuspiciousIOCs)
 
 	# Scan Path -------------------------------------------------------
 	resultFS = False
