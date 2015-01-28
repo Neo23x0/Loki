@@ -156,12 +156,12 @@ rule Mimikatz_Memory_Rule_2 : APT {
 		score = 80
 	strings:
 		$s0 = "sekurlsa::" ascii
-		$s1 = "cryptprimitives.pdb" ascii
-		$s2 = "Now is t1O" ascii fullword
-		$s4 = "ALICE123" ascii
-		$s5 = "BOBBY456" ascii
+		$x1 = "cryptprimitives.pdb" ascii
+		$x2 = "Now is t1O" ascii fullword
+		$x4 = "ALICE123" ascii
+		$x5 = "BOBBY456" ascii
 	condition:
-		4 of them
+		$s0 and 1 of ($x*)
 }
 
 rule Mimikatz_SampleSet_1 : APT {
