@@ -38,6 +38,7 @@ import re
 import datetime
 import platform
 import psutil
+from win32com.shell import shell
 from colorama import Fore, Back, Style
 from colorama import init
 
@@ -180,7 +181,9 @@ def scanProcesses(rule_sets, filename_iocs, filename_suspicious_iocs):
 				owner_raw = process.GetOwner()
 				owner = owner_raw[2]
 			except Exception, e:
-				owner = "unknown"			
+				owner = "unknown"
+			if not owner:
+				owner = "unknown"
 
 		except Exception, e:
 			log("ALERT", "Error getting all process information. Did you run the scanner 'As Administrator'?")
@@ -678,6 +681,14 @@ if __name__ == '__main__':
 	t_hostname = os.environ['COMPUTERNAME']
 	log("INFO", "LOKI - Starting Loki Scan on %s" % t_hostname)
 
+	# Check if admin
+	isAdmin = False
+	if shell.IsUserAnAdmin():
+		isAdmin = True
+		log("INFO", "Current user has admin rights - very good")
+	else:
+		log("NOTICE", "Program should be run 'as Administrator' to ensure all access rights to process memory and file objects.")
+		
 	# Set process to nice priority ------------------------------------
 	setNice()
 
@@ -700,7 +711,10 @@ if __name__ == '__main__':
 	# Scan Processes --------------------------------------------------
 	resultProc = False
 	if not args.noprocscan:
-		scanProcesses(yaraRules, filenameIOCs, filenameSuspiciousIOCs)
+		if isAdmin:
+			scanProcesses(yaraRules, filenameIOCs, filenameSuspiciousIOCs)
+		else:
+			log("NOTICE", "Skipping process memory check. User has no admin rights.")
 
 	# Scan Path -------------------------------------------------------
 	resultFS = False
