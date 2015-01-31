@@ -1,5 +1,5 @@
 
-import "pe"
+/* import "pe" - memory leak */
 
 /* FIVE EYES ------------------------------------------------------------------------------- */
 
@@ -1033,6 +1033,8 @@ rule WaterBug_fa_malware {
 		($mz at 0) and (any of ($string*))
 }
 
+/* pe module memory leak problem
+
 rule WaterBug_sav_dropper {
 	meta: 
 		description = "Symantec Waterbug Attack - SAV Dropper"
@@ -1045,6 +1047,8 @@ rule WaterBug_sav_dropper {
 	condition:
 		($mz at 0) and uint32(0x400) == 0x000000c3 and pe.number_of_sections == 6 and $a 
 }
+
+*/ 
 
 rule WaterBug_sav {
 	meta: 

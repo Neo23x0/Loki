@@ -74,19 +74,19 @@ AppData\\[\w]+\.exe;Executable in AppData directory
 [Cc]:\\[\w]{1,2}\.(exe|com|scr);Short named executable in root directory
 
 # Symantec Waterbug Attack http://goo.gl/9Tlk90
-\\tcpdump32c\.exe;80
-\\typecli\.exe;60
-\\msc32\.exe;60
-\\dxsnd32x\.exe;70
-\\msnetsrv\.exe;60
-\\mswme32\.exe;55
-\\msnetserv\.exe;60
-\\msnet32\.exe;60
-\\rpcsrv\.exe;40
-\\charmap32\.exe;60
-\\mqsvc32\.exe;50
-\\msrss\.exe;60
-\\dc1\.exe;70
-\\svcmgr\.exe;35
-\\msx32\.exe;60
-\.XOR;50
+\\tcpdump32c\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\typecli\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\msc32\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\dxsnd32x\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\msnetsrv\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\mswme32\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\msnetserv\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\msnet32\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\rpcsrv\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\charmap32\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\mqsvc32\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\msrss\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\dc1\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\svcmgr\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\msx32\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
+\.XOR;Symantec Waterbug Attack http://goo.gl/9Tlk90
