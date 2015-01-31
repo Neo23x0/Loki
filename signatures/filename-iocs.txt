@@ -67,3 +67,35 @@ ystem32\\pciclass\.sys;File name known from REGIN malware
 # Skeleton Key File Names
 \\msuta64\.dll;Skeleton Key Malware
 \\ole64\.dll;Skeleton Key Malware (False positives are unknown)
+
+# IXESHE APT Malware
+\\winhlps\.exe;IXESHE APT Malware
+\\acrotry\.exe;IXESHE APT Malware
+
+# PlugX
+(TEMP|TMP|Temp)\\DW20\.dll;PlugX
+(TEMP|TMP|Temp)\\DW20\.dll;PlugX
+(TEMP|TMP|Temp)\\dl_[0-9]{2}\.exe;PlugX
+(TEMP|TMP|Temp)\\dl_[0-9]{2}\.txt;PlugX
+(Mailing|Shipment).*Label\.exe;PlugX
+
+# Mandiant APT
+\\Temp\\~df~;Mandiant APT
+\\Temp\\~hf~;Mandiant APT
+\\Temp\\~[a-z][a-z]~;Mandiant APT
+\\start menu\\programs\\startup\\adobe_sl.exe;Mandiant APT
+Temp\\Updatasched\.exe;Mandiant APT
+\\adobere\.exe;Mandiant APT
+
+# Mandiant APT - SHELLDC.DLL (BACKDOOR)
+\\Temp\\svchost\.exe;Mandiant APT - SHELLDC.DLL (BACKDOOR)
+\\shelldc\.dll;Mandiant APT - SHELLDC.DLL (BACKDOOR)
+\\recyle64\.dll;Mandiant APT - SHELLDC.DLL (BACKDOOR)
+\\ws_18\.dll;Mandiant APT - SHELLDC.DLL (BACKDOOR)
+
+# Mandiant APT - LIGHTDART (FAMILY)
+\\ret\.log;LIGHTDART (FAMILY)
+\\1\.rar;LIGHTDART (FAMILY)
+\\qy\.htm;LIGHTDART (FAMILY)
+\\shsat\.exe;LIGHTDART (FAMILY)
+\\imxgy\.exe;LIGHTDART (FAMILY)
