@@ -1003,18 +1003,6 @@ rule WaterBug_turla_dropper {
 		all of them
 }
 
-rule WaterBug_turla_dll {
-	meta: 
-		description = "Symantec Waterbug Attack - Trojan Turla DLL"
-		author = "Symantec Security Response"
-		date = "22.01.2015"
-		reference = "http://t.co/rF35OaAXrl"	
-	strings:
-		$a = /([A-Za-z0-9]{2,10}_){,2}Win32\.dll\x00/
-	condition:
-		pe.exports("ee") and $a
-}
-
 rule WaterBug_fa_malware { 
 	meta: 
 		description = "Symantec Waterbug Attack - FA malware variant"
@@ -1034,6 +1022,19 @@ rule WaterBug_fa_malware {
 }
 
 /* pe module memory leak problem
+
+
+rule WaterBug_turla_dll {
+	meta: 
+		description = "Symantec Waterbug Attack - Trojan Turla DLL"
+		author = "Symantec Security Response"
+		date = "22.01.2015"
+		reference = "http://t.co/rF35OaAXrl"	
+	strings:
+		$a = /([A-Za-z0-9]{2,10}_){,2}Win32\.dll\x00/
+	condition:
+		pe.exports("ee") and $a
+}
 
 rule WaterBug_sav_dropper {
 	meta: 
