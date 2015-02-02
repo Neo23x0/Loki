@@ -33,8 +33,10 @@ ad61e8daeeba43e442514b177a1b41ad4b7c6727;Skeleton Key Malware
 bf45086e6334f647fda33576e2a05826;Symantec Report http://goo.gl/9Tmq2e ole64.dll 
 a487f1668390df0f4951b7292bae6ecf;Symantec Report http://goo.gl/9Tmq2e HookDC.dll  
 8ba4df29b0593be172ff5678d8a05bb3;Symantec Report http://goo.gl/9Tmq2e HookDC.dll
-f01026e1107b722435126c53b2af47a9;Symantec Report http://goo.gl/9Tmq2e HookDC.dll      
-747cc5ce7f2d062ebec6219384b57e8c;Symantec Report http://goo.gl/9Tmq2e ole.dll 
+f01026e1107b722435126c53b2af47a9;Symantec Report http://goo.gl/9Tmq2e HookDC.dll
+747cc5ce7f2d062ebec6219384b57e8c;Symantec Report http://goo.gl/9Tmq2e ole.dll
+600b604784594e3339776c6563aa45a1;Symantec Report http://goo.gl/9Tmq2e jqs.exe (Backdoor.Winnti dropper)
+48377c1c4cfedebe35733e9c3675f9be;Symantec Report http://goo.gl/9Tmq2e tmp8296.tmp (Backdoor.Winnti variant)
 
 20831e820af5f41353b5afab659f2ad42ec6df5d9692448872f3ed8bbb40ab92;Regin Malware Sample
 225e9596de85ca7b1025d6e444f6a01aa6507feef213f4d2e20da9e7d5d8e430;Regin Malware Sample
