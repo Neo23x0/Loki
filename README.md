@@ -20,6 +20,7 @@ The Windows binary is compiled with PyInstaller 2.1 and should run as x86 applic
 
 Loki currently includes the following IOCs:
 
+  - Anthem APT Deep Panda Signatures (FBI - see [Report](http://krebsonsecurity.com/wp-content/uploads/2015/02/FBI-Flash-Warning-Deep-Panda.pdf)) 
   - Regin Malware (GCHQ / NSA / FiveEyes) (incl. Legspin and Hopscotch)
   - Five Eyes QUERTY Malware (Regin Keylogger Module - see: [Kaspesky Report](https://securelist.com/blog/research/68525/comparing-the-regin-module-50251-and-the-qwerty-keylogger/))
   - Skeleton Key Malware (other state-sponsored Malware) - Source: [Dell SecureWorks Counter Threat Unit(TM)](http://www.secureworks.com/cyber-threat-intelligence/threats/skeleton-key-malware-analysis/)
