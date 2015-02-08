@@ -1101,7 +1101,7 @@ rule WaterBug_ComRat {
 
 */
 
-/* Anthem Deep Panda APT -------------------------------------------------------- */
+/* Anthem Deep Panda APT */
 
 rule Anthem_DeepPanda_sl_txt_packed {
 	meta:
@@ -1179,9 +1179,9 @@ rule Anthem_DeepPanda_htran_exe {
 		10 of them
 }
 
-rule Anthem_DeepPanda_sqlsrv32 {
+rule Anthem_DeepPanda_Trojan_Kakfum {
 	meta:
-		description = "Anthem Hack Deep Panda - FBI Liaison Alert System # A-000049-MW - sqlsrv32.dll"
+		description = "Anthem Hack Deep Panda - FBI Liaison Alert System # A-000049-MW - Trojan.Kakfum sqlsrv32.dll"
 		author = "Florian Roth"
 		reference = "http://krebsonsecurity.com/wp-content/uploads/2015/02/FBI-Flash-Warning-Deep-Panda.pdf"
 		date = "2015/02/08"
@@ -1196,4 +1196,4 @@ rule Anthem_DeepPanda_sqlsrv32 {
 		$s15 = "sqlserver" fullword ascii
 	condition:
 		all of them
-}	
+}
