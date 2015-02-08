@@ -22,7 +22,7 @@
 # Florian Roth
 # BSK Consulting GmbH
 # January 2015
-# v0.3.2
+# v0.3.3
 # 
 # DISCLAIMER - USE AT YOUR OWN RISK.
 
@@ -640,7 +640,7 @@ def printWelcome():
 	print "  "
 	print "  (C) Florian Roth - BSK Consulting GmbH"
 	print "  Jan 2015"
-	print "  Version 0.3.2"
+	print "  Version 0.3.3"
 	print "  "
 	print "  DISCLAIMER - USE AT YOUR OWN RISK"
 	print "  "

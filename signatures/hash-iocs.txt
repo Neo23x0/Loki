@@ -108,4 +108,9 @@ fb56ce4b853a94ae3f64367c02ec7e31;Symantec Waterbug Attack http://goo.gl/9Tlk90 d
 fb56ce4b853a94ae3f64367c02ec7e31;Symantec Waterbug Attack http://goo.gl/9Tlk90 svcmgr.exe
 98992c12e58745854a885f9630124d3e;Symantec Waterbug Attack http://goo.gl/9Tlk90 msx32.exe Used to encrypt file (supplied as argument on command line) using common Trojan.Turla XOR key, Output written to [FILE NAME].XOR
 
-
+7BC8A2EF08F51CF6EEB777B261DA3367;INFOADMIN (TROJAN.KAKFUM) Anthem APT FBI Liaison Alert System # A-000049-MW
+EF498EA09BF51B002FC7EB3DFD0D19D3;INFOADMIN (TROJAN.KAKFUM) Anthem APT FBI Liaison Alert System # A-000049-MW
+3a97d9b6f17754dcd38ca7fc89caab04;Scanline UPX packed Anthem APT FBI Liaison Alert System # A-000049-MW
+02fc4e3a7998e0213fa5e768239bd0b0;Scanline unpacked as sl.txt Anthem APT FBI Liaison Alert System # A-000049-MW
+f34914dd1faabfc94a8695e7229d0192;Htran Anthem APT FBI Liaison Alert System # A-000049-MW
+3d16542d4ee5c8f77e6c0281d283c7bc;Pwdump Anthem APT FBI Liaison Alert System # A-000049-MW
