@@ -90,3 +90,7 @@ AppData\\[\w]+\.exe;Executable in AppData directory
 \\svcmgr\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
 \\msx32\.exe;Symantec Waterbug Attack http://goo.gl/9Tlk90
 \.XOR;Symantec Waterbug Attack http://goo.gl/9Tlk90
+
+# Anthem Deep Panda APT FBI Liaison Alert System # A-000049-MW
+\\sl\.txt;Anthem Deep Panda APT FBI Liaison Alert System # A-000049-MW
+\\lot1\.tmp;Anthem Deep Panda APT FBI Liaison Alert System # A-000049-MW
