@@ -92,5 +92,4 @@ AppData\\[\w]+\.exe;Executable in AppData directory
 \.XOR;Symantec Waterbug Attack http://goo.gl/9Tlk90
 
 # Suspected Anthem Deep Panda APT 
-\\sl\.txt;Anthem Deep Panda APT FBI Liaison Alert System # A-000049-MW
-\\lot1\.tmp;Anthem Deep Panda APT FBI Liaison Alert System # A-000049-MW
+\\lot1\.tmp;Anthem Deep Panda APT
