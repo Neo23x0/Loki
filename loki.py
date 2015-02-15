@@ -489,9 +489,9 @@ def initializeYaraRules():
 					try:
 						compiledRules = yara.compile(yaraRuleFile)
 						yaraRules.append(compiledRules)
-						log("INFO", "Successfully compiled Yara rules from file %s" % file)
+						log("INFO", "Initialized Yara rules from %s" % file)
 					except Exception, e:
-						log("ERROR", "Error in plain text Yara file: %s" % file)
+						log("ERROR", "Error in Yara file: %s" % file)
 						if args.debug:
 							traceback.print_exc()
 
@@ -639,8 +639,8 @@ def printWelcome():
 	print "  Simple IOC Scanner"
 	print "  "
 	print "  (C) Florian Roth - BSK Consulting GmbH"
-	print "  Jan 2015"
-	print "  Version 0.3.3"
+	print "  Feb 2015"
+	print "  Version 0.3.4"
 	print "  "
 	print "  DISCLAIMER - USE AT YOUR OWN RISK"
 	print "  "
