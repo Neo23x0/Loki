@@ -20,6 +20,9 @@ The Windows binary is compiled with PyInstaller 2.1 and should run as x86 applic
 
 Loki currently includes the following IOCs:
 
+  - Equation Group Malware (Hashes, Yara Rules by Kaspersky and 9 custom rules) 
+  - Carbanak APT (Hashes, Filename IOCs - no service detection and Yara rules)
+  - Arid Viper APT (Hashes)
   - Anthem APT Deep Panda Signatures (not officialy confirmed) (krebsonsecurity.com - see [Blog Post](http://krebsonsecurity.com/2015/02/china-to-blame-in-anthem-hack/)) 
   - Regin Malware (GCHQ / NSA / FiveEyes) (incl. Legspin and Hopscotch)
   - Five Eyes QUERTY Malware (Regin Keylogger Module - see: [Kaspesky Report](https://securelist.com/blog/research/68525/comparing-the-regin-module-50251-and-the-qwerty-keylogger/))
