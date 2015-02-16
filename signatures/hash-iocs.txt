@@ -221,3 +221,92 @@ c70cce41ef0e4a206b5b48fa2d460ba4;Kaspersky Carbanak APT Malware Hash http://goo.
 41fb85acedc691bc6033fa2c4cf6a0bc;Kaspersky Carbanak APT Malware Hash http://goo.gl/0Nhax2
 1684a5eafd51852c43b4bca48b58980f;Kaspersky Carbanak APT Malware Hash http://goo.gl/0Nhax2
 08f83d98b18d3dff16c35a20e24ed49a;Kaspersky Carbanak APT Malware Hash http://goo.gl/0Nhax2
+
+015fbc0b216d197136df8692b354bf2fc7bd6eb243e73283d861a4dbbb81a751;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+17f2eb260f0b6942f80453b30f1a13235f27b7ed80d4e5815fb58ff7322fc765;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+32e2b9cc92dfc1e77a85adb6a8b13c9b6264b7adb286260bd8bf6e47b6cde255;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+4a581d9636a4f00a880b07f6dca1a82a866cf5713c74e722cfa9f71e08c33643;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+69589b1691909fa091a901f7323515228594561bc18032f8ffde095993333ecc;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+6cc4869f1991df5879d0c4fc002f996a56bf11624d79ea2d34b52ceb98516425;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+72be7e8903211e37bb3a4b04d7684d49ed8fb21ec3fdf6367e4eed2aa6fdc54c;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+856580576be62a0b14a01e9973b2fcb0c344e680b70a3b08b4ea293f84b47a59;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+8c4867a434e0b279c3f7fc5baedb04753c41a79cc52da6e3148c110d82a588e8;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+ae38be6e54447ddf5a9f16748a749ab0c9c7524f7f4f9878e3b4940415970a19;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+ea94498aeeef4535ea1c876a0f7317d6049307c82f9396dc6b9e3542a6aa50a3;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.A
+2a375d2a9c41af31554bafb4a712097cc016d5227cb1f07652f0ef3483d5be30;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.A
+55cee457c73aa87258a04562c9d04cd3c865608d5dd64366d9cd9bc2fe2f5dd9;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.A
+a4cebac7bf4e5faa537a6013e9ae19c683d7cdad9dd318fdd968a966dd3a3010;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.A
+cb3039dad0ebd63e40fbcdbb8a2a1cdf9f442b2870383f5d469765387d0c8ec0;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.A
+d4cb58f6167b72764a216d0ce6281d2251f02a696060eb425c9782283422a828;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.A
+91d3a9c6de14197fe3be7c2b86b88b58b1f731d3e82bb0b7b11d5c75fbbed9a5;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.B
+b6ca1211159e9fd790790e49db5eb1b7a11c09f746d3135ae7a67ce8f518a403;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.B
+e18f051ac27ed29f792db49e4333adca9b1762d485a9214b5af12ffe858ca3fc;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.B
+381bcf2b7fefcdade08bb6a02dc32ea535dbef9cb9a43220649916db8bcc39d8;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+502953496a40661bb6336a693371d3dd29ad96feb5e9f91a5b5ca0ad3ffbf29f;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+52767ea5e20b8639433c087edf86ef91b0cb7fda46c71dcce625938a9f5d8a74;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+4436c7024366356cd04724e1d6867786f2587a6f6295fc74b3af0c02a257adba;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.D
+4619cec6310e16d30e05204b35c084aabafabdd3d3f87661774fec253a103d11;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.D
+8eeab6635982618bebc137cf6c4795aa10010685d9c7bb6ce66932215195eed7;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+92cd7309723461918b9cd2988a26cd2199749e82636dc6628a46878db7e12db3;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.D
+940a3ed18c4f171c9a6bccc0ab0ee8075aad6da8023e0b0e8883ca56bdddb4c7;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+a348aabfd8aeec855933509c4c0b2aee78408ada89d8b51ce16b2247659b22f7;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+ae35a7a1b084d09bb913b450944dc6f3205650298e58d19e3e2ee4db93a109ea;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+b5ba8fbc4f5c9bbf01c9a0a533ecab0735bf8e5e63116fffc570392e6faa9d18;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+b7666d4a0afe5f5b5de8faa541be31bbe34ea51c3b3a3fab77937f816ac6181e;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+bbacf000880a46c7955a27f5dd960a6e253cd357f14f97f8472dd4fc3032f44d;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+bda7ea39f9105c25250f14e9e1fa3de0f51b91b04349974c7cadbbbe1c06ce2f;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+d2ccf6fa361ceaf8cebada53bb1f9458b016ad85b74a7dc1bf4ba18774d92645;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+e7b59b841e127c6fe6e02dd98292bba49bd32350b57595e09a6adab8da78235b;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+e810c74aefd63ce4ea674a1a961075a4d86a10b802d365b6b2b98a724d9b86db;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.D
+f467c72fa8adde6ddf27150122c117a17d1d664876c2f9d87e68e06257eb1904;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.C
+58b48fd39ef718e5bd501f57e83b537668b13176ca682aee36402d18bd0c0733;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.B
+59d880ae82ccc3c8207b745b1b3e55119a5b62af086a1639270b1ba5b7e1893a;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.B
+74d3093a51482a1eaa15e4fc8aa4b7d659d571db0570950272d7aa998aec6f49;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.B
+829b90bcf24fdf7f0298edec701c3c45b820f297dd012ac22e27e4bd295ee5f2;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.B
+9b6595980751537adf627e6107c08537de13e39752ed54c73e2b6af23e2a2769;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.B
+d711dc3c75a60ca0cd2556c267e3c33cee5d677edcfe70fb88b334f08f81ece9;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.B
+e850650e6982469529768988dfabadfdaa53b25abe1e0c0f0b3894b31a83b061;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPADT.B
+db06c1914c82b52c9f2ee6ddffb13acde22d2227d626c41c35c163266b11d29c;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+177d9e42c4e2dfc3641cdc1f92815600c861501f5c880f5ab9cb642feb9b94bd;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+390ef820779cd7461792f0aa4fc324cb06e1226e551a158cb87ca4db05358ef3;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+3fbdfcf1eae14daa7b2fa6b7d3fa7cf602cd6ff178483c9019e3bb0aa2bb902c;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+62b10dc88df96e2d3d9cf5521a8d8372d6228fc82587bdee7f0de3c1c1d5a8bd;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+6e8287bb8909baa65e5c00b853b4f66844e5cf3d7a5f8b707997c02395b93505;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+8c66812d657027f537aa43f406182ba39e9baf3785f067ade003f96397b11ec0;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+a1bf0e5277f6fc962be778f182971eb4911d9c97cf27526d9e5698d514cef3c0;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+a6eac7a3607713fbeb3b50d227f3742ea23aa21c50eeff8987bbba10138527a9;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+b33472608ce524c2750b70c496a696ad6653b8a6ea7b474445d94cd491d255cf;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+bcc1a294bc63c3fa873f364bab0a7aa368d85726346106422013c270d55fec3c;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+bd9ab35587fdb450242b7a9ee0298c04dbd2fb254065fa004cda1ad42ac5f338;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.E
+e29647c7719696bf9d4d5aa8c8f10152b5b63b6d25969db90d9634273c0353f8;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.F
+05eb2ecfc731ce222ebe82f6b3428fc5aa4179f7be5f328c5447317950e2d0e7;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+0d22606d24911c2128651ba0421c7c5bf7cd3eedef871c460b02b42b2417c457;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+11768a3a63458963d1d31be5c94d716b8e4f75dc1593080c2988b22cb6facaa8;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+21b9b34d4a21ee538e7908727aca5d367f8d400db920187f51be2921a696421f;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+2bd901a246f0b0b90ba891ee37c2ee4f7bd30d36d307b151998769fcc23fd1cb;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+33fc87cc53eb867dc89e34fe7a46d33d90cab02f84299531d2e677a507ed308c;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+62f9839190e2fe50439894c667b3cbe29d64c3808cc471745e3d33b61370a340;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+694c01c9ade6258596cfafa6247da71712b2c3273bfc25ad26cb47302b8bbf4d;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+74f22eced680ca26b767b4b07ba26b98536a385249d751586915b15b56509e0d;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+81cc84f29a4c444724cbbfab83185866ecebc68c9c0a37f9623a4954456c4dd1;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+a185dca4bd3b08bdafa80d53eec7ba792fb94b83785210049ba85477ce7c8cda;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+a36e2b88b2440aff13bf0473a19e4cd7b7d19e8bc96bb2fd10b991c33e18be7c;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+aab2cf709d095d949f662c40e9f889a8f3efa130102fc571f56a84205fdc67cb;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+b009a87d8de4fae3395a06b2676c483a80b10ca12c5bbc093aa71ea504a77dc7;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+bb3eefa723221e2aa27c4f56f61418319ccda41b70e9e4b0375bf3bb131e974b;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+d09a773dab9a20e6b39176e9cf76ac6863fe388d69367407c317c71652c84b9e;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+dad8cf7474c71db1512e637db780f4650d30b040903d7a76840a1c099b9b8650;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+e91216df556bee622e4eab8551fe534cda8f2f1056b8d8442f088a4035815dfe;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.G
+09be9911eedb9b01d8f544252fb0c74f2dadcf850f33a0b947eac740de8c2427;Arid Viper APT http://goo.gl/bGzjmB TROJ_STRPSPI.H
+
+752af597e6d9fd70396accc0b9013dbe;EquationLaser Installer - Equation APT http://goo.gl/ivt8EW
+6fe6c03b938580ebf9b82f3b9cd4c4aa;Disk from Houston "autorun.exe" with EoP exploits - Equation APT http://goo.gl/ivt8EW
+2a12630ff976ba0994143ca93fecd17f;DoubleFantasy installer - Equation APT http://goo.gl/ivt8EW
+4556ce5eb007af1de5bd3b457f0b216d;EquationDrug installer ("LUTEUSOBSTOS") - Equation APT http://goo.gl/ivt8EW
+9b1ca66aab784dc5f1dfe635d8f8a904;GrayFish installer - Equation APT http://goo.gl/ivt8EW
+0a209ac0de4ac033f31d6ba9191a8f7a;Fanny Worm - Equation APT http://goo.gl/ivt8EW
+9180d5affe1e5df0717d7385e7f54386;TripleFantasy loader (17920 bytes .DLL) - Equation APT http://goo.gl/ivt8EW
+ba39212c5b58b97bfc9f5bc431170827;TripleFantasy encrypted payload (.DAT) - Equation APT http://goo.gl/ivt8EW
+03718676311de33dd0b8f4f18cffd488;DoubleFantasy installer + LNK exploit package - Equation APT http://goo.gl/ivt8EW
+11fb08b9126cdb4668b3f5135cf7a6c5;HDD reprogramming module - Equation APT http://goo.gl/ivt8EW
+24a6ec8ebf9c0867ed1c097f4a653b8d;GROK keylogger - Equation APT http://goo.gl/ivt8EW
