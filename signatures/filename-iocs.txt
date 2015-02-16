@@ -99,3 +99,10 @@ Temp\\Updatasched\.exe;Mandiant APT
 \\qy\.htm;LIGHTDART (FAMILY)
 \\shsat\.exe;LIGHTDART (FAMILY)
 \\imxgy\.exe;LIGHTDART (FAMILY)
+
+# Kaspersky Carbanak APT Malware Hash http://goo.gl/0Nhax2
+(application data|AppData|Anwendungsdaten)\\mozilla\\[^\\]+\.bin;Kaspersky Carbanak APT
+\\System32\\com\\svchost\.exe;Kaspersky Carbanak APT
+\\ProgramData\\mozilla\\[^\\]+\.bin;Kaspersky Carbanak APT
+\\(Windows|WinXP)\\paexec;Kaspersky Carbanak APT
+SysWOW64\\com\\svchost\.exe;Kaspersky Carbanak APT
