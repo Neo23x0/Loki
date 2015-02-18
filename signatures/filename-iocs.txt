@@ -106,3 +106,14 @@ Temp\\Updatasched\.exe;Mandiant APT
 \\ProgramData\\mozilla\\[^\\]+\.bin;Kaspersky Carbanak APT
 \\(Windows|WinXP)\\paexec;Kaspersky Carbanak APT
 SysWOW64\\com\\svchost\.exe;Kaspersky Carbanak APT
+
+# Equation
+ystem32\\ee\.dll;Equation Group Malware http://goo.gl/d5ujEH
+# Equation Related File Name http://pastebin.com/QvZNtuQW
+ystem32\\msregstr\.exe;Equation Related File Name http://pastebin.com/QvZNtuQW
+ystem32\\khlp894u\.dll;Equation Related File Name http://pastebin.com/QvZNtuQW
+\\__c__\.lnk;Equation Related File Name http://pastebin.com/QvZNtuQW
+temp\\msupdate\.exe;Equation Related File Name http://pastebin.com/QvZNtuQW
+\\fanny\.bmp;Equation Related File Name http://pastebin.com/QvZNtuQW
+WINDOWS\\mlan\.exe;Equation Related File Name http://pastebin.com/QvZNtuQW
+Windows\\mlan\.exe;Equation Related File Name http://pastebin.com/QvZNtuQW
