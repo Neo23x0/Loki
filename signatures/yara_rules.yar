@@ -269,25 +269,13 @@ rule skeleton_key_injected_code
 		date = "2015/01/13"
 		score = 70
 	strings:
-		$injected = { 33 C0 85 C9 0F 95 C0 48 8B 8C 24 40 01 00 00 48 33 CC E8 4D 02 00 
-		00 48 81 C4 58 01 00 00 C3 }
+		$injected = { 33 C0 85 C9 0F 95 C0 48 8B 8C 24 40 01 00 00 48 33 CC E8 4D 02 00 00 48 81 C4 58 01 00 00 C3 }
 
-		$patch_CDLocateCSystem = { 48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 20 48 8B FA 
-		8B F1 E8 ?? ?? ?? ?? 48 8B D7 8B CE 48 8B D8 FF 50 10 44 8B D8 85 C0 0F 88 A5 00 
-		00 00 48 85 FF 0F 84 9C 00 00 00 83 FE 17 0F 85 93 00 00 00 48 8B 07 48 85 C0 0F 
-		84 84 00 00 00 48 83 BB 48 01 00 00 00 75 73 48 89 83 48 01 00 00 33 D2 }
+		$patch_CDLocateCSystem = { 48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 20 48 8B FA 8B F1 E8 ?? ?? ?? ?? 48 8B D7 8B CE 48 8B D8 FF 50 10 44 8B D8 85 C0 0F 88 A5 00 00 00 48 85 FF 0F 84 9C 00 00 00 83 FE 17 0F 85 93 00 00 00 48 8B 07 48 85 C0 0F 84 84 00 00 00 48 83 BB 48 01 00 00 00 75 73 48 89 83 48 01 00 00 33 D2 }
 
-		$patch_SamIRetrievePrimaryCredential = { 48 89 5C 24 08 48 89 6C 24 10 48 89 74 
-		24 18 57 48 83 EC 20 49 8B F9 49 8B F0 48 8B DA 48 8B E9 48 85 D2 74 2A 48 8B 42 
-		08 48 85 C0 74 21 66 83 3A 26 75 1B 66 83 38 4B 75 15 66 83 78 0E 73 75 0E 66 83 
-		78 1E 4B 75 07 B8 A1 02 00 C0 EB 14 E8 ?? ?? ?? ?? 4C 8B CF 4C 8B C6 48 8B D3 48 
-		8B CD FF 50 18 48 8B 5C 24 30 48 8B 6C 24 38 48 8B 74 24 40 48 83 C4 20 5F C3 }
+		$patch_SamIRetrievePrimaryCredential = { 48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 48 83 EC 20 49 8B F9 49 8B F0 48 8B DA 48 8B E9 48 85 D2 74 2A 48 8B 42 08 48 85 C0 74 21 66 83 3A 26 75 1B 66 83 38 4B 75 15 66 83 78 0E 73 75 0E 66 83 78 1E 4B 75 07 B8 A1 02 00 C0 EB 14 E8 ?? ?? ?? ?? 4C 8B CF 4C 8B C6 48 8B D3 48 8B CD FF 50 18 48 8B 5C 24 30 48 8B 6C 24 38 48 8B 74 24 40 48 83 C4 20 5F C3 }
 
-		$patch_SamIRetrieveMultiplePrimaryCredential  = { 48 89 5C 24 08 48 89 6C 24 10 
-		48 89 74 24 18 57 48 83 EC 20 41 8B F9 49 8B D8 8B F2 8B E9 4D 85 C0 74 2B 49 8B 
-		40 08 48 85 C0 74 22 66 41 83 38 26 75 1B 66 83 38 4B 75 15 66 83 78 0E 73 75 0E 
-		66 83 78 1E 4B 75 07 B8 A1 02 00 C0 EB 12 E8 ?? ?? ?? ?? 44 8B CF 4C 8B C3 8B D6 
-		8B CD FF 50 20 48 8B 5C 24 30 48 8B 6C 24 38 48 8B 74 24 40 48 83 C4 20 5F C3 }
+		$patch_SamIRetrieveMultiplePrimaryCredential  = { 48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 48 83 EC 20 41 8B F9 49 8B D8 8B F2 8B E9 4D 85 C0 74 2B 49 8B 40 08 48 85 C0 74 22 66 41 83 38 26 75 1B 66 83 38 4B 75 15 66 83 78 0E 73 75 0E 66 83 78 1E 4B 75 07 B8 A1 02 00 C0 EB 12 E8 ?? ?? ?? ?? 44 8B CF 4C 8B C3 8B D6 8B CD FF 50 20 48 8B 5C 24 30 48 8B 6C 24 38 48 8B 74 24 40 48 83 C4 20 5F C3 }
 
 	condition:
 		any of them
@@ -496,8 +484,8 @@ rule Regin_Sample_3 {
 		
 		$s10 = "\\REGISTRY\\Machine\\Software\\Microsoft\\Updates" fullword wide
 		$s11 = "IoGetRelatedDeviceObject" fullword ascii
-		$s11 = "VMEM.sys" fullword ascii
-		$s12 = "RtlGetVersion" fullword wide
+		$s12 = "VMEM.sys" fullword ascii
+		$s13 = "RtlGetVersion" fullword wide
 		$s14 = "ntkrnlpa.exe" fullword ascii
 	condition:
 		( $hd at 0 ) and all of ($s*) and filesize > 160KB and filesize < 200KB
@@ -508,8 +496,8 @@ rule Regin_Sample_Set_1 {
 		description = "Auto-generated rule - file SHF-000052 and ndisips.sys"
 		author = "@MalwrSignatures"
 		date = "26.11.14"
-		hash = "8487a961c8244004c9276979bb4b0c14392fc3b8"
-		hash = "bcf3461d67b39a427c83f9e39b9833cfec977c61"		
+		hash1 = "8487a961c8244004c9276979bb4b0c14392fc3b8"
+		hash2 = "bcf3461d67b39a427c83f9e39b9833cfec977c61"		
 	strings:
 		$s0 = "HAL.dll" fullword ascii
 		$s1 = "IoGetDeviceObjectPointer" fullword ascii
@@ -541,8 +529,8 @@ rule Regin_Sample_Set_2 {
 		description = "Detects Regin Backdoor sample 4139149552b0322f2c5c993abccc0f0d1b38db4476189a9f9901ac0d57a656be and e420d0cf7a7983f78f5a15e6cb460e93c7603683ae6c41b27bf7f2fa34b2d935"
 		author = "@MalwrSignatures"
 		date = "27.11.14"
-		hash = "4139149552b0322f2c5c993abccc0f0d1b38db4476189a9f9901ac0d57a656be"
-		hash = "e420d0cf7a7983f78f5a15e6cb460e93c7603683ae6c41b27bf7f2fa34b2d935"
+		hash1 = "4139149552b0322f2c5c993abccc0f0d1b38db4476189a9f9901ac0d57a656be"
+		hash2 = "e420d0cf7a7983f78f5a15e6cb460e93c7603683ae6c41b27bf7f2fa34b2d935"
 	strings:
 		$hd = { fe ba dc fe }
 	
@@ -559,10 +547,10 @@ rule Regin_Sample_Set_2 {
 		
 		$s10 = "sscanf" fullword ascii
 		$s11 = "disp.dll" fullword ascii
-		$s11 = "%x:%x:%x:%x:%x:%x:%x:%x%c" fullword ascii
-		$s12 = "%d.%d.%d.%d%c" fullword ascii
-		$s13 = "imagehlp.dll" fullword ascii
-		$s14 = "%hd %d" fullword ascii
+		$s12 = "%x:%x:%x:%x:%x:%x:%x:%x%c" fullword ascii
+		$s13 = "%d.%d.%d.%d%c" fullword ascii
+		$s14 = "imagehlp.dll" fullword ascii
+		$s15 = "%hd %d" fullword ascii
 	condition:
 		( $hd at 0 ) and all of ($s*) and filesize < 450KB and filesize > 360KB
 }
@@ -1059,23 +1047,10 @@ rule WaterBug_sav {
 		reference = "http://t.co/rF35OaAXrl" 	
 	strings:
 		$mz = "MZ"
-		$code1a = { 8B 75 18 31 34 81 40 3B C2 72 F5 33 F6 39 7D 14 76 
-					1B 8A 04 0E 88 04 0F 6A 0F 33 D2 8B C7 5B F7 F3 85 D2 75 01 }
-		$code1b = { 8B 45 F8 40 89 45 F8 8B 45 10 C1 E8 02 39 45 F8 73 
-					17 8B 45 F8 8B 4D F4 8B 04 81 33 45 20 8B 4D F8 8B
-					55 F4 89 04 8A EB D7 83 65 F8 00 83 65 EC 00 EB 0E
-					8B 45 F8 40 89 45 F8 8B 45 EC 40 89 45 EC 8B 45 EC
-					3B 45 10 73 27 8B 45 F4 03 45 F8 8B 4D F4 03 4D EC
-					8A 09 88 08 8B 45 F8 33 D2 6A 0F 59 F7 F1 85 D2 75
-					07 }
-		$code1c = { 8A 04 0F 88 04 0E 6A 0F 33 D2 8B C6 5B F7 F3 85 D2 
-					75 01 47 8B 45 14 46 47 3B F8 72 E3 EB 04 C6 04 08
-					00 48 3B C6 73 F7 33 C0 C1 EE 02 74 0B 8B 55 18 31 
-					14 81 40 3B C6 72 F5 }
-		$code2 =  { 29 5D 0C 8B D1 C1 EA 05 2B CA 8B 55 F4 2B C3 3D 00 
-					00 00 01 89 0F 8B 4D 10 8D 94 91 00 03 00 00 73 17 
-					8B 7D F8 8B 4D 0C 0F B6 3F C1 E1 08 0B CF C1 E0 08 
-					FF 45 F8 89 4D 0C 8B 0A 8B F8 C1 EF 0B}
+		$code1a = { 8B 75 18 31 34 81 40 3B C2 72 F5 33 F6 39 7D 14 76 1B 8A 04 0E 88 04 0F 6A 0F 33 D2 8B C7 5B F7 F3 85 D2 75 01 }
+		$code1b = { 8B 45 F8 40 89 45 F8 8B 45 10 C1 E8 02 39 45 F8 73 17 8B 45 F8 8B 4D F4 8B 04 81 33 45 20 8B 4D F8 8B 55 F4 89 04 8A EB D7 83 65 F8 00 83 65 EC 00 EB 0E 8B 45 F8 40 89 45 F8 8B 45 EC 40 89 45 EC 8B 45 EC	3B 45 10 73 27 8B 45 F4 03 45 F8 8B 4D F4 03 4D EC 8A 09 88 08 8B 45 F8 33 D2 6A 0F 59 F7 F1 85 D2 75 07 }
+		$code1c = { 8A 04 0F 88 04 0E 6A 0F 33 D2 8B C6 5B F7 F3 85 D2 75 01 47 8B 45 14 46 47 3B F8 72 E3 EB 04 C6 04 08 00 48 3B C6 73 F7 33 C0 C1 EE 02 74 0B 8B 55 18 31 14 81 40 3B C6 72 F5 }
+		$code2 =  { 29 5D 0C 8B D1 C1 EA 05 2B CA 8B 55 F4 2B C3 3D 00 00 00 01 89 0F 8B 4D 10 8D 94 91 00 03 00 00 73 17 8B 7D F8 8B 4D 0C 0F B6 3F C1 E1 08 0B CF C1 E0 08 FF 45 F8 89 4D 0C 8B 0A 8B F8 C1 EF 0B}
 	condition:
 		($mz at 0) and (($code1a or $code1b or $code1c) and $code2) 
 }

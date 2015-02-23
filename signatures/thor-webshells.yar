@@ -22,7 +22,7 @@ rule Weevely_Webshell {
 		date = "2014/12/14"
 		score = 60
 	strings:
-		$php = "<?php\n" ascii
+		$php = "<?php" ascii
 		$s0 = /\$[a-z]{4} = \$[a-z]{4}\("[a-z][a-z]?",[\s]?"",[\s]?"/ ascii
 		$s1 = /\$[a-z]{4} = str_replace\("[a-z][a-z]?","","/ ascii
 		$s2 = /\$[a-z]{4}\.\$[a-z]{4}\.\$[a-z]{4}\.\$[a-z]{4}\)\)\); \$[a-z]{4}\(\);/ ascii
@@ -1682,8 +1682,8 @@ rule webshell_c99_madnet_smowu {
 		$s1 = "$login = \"" fullword
 		$s2 = "eval(gzinflate(base64_decode('"
 		$s4 = "//Pass" 
-		$s4 = "$md5_pass = \"" 
-		$s5 = "//If no pass then hash"
+		$s5 = "$md5_pass = \"" 
+		$s6 = "//If no pass then hash"
 	condition:
 		all of them
 }
@@ -2341,7 +2341,6 @@ rule webshell_jsp_reverse_jsp_reverse_jspbd {
 		description = "Web Shell - from files jsp-reverse.jsp, jsp-reverse.jsp, jspbd.jsp"
 		author = "Florian Roth"
 		date = "2014/01/28"
-		score = 70
 		super_rule = 1
 		hash0 = "8b0e6779f25a17f0ffb3df14122ba594"
 		hash1 = "ea87f0c1f0535610becadf5a98aca2fc"

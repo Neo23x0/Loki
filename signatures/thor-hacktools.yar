@@ -168,11 +168,11 @@ rule Mimikatz_SampleSet_1 : APT {
 	meta:
 		description = "Mimikatz Rule generated from a big Mimikatz sample set"
 		author = "Florian Roth - Florian Roth"
-		hash = "9ef9762169e8b44d01613234927f44d6"
-		hash = "35b34bb9f1ad0fdf48dc090ed4a8190f"	
-		hash = "516fde1fe06f96a019c3ad063c78b760"
-		hash = "faf248ee5184b65d28786d91c02864a6"
-		hash = "5847659129c4e711809ab5b6ab1b8bd8"
+		hash1 = "9ef9762169e8b44d01613234927f44d6"
+		hash2 = "35b34bb9f1ad0fdf48dc090ed4a8190f"	
+		hash3 = "516fde1fe06f96a019c3ad063c78b760"
+		hash4 = "faf248ee5184b65d28786d91c02864a6"
+		hash5 = "5847659129c4e711809ab5b6ab1b8bd8"
 		score = 80
 	strings:
 		$s0 = "mimikatz_trunk/Win32/mimidrv.sys" fullword
@@ -225,9 +225,9 @@ rule Mimikatz_SampleSet_4 : APT {
 	meta:
 		description = "Mimikatz Rule generated from a big Mimikatz sample set"
 		author = "Florian Roth - Florian Roth"
-		hash = "8991aeef8b33049c5997c59afcea4a27"
-		hash = "a3e00b039f2d2ea04a4274506dd83be0"
-		hash = "cb5d40cc8db79c3d24f20f443f7e5926"
+		hash1 = "8991aeef8b33049c5997c59afcea4a27"
+		hash2 = "a3e00b039f2d2ea04a4274506dd83be0"
+		hash3 = "cb5d40cc8db79c3d24f20f443f7e5926"
 		score = 40
 	strings:
 		$s0 = "notsupported" fullword
@@ -247,7 +247,7 @@ rule Mimikatz_SampleSet_5 : APT {
 	meta:
 		description = "Mimikatz Rule generated from a big Mimikatz sample set"
 		author = "Florian Roth - Florian Roth"
-		hash = "9ca015f05cc4cbae8d50bcd067e6d605"
+		hash1 = "9ca015f05cc4cbae8d50bcd067e6d605"
 		score = 50
 	strings:
 		$s6 = "mimidrv.sys" fullword
