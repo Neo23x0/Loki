@@ -721,7 +721,8 @@ if __name__ == '__main__':
 			log("NOTICE", "Program should be run as 'root' to ensure all access rights to process memory and file objects.")
 	
 	# Set process to nice priority ------------------------------------
-	setNice()
+	if not isLinux:
+		setNice()
 
 	# Read IOCs -------------------------------------------------------
 	# File Name IOCs
