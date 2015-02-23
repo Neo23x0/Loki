@@ -33,14 +33,21 @@ import scandir
 import traceback
 import yara
 import hashlib
-import wmi
 import re
 import datetime
 import platform
 import psutil
-from win32com.shell import shell
 from colorama import Fore, Back, Style
 from colorama import init
+
+# Win32 Imports
+try:
+	import wmi
+	from win32com.shell import shell
+	isLinux = False
+except Exception, e:
+	print "Linux System - deactivating process memory check ..."
+	isLinux= True
 
 
 def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, false_hashes):
@@ -66,6 +73,19 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
 					# Print files
 					if args.printAll:
 						log("DEBUG", "Scanning %s" % filePath)
+
+					# Linux directory skip
+					if isLinux:
+						
+						# Exclude /proc
+						if filePath.startswith("/proc"):
+							continue
+
+						if filePath.endswith("/initctl"):
+							continue
+
+						if filePath.endswith("/dev"):
+							continue
 
 					# Counter
 					c += 1
@@ -640,7 +660,7 @@ def printWelcome():
 	print "  "
 	print "  (C) Florian Roth - BSK Consulting GmbH"
 	print "  Feb 2015"
-	print "  Version 0.3.4"
+	print "  Version 0.4.0"
 	print "  "
 	print "  DISCLAIMER - USE AT YOUR OWN RISK"
 	print "  "
@@ -678,16 +698,27 @@ if __name__ == '__main__':
 
 	# Print Welcome ---------------------------------------------------
 	printWelcome()
-	t_hostname = os.environ['COMPUTERNAME']
+	if not isLinux:
+		t_hostname = os.environ['COMPUTERNAME']
+	else:
+		t_hostname = os.uname()[1]
+
 	log("INFO", "LOKI - Starting Loki Scan on %s" % t_hostname)
 
 	# Check if admin
 	isAdmin = False
-	if shell.IsUserAnAdmin():
-		isAdmin = True
-		log("INFO", "Current user has admin rights - very good")
+	if not isLinux:
+		if shell.IsUserAnAdmin():
+			isAdmin = True
+			log("INFO", "Current user has admin rights - very good")
+		else:
+			log("NOTICE", "Program should be run 'as Administrator' to ensure all access rights to process memory and file objects.")
 	else:
-		log("NOTICE", "Program should be run 'as Administrator' to ensure all access rights to process memory and file objects.")
+		if os.geteuid() == 0:
+			isAdmin = True
+			log("INFO", "Current user his root - very good")
+		else:
+			log("NOTICE", "Program should be run as 'root' to ensure all access rights to process memory and file objects.")
 	
 	# Set process to nice priority ------------------------------------
 	setNice()
@@ -710,7 +741,7 @@ if __name__ == '__main__':
 
 	# Scan Processes --------------------------------------------------
 	resultProc = False
-	if not args.noprocscan:
+	if not args.noprocscan and not isLinux:
 		if isAdmin:
 			scanProcesses(yaraRules, filenameIOCs, filenameSuspiciousIOCs)
 		else:
