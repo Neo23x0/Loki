@@ -22,7 +22,7 @@
 # Florian Roth
 # BSK Consulting GmbH
 # February 2015
-# v0.4.1
+# v0.4.3
 # 
 # DISCLAIMER - USE AT YOUR OWN RISK.
 
@@ -38,6 +38,7 @@ import stat
 import datetime
 import platform
 import psutil
+from sets import Set
 from colorama import Fore, Back, Style
 from colorama import init
 
@@ -49,6 +50,10 @@ try:
 except Exception, e:
     print "Linux System - deactivating process memory check ..."
     isLinux= True
+
+# Predefined paths to skip (Linux platform)
+LINUX_PATH_SKIPS_START = Set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux" ])
+LINUX_PATH_SKIPS_END = Set(["/initctl"])
 
 
 def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, false_hashes):
@@ -62,7 +67,25 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
     # Get application path
     appPath = getApplicationPath()
 
+    # Linux excludes from mtab
+    if isLinux:
+        allExcludes = LINUX_PATH_SKIPS_START | Set(getExcludedMountpoints())
+
     for root, directories, files in scandir.walk(path, onerror=walkError, followlinks=False):
+
+            if isLinux:
+                # Skip paths that start with ..
+                newDirectories = []
+                for dir in directories:
+                    skipIt = False
+                    completePath = os.path.join(root, dir)
+                    for skip in allExcludes:
+                        if completePath.startswith(skip):
+                            log("INFO", "Skipping %s directory" % skip)
+                            skipIt = True
+                    if not skipIt:
+                        newDirectories.append(dir)
+                directories[:] = newDirectories
 
             # Loop through files
             for filename in files:
@@ -71,34 +94,15 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
                     # Get the file and path
                     filePath = os.path.join(root,filename)
 
-                    # Print files
-                    if args.printAll:
-                        log("DEBUG", "Scanning %s" % filePath)
-
                     # Linux directory skip
                     if isLinux:
 
-                        if path == "/":
-                            # Exclude /proc
-                            if filePath.startswith("/proc"):
-                                log("INFO", "Skipping /proc directory")
-                                continue
-
-                            if filePath.endswith("/initctl"):
-                                log("INFO", "Skipping /initctl directory")
-                                continue
-
-                            if filePath.endswith("/dev"):
-                                log("INFO", "Skipping /dev directory")
-                                continue
-
-                            if filePath.endswith("/mnt"):
-                                log("INFO", "Skipping /mnt directory")
-                                continue
-
-                            if filePath.endswith("/media"):
-                                log("INFO", "Skipping /media directory")
-                                continue
+                        # Skip paths that end with ..
+                        for skip in LINUX_PATH_SKIPS_END:
+                            if filePath.endswith(skip):
+                                if LINUX_PATH_SKIPS_END[skip] == 0:
+                                    log("INFO", "Skipping %s element" % skip)
+                                    LINUX_PATH_SKIPS_END[skip] = 1
 
                         # File mode
                         mode = os.stat(filePath).st_mode
@@ -135,7 +139,13 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
 
                     # Hash Check -------------------------------------------------------
                     if file_size > ( args.s * 1024):
+                         # Print files
+                        if args.printAll:
+                            log("INFO", "Checking %s" % filePath)
                         continue
+                    else:
+                        if args.printAll:
+                            log("INFO", "Scanning %s" % filePath)
 
                     # Read file complete
                     with open(filePath, 'rb') as f:
@@ -472,6 +482,19 @@ def setNice():
         return 0
 
 
+def getExcludedMountpoints():
+    excludes = []
+    mtab = open("/etc/mtab", "r")
+    for mpoint in mtab:
+        options = mpoint.split(" ")
+        if not options[0].startswith("/dev/"):
+            if not options[1] == "/":
+                excludes.append(options[1])
+
+    mtab.close()
+    return excludes
+
+
 def getFileNameIOCs(ioc_file):
 
     filenames = {}
@@ -676,9 +699,9 @@ def printWelcome():
     print "  "
     print "  Simple IOC Scanner"
     print "  "
-    print "  (C) Florian Roth - BSK Consulting GmbH"
+    print "  (C) Florian Roth"
     print "  Feb 2015"
-    print "  Version 0.4.1"
+    print "  Version 0.4.3"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
@@ -769,7 +792,7 @@ if __name__ == '__main__':
     # Scan Path -------------------------------------------------------
     # Set default
     defaultPath = args.p
-    if isLinux:
+    if isLinux and defaultPath == "C:\\":
         defaultPath = "/"
 
     resultFS = False
