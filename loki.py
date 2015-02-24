@@ -34,6 +34,7 @@ import traceback
 import yara
 import hashlib
 import re
+import stat
 import datetime
 import platform
 import psutil
@@ -85,6 +86,11 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
 							continue
 
 						if filePath.endswith("/dev"):
+							continue
+
+						# File mode
+						mode = os.stat(filePath).st_mode
+						if stat.S_ISCHR(mode) or stat.S_ISBLK(mode) or stat.S_ISFIFO(mode) or stat.S_ISLNK(mode) or stat.S_ISSOCK(mode):
 							continue
 
 					# Counter
@@ -716,7 +722,7 @@ if __name__ == '__main__':
 	else:
 		if os.geteuid() == 0:
 			isAdmin = True
-			log("INFO", "Current user his root - very good")
+			log("INFO", "Current user is root - very good")
 		else:
 			log("NOTICE", "Program should be run as 'root' to ensure all access rights to process memory and file objects.")
 	
@@ -749,9 +755,14 @@ if __name__ == '__main__':
 			log("NOTICE", "Skipping process memory check. User has no admin rights.")
 
 	# Scan Path -------------------------------------------------------
+	# Set default
+	defaultPath = args.p
+	if isLinux:
+		defaultPath = "/"
+
 	resultFS = False
 	if not args.nofilescan:
-		scanPath(args.p, yaraRules, filenameIOCs, filenameSuspiciousIOCs, fileHashes, falseHashes)
+		scanPath(defaultPath, yaraRules, filenameIOCs, filenameSuspiciousIOCs, fileHashes, falseHashes)
 
 	# Result ----------------------------------------------------------
 	print " "
