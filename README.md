@@ -16,7 +16,21 @@ Detection is based on four detection methods:
 
 The Windows binary is compiled with PyInstaller 2.1 and should run as x86 application on both x86 and x64 based systems.
 
-### Included IOCs
+## How-To Run LOKI and Analyse the Reports
+
+### Run
+
+  - Download the Archive via the button "Download ZIP" on the right sidebar
+  - Unpack LOKI locally
+  - Provide the folder to a target system that should be scanned: Removable media, network share, folder on target system
+  - Right-click on loki.exe and select "Run as Administrator" or open a command line "cmd.exe" as Administrator and run it from there (you can also run LOKI without administrative privileges but some checks will be disabled and relevant objects on disk will not be accessible)
+
+### Reports
+
+  - The resulting report will show a GREEN, YELLOW or RED result line. Please analyse the findings yourself by uploading non-confidential samples to Virustotal.com or just google the filename or keywords from the rule name (e.g. EQUATIONGroupMalware_1 > search for "Equation Group")
+  - Please report back false positives via the "Issues" section, which is accessible via the right sidebar
+
+## Included IOCs
 
 Loki currently includes the following IOCs:
 
@@ -34,7 +48,7 @@ Loki currently includes the following IOCs:
 
 Loki is the new generic scanner that combines most of the features from my recently published scanners: [ReginScanner](https://github.com/Neo23x0/ReginScanner) and [SkeletonKeyScanner](https://github.com/Neo23x0/SkeletonKeyScanner).
 
-### Requirements
+## Requirements
 
 No requirements if you use the compiled EXE. 
 
@@ -45,7 +59,7 @@ If you want to build it yourself:
 - [colorama](https://pypi.python.org/pypi/colorama) : to color it up
 - [psutil](https://pypi.python.org/pypi/psutil) : process checks
 
-### Usage
+## Usage
 
     usage: loki.exe [-h] [-p path] [-s kilobyte] [--printAll] [--noprocscan]
                     [--nofilescan] [--noindicator] [--debug]
@@ -62,7 +76,7 @@ If you want to build it yourself:
       --noindicator  Do not show a progress indicator
       --debug        Debug output
 
-### Screenshots
+## Screenshots
 
 Loki Scan
 
@@ -88,7 +102,7 @@ Generated log file
 
 ![Screen](/screens/lokilog1.png)
 
-### Contact
+## Contact
 
 LOKI scanner on our company homepage
 [http://www.bsk-consulting.de/loki-free-ioc-scanner/](http://www.bsk-consulting.de/loki-free-ioc-scanner/)
@@ -105,7 +119,7 @@ The compiled scanner may be detected by antivirus engines. This is caused by the
 
 If you don't trust the compiled executable, please compile it yourself. 
 
-### Compile the Scanner
+## Compile the Scanner
 
 Download PyInstaller, switch to the pyinstaller program directory and execute:
 
@@ -113,7 +127,7 @@ Download PyInstaller, switch to the pyinstaller program directory and execute:
 
 This will create a `loki.exe` in the subfolder `./loki/dist`.
 
-### Pro Tip (optional)
+## Pro Tip (optional)
 
 To include the msvcr100.dll to improve the target os compatibility change the line in the file `./loki/loki.spec` that contains `a.bianries,` to the following:
 
