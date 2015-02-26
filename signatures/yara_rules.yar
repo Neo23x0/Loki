@@ -1688,6 +1688,8 @@ rule VisualDiscovery_Lonovo_Superfish_SSL_Hijack {
 		( $mz at 0 ) and filesize < 2MB and all of ($s*)
 }
 
+/* Others ----------------------------------------------------------------- */
+
 rule BlackEnergy_BE_2 {
         meta:
                 description = "Detects BlackEnergy 2 Malware"
@@ -1704,4 +1706,22 @@ rule BlackEnergy_BE_2 {
                 $s4 = "ReadProcessMemory" fullword ascii
         condition:
                 ( $mz at 0 ) and filesize < 250KB and all of ($s*)
+}
+
+rule PNG_embedded_EXE {
+        meta:
+                description = "Detects an executable embedded in a PNG file"
+                author = "Florian Roth"
+                reference = "http://blogs.cisco.com/security/talos/malicious-pngs"
+                date = "2015/02/26"
+                hash = "a1f6c1cf4df91139b82196b735d10b4548194c80"
+                score = 80
+        strings:
+                $png = { 89 50 4E 47 }
+                $mz  = { 4D 5A }
+                $a1 = "This program cannot be run in DOS mode"
+                $a2 = "This program must be run under Win32"           
+        condition:
+                ( $png at 0 ) and
+                for any i in (1..#mz): ( @a1 < ( @mz[i] + 200 ) or @a2 < ( @mz[i] + 200 ) )
 }
