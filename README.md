@@ -20,15 +20,20 @@ The Windows binary is compiled with PyInstaller 2.1 and should run as x86 applic
 
 ### Run
 
-  - Download the Archive via the button "Download ZIP" on the right sidebar
+  - Download the program archive via the button "Download ZIP" on the right sidebar
   - Unpack LOKI locally
-  - Provide the folder to a target system that should be scanned: Removable media, network share, folder on target system
+  - Provide the folder to a target system that should be scanned: removable media, network share, folder on target system
   - Right-click on loki.exe and select "Run as Administrator" or open a command line "cmd.exe" as Administrator and run it from there (you can also run LOKI without administrative privileges but some checks will be disabled and relevant objects on disk will not be accessible)
 
 ### Reports
 
-  - The resulting report will show a GREEN, YELLOW or RED result line. Please analyse the findings yourself by uploading non-confidential samples to Virustotal.com or just google the filename or keywords from the rule name (e.g. EQUATIONGroupMalware_1 > search for "Equation Group")
-  - Please report back false positives via the "Issues" section, which is accessible via the right sidebar
+  - The resulting report will show a GREEN, YELLOW or RED result line. 
+  - Please analyse the findings yourself by: 
+    1. uploading non-confidential samples to Virustotal.com 
+    2. Search the web for the filename
+    3. Search the web for keywords from the rule name (e.g. EQUATIONGroupMalware_1 > search for "Equation Group")
+    4. Search the web for the MD5 hash of the sample 
+  - Please report back false positives via the "Issues" section, which is accessible via the right sidebar (mention the false positive indicator like a hash and/or filename and the rule name that triggered)
 
 ## Included IOCs
 
