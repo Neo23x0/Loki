@@ -26,18 +26,12 @@ rule Embedded_EXE_Cloaking {
                 for any i in (1..#mz): ( @a1 < ( @mz[i] + 200 ) or @a2 < ( @mz[i] + 200 ) )
 }
 
-
 rule Embedded_Webshell_in_Image {
         meta:
                 description = "Detects an embedded web shell in an image file"
-                author = "Florian Roth"
-                date = "2015/02/28"
-                score = 80
-        strings:
-                $noex_png = { 89 50 4E 47 }
-                $noex_jpg = { FF D8 FF E0 }
-                $noex_gif = { 47 49 46 38 }
-                
+                author = "Florian Roth (eval section from Didier Stevens)"
+                date = "2015/02/29"
+        strings:               
                 $langA1 = "<%"
                 $langA2 = "%>"
                 $langB1 = "<?"
@@ -50,13 +44,17 @@ rule Embedded_Webshell_in_Image {
                 $key5 = "<web-app>"
                 $key6 = "jsp:scriptlet" fullword
                 $key7 = "$_SESSION" fullword
+
+                $eval = /\beval\s*\(/
         condition:
                 (
-                        ( $noex_png at 0 ) or
-                        ( $noex_jpg at 0 ) or
-                        ( $noex_gif at 0 )
+                        uint32be(0x00) == 0x89504E47 or // PNG
+                        uint16be(0x00) == 0xFFD8 or // JPEG
+                        uint32be(0x00) == 0x47494638 // GIF
                 )
-                and ( all of ($langA*) or all of ($langB*) ) 
-                and 1 of ($key*)
-                
+                and 
+                ( 
+                        $eval or 
+                        ( ( all of ($langA*) or all of ($langB*) ) and 1 of ($key*) )
+                )     
 }
