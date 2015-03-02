@@ -44,6 +44,8 @@ rule Embedded_Webshell_in_Image {
                 $key5 = "<web-app>"
                 $key6 = "jsp:scriptlet" fullword
                 $key7 = "$_SESSION" fullword
+                $key8 = "$_POST" fullword
+                $key9 = "$_GET" fullword
 
                 $eval = /\beval\s*\(/
         condition:
