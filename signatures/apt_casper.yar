@@ -1,4 +1,6 @@
 
+/* State-sponsored Casper Malware Rules by @4nc4p - attribution and analysis by @pinkflawd @r00tbsd @circl_lu */
+
 rule Casper_Backdoor_x86 {
 	meta:
 		description = "Casper French Espionage Malware - Win32/ProxyBot.B - x86 Payload http://goo.gl/VRJNLo"
