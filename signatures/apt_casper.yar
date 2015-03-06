@@ -6,6 +6,7 @@ rule Casper_Backdoor_x86 {
 		reference = "http://goo.gl/VRJNLo"
 		date = "2015/03/05"
 		hash = "f4c39eddef1c7d99283c7303c1835e99d8e498b0"
+		score = 80
 	strings:
 		$s1 = "\"svchost.exe\"" fullword wide
 		$s2 = "firefox.exe" fullword ascii
@@ -36,6 +37,7 @@ rule Casper_EXE_Dropper {
 		reference = "http://goo.gl/VRJNLo"
 		date = "2015/03/05"
 		hash = "e4cc35792a48123e71a2c7b6aa904006343a157a"
+		score = 80
 	strings:
 		$s0 = "<Command>" fullword ascii
 		$s1 = "</Command>" fullword ascii
@@ -47,4 +49,47 @@ rule Casper_EXE_Dropper {
 		$s8 = "Name: %S" fullword ascii
 	condition:
 		7 of them
+}
+
+rule Casper_Included_Strings {
+	meta:
+		description = "Casper French Espionage Malware - String Match in File - http://goo.gl/VRJNLo"
+		author = "Florian Roth"
+		reference = "http://goo.gl/VRJNLo"
+		date = "2015/03/06"
+		score = 50
+	strings:
+		$a0 = "cmd.exe /C FOR /L %%i IN (1,1,%d) DO IF EXIST"
+		$a1 = "& SYSTEMINFO) ELSE EXIT"
+		
+		$mz = { 4d 5a }
+		$c1 = "domcommon.exe" wide fullword
+		$c2 = "jpic.gov.sy" fullword
+		$c3 = "aiomgr.exe" wide fullword
+		$c4 = "perfaudio.dat" fullword
+		$c5 = "Casper_DLL.dll" fullword
+		$c6 = { 7B 4B 59 DE 37 4A 42 26 59 98 63 C6 2D 0F 57 40 }
+		$c7 = "{4216567A-4512-9825-7745F856}" fullword
+	condition:
+		all of ($a*) or
+		( $mz at 0 ) and ( 1 of ($c*) )
+}
+
+rule Casper_SystemInformation_Output {
+	meta:
+		description = "Casper French Espionage Malware - System Info Output - http://goo.gl/VRJNLo"
+		author = "Florian Roth"
+		reference = "http://goo.gl/VRJNLo"
+		date = "2015/03/06"
+		score = 70	
+	strings:
+		$a0 = "***** SYSTEM INFORMATION ******"
+		$a1 = "***** SECURITY INFORMATION ******"
+		$a2 = "Antivirus: "
+		$a3 = "Firewall: "
+		$a4 = "***** EXECUTION CONTEXT ******"
+		$a5 = "Identity: "
+		$a6 = "<CONFIG TIMESTAMP="
+	condition:
+		all of them
 }
