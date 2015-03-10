@@ -5,7 +5,6 @@ rule Windows_Malware : Zeus_1134
                     date = "2014-03-03"
                     description = "Match first two bytes, protocol and string present in Zeus 1.1.3.4"
                     reference = "http://www.xylibox.com/2014/03/zeus-1134.html"
-                    yaraexchange = "do what the fuck you want"
             strings:
                     $mz = {4D 5A}
                     $protocol1 = "X_ID: "
