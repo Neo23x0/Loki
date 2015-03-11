@@ -30,8 +30,8 @@ ff0afae5c68c5177ed0a3d6339810cae;Five Eyes QUERTY Malware20121.xml
 ad61e8daeeba43e442514b177a1b41ad4b7c6727;Skeleton Key Malware
 5083b17ccc50dd0557dfc544f84e2ab55d6acd92;Skeleton Key Malware
 66da7ed621149975f6e643b4f9886cfd;Symantec Report http://goo.gl/9Tmq2e msuta64.dll
-bf45086e6334f647fda33576e2a05826;Symantec Report http://goo.gl/9Tmq2e ole64.dll 
-a487f1668390df0f4951b7292bae6ecf;Symantec Report http://goo.gl/9Tmq2e HookDC.dll  
+bf45086e6334f647fda33576e2a05826;Symantec Report http://goo.gl/9Tmq2e ole64.dll
+a487f1668390df0f4951b7292bae6ecf;Symantec Report http://goo.gl/9Tmq2e HookDC.dll
 8ba4df29b0593be172ff5678d8a05bb3;Symantec Report http://goo.gl/9Tmq2e HookDC.dll
 f01026e1107b722435126c53b2af47a9;Symantec Report http://goo.gl/9Tmq2e HookDC.dll
 747cc5ce7f2d062ebec6219384b57e8c;Symantec Report http://goo.gl/9Tmq2e ole.dll
@@ -110,9 +110,9 @@ fb56ce4b853a94ae3f64367c02ec7e31;Symantec Waterbug Attack http://goo.gl/9Tlk90 s
 
 7BC8A2EF08F51CF6EEB777B261DA3367;INFOADMIN (TROJAN.KAKFUM) suspected Anthem APT
 EF498EA09BF51B002FC7EB3DFD0D19D3;INFOADMIN (TROJAN.KAKFUM) suspected Anthem APT
-3a97d9b6f17754dcd38ca7fc89caab04;Scanline UPX packed suspected Anthem APT 
+3a97d9b6f17754dcd38ca7fc89caab04;Scanline UPX packed suspected Anthem APT
 02fc4e3a7998e0213fa5e768239bd0b0;Scanline unpacked as sl.txt suspected Anthem APT
-f34914dd1faabfc94a8695e7229d0192;Htran suspected Anthem APT 
+f34914dd1faabfc94a8695e7229d0192;Htran suspected Anthem APT
 3d16542d4ee5c8f77e6c0281d283c7bc;Pwdump suspected Anthem APT
 
 0022c1fe1d6b036de2a08d50ac5446a5;Kaspersky Carbanak APT Malware Hash http://goo.gl/0Nhax2
@@ -721,3 +721,29 @@ ffad870f291acccbe148673f579689db;FannyWorm Equation Group Sample http://goo.gl/f
 6480843080add60b825efe0532dc727b;EquationLaser Equation Group Sample http://goo.gl/f6xNwu
 c96284363374597a3ac4b07c77e8325b;EquationLaser Equation Group Sample http://goo.gl/f6xNwu
 de356f2a55b25e04742423b5ec56de93;EquationLaser Equation Group Sample http://goo.gl/f6xNwu
+
+# EquationDrug - March 2015 Update
+0a5e9b15014733ee7685d8c8be81fb0d;EquationDrug Kaspersky - http://goo.gl/5meRtS - Kernel mode stage 0 (Windows 9x) - mssvc32.vxd
+c4f8671c1f00dab30f5f88d684af1927;EquationDrug Kaspersky - http://goo.gl/5meRtS - Kernel mode stage 0 and rootkit (Windows 2000 and above) - msndsrv.sys
+c3af66b9ce29efe5ee34e87b6e136e3a;EquationDrug Kaspersky - http://goo.gl/5meRtS - User-mode loader - mscfg32.exe, svchost32.exe
+5767b9d851d0c24e13eca1bfd16ea424;EquationDrug Kaspersky - http://goo.gl/5meRtS - Platform orchestrator - mscfg32.dll, svchost32.dll
+EF4405930E6071AE1F7F6FA7D4F3397D;EquationDrug Kaspersky - http://goo.gl/5meRtS - Unilay.DLL
+8d87a1845122bf090b3d8656dc9d60a8;EquationDrug Kaspersky - http://goo.gl/5meRtS - Network-sniffer/patcher - atmdkdrv.sys
+214f7a2c95bdc265888fbcd24e3587da;EquationDrug Kaspersky - http://goo.gl/5meRtS - Network-sniffer/patcher - atmdkdrv.sys
+74DE13B5EA68B3DA24ADDC009F84BAEE;EquationDrug Kaspersky - http://goo.gl/5meRtS - Backdoor driven by network sniffer - mstcp32.sys, fat32.sys
+B2C7339E87C932C491E34CDCD99FEB07;EquationDrug Kaspersky - http://goo.gl/5meRtS - Backdoor driven by network sniffer - mstcp32.sys, fat32.sys
+311D4923909E07D5C703235D83BF4479;EquationDrug Kaspersky - http://goo.gl/5meRtS - Backdoor driven by network sniffer - mstcp32.sys, fat32.sys
+21C278C88D8F6FAEA64250DF3BFFD7C6;EquationDrug Kaspersky - http://goo.gl/5meRtS - Backdoor driven by network sniffer - mstcp32.sys, fat32.sys
+20506375665a6a62f7d9dd22d1cc9870;EquationDrug Kaspersky - http://goo.gl/5meRtS - Network Sniffer - tdip.sys
+60dab5bb319281747c5863b44c5ac60d;EquationDrug Kaspersky - http://goo.gl/5meRtS - Network Sniffer - tdip.sys
+98dea1bce37bf7087360e1958400589b;EquationDrug Kaspersky - http://goo.gl/5meRtS - Key/clipboard logger driver - msrtvd.sys
+bb8f56874189d5dfe9294f0553a49b83;EquationDrug Kaspersky - http://goo.gl/5meRtS - Key/clipboard logger driver - msrtvd.sys
+f6bf3ed3bcd466e5fd1cbaf6ba658716;EquationDrug Kaspersky - http://goo.gl/5meRtS - Key/clipboard logger driver - msrtvd.sys
+69e7943f3d48233de4a39a924c59ed2c;EquationDrug Kaspersky - http://goo.gl/5meRtS - Collector plugin for Volrec - msrstd.sys
+15d39578460e878dd89e8911180494ff;EquationDrug Kaspersky - http://goo.gl/5meRtS - Collector plugin for Volrec - msrstd.sys
+a6662b8ebca61ca09ce89e1e4f43665d;EquationDrug Kaspersky - http://goo.gl/5meRtS - Filesystem filter driver – volrec.sys, scsi2mgr.sys
+c17e16a54916d3838f63d208ebab9879;EquationDrug Kaspersky - http://goo.gl/5meRtS - Filesystem filter driver – volrec.sys, scsi2mgr.sys
+2b444ac5209a8b4140dd6b747a996653;EquationDrug Kaspersky - http://goo.gl/5meRtS - HDD/SSD operation helper driver - WIN32M.SYS
+b3487fdd1efd2d1ea1550fef5b749037;EquationDrug Kaspersky - http://goo.gl/5meRtS - HDD/SSD operation helper driver - WIN32M.SYS
+11fb08b9126cdb4668b3f5135cf7a6c5;EquationDrug Kaspersky - http://goo.gl/5meRtS - HDD/SSD firmware operation - nls_933w.dll
+9f3f6f46c67d3fad2479963361cf118b;EquationDrug Kaspersky - http://goo.gl/5meRtS - HDD/SSD firmware operation - nls_933w.dll
