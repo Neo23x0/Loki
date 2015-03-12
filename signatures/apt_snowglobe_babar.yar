@@ -1,5 +1,5 @@
 
-/* SnowGlow Babar ---------------------------------------------------------- */
+/* SnowGlobe Babar ---------------------------------------------------------- */
 
 rule SNOWGLOBE_Babar_Malware {
 	meta:
@@ -16,12 +16,12 @@ rule SNOWGLOBE_Babar_Malware {
 		$z2 = "ExecQueryFailled!" fullword ascii
 		$z3 = "NBOT_COMMAND_LINE" fullword
 		$z4 = "!!!EXTRACT ERROR!!!File Does Not Exists-->[%s]" fullword
-		
+
 		$s1 = "/s /n %s \"%s\"" fullword ascii
 		$s2 = "%%WINDIR%%\\%s\\%s" fullword ascii
 		$s3 = "/c start /wait " fullword ascii
 		$s4 = "(D;OICI;FA;;;AN)(A;OICI;FA;;;BG)(A;OICI;FA;;;SY)(A;OICI;FA;;;LS)" ascii
-	
+
 		$x1 = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\" fullword ascii
 		$x2 = "%COMMON_APPDATA%" fullword ascii
 		$x4 = "CONOUT$" fullword ascii
@@ -29,8 +29,8 @@ rule SNOWGLOBE_Babar_Malware {
 		$x6 = "DLLPATH" fullword ascii
 	condition:
 		( $mz at 0 ) and filesize < 1MB and
-		( 
+		(
 			( 1 of ($z*) and 1 of ($x*) ) or
-			( 3 of ($s*) and 4 of ($x*) ) 
+			( 3 of ($s*) and 4 of ($x*) )
 		)
 }
