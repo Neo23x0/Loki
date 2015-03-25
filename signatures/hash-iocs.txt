@@ -747,3 +747,48 @@ c17e16a54916d3838f63d208ebab9879;EquationDrug Kaspersky - http://goo.gl/5meRtS -
 b3487fdd1efd2d1ea1550fef5b749037;EquationDrug Kaspersky - http://goo.gl/5meRtS - HDD/SSD operation helper driver - WIN32M.SYS
 11fb08b9126cdb4668b3f5135cf7a6c5;EquationDrug Kaspersky - http://goo.gl/5meRtS - HDD/SSD firmware operation - nls_933w.dll
 9f3f6f46c67d3fad2479963361cf118b;EquationDrug Kaspersky - http://goo.gl/5meRtS - HDD/SSD firmware operation - nls_933w.dll
+
+8074ed48b99968f5d36a494cdeb9f80685beb0f5;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - BKDR_GHOLE.A
+e6964d467bd99e20bfef556d4ad663934407fd7b;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - BKDR_GHOLE.A
+fd8793ce4ca23988562794b098b9ed20754f8a90;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+6e30d3ef2cd0856ff28adce4cc012853840f6440;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - BKDR_GHOLE.A
+07a77f8b9f0fcc93504dfba2d7d9d26246e5878f;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - BKDR_GHOLE.B
+25d3688763e33eac1428622411d6dda1ec13dd43;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+729f9ce76f20822f48dac827c37024fe4ab8ff70;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+86222ef166474e53f1eb6d7e6701713834e6fee7;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+476489f75fed479f19bac02c79ce1befc62a6633;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+c1edf6e3a271cf06030cc46cbd90074488c05564;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+c6db3e7e723f20ed3bcf4c53fc4748e9591f4c40;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - BKDR_GHOLE.A
+cabdfe7e9920aeaa5eaca7f5415d97f564cdec11;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+ce03790d1df81165d092e89a077c495b75a14013;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - BKDR_GHOLE.A
+e8dbcde49c7f760165ebb0cb3452e4f1c24981f5;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+efd1c6a926095d36108177045db9ad21df926a6e;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+fa5b587ceb5d17f26fe580aca6c02ff2e20ad3c4;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+fe3436294f302a93fbac389291dd20b41b038cba;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+ffead364ae7a692afec91740d24649396e0fa981;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+0b0cdf47363fd27bccbfba6d47b842e44a365723;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+02b04563ef430797051aa13e48971d3490c80636;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+7ad0eb113bc575363a058f4bf21dbab8c8f7073a;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+7fef48e1303e40110798dfec929ad88f1ad4fbd8;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - BKDR_GHOLE.A
+22f6a61aa2d490b6a3bc36e93240d05b1e9b956a;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+37ad0e426f4c423385f1609561422a947a956398;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - BKDR_GHOLE.A
+47b1c9caabe3ae681934a33cd6f3a1b311fd7f9f;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - BKDR_GHOLE.A
+53340f9a49bc21a9e7267173566f4640376147d9;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+58045d7a565f174df8efc0de98d6882675fbb07f;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - BKDR_GHOLE.A
+62172eee1a4591bde2658175dd5b8652d5aead2a;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TROJ_GHOLE.A
+788d881f3bb2c82e685a98d8f405f375c0ac2162;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+2627cdc3324375e6f41f93597a352573e45c0f1e;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+4711f063a0c67fb11c05efdb40424377799efafd;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+6571f2b9a0aea89f45899b256458da78ac51e6bb;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DH
+9579e65e3ae6f03ff7d362be05f9beca07a8b1b3;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+a9245de692c16f90747388c09e9d02c3ee34577e;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DG
+ad6c9b003285e01fc6a02148917e95c780c7d751;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+ae18bb317909e16f765ba2e88c3d72d648db2798;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+c727b8c43943986a888a0428ae7161ff001bf603;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+e2728cabb35c210599e248d0da9791991e38eb41;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+ec692cf82aef16cf61574b5d15e5c5f8135df288;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+ed5615ffb5578f1adee66f571ec65a992c033a50;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+0f4bf1d89d080ed318597754e6d3930f8eec49b0;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - X2KM_DROPPR.DF
+a42f1ad2360833baedd2d5f59354c4fc3820c475;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TSPY_WOOLERG.A CWoolger Keylogger (WOOLERG.A)
+d5b2b30fe2d4759c199e3659d561a50f88a7fb2e;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TSPY_WOOLERG.A CWoolger Keylogger (WOOLERG.A)
+5d334e0cb4ff58859e91f9e7f1c451ffdc7544c3;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - CWoolger Keylogger (WOOLERG.A)
