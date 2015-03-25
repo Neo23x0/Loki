@@ -16,6 +16,7 @@ rule WoolenGoldfish_Sample_1 {
 		author = "Florian Roth"
 		reference = "http://goo.gl/NpJpVZ"
 		date = "2015/03/25"
+		score = 60
 		hash = "7ad0eb113bc575363a058f4bf21dbab8c8f7073a"
 	strings:
 		$s1 = "Cannot execute (%d)" fullword ascii
@@ -30,6 +31,7 @@ rule WoolenGoldfish_Sample_2 {
 		author = "Florian Roth"
 		reference = "http://goo.gl/NpJpVZ"
 		date = "2015/03/25"
+		score = 60
 		hash = "0f4bf1d89d080ed318597754e6d3930f8eec49b0"
 	strings:
 		$s4 = "xl/worksheets/binaryIndex1.bin" fullword ascii
@@ -49,6 +51,7 @@ rule WoolenGoldfish_Sample_3 {
 		author = "Florian Roth"
 		reference = "http://goo.gl/NpJpVZ"
 		date = "2015/03/25"
+		score = 60
 		hash = "c727b8c43943986a888a0428ae7161ff001bf603"
 	strings:
 		$s0 = "xl/worksheets/_rels/sheet1.bin.rels" fullword ascii
@@ -71,6 +74,7 @@ rule WoolenGoldfish_Generic_1 {
 		author = "Florian Roth"
 		reference = "http://goo.gl/NpJpVZ"
 		date = "2015/03/25"
+		score = 90
 		super_rule = 1
 		hash0 = "5d334e0cb4ff58859e91f9e7f1c451ffdc7544c3"
 		hash1 = "d5b2b30fe2d4759c199e3659d561a50f88a7fb2e"
@@ -100,6 +104,7 @@ rule WoolenGoldfish_Generic_2 {
 		author = "Florian Roth"
 		reference = "http://goo.gl/NpJpVZ"
 		date = "2015/03/25"
+		score = 60
 		super_rule = 1
 		hash0 = "0b0cdf47363fd27bccbfba6d47b842e44a365723"
 		hash1 = "476489f75fed479f19bac02c79ce1befc62a6633"
@@ -123,6 +128,7 @@ rule WoolenGoldfish_Generic_3 {
 		author = "Florian Roth"
 		reference = "http://goo.gl/NpJpVZ"
 		date = "2015/03/25"
+		score = 60
 		super_rule = 1
 		hash0 = "25d3688763e33eac1428622411d6dda1ec13dd43"
 		hash1 = "8074ed48b99968f5d36a494cdeb9f80685beb0f5"
@@ -143,6 +149,7 @@ rule WoolenGoldfish_Generic_4 {
 		author = "Florian Roth"
 		reference = "http://goo.gl/NpJpVZ"
 		date = "2015/03/25"
+		score = 60
 		super_rule = 1
 		hash0 = "fd8793ce4ca23988562794b098b9ed20754f8a90"
 		hash1 = "729f9ce76f20822f48dac827c37024fe4ab8ff70"
@@ -164,6 +171,7 @@ rule WoolenGoldfish_Generic_5 {
 		author = "Florian Roth"
 		reference = "http://goo.gl/NpJpVZ"
 		date = "2015/03/25"
+		score = 90
 		hash1 = "47b1c9caabe3ae681934a33cd6f3a1b311fd7f9f"
 		hash2 = "62172eee1a4591bde2658175dd5b8652d5aead2a"
 		hash3 = "7fef48e1303e40110798dfec929ad88f1ad4fbd8"
@@ -180,6 +188,7 @@ rule WoolenGoldfish_Generic_6 {
 		author = "Florian Roth"
 		reference = "http://goo.gl/NpJpVZ"
 		date = "2015/03/25"
+		score = 90
 		hash1 = "86222ef166474e53f1eb6d7e6701713834e6fee7"
 		hash2 = "e8dbcde49c7f760165ebb0cb3452e4f1c24981f5"
 	strings:
@@ -201,28 +210,4 @@ rule WoolenGoldfish_Generic_6 {
 	condition:
 		( 1 of ($x*) ) or
 		( 8 of ($s*) )
-}
-
-rule WoolenGoldfish_Generic_7 {
-	meta:
-		description = "Detects a operation Woolen-Goldfish sample - http://goo.gl/NpJpVZ"
-		author = "Florian Roth"
-		reference = "http://goo.gl/NpJpVZ"
-		date = "2015/03/25"
-		hash1 = "9579e65e3ae6f03ff7d362be05f9beca07a8b1b3"
-		hash2 = "ad6c9b003285e01fc6a02148917e95c780c7d751"
-	strings:
-		$s0 = "xl/worksheets/_rels/sheet2.xml.rels" fullword ascii
-		$s1 = "xl/worksheets/_rels/sheet1.xml.rels" fullword ascii
-		$s4 = "xl/customProperty1.bin" fullword ascii
-		$s5 = "xl/drawings/drawing1.xml" fullword ascii
-		$s6 = "xl/worksheets/sheet1.xml" fullword ascii
-		$s8 = "xl/_rels/workbook.xml.rels " fullword ascii
-		$s13 = "xl/styles.xml" fullword ascii
-		$s14 = "xl/workbook.xml" fullword ascii
-		$s15 = "xl/drawings/drawing1.xmlPK" fullword ascii
-		$s16 = "xl/worksheets/sheet1.xmlPK" fullword ascii
-		$s20 = "xl/workbook.xmlPK" fullword ascii
-	condition:
-		all of them
 }
