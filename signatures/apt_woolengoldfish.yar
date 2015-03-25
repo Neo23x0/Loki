@@ -1,3 +1,14 @@
+/*
+	Operation WoolenGoldfish Rules (Trendmicro Report)
+	v0.1 25.03.2015
+
+	These rules detect 26 of the samples mentioned in the report
+	Reference: http://blog.trendmicro.com/trendlabs-security-intelligence/operation-woolen-goldfish-when-kittens-go-phishing/
+
+	Tested against 20GB goodware sample archiv - pls report back false positives
+	on LOKI's github page https://github.com/Neo23x0/Loki/issues
+
+*/
 
 rule WoolenGoldfish_Sample_1 {
 	meta:
