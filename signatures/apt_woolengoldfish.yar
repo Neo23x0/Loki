@@ -55,7 +55,7 @@ rule WoolenGoldfish_Generic_1 {
 		( 6 of ($s*) )
 }
 
-rule WoolenGoldfish_Generic_5 {
+rule WoolenGoldfish_Generic_2 {
 	meta:
 		description = "Detects a operation Woolen-Goldfish sample - http://goo.gl/NpJpVZ"
 		author = "Florian Roth"
@@ -72,7 +72,7 @@ rule WoolenGoldfish_Generic_5 {
 		all of them
 }
 
-rule WoolenGoldfish_Generic_6 {
+rule WoolenGoldfish_Generic_3 {
 	meta:
 		description = "Detects a operation Woolen-Goldfish sample - http://goo.gl/NpJpVZ"
 		author = "Florian Roth"
