@@ -22,7 +22,7 @@
 # Florian Roth
 # BSK Consulting GmbH
 # February 2015
-# v0.5.0
+# v0.5.1
 # 
 # DISCLAIMER - USE AT YOUR OWN RISK.
 
@@ -349,8 +349,23 @@ def scanProcesses(rule_sets, filename_iocs, filename_suspicious_iocs):
                     matches = rules.match(pid=pid)
                     if matches:
                         for match in matches:
-                            # print match.rule
-                            alerts.append("Yara Rule MATCH: %s PID: %s NAME: %s CMD: %s" % ( match.rule, pid, name, cmd))
+
+                            # Preset memory_rule
+                            memory_rule = 1
+
+                            # Built-in rules have meta fields (cannot be expected from custom rules)
+                            if hasattr(match, 'meta'):
+
+                                # If a score is given
+                                if 'memory' in match.meta:
+                                    memory_rule = int(match.meta['memory'])
+
+                            # If rule is meant to be applied to process memory as well
+                            if memory_rule == 1:
+
+                                # print match.rule
+                                alerts.append("Yara Rule MATCH: %s PID: %s NAME: %s CMD: %s" % ( match.rule, pid, name, cmd))
+
                 if len(alerts) > 3:
                     log("INFO", "Too many matches on process memory - most likely a false positive PID: %s NAME: %s CMD: %s" % (pid, name, cmd))
                 elif len(alerts) > 0:
@@ -764,7 +779,7 @@ def printWelcome():
     print "  "
     print "  (C) Florian Roth"
     print "  Mar 2015"
-    print "  Version 0.5.0"
+    print "  Version 0.5.1"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
