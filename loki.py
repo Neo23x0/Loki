@@ -22,7 +22,7 @@
 # Florian Roth
 # BSK Consulting GmbH
 # February 2015
-# v0.5.1
+# v0.5.2
 # 
 # DISCLAIMER - USE AT YOUR OWN RISK.
 
@@ -220,6 +220,11 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
 
                                         score = 70
                                         description = "not set"
+
+                                        # SAM Backup - Original Check
+                                        if match.rule == "SAM_Hive_Backup" and \
+                                                ( filename.lower().startswith("sam.log") or filename.lower().endswith("_sam") or filename.lower() == "sam" ):
+                                            continue
 
                                         # Built-in rules have meta fields (cannot be expected from custom rules)
                                         if hasattr(match, 'meta'):
@@ -779,7 +784,7 @@ def printWelcome():
     print "  "
     print "  (C) Florian Roth"
     print "  Mar 2015"
-    print "  Version 0.5.1"
+    print "  Version 0.5.2"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
