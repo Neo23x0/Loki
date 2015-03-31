@@ -3405,6 +3405,7 @@ rule SAM_Hive_Backup
 	meta:
 		description = "Detects a SAM hive backup file"
 		author = "Florian Roth"
+		reference = "https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump"
 		score = 60
 		date = "2015/03/31"
 	strings: 
