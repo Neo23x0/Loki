@@ -22,7 +22,7 @@
 # Florian Roth
 # BSK Consulting GmbH
 # February 2015
-# v0.4.3
+# v0.5.0
 # 
 # DISCLAIMER - USE AT YOUR OWN RISK.
 
@@ -120,7 +120,7 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
                         log("DEBUG", "Skipping file in program directory FILE: %s" % filePath)
                         continue
 
-                    file_size = os.stat(filePath).st_size
+                    fileSize = os.stat(filePath).st_size
                     # print file_size
 
                     # File Name Checks -------------------------------------------------
@@ -137,62 +137,125 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
                             description = filename_suspicious_iocs[regex]
                             log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
 
+                    # Access check (also used for magic header detection)
+                    firstBytes = ""
+                    try:
+                        with open(filePath, 'rb') as f:
+                            firstBytes = f.read(4)
+                    except Exception, e:
+                        log("DEBUG", "Cannot open file %s (access denied)" % filePath)
+
+                    # Evaluate Type
+                    fileType = ""
+                    if firstBytes.startswith('\x4d\x5a'):
+                        fileType = "EXE"
+                    if firstBytes.startswith('\x4d\x44\x4d\x50'):
+                        fileType = "MDMP"
+
+                    # Set fileData to an empty value
+                    fileData = ""
+
                     # Hash Check -------------------------------------------------------
-                    if file_size > ( args.s * 1024):
+                    # Evaluate size
+                    do_hash_check = True
+                    if fileSize > ( args.s * 1024):
                          # Print files
                         if args.printAll:
                             log("INFO", "Checking %s" % filePath)
-                        continue
+                        do_hash_check = False
                     else:
                         if args.printAll:
                             log("INFO", "Scanning %s" % filePath)
 
-                    # Read file complete
-                    with open(filePath, 'rb') as f:
-                        fileData = f.read()
+                    # Do the check
+                    if do_hash_check:
 
-                    md5, sha1, sha256 = generateHashes(fileData)
+                        fileData = readFileData(filePath)
+                        md5, sha1, sha256 = generateHashes(fileData)
 
-                    log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
+                        log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
 
-                    # False Positive Hash
-                    if md5 in false_hashes.keys() or sha1 in false_hashes.keys() or sha256 in false_hashes.keys():
-                        continue
+                        # False Positive Hash
+                        if md5 in false_hashes.keys() or sha1 in false_hashes.keys() or sha256 in false_hashes.keys():
+                            continue
 
-                    # Malware Hash
-                    matchType = None
-                    matchDesc = None
-                    matchHash = None
-                    if md5 in hashes.keys():
-                        matchType = "MD5"
-                        matchDesc = hashes[md5]
-                        matchHash = md5
-                    elif sha1 in hashes.keys():
-                        matchType = "SHA1"
-                        matchDesc = hashes[sha1]
-                        matchHash = sha1
-                    elif sha256 in hashes.keys():
-                        matchType = "SHA256"
-                        matchDesc = hashes[sha256]
-                        matchHash = sha256
+                        # Malware Hash
+                        matchType = None
+                        matchDesc = None
+                        matchHash = None
+                        if md5 in hashes.keys():
+                            matchType = "MD5"
+                            matchDesc = hashes[md5]
+                            matchHash = md5
+                        elif sha1 in hashes.keys():
+                            matchType = "SHA1"
+                            matchDesc = hashes[sha1]
+                            matchHash = sha1
+                        elif sha256 in hashes.keys():
+                            matchType = "SHA256"
+                            matchDesc = hashes[sha256]
+                            matchHash = sha256
 
-                    if matchType:
-                        log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
+                        if matchType:
+                            log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
 
                     # Yara Check -------------------------------------------------------
-                    try:
-                        for rules in rule_sets:
-                            matches = rules.match(data=fileData)
-                            if matches:
-                                for match in matches:
-                                    log("ALERT", "Yara Rule MATCH: %s FILE: %s" % ( match.rule, filePath))
-                    except Exception, e:
-                        if args.debug:
-                            traceback.print_exc()
+                    # Size and type check
+                    if fileSize < ( args.s * 1024) or fileType == "MDMP":
+
+                        # Read file data if hash check has been skipped
+                        if not fileData:
+                            fileData = readFileData(filePath)
+
+                        # Memory Dump Scan
+                        if fileType == "MDMP":
+                            log("INFO", "Scanning memory dump file %s" % filePath)
+
+                        # Scan with yara
+                        try:
+                            for rules in rule_sets:
+                                matches = rules.match(data=fileData)
+                                if matches:
+                                    for match in matches:
+
+                                        score = 70
+                                        description = "not set"
+
+                                        # Built-in rules have meta fields (cannot be expected from custom rules)
+                                        if hasattr(match, 'meta'):
+
+                                            if 'description' in match.meta:
+                                                description = match.meta['description']
+
+                                            # If a score is given
+                                            if 'score' in match.meta:
+                                                score = int(match.meta['score'])
+
+                                        if score >= 70:
+                                            log("ALERT", "Yara Rule MATCH: %s FILE: %s" % ( match.rule, filePath))
+
+                                        elif score >= 40:
+                                            log("WARNING", "Yara Rule MATCH: %s FILE: %s" % ( match.rule, filePath))
+
+                        except Exception, e:
+                            if args.debug:
+                                traceback.print_exc()
 
                 except Exception, e:
                     if args.debug:
                         traceback.print_exc()
+
+
+def readFileData(filePath):
+    fileData = ""
+    try:
+        # Read file complete
+        with open(filePath, 'rb') as f:
+            fileData = f.read()
+    except Exception, e:
+        log("DEBUG", "Cannot open file %s (access denied)" % filePath)
+    finally:
+        return fileData
 
 
 def scanProcesses(rule_sets, filename_iocs, filename_suspicious_iocs):
@@ -701,7 +764,7 @@ def printWelcome():
     print "  "
     print "  (C) Florian Roth"
     print "  Mar 2015"
-    print "  Version 0.4.4"
+    print "  Version 0.5.0"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
