@@ -792,3 +792,42 @@ ed5615ffb5578f1adee66f571ec65a992c033a50;Operation Woolen-GOLDFiSH research pape
 a42f1ad2360833baedd2d5f59354c4fc3820c475;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TSPY_WOOLERG.A CWoolger Keylogger (WOOLERG.A)
 d5b2b30fe2d4759c199e3659d561a50f88a7fb2e;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - TSPY_WOOLERG.A CWoolger Keylogger (WOOLERG.A)
 5d334e0cb4ff58859e91f9e7f1c451ffdc7544c3;Operation Woolen-GOLDFiSH research paper - http://goo.gl/NpJpVZ - CWoolger Keylogger (WOOLERG.A)
+
+eb7042ad32f41c0e577b5b504c7558ea;APT Volatile Cedar Malware http://goo.gl/emons5
+44b5a3af895f31e22f6bc4eb66bd3eb7;APT Volatile Cedar Malware http://goo.gl/emons5
+08c988d6cebdd55f3b123f2d9d5507a6;APT Volatile Cedar Malware http://goo.gl/emons5
+61b11b9e6baae4f764722a808119ed0c;APT Volatile Cedar Malware http://goo.gl/emons5
+c7ac6193245b76cc8cebc2835ee13532;APT Volatile Cedar Malware http://goo.gl/emons5
+184320a057e455555e3be22e67663722;APT Volatile Cedar Malware http://goo.gl/emons5
+5d437eb2a22ec8f37139788f2087d45d;APT Volatile Cedar Malware http://goo.gl/emons5
+1dcac3178a1b85d5179ce75eace04d10;APT Volatile Cedar Malware http://goo.gl/emons5
+9a5a99def615966ea05e3067057d6b37;APT Volatile Cedar Malware http://goo.gl/emons5
+2b9106e8df3aa98c3654a4e0733d83e7;APT Volatile Cedar Malware http://goo.gl/emons5
+ab3d0c748ced69557f78b7071879e50a;APT Volatile Cedar Malware http://goo.gl/emons5
+c9a4317f1002fefcc7a250c3d76d4b01;APT Volatile Cedar Malware http://goo.gl/emons5
+4f8b989bc424a39649805b5b93318295;APT Volatile Cedar Malware http://goo.gl/emons5
+3f35c97e9e87472030b84ae1bc932ffc;APT Volatile Cedar Malware http://goo.gl/emons5
+7cd87c4976f1b34a0b060a23faddbd19;APT Volatile Cedar Malware http://goo.gl/emons5
+ea53e618432ca0c823fafc06dc60b726;APT Volatile Cedar Malware http://goo.gl/emons5
+034e4c62965f8d5dd5d5a2ce34a53ba9;APT Volatile Cedar Malware http://goo.gl/emons5
+5ca3ac2949022e5c77335f7e228db1d8;APT Volatile Cedar Malware http://goo.gl/emons5
+306d243745ba53d09353b3b722d471b8;APT Volatile Cedar Malware http://goo.gl/emons5
+e6f874b7629b11a2f5ed3cc2c123f8b6;APT Volatile Cedar Malware http://goo.gl/emons5
+5b505d0286378efcca4df38ed4a26c90;APT Volatile Cedar Malware http://goo.gl/emons5
+7dbc46559efafe8ec8446b836129598c;APT Volatile Cedar Malware http://goo.gl/emons5
+1d4b0fc476b7d20f1ef590bcaa78dc5d;APT Volatile Cedar Malware http://goo.gl/emons5
+66e2adf710261e925db588b5fac98ad8;APT Volatile Cedar Malware http://goo.gl/emons5
+c898aed0ab4173cc3ac7d4849d06e7fa;APT Volatile Cedar Malware http://goo.gl/emons5
+22872f40f5aad3354bbf641fe90f2fd6;APT Volatile Cedar Malware http://goo.gl/emons5
+c19e91a91a2fa55e869c42a70da9a506;APT Volatile Cedar Malware http://goo.gl/emons5
+740c47c663f5205365ae9fb08adfb127;APT Volatile Cedar Malware http://goo.gl/emons5
+edaca6fb1896a120237b2ce13f6bc3e6;APT Volatile Cedar Malware http://goo.gl/emons5
+d2074d6273f41c34e8ba370aa9af46ad;APT Volatile Cedar Malware http://goo.gl/emons5
+6f11a67803e1299a22c77c8e24072b82;APT Volatile Cedar Malware http://goo.gl/emons5
+7031426fb851e93965a72902842b7c2c;APT Volatile Cedar Malware http://goo.gl/emons5
+981234d969a4c5e6edea50df009efedd;APT Volatile Cedar Malware http://goo.gl/emons5
+2783cee3aac144175fef308fc768ea63;APT Volatile Cedar Malware http://goo.gl/emons5
+f58f03121eed899290ed70f4d19af307;APT Volatile Cedar Malware http://goo.gl/emons5
+96b1221ba725f1aaeaaa63f63cf04092;APT Volatile Cedar Malware http://goo.gl/emons5
+29eca6286a01c0b684f7d5f0bfe0c0e6;APT Volatile Cedar Malware http://goo.gl/emons5
+826b772c81f41505f96fc18e666b1acd;APT Volatile Cedar Malware http://goo.gl/emons5
