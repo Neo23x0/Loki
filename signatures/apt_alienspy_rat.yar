@@ -45,5 +45,5 @@ meta:
 	
   condition:
     
-	(all of ($sa_*)) or (all of ($sb_*)) or (all of ($sc_*))
+	uint16(0) == 0x4B50 and filesize < 500KB and (all of ($sa_*)) or (all of ($sb_*)) or (all of ($sc_*))
 }
