@@ -1140,21 +1140,3 @@ rule APT30_Generic_9 {
 		filesize < 250KB and uint16(0) == 0x5A4D and all of them
 }
 
-rule APT30_Generic_10 {
-	meta:
-		description = "FireEye APT30 Report Sample - from files 11876eaadeac34527c28f4ddfadd1e8d, 80e39b656f9a77503fa3e6b7dd123ee3, 8e2eee994cd1922e82dea58705cc9631"
-		author = "Florian Roth"
-		reference = "https://www2.fireeye.com/rs/fireye/images/rpt-apt30.pdf"
-		date = "2015/04/13"
-		super_rule = 1
-		hash0 = "cb4263cab467845dae9fae427e3bbeb31c6a14c2"
-		hash1 = "5c29e21bbe8873778f9363258f5e570dddcadeb9"
-		hash2 = "626dcdd7357e1f8329e9137d0f9883f57ec5c163"
-	strings:
-		$s0 = "VFP6.EXE" fullword wide
-		$s1 = "Microsft Corporation. 1993-1998" fullword wide
-		$s2 = "Micrsft Corporation" fullword wide
-		$s3 = "Microsoft Visual FoxPro" fullword wide
-	condition:
-		filesize < 250KB and uint16(0) == 0x5A4D and all of them
-}
