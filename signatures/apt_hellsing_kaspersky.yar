@@ -1,3 +1,4 @@
+
 rule apt_hellsing_implantstrings { 
 	meta:
 		version = "1.0"
