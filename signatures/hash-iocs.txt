@@ -1001,3 +1001,45 @@ b5546842e08950bc17a438d785b5a019;Backspace Malware APT30 Report FireEye http://g
 8214b0e18fbcd5db6b008884e7685f2c;Backspace Malware APT30 Report FireEye http://goo.gl/h0dJTr
 8da9373fc5b8320fb04d6202ca1eb6f1;Backspace Malware APT30 Report FireEye http://goo.gl/h0dJTr
 9c31551cd8087072d08c9004c0ce76c5;Backspace Malware APT30 Report FireEye http://goo.gl/h0dJTr
+
+015915BBFCDA1B2B884DB87262970A11;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+036E021E1B7F61CDDFD294F791DE7EA2;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+04090aca47f5360b84f6a55033544863;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+055BC765A78DA9CC759D1BA7AC7AC05E;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+085FAAC21114C844529E11422EF684D1;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+0BA116AA1704A415812552A815FCD34B;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+0CBEFD8CD4B9A36C791D926F84F10B7B;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+0CC5918D426CD836C52207A8332296BC;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+0dfcbb858bd2d5fb1d33cd69dcd844ae;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+0F13DEAC7D2C1A971F98C9365B071DB9;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+0FFE80AF4461C68D6571BEDE9527CF74;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+13EF0DFE608440EE60449E4300AE9324;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+14309b52f5a3df8cb0eb5b6dae9ce4da;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+17EF094043761A917BA129280618C1D3;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+2682A1246199A18967C98CB32191230C;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+2CCE768DC3717E86C5D626ED7CE2E0B7;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+3032F4C7A6E4E807DD7B012FA4B43718;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+31B3CC60DBECB653AE972DB9E57E14EC;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+3A40E0DEB14F821516EADAED24301335;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+3de2a22babb69e480db11c3c15197586;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+4DBFD37FD851DAEBDAE7F009ADEC3CBD;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+4F19D5D2C04B6FC05E56C6A48FD9CB50;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+58670063EC00CAF0D2D17F9D52F0AC95;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+588f41b1f34b29529bc117346355113f;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+5dec2e81037b2d72320516e86a2bcfbd;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+5f776a0de913173e878844d023a98f1c;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+5fc86559ae66dd223265540fd5dfaf3b;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+621e4c293313e8638fb8f725c0ae9d0f;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+67E032085DC756BB7123DFE942E5DCA4;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+73396BACD33CDE4C8CB699BCF11D9F56;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+824C92E4B27026C113D766C0816428A0;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+8BEFABB08750548D7BA64717D92B71E0;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+8E5FD9F8557E0D39787DD205ABFFA973;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+9317458E0D8484B77C0B9FA914A98230;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+a23d7b6a81dc0b460294e8be829f564d;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+a642c3dfd7e9dad5dc2a27ac6d8c9868;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+A6703722C6A1953A8C3807A6FF93D913;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+aa906567b9feb1af431404d1c55e0241;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+ac073ad83555f3748d481bcf796e1993;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+e8770d73d7d8b837df44a55de9adb7d5;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
+fe07da37643ed789c48f85d636abcf66;Kaspersky Hellsing Malware Sample http://goo.gl/TWGNYE
