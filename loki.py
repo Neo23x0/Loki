@@ -21,8 +21,6 @@
 # 
 # Florian Roth
 # BSK Consulting GmbH
-# February 2015
-# v0.5.2
 # 
 # DISCLAIMER - USE AT YOUR OWN RISK.
 
@@ -56,7 +54,7 @@ LINUX_PATH_SKIPS_START = Set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/
 LINUX_PATH_SKIPS_END = Set(["/initctl"])
 
 
-def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, false_hashes):
+def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
 
     # Startup
     log("INFO","Scanning %s ...  " % path)
@@ -127,15 +125,12 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
                     for regex in filename_iocs.keys():
                         match = re.search(r'%s' % regex, filePath)
                         if match:
-                            description = filename_iocs[regex]
-                            log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
-
-                    # File Name Suspicious Checks --------------------------------------
-                    for regex in filename_suspicious_iocs.keys():
-                        match = re.search(r'%s' % regex, filePath)
-                        if match:
-                            description = filename_suspicious_iocs[regex]
-                            log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
+                            description = filenameIOC_desc[regex]
+                            score = filename_iocs[regex]
+                            if score > 70:
+                                log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
+                            elif score > 40:
+                                log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
 
                     # Access check (also used for magic header detection)
                     firstBytes = ""
@@ -214,7 +209,15 @@ def scanPath(path, rule_sets, filename_iocs, filename_suspicious_iocs, hashes, f
                         # Scan with yara
                         try:
                             for rules in rule_sets:
-                                matches = rules.match(data=fileData)
+
+                                # Yara Rule Match
+                                matches = rules.match(data=fileData,
+                                                      externals= {
+                                                          'filename': filename.lower(),
+                                                          'filepath': filePath.lower()
+                                                      })
+
+                                # If matched
                                 if matches:
                                     for match in matches:
 
@@ -263,7 +266,7 @@ def readFileData(filePath):
         return fileData
 
 
-def scanProcesses(rule_sets, filename_iocs, filename_suspicious_iocs):
+def scanProcesses(rule_sets, filename_iocs):
     # WMI Handler
     c = wmi.WMI()
     processes = c.Win32_Process()
@@ -335,15 +338,12 @@ def scanProcesses(rule_sets, filename_iocs, filename_suspicious_iocs):
         for regex in filename_iocs.keys():
             match = re.search(r'%s' % regex, cmd)
             if match:
-                description = filename_iocs[regex]
-                log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
-
-        # File Name Suspicious Checks --------------------------------------
-        for regex in filename_suspicious_iocs.keys():
-            match = re.search(r'%s' % regex, cmd)
-            if match:
-                description = filename_suspicious_iocs[regex]
-                log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
+                description = filenameIOC_desc[regex]
+                score = filename_iocs[regex]
+                if score > 70:
+                    log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
+                elif score > 40:
+                    log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
 
         # Yara rule match
         # only on processes with a small working set size
@@ -580,26 +580,47 @@ def getExcludedMountpoints():
 
 def getFileNameIOCs(ioc_file):
 
-    filenames = {}
+    filesig_scores = {}
+    filesig_descriptions = {}
 
     try:
         with open(ioc_file, 'r') as file:
             lines = file.readlines()
 
+        # Last Comment Line
+        last_comment = ""
+
         for line in lines:
             try:
-                # Comments
-                if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
+                # Empty
+                if re.search(r'^[\s]*$', line):
                     continue
+
+                # Comments
+                if re.search(r'^#', line):
+                    last_comment = line.lstrip("#").lstrip(" ").rstrip("\n")
+                    continue
+
                 # Elements with description
                 if ";" in line:
                     row = line.split(';')
-                    regex = row[0]
-                    desc  = row[1].rstrip(" ").rstrip("\n")
+                    regex   = row[0]
+                    score   = row[1].rstrip(" ").rstrip("\n")
+                    desc    = last_comment
+
+                    # Catch legacy lines
+                    if not score.isdigit():
+                        desc = score # score is description (old format)
+                        score = 80 # default value
+
                 # Elements without description
                 else:
                     regex = line
-                filenames[regex] = desc
+
+                # Create list elements
+                filesig_scores[regex] = score
+                filesig_descriptions[regex] = desc
+
             except Exception, e:
                 log("ERROR", "Error reading line: %s" % line)
 
@@ -607,12 +628,14 @@ def getFileNameIOCs(ioc_file):
         traceback.print_exc()
         log("ERROR", "Error reading File IOC file: %s" % ioc_file)
 
-    return filenames
+    return (filesig_scores, filesig_descriptions)
 
 
 def initializeYaraRules():
 
     yaraRules = []
+    filename_dummy = ""
+    filepath_dummy = ""
 
     try:
         for file in ( os.listdir(os.path.join(getApplicationPath(), "./signatures"))  ):
@@ -631,7 +654,10 @@ def initializeYaraRules():
                 # Encrypted
                 if extension == ".yar":
                     try:
-                        compiledRules = yara.compile(yaraRuleFile)
+                        compiledRules = yara.compile(yaraRuleFile, externals= {
+                                                          'filename': filename_dummy,
+                                                          'filepath': filepath_dummy
+                                                      })
                         yaraRules.append(compiledRules)
                         log("INFO", "Initialized Yara rules from %s" % file)
                     except Exception, e:
@@ -784,7 +810,7 @@ def printWelcome():
     print "  "
     print "  (C) Florian Roth"
     print "  Mar 2015"
-    print "  Version 0.5.2"
+    print "  Version 0.6.0"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
@@ -850,11 +876,8 @@ if __name__ == '__main__':
 
     # Read IOCs -------------------------------------------------------
     # File Name IOCs
-    filenameIOCs = getFileNameIOCs(os.path.join(getApplicationPath(), "./signatures/filename-iocs.txt"))
-    log("INFO","File Name Characteristics initialized with %s regex patterns" % len(filenameIOCs.keys()))
-    # File Name Suspicious IOCs
-    filenameSuspiciousIOCs = getFileNameIOCs(os.path.join(getApplicationPath(), "./signatures/filename-suspicious.txt"))
-    log("INFO","File Name Suspicious Characteristics initialized with %s regex patterns" % len(filenameSuspiciousIOCs.keys()))
+    ( filenameIOC_sigs, filenameIOC_desc ) = getFileNameIOCs(os.path.join(getApplicationPath(), "./signatures/filename-iocs.txt"))
+    log("INFO","File Name Characteristics initialized with %s regex patterns" % len(filenameIOC_sigs.keys()))
     # Hash based IOCs
     fileHashes = getHashes(os.path.join(getApplicationPath(), "./signatures/hash-iocs.txt"))
     log("INFO","Malware Hashes initialized with %s hashes" % len(fileHashes.keys()))
@@ -868,7 +891,7 @@ if __name__ == '__main__':
     resultProc = False
     if not args.noprocscan and not isLinux:
         if isAdmin:
-            scanProcesses(yaraRules, filenameIOCs, filenameSuspiciousIOCs)
+            scanProcesses(yaraRules, filenameIOC_sigs)
         else:
             log("NOTICE", "Skipping process memory check. User has no admin rights.")
 
@@ -880,7 +903,7 @@ if __name__ == '__main__':
 
     resultFS = False
     if not args.nofilescan:
-        scanPath(defaultPath, yaraRules, filenameIOCs, filenameSuspiciousIOCs, fileHashes, falseHashes)
+        scanPath(defaultPath, yaraRules, filenameIOC_sigs, fileHashes, falseHashes)
 
     # Result ----------------------------------------------------------
     print " "

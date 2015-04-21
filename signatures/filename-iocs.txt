@@ -11,109 +11,251 @@
 # FORMAT -----------------------------------------------------------------------
 #
 # # COMMENT
-# REGEX;DESCRIPTION
+# REGEX;SCORE
 #
 # EXAMPLES ---------------------------------------------------------------------
 #
 # # Various examples from APT case X
-# \\svcsstat\.exe;Case 1 - infector
-# \\(server|servisces|smrr|srrm|svchost|svhost|svshost|taskmrg)\.exe$;Common IOC
-# ProgramData\\Mail\\MailAg\\;Case 2
-# (Anwendungsdaten|Application Data|APPDATA)\\sydmain\.dll;Malware X Case 3
-# (TEMP|Temp)\\[^\\]+\.(xmd|yls)$;Case 2
-# (LOCAL SETTINGS\\Temp|Local Settings\\Temp|Local\\Temp)\\(word\.exe|winword\.exe);Case 2
+# \\svcsstat\.exe;70
+# \\(server|servisces|smrr|srrm|svchost|svhost|svshost|taskmrg)\.exe$;50
+# ProgramData\\Mail\\MailAg\\;80
+# (Anwendungsdaten|Application Data|APPDATA)\\sydmain\.dll;80
+# (TEMP|Temp)\\[^\\]+\.(xmd|yls)$;80
+# (LOCAL SETTINGS\\Temp|Local Settings\\Temp|Local\\Temp)\\(word\.exe|winword\.exe);80
 #
 
 # Ncat Example
-# bin\\nc\.exe;Ncat Demo
+# bin\\nc\.exe;80
 
 # Regin
-\\usbclass\.sys;File name known from REGIN malware
-\\adpu160\.sys;File name known from REGIN malware
-\\msrdc64\.dat;File name known from REGIN malware
-\\msdcsvc\.dat;File name known from REGIN malware
-\\config\\SystemAudit\.Evt;File name known from REGIN malware
-\\config\\SecurityAudit\.Evt;File name known from REGIN malware
-\\config\\SystemLog\.evt;File name known from REGIN malware
-\\config\\ApplicationLog\.evt;File name known from REGIN malware
-\\ime\\imesc5\\dicts\\pintlgbs\.imd;File name known from REGIN malware
-\\ime\\imesc5\\dicts\\pintlgbp\.imd;File name known from REGIN malware
-ystem32\\winhttpc\.dll;File name known from REGIN malware
-ystem32\\wshnetc\.dll;File name known from REGIN malware
-\\SysWow64\\wshnetc\.dll;File name known from REGIN malware
-ystem32\\svcstat\.exe;File name known from REGIN malware
-ystem32\\svcsstat\.exe;File name known from REGIN malware
-IME\\IMESC5\\DICTS\\PINTLGBP\.IMD;File name known from REGIN malware
-ystem32\\wsharp\.dll;File name known from REGIN malware
-ystem32\\wshnetc\.dll;File name known from REGIN malware
-pchealth\\helpctr\\Database\\cdata\.dat;File name known from REGIN malware
-pchealth\\helpctr\\Database\\cdata\.edb;File name known from REGIN malware
-Windows\\Panther\\setup\.etl\.000;File name known from REGIN malware
-ystem32\\wbem\\repository\\INDEX2\.DATA;File name known from REGIN malware
-ystem32\\wbem\\repository\\OBJECTS2\.DATA;File name known from REGIN malware
-ystem32\\dnscache\.dat;File name known from REGIN malware
-ystem32\\mregnx\.dat;File name known from REGIN malware
-ystem32\\displn32\.dat;File name known from REGIN malware
-ystem32\\dmdskwk\.dat;File name known from REGIN malware
-ystem32\\nvwrsnu\.dat;File name known from REGIN malware
-ystem32\\tapiscfg\.dat;File name known from REGIN malware
-ystem32\\pciclass\.sys;File name known from REGIN malware
+\\usbclass\.sys;80
+\\adpu160\.sys;80
+\\msrdc64\.dat;80
+\\msdcsvc\.dat;80
+\\config\\SystemAudit\.Evt;80
+\\config\\SecurityAudit\.Evt;80
+\\config\\SystemLog\.evt;80
+\\config\\ApplicationLog\.evt;80
+\\ime\\imesc5\\dicts\\pintlgbs\.imd;80
+\\ime\\imesc5\\dicts\\pintlgbp\.imd;80
+ystem32\\winhttpc\.dll;80
+ystem32\\wshnetc\.dll;80
+\\SysWow64\\wshnetc\.dll;80
+ystem32\\svcstat\.exe;80
+ystem32\\svcsstat\.exe;80
+IME\\IMESC5\\DICTS\\PINTLGBP\.IMD;80
+ystem32\\wsharp\.dll;80
+ystem32\\wshnetc\.dll;80
+pchealth\\helpctr\\Database\\cdata\.dat;80
+pchealth\\helpctr\\Database\\cdata\.edb;80
+Windows\\Panther\\setup\.etl\.000;80
+ystem32\\wbem\\repository\\INDEX2\.DATA;80
+ystem32\\wbem\\repository\\OBJECTS2\.DATA;80
+ystem32\\dnscache\.dat;80
+ystem32\\mregnx\.dat;80
+ystem32\\displn32\.dat;80
+ystem32\\dmdskwk\.dat;80
+ystem32\\nvwrsnu\.dat;80
+ystem32\\tapiscfg\.dat;80
+ystem32\\pciclass\.sys;80
 
 # Five Eyes
-\\20120\.dll;Five Eyes QUERTY Malware Name
-\\20121\.dll;Five Eyes QUERTY Malware Name
-\\20123\.sys;Five Eyes QUERTY Malware Name
+\\20120\.dll;80
+\\20121\.dll;80
+\\20123\.sys;80
 
 # Skeleton Key File Names
-\\msuta64\.dll;Skeleton Key Malware
-\\ole64\.dll;Skeleton Key Malware (False positives are unknown)
+\\msuta64\.dll;80
+\\ole64\.dll;80
 
 # IXESHE APT Malware
-\\winhlps\.exe;IXESHE APT Malware
-\\acrotry\.exe;IXESHE APT Malware
+\\winhlps\.exe;80
+\\acrotry\.exe;80
 
 # PlugX
-(TEMP|TMP|Temp)\\DW20\.dll;PlugX
-(TEMP|TMP|Temp)\\DW20\.dll;PlugX
-(TEMP|TMP|Temp)\\dl_[0-9]{2}\.exe;PlugX
-(TEMP|TMP|Temp)\\dl_[0-9]{2}\.txt;PlugX
-(Mailing|Shipment).*Label\.exe;PlugX
+(TEMP|TMP|Temp)\\DW20\.dll;80
+(TEMP|TMP|Temp)\\DW20\.dll;80
+(TEMP|TMP|Temp)\\dl_[0-9]{2}\.exe;80
+(TEMP|TMP|Temp)\\dl_[0-9]{2}\.txt;80
+(Mailing|Shipment).*Label\.exe;80
 
 # Mandiant APT
-\\Temp\\~df~;Mandiant APT
-\\Temp\\~hf~;Mandiant APT
-\\Temp\\~[a-z][a-z]~;Mandiant APT
-\\start menu\\programs\\startup\\adobe_sl.exe;Mandiant APT
-Temp\\Updatasched\.exe;Mandiant APT
-\\adobere\.exe;Mandiant APT
+\\Temp\\~df~;80
+\\Temp\\~hf~;80
+\\Temp\\~[a-z][a-z]~;80
+\\start menu\\programs\\startup\\adobe_sl.exe;80
+Temp\\Updatasched\.exe;80
+\\adobere\.exe;80
 
 # Mandiant APT - SHELLDC.DLL (BACKDOOR)
-\\Temp\\svchost\.exe;Mandiant APT - SHELLDC.DLL (BACKDOOR)
-\\shelldc\.dll;Mandiant APT - SHELLDC.DLL (BACKDOOR)
-\\recyle64\.dll;Mandiant APT - SHELLDC.DLL (BACKDOOR)
-\\ws_18\.dll;Mandiant APT - SHELLDC.DLL (BACKDOOR)
+\\Temp\\svchost\.exe;80
+\\shelldc\.dll;80
+\\recyle64\.dll;80
+\\ws_18\.dll;80
 
 # Mandiant APT - LIGHTDART (FAMILY)
-\\ret\.log;LIGHTDART (FAMILY)
-\\1\.rar;LIGHTDART (FAMILY)
-\\qy\.htm;LIGHTDART (FAMILY)
-\\shsat\.exe;LIGHTDART (FAMILY)
-\\imxgy\.exe;LIGHTDART (FAMILY)
+\\ret\.log;80
+\\1\.rar;80
+\\qy\.htm;80
+\\shsat\.exe;80
+\\imxgy\.exe;80
 
 # Kaspersky Carbanak APT Malware Hash http://goo.gl/0Nhax2
-(application data|AppData|Anwendungsdaten)\\mozilla\\[^\\]+\.bin;Kaspersky Carbanak APT
-\\System32\\com\\svchost\.exe;Kaspersky Carbanak APT
-\\ProgramData\\mozilla\\[^\\]+\.bin;Kaspersky Carbanak APT
-\\(Windows|WinXP)\\paexec;Kaspersky Carbanak APT
-SysWOW64\\com\\svchost\.exe;Kaspersky Carbanak APT
+(application data|AppData|Anwendungsdaten)\\mozilla\\[^\\]+\.bin;80
+\\System32\\com\\svchost\.exe;80
+\\ProgramData\\mozilla\\[^\\]+\.bin;80
+\\(Windows|WinXP)\\paexec;80
+SysWOW64\\com\\svchost\.exe;80
 
-# Equation
-ystem32\\ee\.dll;Equation Group Malware http://goo.gl/d5ujEH
+# Equation Group Malware http://goo.gl/d5ujEH
+ystem32\\ee\.dll;80
 # Equation Related File Name http://pastebin.com/QvZNtuQW
-ystem32\\msregstr\.exe;Equation Related File Name http://pastebin.com/QvZNtuQW
-ystem32\\khlp894u\.dll;Equation Related File Name http://pastebin.com/QvZNtuQW
-\\__c__\.lnk;Equation Related File Name http://pastebin.com/QvZNtuQW
-temp\\msupdate\.exe;Equation Related File Name http://pastebin.com/QvZNtuQW
-\\fanny\.bmp;Equation Related File Name http://pastebin.com/QvZNtuQW
-WINDOWS\\mlan\.exe;Equation Related File Name http://pastebin.com/QvZNtuQW
-Windows\\mlan\.exe;Equation Related File Name http://pastebin.com/QvZNtuQW
+ystem32\\msregstr\.exe;80
+ystem32\\khlp894u\.dll;80
+\\__c__\.lnk;80
+temp\\msupdate\.exe;80
+\\fanny\.bmp;80
+WINDOWS\\mlan\.exe;80
+Windows\\mlan\.exe;80
+
+# Former Suspicious File Signatures ###########################################
+# They get a lower score by default
+
+# ThreatExpert Statistics
+\\winsvc\.exe$;45
+\\blaah\.exe;45
+\\ldr\.exe$;45
+\\t\.exe$;45
+\\user0\.exe;45
+\\mxplay_installer\.exe;45
+\\pak\-[0-9]{3,}.exe$;45
+\\rundll\.exe$;45
+\\windows\.exe$;45
+\\windowsservice\\starter\.exe$;45
+\\starter\.exe$;45
+\\wrar[0-9a-z]+\\.exe$;45
+\\av[0-9]+\.exe$;45
+\\eixplorer\.exe;45
+\\win\.exe$;45
+\\cleanup\.exe$;45
+\\winsystem\.exe;45
+Fonts\\[\w]+\.exe$;45
+\\(temp|tmp)\\server\.exe;45
+\\interxpoler\.exe;45
+\\networkservice\.exe;45
+\\favorites\.exe;45
+\\microsoft\.exe$;45
+\\adobe\.exe$;45
+\\cncdown\.exe$;45
+\\ntcom\.dll$;45
+\\nthead\.dll$;45
+\\services32\.exe;45
+\\recycled\.exe;45
+\\sofware.exe;45
+\\explorer[0-9]\.exe;45
+\\criptor\.exe;45
+\\crypt3r\.exe;45
+\\temp\\copy\.exe;45
+\\cuda\.exe;45
+
+# Typical Malware Name
+[\s]{7,}\.(exe|com|dll|bat|scr|vbs);45
+\\[0-9]\.(exe|dll)$;45
+\\[a-zA-Z]\.exe$;45
+\.(doc|docx|pdf|txt)\.(exe|bat|com|scr|vbs)$;45
+\\\.tmp$;45
+(temp|tmp)\\[a-z]\.(zip|exe|txt)$;45
+(temp|tmp)\\[a-z]\.rar;45
+\\32\.exe;45
+\\64\.exe;45
+\\d\.exe;45
+\\s\.exe;45
+\\ss\.exe;45
+\\sss\.exe;45
+
+# Malware locations
+AppData\\[\w]+\.exe;45
+[Tt]emp\\[\w]{1,2}\.(exe|com|scr);45
+[Cc]:\\[\w]{1,2}\.(exe|com|scr);45
+
+# Symantec Waterbug Attack http://goo.gl/9Tlk90
+\\tcpdump32c\.exe;45
+\\typecli\.exe;45
+\\msc32\.exe;45
+\\dxsnd32x\.exe;45
+\\msnetsrv\.exe;45
+\\mswme32\.exe;45
+\\msnetserv\.exe;45
+\\msnet32\.exe;45
+\\rpcsrv\.exe;45
+\\charmap32\.exe;45
+\\mqsvc32\.exe;45
+\\msrss\.exe;45
+\\dc1\.exe;45
+\\svcmgr\.exe;45
+\\msx32\.exe;45
+\.XOR$;45
+
+# Suspected Anthem Deep Panda APT 
+\\lot1\.tmp;45
+
+# Trojan Characteristics
+\\EXPL0RER\.exe;55
+\\srv32\.exe;55
+\\csrnss\.exe;55
+\\0\.exe;55
+\\ntldm\.exe;55
+\\xxxc\.bat;55
+\\winkept\.exe;55
+Temp\\iexplore\.exe;55
+\\hidserv\.exe;55
+[Cc]:\\Inetpub\.lnk;55
+\\zggjmyd\.exe;55
+ystem32\\2bed\.exe;55
+360\\sendlog\.txt;55
+Windows\\[0-9a-z]+.flv;55
+ystem32\\[0-9a-z]+.flv;55
+\\downloaded[0-9]+\.exe;55
+\\New\sFolder[^\\]+\.exe;55
+\\myloveever\.exe;55
+\\killer\.exe;55
+\\mspool\.DLL;55
+\\superproxy\.exe;55
+\\zoufoo\.exe;55
+\\omesuperv\.exe;50
+ystem32\\dpisca\.exe;45
+ystem32\\razorp\.exe;45
+\\aaaaaaaa\.exe;55
+\\d1\.tmp\.dll;55
+\\fotos\.exe;55
+\\new\.exe;60
+\\image\.exe;60
+\\movie\.exe;60
+\\files\.exe;55
+\\fun\.exe;60
+\\freepdf\.exe;60
+\\iexplorei\.exe;80
+\\imagens\.exe;60
+\\lost\.dir\.exe;70
+\\new_folder\.exe;70
+\\picture\.exe;65
+\\play me\.exe;65
+\\ppts\.exe;65
+\\recycler\.exe;65
+\\share_apps\.exe;65
+\\video\.exe;65
+\\whatsapp\.exe;65
+\\xx\.exe;65
+\\keygen1\.exe;65
+\\meta\.exe;50
+\\tmp\.exe;60
+\\userfiles\.exe;65
+\\nuevo\.exe;65
+\\photo\.exe;65
+\\pdf\.exe;65
+\\_thumbs\.exe;65
+\\music\.exe;65
+\\picture\.exe;65
+\\music\.exe;65
+\\movie\.exe;65
+\\skypee\.exe;65
