@@ -115,8 +115,8 @@ LOKI scanner on our company homepage
 [http://www.bsk-consulting.de/loki-free-ioc-scanner/](http://www.bsk-consulting.de/loki-free-ioc-scanner/)
 
 Twitter
-[@MalwrSignatures](https://twitter.com/malwrsignatures)
-[@Thor_irs](https://twitter.com/thor_irs)
+[@cyb3rOps](https://twitter.com/Cyb3rOps)
+[@thor_scanner](https://twitter.com/thor_scanner)
 
 If you are interested in a corporate solution for APT scanning, check out Loki's big brother [THOR](http://www.bsk-consulting.de/apt-scanner-thor/).
 
