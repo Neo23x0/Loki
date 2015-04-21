@@ -51,6 +51,7 @@ Loki currently includes the following IOCs:
   - More than 180 hack tool Yara rules - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
   - More than 600 web shell Yara rules - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
   - Numerous suspicious file name regex signatures - Source: [APT Scanner THOR](http://www.bsk-consulting.de/apt-scanner-thor/)
+  - Much more ... (cannot update the list as fast as I include new signatures)
 
 Loki is the new generic scanner that combines most of the features from my recently published scanners: [ReginScanner](https://github.com/Neo23x0/ReginScanner) and [SkeletonKeyScanner](https://github.com/Neo23x0/SkeletonKeyScanner).
 
