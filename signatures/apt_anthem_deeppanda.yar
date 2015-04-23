@@ -1,6 +1,6 @@
 /* Anthem Deep Panda APT */
 
-rule Anthem_DeepPanda_sl_txt_packed {
+rule DeepPanda_sl_txt_packed {
 	meta:
 		description = "Anthem Hack Deep Panda - ScanLine sl-txt-packed"
 		author = "Florian Roth"
@@ -44,7 +44,7 @@ rule Anthem_DeepPanda_lot1 {
 		10 of them
 }
 
-rule Anthem_DeepPanda_htran_exe {
+rule DeepPanda_htran_exe {
 	meta:
 		description = "Anthem Hack Deep Panda - htran-exe"
 		author = "Florian Roth"
