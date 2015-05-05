@@ -259,3 +259,9 @@ ystem32\\razorp\.exe;45
 \\music\.exe;65
 \\movie\.exe;65
 \\skypee\.exe;65
+
+# Rombertik / CarbonGrabber http://goo.gl/SGcS2H
+\\fgf\.vbs;65
+\\rsr\\yfoye\.bat;75
+\\rsr\\yfoye\.exe;75
+
