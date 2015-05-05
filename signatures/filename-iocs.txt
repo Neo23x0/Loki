@@ -243,7 +243,7 @@ ystem32\\razorp\.exe;45
 \\ppts\.exe;65
 \\recycler\.exe;65
 \\share_apps\.exe;65
-\\video\.exe;65
+[^s]\\video\.exe;65
 \\whatsapp\.exe;65
 \\xx\.exe;65
 \\keygen1\.exe;65
