@@ -7,7 +7,6 @@
 
 /* Rule Set ----------------------------------------------------------------- */
 
-
 rule Rombertik_CarbonGrabber {
 	meta:
 		description = "Detects CarbonGrabber alias Rombertik - file Copy#064046.scr"
