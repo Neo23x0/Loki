@@ -1,6 +1,8 @@
 ![Logo](/lokiicon.jpg)
 # Loki - Simple IOC Scanner
 
+[![Join the chat at https://gitter.im/Neo23x0/Loki](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Neo23x0/Loki?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Scanner for Simple Indicators of Compromise
 
 Detection is based on four detection methods:
