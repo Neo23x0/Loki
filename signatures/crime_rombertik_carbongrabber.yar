@@ -57,7 +57,7 @@ rule Rombertik_CarbonGrabber_Panel {
 		hash = "e6e9e4fc3772ff33bbeeda51f217e9149db60082"
 	strings:
 		$s0 = "echo '<meta http-equiv=\"refresh\" content=\"0;url=index.php?a=login\">';" fullword ascii
-		$s1 = "echo '<meta http-equiv=\"refresh\" content=\"2;url='.$website.'/index.php?a=logi" ascii
+		$s1 = "echo '<meta http-equiv=\"refresh\" content=\"2;url='.$website.'/index.php?a=login" ascii
 		$s2 = "header(\"location: $website/index.php?a=login\");" fullword ascii
 		$s3 = "$insertLogSQL -> execute(array(':id' => NULL, ':ip' => $ip, ':name' => $name, ':" ascii
 		$s16 = "if($_POST['username'] == $username && $_POST['password'] == $password){" fullword ascii
