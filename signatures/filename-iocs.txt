@@ -265,3 +265,6 @@ ystem32\\razorp\.exe;45
 \\rsr\\yfoye\.bat;75
 \\rsr\\yfoye\.exe;75
 
+# Mimikatz Output
+\.kirbi$;70
+

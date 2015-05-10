@@ -150,9 +150,9 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
                     # Set fileData to an empty value
                     fileData = ""
 
-                    # Hash Check -------------------------------------------------------
+                    # Evaluations -------------------------------------------------------
                     # Evaluate size
-                    do_hash_check = True
+                    do_intense_check = True
                     if fileSize > ( args.s * 1024):
                          # Print files
                         if args.printAll:
@@ -162,8 +162,16 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
                         if args.printAll:
                             log("INFO", "Scanning %s" % filePath)
 
+                    # Some file types will force intense check
+                    if fileType == "MDMP":
+                        do_intense_check = True
+
+                    # Hash Check -------------------------------------------------------
                     # Do the check
-                    if do_hash_check:
+                    md5 = "-"
+                    sha1 = "-"
+                    sha256 = "-"
+                    if do_intense_check:
 
                         fileData = readFileData(filePath)
                         md5, sha1, sha256 = generateHashes(fileData)
@@ -196,7 +204,7 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
 
                     # Yara Check -------------------------------------------------------
                     # Size and type check
-                    if fileSize < ( args.s * 1024) or fileType == "MDMP":
+                    if do_intense_check:
 
                         # Read file data if hash check has been skipped
                         if not fileData:
@@ -224,11 +232,6 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
                                         score = 70
                                         description = "not set"
 
-                                        # SAM Backup - Original Check
-                                        if match.rule == "SAM_Hive_Backup" and \
-                                                ( filename.lower().startswith("sam.log") or filename.lower().endswith("_sam") or filename.lower() == "sam" ):
-                                            continue
-
                                         # Built-in rules have meta fields (cannot be expected from custom rules)
                                         if hasattr(match, 'meta'):
 
@@ -239,11 +242,20 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
                                             if 'score' in match.meta:
                                                 score = int(match.meta['score'])
 
+                                        # Hash string
+                                        hash_string = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
+
+                                        # Matching strings
+                                        matched_strings = ""
+                                        if hasattr(match, 'strings'):
+                                            # Get matching strings
+                                            matched_strings = getStringMatches(match.strings)
+
                                         if score >= 70:
-                                            log("ALERT", "Yara Rule MATCH: %s FILE: %s" % ( match.rule, filePath))
+                                            log("ALERT", "Yara Rule MATCH: %s FILE: %s %s MATCHES: %s" % ( match.rule, filePath, hash_string, matched_strings))
 
                                         elif score >= 40:
-                                            log("WARNING", "Yara Rule MATCH: %s FILE: %s" % ( match.rule, filePath))
+                                            log("WARNING", "Yara Rule MATCH: %s FILE: %s %s MATCHES: %s" % ( match.rule, filePath, hash_string, matched_strings))
 
                         except Exception, e:
                             if args.debug:
@@ -711,6 +723,34 @@ def getHashes(hash_file):
     return hashes
 
 
+def getStringMatches(strings):
+    try:
+        string_matches = []
+        matching_strings = ""
+        for string in strings:
+            # print string
+            extract = string[2]
+            if not extract in string_matches:
+                string_matches.append(extract)
+
+        string_num = 1
+        for string in string_matches:
+            matching_strings += " Str" + str(string_num) + ": " + removeNonAscii(removeBinaryZero(string))
+            string_num += 1
+
+        # Limit string
+        if len(matching_strings) > 140:
+            matching_strings = matching_strings[:140] + " ... (truncated)"
+
+        return matching_strings.lstrip(" ")
+    except:
+        traceback.print_exc()
+
+
+def removeBinaryZero(string):
+    return re.sub(r'\x00','',string)
+
+
 def printProgress(i):
     if (i%4) == 0:
         sys.stdout.write('\b/')
@@ -746,49 +786,108 @@ def log(mes_type, message):
 
     global alerts, warnings
 
+    if not args.debug and mes_type == "DEBUG":
+        return
+
+    # Counter
+    if mes_type == "ALERT":
+        alerts += 1
+    if mes_type == "WARNING":
+        warnings += 1
+
+    # Prepare Message
+    orig_message = message
+    message = removeNonAsciiDrop(message)
+
     try:
-        # Default
-        color = Fore.WHITE
-        # Print to console
-        if mes_type == "ERROR":
-            color = Fore.MAGENTA
-        if mes_type == "INFO":
-            color = Fore.GREEN + Style.BRIGHT
-        if mes_type == "ALERT":
-            color = Fore.RED
-            alerts += 1
-        if mes_type == "DEBUG":
-            if not args.debug:
-                return
-            color = Fore.WHITE
-        if mes_type == "WARNING":
-            color = Fore.YELLOW
-            warnings += 1
+
+        key_color = Fore.WHITE
+        base_color = Fore.WHITE+Back.BLACK
+        high_color = Fore.WHITE+Back.BLACK
+
         if mes_type == "NOTICE":
-            color = Fore.CYAN
-        if mes_type == "RESULT":
+            base_color = Fore.CYAN+''+Back.BLACK
+            high_color = Fore.BLACK+''+Back.CYAN
+        elif mes_type == "INFO":
+            base_color = Fore.GREEN+''+Back.BLACK
+            high_color = Fore.BLACK+''+Back.GREEN
+        elif mes_type == "WARNING":
+            base_color = Fore.YELLOW+''+Back.BLACK
+            high_color = Fore.BLACK+''+Back.YELLOW
+        elif mes_type == "ALERT":
+            base_color = Fore.RED+''+Back.BLACK
+            high_color = Fore.BLACK+''+Back.RED
+        elif mes_type == "DEBUG":
+            base_color = Fore.WHITE+''+Back.BLACK
+            high_color = Fore.BLACK+''+Back.WHITE
+        elif mes_type == "ERROR":
+            base_color = Fore.MAGENTA+''+Back.BLACK
+            high_color = Fore.WHITE+''+Back.MAGENTA
+        elif mes_type == "RESULT":
             if "clean" in message.lower():
-                color = Fore.BLACK+Back.GREEN
+                high_color = Fore.BLACK+Back.GREEN
+                base_color = Fore.GREEN+Back.BLACK
             elif "suspicious" in message.lower():
-                color = Fore.BLACK+Back.YELLOW
+                high_color = Fore.BLACK+Back.YELLOW
+                base_color = Fore.YELLOW+Back.BLACK
             else:
-                color = Fore.BLACK+Back.RED
+                high_color = Fore.BLACK+Back.RED
+                base_color = Fore.RED+Back.BLACK
+
+        # Colorize Type Word at the beginning of the line
+        type_colorer = re.compile(r'([A-Z]{3,})', re.VERBOSE)
+        mes_type = type_colorer.sub(high_color+r'[\1]'+base_color, mes_type)
+        # Colorize Key Words
+        colorer = re.compile('([A-Z_0-9]{2,}:)\s', re.VERBOSE)
+        message = colorer.sub(key_color+Style.BRIGHT+r'\1 '+base_color+Style.NORMAL, message)
+        # Break Line before REASONS
+        linebreaker = re.compile('(MD5:|SHA1:|SHA256:|MATCHES:|FILE:)', re.VERBOSE)
+        message = linebreaker.sub(r'\n\1', message)
 
         # Print to console
         if mes_type == "RESULT":
-            res_message = "\b\b[%s] %s" % (mes_type, removeNonAsciiDrop(message))
-            print color,res_message,Back.BLACK
+            res_message = "\b\b%s %s" % (mes_type, message)
+            print base_color,res_message,Back.BLACK
             print Fore.WHITE,Style.NORMAL
         else:
-            print color,"\b\b[%s] %s" % (mes_type, removeNonAsciiDrop(message)),Back.BLACK,Fore.WHITE,Style.NORMAL
+            print base_color,"\b\b%s %s" % (mes_type, message),Back.BLACK,Fore.WHITE,Style.NORMAL
 
         # Write to file
         with open(args.l, "a") as logfile:
-            logfile.write("%s %s LOKI: %s\n" % (getSyslogTimestamp(), t_hostname, removeNonAsciiDrop(message)))
+            logfile.write("%s %s LOKI: %s\n" % (getSyslogTimestamp(), t_hostname, orig_message))
 
     except Exception, e:
         traceback.print_exc()
         print "Cannot print log file"
+
+
+def removeNonAscii(string, stripit=False):
+    nonascii = "error"
+
+    try:
+        try:
+            # Handle according to the type
+            if isinstance(string, unicode) and not stripit:
+                nonascii = string.encode('unicode-escape')
+            elif isinstance(string, str) and not stripit:
+                nonascii = string.decode('utf-8', 'replace').encode('unicode-escape')
+            else:
+                try:
+                    nonascii = string.encode('raw_unicode_escape')
+                except Exception, e:
+                    nonascii = str("%s" % string)
+
+        except Exception, e:
+            # traceback.print_exc()
+            # print "All methods failed - removing characters"
+            # Generate a new string without disturbing characters
+            nonascii = "".join(i for i in string if ord(i)<127 and ord(i)>31)
+
+    except Exception, e:
+        traceback.print_exc()
+        pass
+
+    return nonascii
 
 
 def getSyslogTimestamp():
@@ -810,7 +909,7 @@ def printWelcome():
     print "  "
     print "  (C) Florian Roth"
     print "  Mar 2015"
-    print "  Version 0.6.0"
+    print "  Version 0.7.0"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
