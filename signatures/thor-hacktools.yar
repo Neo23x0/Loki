@@ -10,7 +10,7 @@
    BSK Consulting GmbH
    Web: bsk-consulting.de
 
-   revision: 20150122 
+   revision: 20150510
 
 */
 
@@ -119,272 +119,6 @@ rule HackTool_Producers {
 	$extension = /extension: \.(ini|xml)\n/
 	condition: 1 of ($a*) and not $extension
 }
-
-/* Mimikatz */
-
-rule Mimikatz_Memory_Rule_1 : APT {
-	meta: 
-		author = "Florian Roth"
-		date = "12/22/2014"
-		score = 70
-		type = "memory"
-		description = "Detects password dumper mimikatz in memory"
-	strings:
-		$s1 = "sekurlsa::msv" fullword ascii
-	    $s2 = "sekurlsa::wdigest" fullword ascii
-	    $s4 = "sekurlsa::kerberos" fullword ascii
-	    $s5 = "sekurlsa::tspkg" fullword ascii
-	    $s6 = "sekurlsa::livessp" fullword ascii
-	    $s7 = "sekurlsa::ssp" fullword ascii
-	    $s8 = "sekurlsa::logonPasswords" fullword ascii
-	    $s9 = "sekurlsa::process" fullword ascii
-	    $s10 = "ekurlsa::minidump" fullword ascii
-	    $s11 = "sekurlsa::pth" fullword ascii
-	    $s12 = "sekurlsa::tickets" fullword ascii
-	    $s13 = "sekurlsa::ekeys" fullword ascii
-	    $s14 = "sekurlsa::dpapi" fullword ascii
-	    $s15 = "sekurlsa::credman" fullword ascii
-	condition:
-		1 of them
-}
-
-rule Mimikatz_Memory_Rule_2 : APT {
-	meta:
-		description = "Mimikatz Rule generated from a memory dump"
-		author = "Florian Roth - Florian Roth"
-		type = "memory"
-		score = 80
-	strings:
-		$s0 = "sekurlsa::" ascii
-		$x1 = "cryptprimitives.pdb" ascii
-		$x2 = "Now is t1O" ascii fullword
-		$x4 = "ALICE123" ascii
-		$x5 = "BOBBY456" ascii
-	condition:
-		$s0 and 1 of ($x*)
-}
-
-rule Mimikatz_SampleSet_1 : APT {
-	meta:
-		description = "Mimikatz Rule generated from a big Mimikatz sample set"
-		author = "Florian Roth - Florian Roth"
-		hash1 = "9ef9762169e8b44d01613234927f44d6"
-		hash2 = "35b34bb9f1ad0fdf48dc090ed4a8190f"	
-		hash3 = "516fde1fe06f96a019c3ad063c78b760"
-		hash4 = "faf248ee5184b65d28786d91c02864a6"
-		hash5 = "5847659129c4e711809ab5b6ab1b8bd8"
-		score = 80
-	strings:
-		$s0 = "mimikatz_trunk/Win32/mimidrv.sys" fullword
-		$s1 = "Mimikatz 2.0\\x64\\mimidrv.sys" fullword
-		$s2 = "32\\kelloworld.dll"
-		$s3 = "64\\kelloworld.dll"
-		$s4 = "32/kelloworld.dll"
-		$s5 = "64/kelloworld.dll"
-		$s6 = "mimidrv.sys" fullword
-		$s7 = "sekurlsa.lib" fullword
-		$s8 = "mimilib.dll" fullword
-		$s9 = "mimikatz.exe" fullword
-	condition:
-		3 of them
-}
-rule Mimikatz_SampleSet_2 : APT {
-	meta:
-		description = "Mimikatz Rule generated from a big Mimikatz sample set"
-		author = "Florian Roth - Florian Roth"
-		hash = "6f14b6744aad66ac017ab7733cdb51ad"
-		score = 50
-	strings:
-		$s0 = "notsupported" fullword
-		$s1 = "getKerberos" fullword
-		$s2 = "M(knN0123456789abcdefghijklmnopqrstuvwxyz" fullword
-		$s3 = "getLiveSSPFunctions" fullword
-		$s4 = "getKerberosFunctions" fullword
-		$s5 = "<assembly xmlns=\"urn:schemas-microsoft-com:asm.v1\" manifestVersion=\"1.0\"><tr"
-		$s6 = ".?AV_System_error@std@@" fullword
-		$s7 = "getCredmanFunctions" fullword
-		$s8 = "find_tokens" fullword
-	condition:
-		all of them
-}
-
-rule Mimikatz_SampleSet_4 : APT {
-	meta:
-		description = "Mimikatz Rule generated from a big Mimikatz sample set"
-		author = "Florian Roth - Florian Roth"
-		hash1 = "8991aeef8b33049c5997c59afcea4a27"
-		hash2 = "a3e00b039f2d2ea04a4274506dd83be0"
-		hash3 = "cb5d40cc8db79c3d24f20f443f7e5926"
-		score = 40
-	strings:
-		$s0 = "notsupported" fullword
-		$s1 = "getLiveSSP" fullword
-		$s2 = "getKerberos" fullword
-		$s3 = "getLiveSSPFunctions" fullword
-		$s4 = "getKerberosFunctions" fullword
-		$s5 = "<assembly xmlns=\"urn:schemas-microsoft-com:asm.v1\" manifestVersion=\"1.0\"><tr"
-		$s6 = "getCredmanFunctions" fullword
-		$s7 = "getCredman" fullword
-		$s8 = "find_tokens" fullword
-	condition:
-		all of them
-}
-
-rule Mimikatz_SampleSet_5 : APT {
-	meta:
-		description = "Mimikatz Rule generated from a big Mimikatz sample set"
-		author = "Florian Roth - Florian Roth"
-		hash1 = "9ca015f05cc4cbae8d50bcd067e6d605"
-		score = 50
-	strings:
-		$s6 = "mimidrv.sys" fullword
-	condition:
-		all of them
-}
-rule Mimikatz_SampleSet_6 : APT {
-	meta:
-		description = "Mimikatz Rule generated from a big Mimikatz sample set"
-		author = "Florian Roth - Florian Roth"
-		hash = "739c80bac405eb1b0ebbe10a75515ff1"
-	strings:
-		$s1 = "<assembly xmlns=\"urn:schemas-microsoft-com:asm.v1\" manifestVersion=\"1.0\"><tr"
-		$s2 = "Erreur : impossible d'ouvrir le bureau cible (" fullword
-	condition:
-		all of them
-}
-
-rule Mimikatz_SampleSet_7 : APT {
-	meta:
-		description = "Mimikatz Rule generated from a big Mimikatz sample set"
-		author = "Florian Roth - Florian Roth"
-		super_rule = 1
-		hash0 = "821e5dc1ad4bbad2958e036c84bf7734"
-		hash1 = "e39e57fb7ff38e7be1a8da785ef83557"
-		hash2 = "9ecb8020b0989778009d5aaf13640ea4"
-		hash3 = "4bfe2b27a63678fa6b4bd27c8d309508"
-		hash4 = "fb164aadc2ae4a7aa3fc3f54cd8fa92a"
-		hash5 = "33786d2823e6d5e75b1a3a8bb2837b40"
-		hash6 = "a4c1feb5f3f5a71320aeca588cb1f14c"
-		hash7 = "36fc962a871cfb9f7d31dc9faaab5b54"
-		hash8 = "35bc4af0cbaa48e8a72884e3e690fc3b"
-		hash9 = "f1de7a81394efe6cc9438033a75cae0d"
-		hash10 = "a6e0cf20f2de5149885297188644f123"
-		hash11 = "bb7d4174e9ffae01a14993c528de8653"
-		hash12 = "ffd3df1ee7bfd6f1255221c3f82478f1"
-		hash13 = "eaf8dfbe80c42dd92740a9e71ea444ab"
-		hash14 = "e25b75621c03da7addc55dac378d77c4"
-		hash15 = "41ea9b05bcfceca78d51f776bfdee393"
-		hash16 = "a03a4272be8a2ee5e48ba2c417ff3b5b"
-		hash17 = "96501f7e9dc19a4012b1f5db1dce7018"
-		hash18 = "b6fe1b2e961c294155d8f48b6c57f28f"
-		hash19 = "1680c6afebcb77a21b6619aedc304931"
-		hash20 = "46820c90b2fb296e26b4bb8f7cad51ac"
-		hash21 = "a21634571795601f5eace5d503246b3b"
-		hash22 = "e6dda29f842ce3b7c72b5536fab4f860"
-		hash23 = "006480db3303a7ba9d73e32bc6c0bc11"
-		hash24 = "efa68dd73410c4be6f6b0a95a02762f2"
-		hash25 = "7194944aa418851631d7e614ff430b0a"
-		hash26 = "3a98b9190bf6ed5f75d9c3950a63dd08"
-		hash27 = "02f7536279480b73c9942c072c1b5316"
-		hash28 = "8638370c805dc92581eba34fa57eb45e"
-		hash29 = "6f393ab258b87790a45d6d2b125bbc24"
-		hash30 = "dbb01a015ab11266bae5d6381ffd41c2"
-		score = 80
-	strings:
-		$s0 = "#         * Kernel mode *         #" fullword
-		$s1 = "kerberos!KerbGlobalLogonSessionTable" fullword
-		$s2 = "Authentication Id : %u ; %u (%08x:%08x)" fullword
-		$s3 = "%p - lsasrv!InitializationVector" fullword
-		$s4 = "%p - lsasrv!LogonSessionListCount" fullword
-		$s7 = "#          * User mode *          #" fullword
-		$s8 = "##   Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )"
-		$s9 = "livessp!LiveGlobalLogonSessionList" fullword
-	condition:
-		all of them
-}
-rule Mimikatz_SampleSet_8 : APT {
-	meta:
-		description = "Mimikatz Rule generated from a big Mimikatz sample set"
-		author = "Florian Roth - Florian Roth"
-		super_rule = 1
-		hash0 = "0a10fe0a341ac0b24347f183c83123cc"
-		hash1 = "d7e16bc11cdfc0f781e87f5df4ae24a5"
-		hash2 = "abdb41e32c447e703b03c9e307565ed3"
-		score = 40
-	strings:
-		$s0 = "?!?(?0?8?@?H?P?X?`?n?w?" fullword
-		$s1 = "2\"2'2.24292@2F2K2R2X2]2d2j2o2v2|2" fullword
-		$s2 = "7!7<7C7P7V7^7d7r7" fullword
-		$s3 = "0#0)0=0E0K0[0c0i0" fullword
-		$s4 = "878E8L8Y8`8f8l8r8" fullword
-		$s5 = ":*:/:7:=:B:I:O:T:[:a:f:m:s:x:" fullword
-		$s6 = "<'<4<9<D<K<Q<X<e<j<u<{<" fullword
-		$s7 = "8&878?8M8R8]8d8q8~8" fullword
-		$s8 = ";,;2;A;F;L;_;d;k;q;" fullword
-		$s9 = "3%3+31373=3C3I3N3_3s3" fullword
-	condition:
-		all of them
-}
-rule Mimikatz_SampleSet_9 : APT {
-	meta:
-		description = "Mimikatz Rule generated from a big Mimikatz sample set"
-		author = "Florian Roth - Florian Roth"
-		super_rule = 1
-		hash0 = "6e2eda476c141c63ff62c92d8b52ff7e"
-		hash1 = "f42b75103230cab39e4c58d5b0dca2c4"
-		hash2 = "dc6f62e3a0b584cb134633a12fd7d7b8"
-		hash3 = "d5918d735a23f746f0e83f724c4f26e5"
-		hash4 = "e98b714ccd14e61f776cc55a602d2dd0"
-		hash5 = "09a6e5cc589a485d9ab4eda772b46f2a"
-		hash6 = "4a51faef37af8b70fc9cf7c64f030b25"
-		hash7 = "e52e30811287426d4eef089a65cc2acf"
-		hash8 = "cd1606a1800150a33dea71d3f3ee9aed"
-		hash9 = "510fe825464dca92aadcd3d8289405aa"
-		hash10 = "0be87e16eb598006358cdaa9dfcd5af5"
-		hash11 = "1f0ce022ee9fe8d92235809eda73ce38"
-		hash12 = "e172a38ade3aa0a2bc1bf9604a54a3b5"
-		hash13 = "de20bddb9c3b1b09d980db5bbb5b5789"
-		hash14 = "c77db1ddffc7e6edac60bb5ca9a6e863"
-		hash15 = "6d8008edd86c5ca1a112018852777b1e"
-		hash16 = "525d6ca1446b01f912303f04f0c713ab"
-		score = 70
-	strings:
-		$s6 = "\\i386\\mimidrv.pdb"
-	condition:
-		all of them
-}
-rule Mimikatz_SampleSet_10 : APT {
-	meta:
-		description = "Mimikatz Rule generated from a big Mimikatz sample set"
-		author = "Florian Roth - Florian Roth"
-		super_rule = 1
-		hash0 = "5522fd8fe2e205b30f9e74a94da0352d"
-		hash1 = "ec428ed7d1cc4ba3023696ddc138a376"
-		hash2 = "13e88493f844a0df3352cd721bfa41a6"
-		hash3 = "483e5365e1f1d83c2dcd4bdb398e779f"
-		hash4 = "04d04a1f0ff9e2ff1d35b8c2950cce53"
-		hash5 = "97cbbd6c4153ae4a410439e2c02d77ce"
-		hash6 = "b43dfc8be8db7eacfc993e323229fb9f"
-		hash7 = "72e95180a2e4ab59e1b7c10f1054740a"
-		hash8 = "eaaecd5bd100923c72d2b39d84dfd411"
-		hash9 = "a8ae792f0384fd3e7f411c826b48b7c8"
-		score = 40
-	strings:
-		$s0 = "D$hL9(t" fullword
-		$s1 = "l$LfD9o" fullword
-		$s2 = "AHH90t?L" fullword
-		$s3 = "M9Qpv\"I9Ips" fullword
-		$s4 = "tSD8T$<u" fullword
-		$s5 = ";f9T$Xw" fullword
-		$s6 = "6f9L$Xw" fullword
-		$s7 = "f;\\$@u1E3" fullword
-		$s8 = "8\\$8uFH" fullword
-		$s9 = "L$DfD;O" fullword
-	condition:
-		all of them
-}
-
-/* Removed Mimikatz samples set super rules 11 - 27 */
 
 /* Disclosed hack tool set */
 
@@ -3023,84 +2757,6 @@ rule Ammyy_Admin_AA_v3 {
 
 /* Other dumper and custom hack tools */
 
-rule Mimikatz_Samples_2014b_1 {
-	meta:
-		description = "Mimikatz pwassword dumper samples from the second half of 2014"
-		author = "Florian Roth with the help of YarGen Rule Generator"
-		reference = "not set"
-		date = "2014/12/23"
-		score = 80
-		hash = "ef5bd09b2e5836b58a8b27c1fb3650621aaf6488"
-	strings:
-		$s1 = "Raw command (not implemented yet) : %s" fullword wide
-		$s3 = " ! ZwSetInformationProcess 0x%08x for %u/%-14S" fullword wide
-		$s6 = "PsSetCreateProcessNotifyRoutineEx" fullword wide
-		$s10 = "\\Device\\mimidrv" fullword wide
-		$s16 = "\\DosDevices\\mimidrv" fullword wide
-		$s17 = "All privileges for the access token from %u/%-14S" fullword wide
-		$s20 = "in (0x%p - %u) ; out (0x%p - %u)" fullword wide
-	condition:
-		all of them
-}
-
-rule Mimikatz_Samples_2014b_2 {
-	meta:
-		description = "Mimikatz pwassword dumper samples from the second half of 2014"
-		author = "Florian Roth with the help of YarGen Rule Generator"
-		reference = "not set"
-		date = "2014/12/23"
-		score = 80		
-		hash = "98033f5bbdd79b12a7804bad0698c91e6d5067ad"
-	strings:
-		$s0 = "0: kd> .process /r /p <EPROCESS address>" fullword ascii
-		$s4 = "%p - lsasrv!LogonSessionListCount" fullword ascii
-		$s7 = "%p - lsasrv!LogonSessionList" fullword ascii
-		$s12 = "livessp!LiveGlobalLogonSessionList" fullword ascii
-		$s13 = "UndefinedLogonType" fullword ascii
-		$s14 = "[ERROR] [CRYPTO] Acquire keys" fullword ascii
-		$s15 = "masterkey" fullword ascii
-		$s16 = "kerberos!KerbGlobalLogonSessionTable" fullword ascii
-		$s17 = "RemoteInteractive" fullword ascii
-		$s18 = "mimilib.dll" fullword wide
-		$s19 = "%p - lsasrv!InitializationVector" fullword ascii
-		$s20 = "lsasrv!LogonSessionListCount" fullword ascii
-	condition:
-		all of them
-}
-
-rule Mimikatz_Samples_2014b_Family_2 {
-	meta:
-		description = "Mimikatz pwassword dumper samples from the second half of 2014"
-		author = "Florian Roth with the help of YarGen Rule Generator"
-		date = "2014/12/23"
-		super_rule = 1
-		score = 80		
-		hash0 = "61001a32c5388e629dd0441a77974200057816ef"
-		hash1 = "46df272cecb541aebca3c863802c0d0a0dc5fcb4"
-		hash2 = "c3307bb70efa19fc5049dfd829d07ea52a65bb74"
-		hash3 = "29d9bfc4e4884bc7b2f3cd01960b727c17fb50cb"
-		hash4 = "ac1d1db32ca6e7af5625f0f6fbe210fe68002b5c"
-	strings:
-		$s0 = "ncryptprov.dll" fullword wide
-		$s1 = "CERT_SYSTEM_STORE_CURRENT_USER_GROUP_POLICY" fullword wide
-		$s2 = "logonPasswords" fullword wide
-		$s3 = "CERT_SYSTEM_STORE_LOCAL_MACHINE_ENTERPRISE" fullword wide
-		$s4 = "CERT_SYSTEM_STORE_LOCAL_MACHINE_GROUP_POLICY" fullword wide
-		$s5 = "inject" fullword wide
-		$s6 = "MS_DEF_RSA_SCHANNEL_PROV" fullword wide
-		$s7 = "MS_ENHANCED_PROV" fullword wide
-		$s8 = "MS_DEF_RSA_SIG_PROV" fullword wide
-		$s9 = "privilege" fullword wide
-		$s10 = "MS_ENH_RSA_AES_PROV" fullword wide
-		$s16 = "sekurlsa" fullword wide
-		$s17 = "answer" fullword wide
-		$s18 = "secrets" fullword wide
-		$s19 = "MS_DEF_DSS_PROV" fullword wide
-		$s20 = "MS_DEF_PROV" fullword wide
-	condition:
-		all of them
-}
-
 rule LinuxHacktool_eyes_screen {
 	meta:
 		description = "Linux hack tools - file screen"
@@ -3327,28 +2983,110 @@ rule CN_Toolset_sig_1433_135_sqlr {
 		all of them
 }
 
-rule Mimikatz_Lib {
-    meta:
-        author = "Florian Roth"
-        score = 80
-        date = "2015/02/03"
-        description = "Detects the mimikatz library files - malicious tool to extract credentials/tickets/hashes from memory/dump files"
-    strings:
-    	$mz = { 4d 5a }
-        $s1 = "mimikatz" wide
-        $s2 = "mimilib.dll" wide
-     condition:
-        ( $mz at 0 ) and all of ( $s* )
+/* Mimikatz */
+
+rule Mimikatz_Memory_Rule_1 : APT {
+	meta: 
+		author = "Florian Roth"
+		date = "12/22/2014"
+		score = 70
+		type = "memory"
+		description = "Detects password dumper mimikatz in memory"
+	strings:
+		$s1 = "sekurlsa::msv" fullword ascii
+	    $s2 = "sekurlsa::wdigest" fullword ascii
+	    $s4 = "sekurlsa::kerberos" fullword ascii
+	    $s5 = "sekurlsa::tspkg" fullword ascii
+	    $s6 = "sekurlsa::livessp" fullword ascii
+	    $s7 = "sekurlsa::ssp" fullword ascii
+	    $s8 = "sekurlsa::logonPasswords" fullword ascii
+	    $s9 = "sekurlsa::process" fullword ascii
+	    $s10 = "ekurlsa::minidump" fullword ascii
+	    $s11 = "sekurlsa::pth" fullword ascii
+	    $s12 = "sekurlsa::tickets" fullword ascii
+	    $s13 = "sekurlsa::ekeys" fullword ascii
+	    $s14 = "sekurlsa::dpapi" fullword ascii
+	    $s15 = "sekurlsa::credman" fullword ascii
+	condition:
+		1 of them
 }
 
-rule MimikatzKerberosTicketDump
+rule Mimikatz_Memory_Rule_2 : APT {
+	meta:
+		description = "Mimikatz Rule generated from a memory dump"
+		author = "Florian Roth - Florian Roth"
+		type = "memory"
+		score = 80
+	strings:
+		$s0 = "sekurlsa::" ascii
+		$x1 = "cryptprimitives.pdb" ascii
+		$x2 = "Now is t1O" ascii fullword
+		$x4 = "ALICE123" ascii
+		$x5 = "BOBBY456" ascii
+	condition:
+		$s0 and 1 of ($x*)
+}
+
+rule mimikatz
 {
 	meta:
-		description = "Magic-value for Mimikatz dumped Kerberos tickets"
-		author = "M. Stroebel (HVS)"
-		score = 50
+		description		= "mimikatz"
+		author			= "Benjamin DELPY (gentilkiwi)"
+		tool_author		= "Benjamin DELPY (gentilkiwi)"
+		score 			= 80
+	strings:
+		$exe_x86_1		= { 89 71 04 89 [0-3] 30 8d 04 bd }
+		$exe_x86_2		= { 89 79 04 89 [0-3] 38 8d 04 b5 }
+		
+		$exe_x64_1		= { 4c 03 d8 49 [0-3] 8b 03 48 89 }
+		$exe_x64_2		= { 4c 8b df 49 [0-3] c1 e3 04 48 [0-3] 8b cb 4c 03 [0-3] d8 }
+
+		$dll_1			= {	c7 0? 00 00 01 00 [4-14] c7 0? 01 00 00 00 }
+		$dll_2			= { c7 0? 10 02 00 00 ?? 89 4? }
+		
+		$sys_x86		= { a0 00 00 00 24 02 00 00 40 00 00 00 [0-4] b8 00 00 00 6c 02 00 00 40 00 00 00 }
+		$sys_x64		= { 88 01 00 00 3c 04 00 00 40 00 00 00 [0-4] e8 02 00 00 f8 02 00 00 40 00 00 00 }
 	condition:
-		uint16(0) == 0x8276 and filesize < 3000
+		(all of ($exe_x86_*)) or (all of ($exe_x64_*)) or (all of ($dll_*)) or (any of ($sys_*))
+}
+
+rule mimikatz_lsass_mdmp
+{
+	meta:
+		description		= "LSASS minidump file for mimikatz"
+		author			= "Benjamin DELPY (gentilkiwi)"
+		score 			= 80
+	strings:
+		$lsass			= "System32\\lsass.exe"	wide nocase
+	condition:
+		(uint32(0) == 0x504d444d) and $lsass
+}
+
+rule mimikatz_kirbi_ticket
+{
+	meta:
+		description		= "KiRBi ticket for mimikatz"
+		author			= "Benjamin DELPY (gentilkiwi)"
+		score 			= 80
+	strings:
+		$asn1			= { 76 82 ?? ?? 30 82 ?? ?? a0 03 02 01 05 a1 03 02 01 16 }
+	condition:
+		$asn1 at 0
+}
+
+rule wce
+{
+	meta:
+		description		= "wce"
+		author			= "Benjamin DELPY (gentilkiwi)"
+		tool_author		= "Hernan Ochoa (hernano)"
+		score 			= 80
+	strings:
+		$hex_legacy		= { 8b ff 55 8b ec 6a 00 ff 75 0c ff 75 08 e8 [0-3] 5d c2 08 00 }
+		$hex_x86		= { 8d 45 f0 50 8d 45 f8 50 8d 45 e8 50 6a 00 8d 45 fc 50 [0-8] 50 72 69 6d 61 72 79 00 }
+		$hex_x64		= { ff f3 48 83 ec 30 48 8b d9 48 8d 15 [0-16] 50 72 69 6d 61 72 79 00 }
+	condition:
+		any of them
 }
 
 rule Mimikatz_Logfile
