@@ -1076,21 +1076,6 @@ rule Hacktools_CN_Burst_sql {
 		6 of them
 }
 
-rule Hacktools_CN_JoHor_Rdos {
-	meta:
-		description = "Disclosed hacktool set - file spec.vbp"
-		author = "Florian Roth"
-		date = "17.11.14"
-		score = 60
-		hash = "400a90c9eabeb94ae05e5036e21dc922b0c1ffad"
-	strings:
-		$s3 = "service@dywt.com.cn" fullword ascii
-		$s9 = "www.dywt.com.cn" fullword ascii
-		$s17 = "This is a runtime library file for EPL applications. The EPL is a software devel" ascii
-	condition:
-		2 of them
-}
-
 rule Hacktools_CN_Panda_445TOOL {
 	meta:
 		description = "Disclosed hacktool set - file 445TOOL.rar"
@@ -1265,23 +1250,6 @@ rule Hacktools_CN_JoHor_Posts_Killer {
 		5 of them
 }
 
-rule Hacktools_CN_JoHor_Rdos_3_6_uplis {
-	meta:
-		description = "Disclosed hacktool set - file uplis.vbp"
-		author = "Florian Roth"
-		date = "17.11.14"
-		score = 60
-		hash = "a87d00d78838c2d968b72330ee6f21f69b2caae5"
-	strings:
-		$s0 = "http://dywt.com.cn" fullword ascii
-		$s1 = "service@dywt.com.cn" fullword ascii
-		$s4 = "GetNewInf" fullword ascii
-		$s5 = "This is a runtime library file for EPL applications. The EPL is a software devel" ascii
-		$s8 = "yiyuyan" fullword ascii
-	condition:
-		4 of them
-}
-
 rule Hacktools_CN_Panda_tesksd {
 	meta:
 		description = "Disclosed hacktool set - file tesksd.jpg"
@@ -1327,45 +1295,6 @@ rule Hacktools_CN_Http {
 		$s3 = "_controlfp" fullword ascii
 	condition:
 		all of them and filesize < 10KB
-}
-
-rule Hacktools_CN_JoHor_Rdos_get {
-	meta:
-		description = "Disclosed hacktool set - file get.vbp"
-		author = "Florian Roth"
-		date = "17.11.14"
-		score = 60
-		hash = "09c32ca167136a17fd69df8c525ea5ffeca6c534"
-	strings:
-		$s1 = "http://dywt.com.cn" fullword ascii
-		$s2 = "service@dywt.com.cn" fullword ascii
-		$s3 = "Uncompress" fullword ascii
-		$s5 = "GetNewInf" fullword ascii
-		$s6 = "This is a runtime library file for EPL applications. The EPL is a software devel" ascii
-		$s10 = "GetMD5" fullword ascii
-		$s12 = "RSACheck" fullword ascii
-	condition:
-		all of them
-}
-
-rule Hacktools_CN_JoHor_Rdos_LineExp {
-	meta:
-		description = "Disclosed hacktool set - file LineExp.vbp"
-		author = "Florian Roth"
-		date = "17.11.14"
-		score = 60
-		hash = "1bd2db477c68cdcba9ae5c3668bd76c51fc12d2e"
-	strings:
-		$s0 = "http://dywt.com.cn" fullword ascii
-		$s1 = "service@dywt.com.cn" fullword ascii
-		$s2 = "EThread.fne" fullword ascii
-		$s3 = "GetNewInf" fullword ascii
-		$s4 = "This is a runtime library file for EPL applications. The EPL is a software devel" ascii
-		$s5 = "CloseThreadHandle" fullword ascii
-		$s6 = "WaitThread" fullword ascii
-		$s8 = "CreateCriticalSection" fullword ascii
-	condition:
-		all of them
 }
 
 rule Hacktools_CN_Burst_Start {
