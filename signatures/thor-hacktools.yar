@@ -2983,6 +2983,21 @@ rule CN_Toolset_sig_1433_135_sqlr {
 		all of them
 }
 
+rule DarkComet_Keylogger_File
+{
+	meta:
+		author = "Florian Roth"
+		description = "Looks like a keylogger file created by DarkComet Malware"
+		date = "25.07.14"
+		score = 50
+	strings:
+		$magic = "::"
+		$entry = /\n:: [A-Z]/
+		$timestamp = /\([0-9]?[0-9]:[0-9][0-9]:[0-9][0-9] [AP]M\)/
+	condition:
+		($magic at 0) and #entry > 10 and #timestamp > 10
+}
+
 /* Mimikatz */
 
 rule Mimikatz_Memory_Rule_1 : APT {
