@@ -28,4 +28,3 @@ rule PoisonIvy_Generic_3 {
 				$k1 or all of ($s*) or all of ($h*)
 			)
 }
-

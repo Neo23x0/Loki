@@ -1,7 +1,7 @@
 
 rule Backdoor_Naikon_APT_Sample1 {
 	meta:
-		description = "Detects backdoors used in the Naikon APT"
+		description = "Detects backdoors related to the Naikon APT"
 		author = "Florian Roth"
 		reference = "https://goo.gl/7vHyvh"
 		date = "2015-05-14"
