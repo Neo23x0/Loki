@@ -14,5 +14,5 @@ rule custom_ssh_backdoor_server {
 		$s4 = "print '[-] SSH negotiation failed.'" fullword ascii
 		$s5 = "except paramiko.SSHException, x:" fullword ascii
 	condition:
-		uint16(0) == 0x6d69 and filesize < 10KB and 5 of them
+		filesize < 10KB and 5 of them
 }
