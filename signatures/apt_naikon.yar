@@ -12,7 +12,8 @@ rule Backdoor_Naikon_APT_Sample1 {
 		$x1 = "POST http://%s:%d/aspxabcdefg.asp?%s HTTP/1.1" fullword ascii
 		$x2 = "greensky27.vicp.net" fullword ascii
 		$x3 = "\\tempvxd.vxd.dll" fullword wide
-		$x5 = "otna.vicp.net" fullword ascii
+		$x4 = "otna.vicp.net" fullword ascii
+		$x5 = "smithking19.gicp.net" fullword ascii
 		
 		$s1 = "User-Agent: webclient" fullword ascii
 		$s2 = "\\User.ini" fullword ascii
