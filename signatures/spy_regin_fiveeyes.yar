@@ -1,3 +1,14 @@
+/*
+	Yara Rule Set
+	Author: Florian Roth
+	Date: 2014-11-23
+	Identifier: Regin
+
+	Warning: Don't use this rule set without excluding the false positive hashes listed in 
+	         the file falsepositive-hashes.txt
+
+*/
+
 /* REGIN ---------------------------------------------------------------------------------- */
 
 rule Regin_APT_KernelDriver_Generic_A {
