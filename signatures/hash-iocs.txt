@@ -5477,7 +5477,6 @@ f4c9bc4f045b90c496df4b75398dfa5c;APTnotes 2013 winnti-more-than-just-a-game-1304
 04f3fbaaaf5026df29e0d7d317194043;APTnotes 2013 winnti-more-than-just-a-game-130410.pdf
 07e40089cdf338e8d1423b3d97332a4d;APTnotes 2013 winnti-more-than-just-a-game-130410.pdf
 7024ea8285cee098829ac8f2b1de4455;APTnotes 2013 winnti-more-than-just-a-game-130410.pdf
-e617348b8947f28e2a280dd93c75a6ad;APTnotes 2013 kaspersky-the-net-traveler-part1-final.pdf
 72bdca7dd12ed04b21dfa60c5c2ab6c4;APTnotes 2013 NormanShark-MaudiOperation.pdf
 ec16143a14c091100e7af30de03fce1f;APTnotes 2013 NormanShark-MaudiOperation.pdf
 cc1a806d25982acdb35dd196ab8171bc;APTnotes 2013 NormanShark-MaudiOperation.pdf
