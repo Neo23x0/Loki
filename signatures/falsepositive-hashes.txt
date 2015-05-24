@@ -27,3 +27,5 @@ d566bd2f46aebcad47261775d64fd970e297542fd846fde2685e45efc4669901;REGIN False Pos
 c541cf35129e7effb57ac60d72bc45f821956a7e6f6a85d9a42364e1ddce3485;REGIN False Positive - Windows Serial Driver
 d566bd2f46aebcad47261775d64fd970e297542fd846fde2685e45efc4669901;REGIN False Positive - Windows Serial Driver
 40beeeca4c797a3355f4b01c57c2763c33028f27826315062320789a496d0810;REGIN False Positive - Windows Serial Driver
+
+14f3e6b05e5693b1cbd9091bafe2649f830799a3;Malwarebytes Winlogon
