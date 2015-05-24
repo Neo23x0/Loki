@@ -268,3 +268,9 @@ ystem32\\razorp\.exe;45
 # Mimikatz Output
 \.kirbi$;70
 
+# Kraken / Laziok Bot https://goo.gl/5jvv9q
+System\\Oracle\\smss\.exe;80
+
+# CryptoWall http://goo.gl/psjCCc
+\\HELP_DECRYPT\.URL;60
+
