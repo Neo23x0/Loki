@@ -237,12 +237,11 @@ rule CGISscan_CGIScan {
 		author = "yarGen Yara Rule Generator by Florian Roth"
 		hash = "338820e4e8e7c943074d5a5bc832458a"
 	strings:
+		$s1 = "Wang Products" fullword wide	
 		$s2 = "WSocketResolveHost: Cannot convert host address '%s'"
 		$s3 = "tcp is the only protocol supported thru socks server"
-		
-		$path1 = /filepath: .{,70}EPO.{,70}\n/
 	condition:
-		$s2 and $s3 and not $path1
+		all of ($s*)
 }
 
 rule IP_Stealing_Utilities {
