@@ -114,6 +114,7 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
                         printProgress(c)
 
                     # Skip program directory
+                    # print appPath.lower() +" - "+ filePath.lower()
                     if appPath.lower() in filePath.lower():
                         log("DEBUG", "Skipping file in program directory FILE: %s" % filePath)
                         continue
@@ -908,8 +909,8 @@ def printWelcome():
     print "  Simple IOC Scanner"
     print "  "
     print "  (C) Florian Roth"
-    print "  Mar 2015"
-    print "  Version 0.7.0"
+    print "  May 2015"
+    print "  Version 0.7.1"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
