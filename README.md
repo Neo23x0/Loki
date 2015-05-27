@@ -67,6 +67,7 @@ If you want to build it yourself:
 - [scandir](https://github.com/benhoyt/scandir) : faster alternative to os.walk()
 - [colorama](https://pypi.python.org/pypi/colorama) : to color it up
 - [psutil](https://pypi.python.org/pypi/psutil) : process checks
+- [pywin32](http://sourceforge.net/projects/pywin32/) : path conversions (PyInstaller [issue](https://github.com/pyinstaller/pyinstaller/issues/1282); Windows only)
 
 ## Usage
 
