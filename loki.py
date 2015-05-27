@@ -207,7 +207,7 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
                             log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
 
                     # Regin .EVT FS Check
-                    if do_intense_check:
+                    if do_intense_check and len(fileData) > 11:
 
                         # Check if file is Regin virtual .evt file system
                         checkReginFS(fileData)
