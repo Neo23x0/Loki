@@ -267,6 +267,7 @@ rule taskmgr_ANOMALY {
 	strings:		
 		$s0 = "Windows Task Manager" fullword wide
 		$s1 = "taskmgr.chm" fullword
+		$s2 = "TmEndTaskHandler::" ascii
 	condition:
 		( filename == "taskmgr.exe" or filename == "Taskmgr.exe" ) and not 1 of ($s*) and not WINDOWS_UPDATE_BDC
 }
