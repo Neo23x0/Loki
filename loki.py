@@ -777,11 +777,14 @@ def getApplicationPath():
             # system when thor is started from a read only network share
             # os.chdir(application_path)
             pass
+        if application_path == "":
+            application_path = os.path.dirname(os.path.realpath(__file__))
         if "~" in application_path and not isLinux:
             # print "Trying to translate"
             # print application_path
             application_path = win32api.GetLongPathName(application_path)
-            # print application_path
+        #if args.debug:
+        #    log("DEBUG", "Application Path: %s" % application_path)
         return application_path
     except Exception, e:
         log("ERROR","Error while evaluation of application path")
