@@ -36,6 +36,8 @@ import stat
 import datetime
 import platform
 import psutil
+import binascii
+from StringIO import StringIO
 from sets import Set
 from colorama import Fore, Back, Style
 from colorama import init
@@ -204,6 +206,12 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
                         if matchType:
                             log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
 
+                    # Regin .EVT FS Check
+                    if do_intense_check:
+
+                        # Check if file is Regin virtual .evt file system
+                        checkReginFS(fileData)
+
                     # Yara Check -------------------------------------------------------
                     # Size and type check
                     if do_intense_check:
@@ -278,6 +286,36 @@ def readFileData(filePath):
         log("DEBUG", "Cannot open file %s (access denied)" % filePath)
     finally:
         return fileData
+
+
+def checkReginFS(fileData):
+
+    # Code section by Paul Rascagneres, G DATA Software
+    # Adapted to work with the fileData already read to avoid
+    # further disk I/O
+
+    fp = StringIO(fileData)
+    SectorSize=fp.read(2)[::-1]
+    MaxSectorCount=fp.read(2)[::-1]
+    MaxFileCount=fp.read(2)[::-1]
+    FileTagLength=fp.read(1)[::-1]
+    CRC32custom=fp.read(4)[::-1]
+
+    # original code:
+    # fp.close()
+    # fp = open(filePath, 'r')
+
+    # replaced with the following:
+    fp.seek(0)
+
+    data=fp.read(0x7)
+    crc = binascii.crc32(data, 0x45)
+    crc2 = '%08x' % (crc & 0xffffffff)
+
+    log("DEBUG", "Regin FS Check CRC2: %s" % crc2.encode('hex'))
+
+    if CRC32custom.encode('hex') == crc2:
+        log("ALERT", "Regin Virtual Filesystem MATCH: %s" % filePath)
 
 
 def scanProcesses(rule_sets, filename_iocs):
@@ -917,7 +955,7 @@ def printWelcome():
     print "  "
     print "  (C) Florian Roth"
     print "  May 2015"
-    print "  Version 0.7.2"
+    print "  Version 0.7.3"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
