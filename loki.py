@@ -43,6 +43,7 @@ from colorama import init
 # Win32 Imports
 try:
     import wmi
+    import win32api
     from win32com.shell import shell
     isLinux = False
 except Exception, e:
@@ -768,7 +769,7 @@ def getApplicationPath():
     try:
         application_path = ""
         if getattr(sys, 'frozen', False):
-            application_path = os.path.dirname(sys.executable)
+            application_path = os.path.dirname(os.path.realpath(sys.executable))
         elif __file__:
             application_path = os.path.dirname(__file__)
         if application_path != "":
@@ -776,8 +777,11 @@ def getApplicationPath():
             # system when thor is started from a read only network share
             # os.chdir(application_path)
             pass
-        if application_path == "":
-            application_path = os.path.dirname(os.path.realpath(__file__))
+        if "~" in application_path and not isLinux:
+            # print "Trying to translate"
+            # print application_path
+            application_path = win32api.GetLongPathName(application_path)
+            # print application_path
         return application_path
     except Exception, e:
         log("ERROR","Error while evaluation of application path")
@@ -910,7 +914,7 @@ def printWelcome():
     print "  "
     print "  (C) Florian Roth"
     print "  May 2015"
-    print "  Version 0.7.1"
+    print "  Version 0.7.2"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
