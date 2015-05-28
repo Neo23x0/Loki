@@ -274,3 +274,12 @@ System\\Oracle\\smss\.exe;80
 # CryptoWall http://goo.gl/psjCCc
 \\HELP_DECRYPT\.URL;60
 
+# Hawkeye Keylogger https://goo.gl/th5q2v
+\\HawkEye_Keylogger_;70
+
+# Kaspersky RAT Report https://goo.gl/th5q2v
+\\AppData\\Roaming\\Microsoft\\[^\\]{1,32}\.(exe|doc|zip);50
+\\AudioEndpointBuilder\.exe;60
+\\BrokerInfrastructure\.exe;60
+\\WindowsUpdate\.exe;50
+
