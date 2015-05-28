@@ -25,3 +25,17 @@ rule Cloaked_RAR_File {
 		and not filename matches /\.rar$/is	// not the .RAR extension
 		and not filepath contains "Recycle" // not a deleted RAR file in recycler
 }
+
+rule Base64_encoded_Executable {
+	meta:
+		description = "Executable with TXT extension"
+		author = "Florian Roth"
+	strings:
+		$s1 = "TVpTAQEAAAAEAAAA//8AALgAAAA" // 14 samples in goodware archive
+		$s2 = "TVoAAAAAAAAAAAAAAAAAAAAAAAA" // 26 samples in goodware archive
+		$s3 = "TVqAAAEAAAAEABAAAAAAAAAAAAA" // 75 samples in goodware archive
+		$s4 = "TVpQAAIAAAAEAA8A//8AALgAAAA" // 168 samples in goodware archive
+		$s5 = "TVqQAAMAAAAEAAAA//8AALgAAAA" // 28,529 samples in goodware archive
+	condition:
+		1 of them
+}
