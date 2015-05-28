@@ -28,8 +28,10 @@ rule Cloaked_RAR_File {
 
 rule Base64_encoded_Executable {
 	meta:
-		description = "Executable with TXT extension"
+		description = "Detects an base64 encoded executable (often embedded)"
 		author = "Florian Roth"
+		date = "2015-05-28"
+		score = 50
 	strings:
 		$s1 = "TVpTAQEAAAAEAAAA//8AALgAAAA" // 14 samples in goodware archive
 		$s2 = "TVoAAAAAAAAAAAAAAAAAAAAAAAA" // 26 samples in goodware archive
