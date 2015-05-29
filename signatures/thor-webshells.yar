@@ -5045,7 +5045,8 @@ rule GIFCloaked_Webshell {
 		$s2 = "<%eval(Request.Item["
 		$s3 = "LANGUAGE='VBScript'"
 	condition:
-		( $magic at 0 ) and ( 1 of ($s*) )
+		( $magic at 0 ) and ( 1 of ($s*) ) 
+		and not filepath contains "AppData"
 }
 
 rule PHP_Cloaked_Webshell_SuperFetchExec {
