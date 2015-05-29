@@ -14,9 +14,12 @@
 private rule WINDOWS_UPDATE_BDC
 {
 condition:
-    uint32be(0) == 0x44434d01 and // magic: DCM PA30
-    uint32be(4) == 0x50413330
-}
+    (uint32be(0) == 0x44434d01 and // magic: DCM PA30
+     uint32be(4) == 0x50413330)
+    or
+    (uint32be(0) == 0x44434401 and
+     uint32be(12)== 0x50413330)    // magic: DCD PA30
+}  
 
 /* Rules -------------------------------------------------------------------- */
 
@@ -284,11 +287,11 @@ rule APT_Cloaked_PsExec
 		author = "Florian Roth"
 		score = 60
 	strings:
-		$magic = { 4d 5a }
 		$s0 = "psexesvc.exe" wide fullword
 		$s1 = "Sysinternals PsExec" wide fullword
 	condition:
-		( $magic at 0 ) and $s0 and $s1 and not filename contains "psexe"
+		uint16(0) == 0x5a4d and $s0 and $s1 
+		and not filename matches /^(psexec.exe|psexesvc.exe)$/is
 }
 
 /* removed 6 rules here */	
