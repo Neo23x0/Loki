@@ -283,3 +283,14 @@ System\\Oracle\\smss\.exe;80
 \\BrokerInfrastructure\.exe;60
 \\WindowsUpdate\.exe;50
 
+# APT28 https://goo.gl/6Xiayq
+Microsoft\\MediaPlayer\\updatewindws\.exe;100
+\\updatewindws\.exe;70
+\\netui\.dll;50
+\\edg6EF885E2\.tmp;60
+\\AppData\\Local\\conhost\.dll;70
+\\Application Data\\conhost\.dll;70
+\\Application Data\\svchost\.exe;70
+\\Application Data\\conhost\.dll;70
+\\AppData\\Local\\svchost\.exe;70
+\\AppData\\Local\\conhost\.dll;70
