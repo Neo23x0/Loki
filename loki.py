@@ -578,6 +578,8 @@ def generateHashes(filedata):
 
 
 def walkError(err):
+    if "Error 3" in str(err):
+        log("ERROR", str(err))
     if args.debug:
         traceback.print_exc()
 
