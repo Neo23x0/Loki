@@ -21,9 +21,9 @@ rule Cloaked_RAR_File {
 		description = "RAR file cloaked by a different extension"
 		author = "Florian Roth"
 	condition:
-		uint32be(0) == 0x52617221			// RAR File Magic Header
-		and not filename matches /\.rar$/is	// not the .RAR extension
-		and not filepath contains "Recycle" // not a deleted RAR file in recycler
+		uint32be(0) == 0x52617221							// RAR File Magic Header
+		and not filename matches /(rarnew.dat|\.rar)$/is	// not the .RAR extension
+		and not filepath contains "Recycle" 				// not a deleted RAR file in recycler
 }
 
 rule Base64_encoded_Executable {
