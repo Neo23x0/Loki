@@ -328,3 +328,26 @@ rule apt_regin_hopscotch {
 	condition:
 	    ($mz at 0) and all of ($a*)
 }
+
+rule Regin_Related_Malware {
+	meta:
+		description = "Malware Sample - maybe Regin related"
+		author = "Florian Roth"
+		score = 70
+		reference = "VT Analysis"
+		date = "2015-06-03"
+		hash = "76c355bfeb859a347e38da89e3d30a6ff1f94229"
+	strings:
+		$s1 = "%c%s%c -p %d -e %d -pv -c \"~~[%x] s; .%c%c%s %s /u %s_%d.dmp; q\"" fullword wide /* score: '22.015' */
+
+		$s0 = "Software\\Microsoft\\Windows NT\\CurrentVersion\\HotFix" fullword wide /* PEStudio Blacklist: os */ /* score: '26.02' */
+		$s2 = "%x:%x:%x:%x:%x:%x:%x:%x%c" fullword ascii /* score: '13.01' */
+		$s3 = "disp.dll" fullword ascii /* score: '11.01' */
+		$s4 = "msvcrtd.dll" fullword ascii /* score: '11.005' */
+		$s5 = "%d.%d.%d.%d%c" fullword ascii /* score: '11.0' */
+		$s6 = "%ls_%08x" fullword wide /* score: '8.0' */
+		$s8 = "d%ls%ls" fullword wide /* score: '7.005' */
+		$s9 = "Memory location: 0x%p, size 0x%08x" fullword wide /* score: '6.025' */
+	condition:
+		$s1 or 3 of ($s*)
+}
