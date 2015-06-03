@@ -14,6 +14,7 @@ rule APT28_CHOPSTICK {
 		reference = "https://goo.gl/v3ebal"
 		date = "2015-06-02"
 		hash = "f4db2e0881f83f6a2387ecf446fcb4a4c9f99808"
+		score = 60
 	strings:
 		$s0 = "jhuhugit.tmp" fullword ascii /* score: '14.005' */
 		$s8 = "KERNEL32.dll" fullword ascii /* PEStudio Blacklist: strings */ /* score: '5' */ /* Goodware String - occured 14405 times */
@@ -36,6 +37,7 @@ rule APT28_SourFace_Malware1 {
 		date = "2015-06-01"
 		hash1 = "e2450dffa675c61aa43077b25b12851a910eeeb6"
 		hash2 = "d9c53adce8c35ec3b1e015ec8011078902e6800b"
+		score = 60
 	strings:
 		$s0 = "coreshell.dll" fullword wide /* PEStudio Blacklist: strings */
 		$s1 = "Core Shell Runtime Service" fullword wide /* PEStudio Blacklist: strings */
@@ -57,6 +59,7 @@ rule APT28_SourFace_Malware2 {
 		hash3 = "682e49efa6d2549147a21993d64291bfa40d815a"
 		hash4 = "a8551397e1f1a2c0148e6eadcb56fa35ee6009ca"
 		hash5 = "f5b3e98c6b5d65807da66d50bd5730d35692174d"
+		score = 60
 	strings:
 		$s0 = "coreshell.dll" fullword ascii /* PEStudio Blacklist: strings */
 		$s1 = "Applicate" fullword ascii
@@ -81,6 +84,7 @@ rule APT28_SourFace_Malware3 {
 		hash7 = "a8551397e1f1a2c0148e6eadcb56fa35ee6009ca"
 		hash8 = "f5b3e98c6b5d65807da66d50bd5730d35692174d"
 		hash9 = "e2450dffa675c61aa43077b25b12851a910eeeb6"
+		score = 60
 	strings:
 		$s0 = "coreshell.dll" fullword wide /* PEStudio Blacklist: strings */
 		$s1 = "Core Shell Runtime Service" fullword wide /* PEStudio Blacklist: strings */
