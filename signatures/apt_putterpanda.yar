@@ -122,21 +122,27 @@ rule APT_Malware_PutterPanda_Gen1 {
 		uint16(0) == 0x5a4d and filesize < 1000KB and 5 of them
 }
 
-
-rule APT_Malware_PutterPanda_MsUpdater_String_in_EXE {
+rule Malware_MsUpdater_String_in_EXE {
 	meta:
 		description = "MSUpdater String in Executable"
 		author = "Florian Roth"
-		score = 50
+		score = 60
 		reference = "VT Analysis"
 		date = "2015-06-03"
 		hash = "b1a2043b7658af4d4c9395fa77fde18ccaf549bb"
 	strings:
-		$s0 = "msupdate.exe" fullword wide /* PEStudio Blacklist: strings */ /* score: '20.01' */
-		$s1 = "msupdate" fullword wide /* PEStudio Blacklist: strings */ /* score: '13.01' */
-		$s2 = "msupdater.exe" fullword ascii /* PEStudio Blacklist: strings */ /* score: '20.02' */
+		$x1 = "msupdate.exe" fullword wide /* PEStudio Blacklist: strings */ /* score: '20.01' */
+		$x2 = "msupdate" fullword wide /* PEStudio Blacklist: strings */ /* score: '13.01' */
+		$x3 = "msupdater.exe" fullword ascii /* PEStudio Blacklist: strings */ /* score: '20.02' */
+		$x4 = "msupdater32.exe" fullword ascii
+		$x5 = "msupdater32.exe" fullword wide
+		$x6 = "msupdate.pif" fullword ascii
+
+		$fp1 = "_msupdate_" wide /* False Positive */
+		$fp2 = "_msupdate_" ascii /* False Positive */
+		$fp3 = "/kies" wide
 	condition:
-		uint16(0) == 0x5a4d and 1 of them
+		uint16(0) == 0x5a4d and filesize < 500KB and ( 1 of ($x*) ) and not ( 1 of ($fp*) ) 
 }
 
 rule APT_Malware_PutterPanda_MsUpdater_3 {
