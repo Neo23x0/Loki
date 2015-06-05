@@ -6194,3 +6194,9 @@ b778d0de33b66ffdaaf76ba01e7c5b7b;Operation OceanLotus Chinese APT USBDeview.exe
 53e5718adf6f5feb2e3bb3396a229ba8;Operation OceanLotus Chinese APT DSC00229.exe
 d39edc7922054a0f14a5b000a28e3329;Operation OceanLotus Chinese APT install_flashplayer13x37.exe
 41bced8c65c5822d43cadad7d1dc49fd;Operation OceanLotus Chinese APT NetcaEKeyClient.exe
+
+757ae5eed0c5e229ad9bae586f1281b5de053767;TrendMicro MalumPOS, mnv.exe, Oracle Forms process, MICROS 9700 VISAD Driver
+2cf2f41d2454b59641a84f8180fd7e32135a0dbc;TrendMicro MalumPOS, nvsvc.exe, MICROS 9700 SSL GW
+f728bf7d6dbfc4c7bea21d6a3fd0b88f4fe52a4a;TrendMicro MalumPOS, nvsvc.exe, Oracle Forms process, Web-based PoS systems
+798bc2d91293c18af7e99ba7c9a4fd3010051741;TrendMicro MalumPOS, nvsvc.exe, accessed through MicrosoftTM, Windows Internet Explorer, Shift4 Corporation Universal
+90e85b471b64667dbcde3aee3fa504c0d4b0ad35;TrendMicro MalumPOS, nvsvc.exe, Transaction Gateway, PAR Springer-Miller Systems
