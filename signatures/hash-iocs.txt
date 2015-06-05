@@ -6185,3 +6185,12 @@ e2450dffa675c61aa43077b25b12851a910eeeb6;APT28 FireEye https://goo.gl/LXeeW7
 ed48ef531d96e8c7360701da1c57e2ff13f12405;APT28 FireEye https://goo.gl/LXeeW7
 d9c53adce8c35ec3b1e015ec8011078902e6800b;APT28 FireEye https://goo.gl/LXeeW7
 d87b310aa81ae6254fff27b7d57f76035f544073;APT28 FireEye https://goo.gl/LXeeW7
+
+7e68371ba3a988ff88e0fb54e2507f0d;Operation OceanLotus Chinese APT install_flashplayer.exe
+0529b1d393f405bc2b2b33709dd57153;Operation OceanLotus Chinese APT rtx.exe
+9fea62c042a8eda1d3f5ae54bad1e959;Operation OceanLotus Chinese APT sinopec.exe
+486bb089b22998ec2560afa59008eafa;Operation OceanLotus Chinese APT 
+b778d0de33b66ffdaaf76ba01e7c5b7b;Operation OceanLotus Chinese APT USBDeview.exe
+53e5718adf6f5feb2e3bb3396a229ba8;Operation OceanLotus Chinese APT DSC00229.exe
+d39edc7922054a0f14a5b000a28e3329;Operation OceanLotus Chinese APT install_flashplayer13x37.exe
+41bced8c65c5822d43cadad7d1dc49fd;Operation OceanLotus Chinese APT NetcaEKeyClient.exe
