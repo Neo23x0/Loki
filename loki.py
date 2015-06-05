@@ -262,10 +262,10 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
                                             matched_strings = getStringMatches(match.strings)
 
                                         if score >= 70:
-                                            log("ALERT", "Yara Rule MATCH: %s FILE: %s %s MATCHES: %s" % ( match.rule, filePath, hash_string, matched_strings))
+                                            log("ALERT", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( match.rule, description, filePath, hash_string, matched_strings))
 
                                         elif score >= 40:
-                                            log("WARNING", "Yara Rule MATCH: %s FILE: %s %s MATCHES: %s" % ( match.rule, filePath, hash_string, matched_strings))
+                                            log("WARNING", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( match.rule, description, filePath, hash_string, matched_strings))
 
                         except Exception, e:
                             if args.debug:
