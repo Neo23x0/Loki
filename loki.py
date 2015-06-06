@@ -692,37 +692,38 @@ def initializeYaraRules():
     filepath_dummy = ""
 
     try:
-        for file in ( os.listdir(os.path.join(getApplicationPath(), "./signatures"))  ):
-            try:
+        for root, directories, files in scandir.walk(os.path.join(getApplicationPath(), "./signatures"), onerror=walkError, followlinks=False):
+            for file in files:
+                try:
 
-                # Skip hidden, backup or system related files
-                if file.startswith(".") or file.startswith("~") or file.startswith("_"):
-                    continue
+                    # Full Path
+                    yaraRuleFile = os.path.join(root, file)
 
-                # Extension
-                extension = os.path.splitext(file)[1].lower()
+                    # Skip hidden, backup or system related files
+                    if file.startswith(".") or file.startswith("~") or file.startswith("_"):
+                        continue
 
-                # Full Path
-                yaraRuleFile = os.path.join(getApplicationPath(), "./signatures/%s" % file)
+                    # Extension
+                    extension = os.path.splitext(file)[1].lower()
 
-                # Encrypted
-                if extension == ".yar":
-                    try:
-                        compiledRules = yara.compile(yaraRuleFile, externals= {
-                                                          'filename': filename_dummy,
-                                                          'filepath': filepath_dummy
-                                                      })
-                        yaraRules.append(compiledRules)
-                        log("INFO", "Initialized Yara rules from %s" % file)
-                    except Exception, e:
-                        log("ERROR", "Error in Yara file: %s" % file)
-                        if args.debug:
-                            traceback.print_exc()
+                    # Encrypted
+                    if extension == ".yar":
+                        try:
+                            compiledRules = yara.compile(yaraRuleFile, externals= {
+                                                              'filename': filename_dummy,
+                                                              'filepath': filepath_dummy
+                                                          })
+                            yaraRules.append(compiledRules)
+                            log("INFO", "Initialized Yara rules from %s" % file)
+                        except Exception, e:
+                            log("ERROR", "Error in Yara file: %s" % file)
+                            if args.debug:
+                                traceback.print_exc()
 
-            except Exception, e:
-                log("ERROR", "Error reading signature file /signatures/%s ERROR: %s" % file)
-                if args.debug:
-                    traceback.print_exc()
+                except Exception, e:
+                    log("ERROR", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
+                    if args.debug:
+                        traceback.print_exc()
 
     except Exception, e:
         log("ERROR", "Error reading signature folder /signatures/")
@@ -957,7 +958,7 @@ def printWelcome():
     print "  "
     print "  (C) Florian Roth"
     print "  May 2015"
-    print "  Version 0.7.3"
+    print "  Version 0.7.4"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
