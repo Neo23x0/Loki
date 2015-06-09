@@ -6200,3 +6200,22 @@ d39edc7922054a0f14a5b000a28e3329;Operation OceanLotus Chinese APT install_flashp
 f728bf7d6dbfc4c7bea21d6a3fd0b88f4fe52a4a;TrendMicro MalumPOS, nvsvc.exe, Oracle Forms process, Web-based PoS systems
 798bc2d91293c18af7e99ba7c9a4fd3010051741;TrendMicro MalumPOS, nvsvc.exe, accessed through MicrosoftTM, Windows Internet Explorer, Shift4 Corporation Universal
 90e85b471b64667dbcde3aee3fa504c0d4b0ad35;TrendMicro MalumPOS, nvsvc.exe, Transaction Gateway, PAR Springer-Miller Systems
+fe713f9bb90b999250c3b6a3bba965d603de32a3;rdp.exe TSPY_MALUMPOS.SM Looks like a test
+d0b3562d868694fd1147e15483f88f3a78ebedfb;winini.exe TSPY_MALUMPOS.A Client stub
+
+85b9ae20e23a0771a8261ebf167a327f;Fidelis Threat Advisory http://goo.gl/ZjJyti cvaniocol.cmd (hidden file)
+a0f2ce49dec8f4f387fddb7cbd3ad0e0;Fidelis Threat Advisory http://goo.gl/ZjJyti flrsqgyy.DVZ
+ed9fa43c2a752a06a442a9abfec4a9cb;Fidelis Threat Advisory http://goo.gl/ZjJyti ibdyambl.vbs (hidden file)
+3739694248933ff8c2d2f6b6efd7c353;Fidelis Threat Advisory http://goo.gl/ZjJyti ouhlolswfixh
+2d0f8dd92186d6666c0154064ae2ad9d;Fidelis Threat Advisory http://goo.gl/ZjJyti slie.RJD
+71d8f6d5dc35517275bc38ebcc815f9f;Fidelis Threat Advisory http://goo.gl/ZjJyti znimialt.exe (AutoIt)
+36847ac57b1a24c02c421ad045e5c7531f5f937d;Fidelis Threat Advisory http://goo.gl/ZjJyt cedt370r(3).exe
+4a8fe7cd0ba3582d9bdf29e2e4ddcd1ff7cca03b;Fidelis Threat Advisory http://goo.gl/ZjJy AppMgnt.exe
+9a382a362d0485822809d837e891f91e4a37c80c;Fidelis Threat Advisory http://goo.gl/ZjJy PolicyManager
+fae726d1056118a819498592dbf2a0d62b53d105;Fidelis Threat Advisory http://goo.gl/ZjJy FILE_127.127.ppt
+ad9c15b11075bc9c99c547fbffc43b3f;Fidelis Threat Advisory http://goo.gl/ZjJyti %TEMP%\cedt370r(3).exe
+e9096babf98566536ae4af997c1f8667;Fidelis Threat Advisory http://goo.gl/ZjJyti %TEMP%/destsx.inf
+d8e1b4bf4f9bbea0bb0f77460494b169;Fidelis Threat Advisory http://goo.gl/ZjJyti %APPDATA%\Alsa\doub.tmp
+67ddf6fce4e6efb352d78d9574c3f841;Fidelis Threat Advisory http://goo.gl/ZjJyti %APPDATA%\muysf\ipbuy.exe 
+3d0a657b13b31a05f8ef7a02fe7bbe12d1574f18;Fidelis Threat Advisory http://goo.gl/ZjJyti Order Details.xls.pps 
+
