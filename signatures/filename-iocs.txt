@@ -294,3 +294,23 @@ Microsoft\\MediaPlayer\\updatewindws\.exe;100
 \\Application Data\\conhost\.dll;70
 \\AppData\\Local\\svchost\.exe;70
 \\AppData\\Local\\conhost\.dll;70
+
+# Fidelis Threat Advisory http://goo.gl/ZjJyti
+\\9i86vdi3l1zi1v\\;60
+\\cvaniocol\.cmd;60
+\\flrsqgyy\.DVZ;60
+\\ibdyambl\.vbs;60
+\\ouhlolswfixh$;60
+\\slie\.RJD$;60
+\\znimialt\.exe;60
+(Temp|Tmp|TEMP)\\cedt370r\(3\)\.exe;60
+(Temp|Tmp|TEMP)\\penguin\.exe;60
+\\Microsoft\\Windows\\hknswc\.exe;60
+\\Microsoft\\Windows\\AppMgnt\.exe;60
+\\PolicyManager$;60
+\\FILE_127\.127\.ppt;60
+\\FILE_127\.127\.ppsx;60
+(Temp|Tmp|TEMP)\\destsx\.inf;50
+(Temp|Tmp|TEMP)\\Alsa\\doub\.tmp;60
+(Temp|Tmp|TEMP)\\muysf\\ipbuy.exe;70 
+\\Order Details\.xls\.pps;60
