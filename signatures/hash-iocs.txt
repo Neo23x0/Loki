@@ -6217,5 +6217,27 @@ ad9c15b11075bc9c99c547fbffc43b3f;Fidelis Threat Advisory http://goo.gl/ZjJyti %T
 e9096babf98566536ae4af997c1f8667;Fidelis Threat Advisory http://goo.gl/ZjJyti %TEMP%/destsx.inf
 d8e1b4bf4f9bbea0bb0f77460494b169;Fidelis Threat Advisory http://goo.gl/ZjJyti %APPDATA%\Alsa\doub.tmp
 67ddf6fce4e6efb352d78d9574c3f841;Fidelis Threat Advisory http://goo.gl/ZjJyti %APPDATA%\muysf\ipbuy.exe 
-3d0a657b13b31a05f8ef7a02fe7bbe12d1574f18;Fidelis Threat Advisory http://goo.gl/ZjJyti Order Details.xls.pps 
+3d0a657b13b31a05f8ef7a02fe7bbe12d1574f18;Fidelis Threat Advisory http://goo.gl/ZjJyti Order Details.xls.pps
+
+089a14f69a31ea5e9a5b375dc0c46e45;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+16ed790940a701c813e0943b5a27c6c1;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+26c48a03a5f3218b4a10f2d3d9420b97;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+a6dcae1c11c0d4dd146937368050f655;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+acbf2d1f8a419528814b2efa9284ea8b;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+c04724afdb6063b640499b52623f09b5;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+e8eaec1f021a564b82b824af1dbe6c4d;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+10e16e36fe459f6f2899a8cea1303f06;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+48fb0166c5e2248b665f480deac9f5e1;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+520cd9ee4395ee85ccbe073a00649602;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+7699d7e0c7d6b2822992ad485caacb3e;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+84c2e7ff26e6dd500ec007d6d5d2255e;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+856752482c29bd93a5c2b62ff50df2f0;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+85f5feeed15b75cacb63f9935331cf4e;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+8783ac3cc0168ebaef9c448fbe7e937f;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+966953034b7d7501906d8b4cd3f90f6b;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+a14a6fb62d7efc114b99138a80b6dc7d;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+a6b2ac3ee683be6fbbbab0fa12d88f73;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+cc68fcc0a4fab798763632f9515b3f92;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+3f52ea949f2bd98f1e6ee4ea1320e80d;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
+c7c647a14cb1b8bc141b089775130834;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
 
