@@ -27,9 +27,9 @@ rule Duqu2_Generic1 {
 	strings:
 		$s0 = "Global\\{B54E3268-DE1E-4c1e-A667-2596751403AD}" fullword wide
 		$s1 = "SetSecurityDescriptorSacl" fullword ascii /* PEStudio Blacklist: strings */ /* Goodware String - occured 189 times */
-		$s6 = "msisvc_32@" fullword wide
-		$s7 = "CompareStringA" fullword ascii /* PEStudio Blacklist: strings */ /* Goodware String - occured 1392 times */
-		$s8 = "GetCommandLineW" fullword ascii /* PEStudio Blacklist: strings */ /* Goodware String - occured 1680 times */
+		$s2 = "msisvc_32@" fullword wide
+		$s3 = "CompareStringA" fullword ascii /* PEStudio Blacklist: strings */ /* Goodware String - occured 1392 times */
+		$s4 = "GetCommandLineW" fullword ascii /* PEStudio Blacklist: strings */ /* Goodware String - occured 1680 times */
 	condition:
 		uint16(0) == 0x5a4d and filesize < 150KB and all of them
 }
@@ -48,7 +48,7 @@ rule APT_Kaspersky_Duqu2_procexp {
 		$s1 = "svcmsi_32.dll" fullword wide
 		$s2 = "Sysinternals installer" fullword wide /* PEStudio Blacklist: strings */
 		$s3 = "MSI.dll" fullword ascii
-		$s7 = "Process Explorer" fullword wide /* PEStudio Blacklist: strings */ /* Goodware String - occured 5 times */
+		$s4 = "Process Explorer" fullword wide /* PEStudio Blacklist: strings */ /* Goodware String - occured 5 times */
 	condition:
 		uint16(0) == 0x5a4d and filesize < 100KB and all of them
 }
@@ -62,15 +62,11 @@ rule APT_Kaspersky_Duqu2_SamsungPrint {
 		hash = "ce39f41eb4506805efca7993d3b0b506ab6776ca"
 	strings:
 		$s0 = "Installer for printer drivers and applications" fullword wide /* PEStudio Blacklist: strings */
-		$s1 = "Printer Software Installer" fullword wide /* PEStudio Blacklist: strings */
-		$s2 = "Printer software installer" fullword wide /* PEStudio Blacklist: strings */
-		$s3 = "msi4_32.dll" fullword wide
-		$s4 = "2.0.0.12" fullword wide
-		$s5 = "HASHVAL" fullword wide
-		$s6 = "SELECT `%s` FROM `%s` WHERE `%s`='CAData%i'" fullword wide
-		$s7 = "ca.dll" fullword ascii
-		$s8 = "Samsung Electronics Co., Ltd." fullword wide
-		$s9 = "TerminateThread" fullword ascii /* PEStudio Blacklist: strings */ /* Goodware String - occured 744 times */
+		$s1 = "msi4_32.dll" fullword wide
+		$s2 = "HASHVAL" fullword wide
+		$s3 = "SELECT `%s` FROM `%s` WHERE `%s`='CAData%i'" fullword wide
+		$s4 = "ca.dll" fullword ascii
+		$s5 = "Samsung Electronics Co., Ltd." fullword wide
 	condition:
 		uint16(0) == 0x5a4d and filesize < 82KB and all of them
 }
@@ -87,11 +83,11 @@ rule APT_Kaspersky_Duqu2_msi3_32 {
 		$s1 = "SELECT `UserName`, `Password`, `Attributes` FROM `CustomUserAccounts`" fullword wide /* PEStudio Blacklist: strings */
 		$s2 = "SELECT `UserName` FROM `CustomUserAccounts`" fullword wide /* PEStudio Blacklist: strings */
 		$s3 = "SELECT `Data` FROM `Binary` WHERE `Name`='CryptHash%i'" fullword wide
-		$s9 = "msi3_32.dll" fullword wide
-		$s10 = "RunDLL" fullword ascii
-		$s11 = "MSI Custom Action v3" fullword wide
-		$s16 = "msi3_32" fullword wide
-		$s20 = "Operating System" fullword wide /* PEStudio Blacklist: strings */ /* Goodware String - occured 9203 times */
+		$s4 = "msi3_32.dll" fullword wide
+		$s5 = "RunDLL" fullword ascii
+		$s6 = "MSI Custom Action v3" fullword wide
+		$s7 = "msi3_32" fullword wide
+		$s8 = "Operating System" fullword wide /* PEStudio Blacklist: strings */ /* Goodware String - occured 9203 times */
 	condition:
 		uint16(0) == 0x5a4d and filesize < 72KB and all of them
 }
