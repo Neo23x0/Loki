@@ -6241,3 +6241,8 @@ cc68fcc0a4fab798763632f9515b3f92;Kaspersky Duqu2 APT Report IOC https://goo.gl/7
 3f52ea949f2bd98f1e6ee4ea1320e80d;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
 c7c647a14cb1b8bc141b089775130834;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
 
+9fb0a1e6828add0af71b46c107b3aa2c5692e023;Hacktool set June 2015 tools.zjqhr.com zxarps.exe
+82d07bd40adf9faf1ab9febea95a5284ac255c27;Hacktool set June 2015 tools.zjqhr.com iiswrite.exe
+547b0fc917e81dd668675a74fb1a15bf6e4ac0d3;Hacktool set June 2015 tools.zjqhr.com 360.exe
+e7e26c83299be2119c11a4922c2860efa5ca48a9;Hacktool set June 2015 tools.zjqhr.com qiqi.exe
+0e8a8b4c31a714da2e6d6a89a1e294e3980f3d39;Hacktool set June 2015 tools.zjqhr.com anhao1.exe

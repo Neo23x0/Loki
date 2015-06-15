@@ -41,3 +41,4 @@ rule Base64_encoded_Executable {
 	condition:
 		1 of them
 }
+

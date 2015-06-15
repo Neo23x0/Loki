@@ -126,13 +126,13 @@ rule Malware_MsUpdater_String_in_EXE {
 	meta:
 		description = "MSUpdater String in Executable"
 		author = "Florian Roth"
-		score = 60
+		score = 50
 		reference = "VT Analysis"
 		date = "2015-06-03"
 		hash = "b1a2043b7658af4d4c9395fa77fde18ccaf549bb"
 	strings:
 		$x1 = "msupdate.exe" fullword wide /* PEStudio Blacklist: strings */ /* score: '20.01' */
-		$x2 = "msupdate" fullword wide /* PEStudio Blacklist: strings */ /* score: '13.01' */
+		// $x2 = "msupdate" fullword wide /* PEStudio Blacklist: strings */ /* score: '13.01' */
 		$x3 = "msupdater.exe" fullword ascii /* PEStudio Blacklist: strings */ /* score: '20.02' */
 		$x4 = "msupdater32.exe" fullword ascii
 		$x5 = "msupdater32.exe" fullword wide
