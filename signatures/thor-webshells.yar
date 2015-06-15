@@ -3358,7 +3358,7 @@ rule jsp_reverse_jsp {
 		$s1 = "JSP Backdoor Reverse Shell" 
 		$s2 = "http://michaeldaw.org" 
 	condition:
-		1 of them
+		2 of them
 }
 rule Tool_asp {
 	meta:
@@ -4407,7 +4407,7 @@ rule cmdjsp_jsp {
 		$s2 = "cmdjsp.jsp" 
 		$s3 = "michaeldaw.org" fullword
 	condition:
-		1 of them
+		2 of them
 }
 rule h4ntu_shell__powered_by_tsoi_ {
 	meta:
