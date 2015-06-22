@@ -6246,3 +6246,51 @@ c7c647a14cb1b8bc141b089775130834;Kaspersky Duqu2 APT Report IOC https://goo.gl/7
 547b0fc917e81dd668675a74fb1a15bf6e4ac0d3;Hacktool set June 2015 tools.zjqhr.com 360.exe
 e7e26c83299be2119c11a4922c2860efa5ca48a9;Hacktool set June 2015 tools.zjqhr.com qiqi.exe
 0e8a8b4c31a714da2e6d6a89a1e294e3980f3d39;Hacktool set June 2015 tools.zjqhr.com anhao1.exe
+
+0201aaa8eda6dedc6c90381e225620cd33fb7b244f76bf229c3dd43feb9bdeaf;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+1333a300b03fb2d7bf028f4dee3d9b1f9c97267266faec9e02064862fbb6acb4;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+135e37122c23f26fed98b3bc884171c91c370250a73c6660b20416497b66a750;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+24bb8e48f37cbd71b2195cff4f52ec304a2ed9d60c28d2afd785e6f32639325f;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+2c2eb2eaadf9253a78265ac4655a6ec5935aa2673ff5e4fe3bb6753803c7fe59;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+2c512b50f8aa0881120d844b0bbbf7baa33465083fdc85755d51d1b5721bc057;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+2d43632953b511e1f1c7698de3c21b2ba7c27b75bb6079f51dcf9376e05e42b7;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+376c3ea59411380ab5146b3bc39ee79cf7f78b08dd712ef1cc5327bda5a2e46b;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+39dd2381bcd0f47dadf23399254bf1b51a837179e5634328afafe07510f5888a;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+3eb115f4eb62c4404be1a318afa3837bdba8fd66938efe15664741d942a85add;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+49bf19bd2381f5c78eb2d00a62e1b377620705dba0fa843fb8c8d26d92ec52e4;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+4de470147d90efbb440aa4420a5832b4f22f9f6128183568fe604df6427cc06b;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+4ff70adad080095421f34873e491c9da2e798f8db96a984f87efb9889d246fcb;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+5960d8f8b26edb453926efbd424332eabc0e1a74e25dbc1e9a570cc5920c8830;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+64ffe128c61289bec90057c7bf3ff869c329ffcb1afa4c4cd0daed1effabf105;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+712c488950f27e98bc4ebe5b63e5775498236a179cb4576bf021f8e6e6de0df4;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+7b2d470b9c6159c97cef2634493be0e4f2994f43501605a14d4c5a7efdeac3ba;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+7e386ff64be78af18f8a79d01cb75b0438cbcee4647e0a928100bd52ee56db76;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+840d18698ff0b114ee587f57231001d046fbd1eb22603e0f951cbb8c290804ed;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+866c698073e4deb66dd83c1ec9567ec03eca9f03775deadb81cc59fdb6cfd446;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+899730962e10546c9d43a9ffa79d900fd37c0d17f95aa537b67d31aa737447b5;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+8b4446cfaee549072c5da2468af7b9fec711f2d28851a3e8076fcfb53393a415;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+8c2cd914de7c125e49019f3826918511150ee4fff8a923da350a99c102b36455;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+8ce0b29202f3df23ce583040e2ffe79af78e0bb375ce65ec37a6ffe7d49b5bb5;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+8f7c74a9e1d04ff116e785f3234f80119d68ae0334fb6a5498f6d40eee189cf7;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+90296f0ecacc017bcf289297f5743660dd18bbc2842e631e9be4b2dc51732412;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+96356db43d7e9a5c3c4e3f9f7ee9a3dba14ad1c7db7367b7f6d664db4f0ef5d7;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+97d6699e449ddad97cc33e380a4873a7ceb0e8f0f50b5c8f72e6a4ff3dd1009f;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+9e5c286fcc47c8346267574ea805cde24b04915f5372f03923c0d6a13290e0ea;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+a462085549f9a1fdeff81ea8190a1f89351a83cf8f6d01ecb5f238541785d4b3;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+a8e0ab6b19400eccd3c9aceb183fe7626d5bde7bdf9b8ec8825aa17cc3a213a3;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+b5a1f7e9d0d6d3bec17674610a3b26991083e1e3cb81729714b69c18038a902f;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+bd78e106f208cbb8ea9e5902d778514f1fc2d15876fca292971c6695541889a3;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+d68a90fbe579a8199d78ef9ca001301e2c55a3015d4e3df3c238c276ed7cc1ce;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+dc06012b4aef457efb0ecb9cdca579bb573823a1a63bb7a2ba92c7ce0c2ddbfb;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+e2181b3d47feb5a321fe3b85b08a0245a1e0824b213e568fa4736d529fd5f8c2;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+e4a460db653c8df4223ec466a0237943be5de0da92b04a3bf76053fa1401b19e;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+edb45f03dfd52ab58f163ad2ca48f4bc9c4bcb72ea9181d0e0a1d87859f707a6;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+f0304a1f7d87ac413f43a815088895872be0045a33c5f830b4b392a7ce5b8c46;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+f307280077b2a60d991a68c5700cbc57fe0ab6ec005caba0b0bcca4dbc5a1e2f;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+fb506b8dd4025e247ac2fa12ffd46fd1cb6a06a138995a5cbda49074d567f615;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+fd2d9011ec860ba211d169063248d13d17425f210ff87a6c5a610b4704866339;Operation Lotus Blossom - PaloAlto - http://goo.gl/kAHB9t
+
+730a0e3daf0b54f065bdd2ca427fbe10e8d4e28646a5dc40cbcfb15e1702ed9a;Sofacy Bundestag http://linksfraktion.de/im-wortlaut/linke-will-transparenz-offenheit/
+5f6b2a0d1d966fc4f1ed292b46240767f4acb06c13512b0061b434ae2a692fa1;Sofacy Bundestag http://linksfraktion.de/im-wortlaut/linke-will-transparenz-offenheit/
+5130f600cd9a9cdc82d4bad938b20cbd2f699aadb76e7f3f1a93602330d9997d;Sofacy Bundestag http://linksfraktion.de/im-wortlaut/linke-will-transparenz-offenheit/
+566ab945f61be016bfd9e83cc1b64f783b9b8deb891e6d504d3442bc8281b092;Sofacy Bundestag http://linksfraktion.de/im-wortlaut/linke-will-transparenz-offenheit/
