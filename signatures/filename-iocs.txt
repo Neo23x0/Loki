@@ -314,3 +314,7 @@ Microsoft\\MediaPlayer\\updatewindws\.exe;100
 (Temp|Tmp|TEMP)\\Alsa\\doub\.tmp;60
 (Temp|Tmp|TEMP)\\muysf\\ipbuy.exe;70 
 \\Order Details\.xls\.pps;60
+
+# Sofacy - Malware Bundestag http://goo.gl/OtmPzq
+Windows\\winexesvc\.exe;70
+\\svchost\.exe\.exe;70
