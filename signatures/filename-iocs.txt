@@ -130,7 +130,6 @@ Windows\\mlan\.exe;80
 \\mxplay_installer\.exe;45
 \\pak\-[0-9]{3,}.exe$;45
 \\rundll\.exe$;45
-[^\s]\\windows\.exe$;45
 \\windowsservice\\starter\.exe$;45
 \\starter\.exe$;45
 \\wrar[0-9a-z]+\\.exe$;45

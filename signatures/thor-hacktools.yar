@@ -116,8 +116,10 @@ rule HackTool_Producers {
 	$a3 = "ntsecurity.nu"
 	$a4 = "gentilkiwi.com"
 	$a6 = "Marcus Murray"
-	$extension = /extension: \.(ini|xml)\n/
-	condition: 1 of ($a*) and not $extension
+	condition: 1 of ($a*) and 
+	not extension contains ".ini" and
+	not extension contains ".xml" and
+	not extension contains ".sqlite" 	
 }
 
 /* Disclosed hack tool set */
