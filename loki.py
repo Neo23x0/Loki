@@ -95,6 +95,9 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
                     # Get the file and path
                     filePath = os.path.join(root,filename)
 
+                    # Get Extension
+                    extension = os.path.splitext(filePath)[1].lower()
+
                     # Linux directory skip
                     if isLinux:
 
@@ -232,7 +235,9 @@ def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
                                 matches = rules.match(data=fileData,
                                                       externals= {
                                                           'filename': filename.lower(),
-                                                          'filepath': filePath.lower()
+                                                          'filepath': filePath.lower(),
+                                                          'extension': extension.lower(),
+                                                          'filetype': fileType.lower()
                                                       })
 
                                 # If matched
@@ -690,6 +695,8 @@ def initializeYaraRules():
     yaraRules = []
     filename_dummy = ""
     filepath_dummy = ""
+    extension_dummy = ""
+    filetype_dummy = ""
 
     try:
         for root, directories, files in scandir.walk(os.path.join(getApplicationPath(), "./signatures"), onerror=walkError, followlinks=False):
@@ -711,7 +718,9 @@ def initializeYaraRules():
                         try:
                             compiledRules = yara.compile(yaraRuleFile, externals= {
                                                               'filename': filename_dummy,
-                                                              'filepath': filepath_dummy
+                                                              'filepath': filepath_dummy,
+                                                              'extension': extension_dummy,
+                                                              'filetype': filetype_dummy
                                                           })
                             yaraRules.append(compiledRules)
                             log("INFO", "Initialized Yara rules from %s" % file)
@@ -958,7 +967,7 @@ def printWelcome():
     print "  "
     print "  (C) Florian Roth"
     print "  May 2015"
-    print "  Version 0.7.4"
+    print "  Version 0.7.5"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
