@@ -215,7 +215,9 @@ rule winlogon_ANOMALY {
 		$s1 = "AuthzAccessCheck failed" fullword
 		$s2 = "Windows Logon Application" fullword wide
 	condition:
-		filename == "winlogon.exe" and not 1 of ($s*) and not WINDOWS_UPDATE_BDC
+		filename == "winlogon.exe" and not 1 of ($s*) 
+		and not WINDOWS_UPDATE_BDC
+		and not filepath contains "Malwarebytes"
 }
 
 rule SndVol_ANOMALY {
