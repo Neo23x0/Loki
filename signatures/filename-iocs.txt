@@ -317,3 +317,27 @@ Microsoft\\MediaPlayer\\updatewindws\.exe;100
 # Sofacy - Malware Bundestag http://goo.gl/OtmPzq
 Windows\\winexesvc\.exe;70
 \\svchost\.exe\.exe;70
+
+# Wild Neutron File Names https://goo.gl/Qew6dT
+AppData\\Roaming\\FlashUtil\.exe;60
+AppData\\Roaming\\Acer\\LiveUpdater\.exe;60
+AppData\\Roaming\\Realtek\\RtlUpd\.exe;60
+ProgramData\\Realtek\\RtlUpd\.exe;60
+AppData\\Roaming\\sqlite3\.dll;60
+Windows\\winsession\.dll;60
+AppData\\appdata\\local\\temp\\teamviewer\\version9\\update\.exe;60
+Windows\\temp\\_dbg\.tmp;60
+Windows\\temp\\ok\.tmp;60
+indows\\temp\\debug\.txt;60
+indows\\syswow64\\mshtaex\.exe;60
+\\System32\\mshtaex\.exe;60
+\\System32\\wdigestEx\.dll;60
+\\System32\\dpcore16t\.dll;60
+\\System32\\iastor32\.exe;60
+\\System32\\mspool\.dll;60
+\\System32\\msvcse\.exe;60
+\\System32\\mspool\.exe;60
+C:\\Program Files (x86)\\LNVSuite\\LnrAuth\.dll;60
+C:\\Program Files (x86)\\LNVSuite\\LnrAuthSvc\.dll;60
+C:\\Program Files (x86)\\LNVSuite\\LnrUpdt\.exe;60
+C:\\Program Files (x86)\\LNVSuite\\LnrUpdtP\.exe;60
