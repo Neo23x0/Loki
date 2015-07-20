@@ -13,7 +13,14 @@ rule MiniDionis_readerView {
 		author = "Florian Roth"
 		reference = "http://www.kernelmode.info/forum/viewtopic.php?f=16&t=3950"
 		date = "2015-07-20"
-		hash = "ee5eb9d57c3611e91a27bb1fc2d0aaa6bbfa6c69ab16e65e7123c7c49d46f145"
+		/* Original Hash */
+		hash1 = "ee5eb9d57c3611e91a27bb1fc2d0aaa6bbfa6c69ab16e65e7123c7c49d46f145"
+		/* Derived Samples */
+		hash2 = "a713982d04d2048a575912a5fc37c93091619becd5b21e96f049890435940004"
+		hash3 = "88a40d5b679bccf9641009514b3d18b09e68b609ffaf414574a6eca6536e8b8f"
+		hash4 = "97d8725e39d263ed21856477ed09738755134b5c0d0b9ae86ebb1cdd4cdc18b7"
+		hash5 = "ed7abf93963395ce9c9cba83a864acb4ed5b6e57fd9a6153f0248b8ccc4fdb46"
+		hash6 = "56ac764b81eb216ebed5a5ad38e703805ba3e1ca7d63501ba60a1fb52c7ebb6e"
 	strings:
 		$s1 = "%ws_out%ws" fullword wide /* score: '8.00' */
 		$s2 = "dnlibsh" fullword ascii /* score: '7.00' */
