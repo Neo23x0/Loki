@@ -1,4 +1,4 @@
-APT_Liudoor {
+rule APT_Liudoor {
     meta:
         author = "RSA FirstWatch"
         date = "2015-07-23"
