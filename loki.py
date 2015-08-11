@@ -37,6 +37,9 @@ import datetime
 import platform
 import psutil
 import binascii
+import pylzma
+import zlib
+import struct
 from StringIO import StringIO
 from sets import Set
 from colorama import Fore, Back, Style
@@ -52,233 +55,519 @@ except Exception, e:
     print "Linux System - deactivating process memory check ..."
     isLinux= True
 
-# Predefined paths to skip (Linux platform)
-LINUX_PATH_SKIPS_START = Set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux" ])
-LINUX_PATH_SKIPS_END = Set(["/initctl"])
+class Loki():
+
+    # Predefined paths to skip (Linux platform)
+    LINUX_PATH_SKIPS_START = Set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux" ])
+    LINUX_PATH_SKIPS_END = Set(["/initctl"])
+
+    def __init__(self):
+
+        # Read IOCs -------------------------------------------------------
+        # File Name IOCs
+        ( self.filename_iocs, self.filename_ioc_desc ) = getFileNameIOCs(os.path.join(getApplicationPath(), "./signatures/filename-iocs.txt"))
+        log("INFO","File Name Characteristics initialized with %s regex patterns" % len(self.filename_iocs.keys()))
+
+        # Hash based IOCs
+        self.hashes = getHashes(os.path.join(getApplicationPath(), "./signatures/hash-iocs.txt"))
+        log("INFO","Malware Hashes initialized with %s hashes" % len(self.hashes.keys()))
+
+        # Hash based False Positives
+        self.false_hashes = getHashes(os.path.join(getApplicationPath(), "./signatures/falsepositive-hashes.txt"))
+        log("INFO","False Positive Hashes initialized with %s hashes" % len(self.false_hashes.keys()))
+
+        # Compile Yara Rules
+        self.rule_sets = initializeYaraRules()
 
 
-def scanPath(path, rule_sets, filename_iocs, hashes, false_hashes):
+    def scanPath(self, path):
 
-    # Startup
-    log("INFO","Scanning %s ...  " % path)
+        # Startup
+        log("INFO","Scanning %s ...  " % path)
 
-    # Counter
-    c = 0
+        # Counter
+        c = 0
 
-    # Get application path
-    appPath = getApplicationPath()
+        # Get application path
+        appPath = getApplicationPath()
 
-    # Linux excludes from mtab
-    if isLinux:
-        allExcludes = LINUX_PATH_SKIPS_START | Set(getExcludedMountpoints())
+        # Linux excludes from mtab
+        if isLinux:
+            allExcludes = self.LINUX_PATH_SKIPS_START | Set(getExcludedMountpoints())
 
-    for root, directories, files in scandir.walk(path, onerror=walkError, followlinks=False):
+        for root, directories, files in scandir.walk(path, onerror=walkError, followlinks=False):
 
-            if isLinux:
-                # Skip paths that start with ..
-                newDirectories = []
-                for dir in directories:
-                    skipIt = False
-                    completePath = os.path.join(root, dir)
-                    for skip in allExcludes:
-                        if completePath.startswith(skip):
-                            log("INFO", "Skipping %s directory" % skip)
-                            skipIt = True
-                    if not skipIt:
-                        newDirectories.append(dir)
-                directories[:] = newDirectories
+                if isLinux:
+                    # Skip paths that start with ..
+                    newDirectories = []
+                    for dir in directories:
+                        skipIt = False
+                        completePath = os.path.join(root, dir)
+                        for skip in allExcludes:
+                            if completePath.startswith(skip):
+                                log("INFO", "Skipping %s directory" % skip)
+                                skipIt = True
+                        if not skipIt:
+                            newDirectories.append(dir)
+                    directories[:] = newDirectories
 
-            # Loop through files
-            for filename in files:
-                try:
-
-                    # Get the file and path
-                    filePath = os.path.join(root,filename)
-
-                    # Get Extension
-                    extension = os.path.splitext(filePath)[1].lower()
-
-                    # Linux directory skip
-                    if isLinux:
-
-                        # Skip paths that end with ..
-                        for skip in LINUX_PATH_SKIPS_END:
-                            if filePath.endswith(skip):
-                                if LINUX_PATH_SKIPS_END[skip] == 0:
-                                    log("INFO", "Skipping %s element" % skip)
-                                    LINUX_PATH_SKIPS_END[skip] = 1
-
-                        # File mode
-                        mode = os.stat(filePath).st_mode
-                        if stat.S_ISCHR(mode) or stat.S_ISBLK(mode) or stat.S_ISFIFO(mode) or stat.S_ISLNK(mode) or stat.S_ISSOCK(mode):
-                            continue
-
-                    # Counter
-                    c += 1
-
-                    if not args.noindicator:
-                        printProgress(c)
-
-                    # Skip program directory
-                    # print appPath.lower() +" - "+ filePath.lower()
-                    if appPath.lower() in filePath.lower():
-                        log("DEBUG", "Skipping file in program directory FILE: %s" % filePath)
-                        continue
-
-                    fileSize = os.stat(filePath).st_size
-                    # print file_size
-
-                    # File Name Checks -------------------------------------------------
-                    for regex in filename_iocs.keys():
-                        match = re.search(r'%s' % regex, filePath)
-                        if match:
-                            description = filenameIOC_desc[regex]
-                            score = filename_iocs[regex]
-                            if score > 70:
-                                log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
-                            elif score > 40:
-                                log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
-
-                    # Access check (also used for magic header detection)
-                    firstBytes = ""
+                # Loop through files
+                for filename in files:
                     try:
-                        with open(filePath, 'rb') as f:
-                            firstBytes = f.read(4)
-                    except Exception, e:
-                        log("DEBUG", "Cannot open file %s (access denied)" % filePath)
 
-                    # Evaluate Type
-                    fileType = ""
-                    if firstBytes.startswith('\x4d\x5a'):
-                        fileType = "EXE"
-                    if firstBytes.startswith('\x4d\x44\x4d\x50'):
-                        fileType = "MDMP"
+                        # Get the file and path
+                        filePath = os.path.join(root,filename)
 
-                    # Set fileData to an empty value
-                    fileData = ""
+                        # Get Extension
+                        extension = os.path.splitext(filePath)[1].lower()
 
-                    # Evaluations -------------------------------------------------------
-                    # Evaluate size
-                    do_intense_check = True
-                    if fileSize > ( args.s * 1024):
-                         # Print files
-                        if args.printAll:
-                            log("INFO", "Checking %s" % filePath)
-                        do_hash_check = False
-                    else:
-                        if args.printAll:
-                            log("INFO", "Scanning %s" % filePath)
+                        # Linux directory skip
+                        if isLinux:
 
-                    # Some file types will force intense check
-                    if fileType == "MDMP":
-                        do_intense_check = True
+                            # Skip paths that end with ..
+                            for skip in self.LINUX_PATH_SKIPS_END:
+                                if filePath.endswith(skip):
+                                    if self.LINUX_PATH_SKIPS_END[skip] == 0:
+                                        log("INFO", "Skipping %s element" % skip)
+                                        self.LINUX_PATH_SKIPS_END[skip] = 1
 
-                    # Hash Check -------------------------------------------------------
-                    # Do the check
-                    md5 = "-"
-                    sha1 = "-"
-                    sha256 = "-"
-                    if do_intense_check:
+                            # File mode
+                            mode = os.stat(filePath).st_mode
+                            if stat.S_ISCHR(mode) or stat.S_ISBLK(mode) or stat.S_ISFIFO(mode) or stat.S_ISLNK(mode) or stat.S_ISSOCK(mode):
+                                continue
 
-                        fileData = readFileData(filePath)
-                        md5, sha1, sha256 = generateHashes(fileData)
+                        # Counter
+                        c += 1
 
-                        log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
+                        if not args.noindicator:
+                            printProgress(c)
 
-                        # False Positive Hash
-                        if md5 in false_hashes.keys() or sha1 in false_hashes.keys() or sha256 in false_hashes.keys():
+                        # Skip program directory
+                        # print appPath.lower() +" - "+ filePath.lower()
+                        if appPath.lower() in filePath.lower():
+                            log("DEBUG", "Skipping file in program directory FILE: %s" % filePath)
                             continue
 
-                        # Malware Hash
-                        matchType = None
-                        matchDesc = None
-                        matchHash = None
-                        if md5 in hashes.keys():
-                            matchType = "MD5"
-                            matchDesc = hashes[md5]
-                            matchHash = md5
-                        elif sha1 in hashes.keys():
-                            matchType = "SHA1"
-                            matchDesc = hashes[sha1]
-                            matchHash = sha1
-                        elif sha256 in hashes.keys():
-                            matchType = "SHA256"
-                            matchDesc = hashes[sha256]
-                            matchHash = sha256
+                        fileSize = os.stat(filePath).st_size
+                        # print file_size
 
-                        if matchType:
-                            log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
+                        # File Name Checks -------------------------------------------------
+                        for regex in self.filename_iocs.keys():
+                            match = re.search(r'%s' % regex, filePath)
+                            if match:
+                                description = self.filename_ioc_desc[regex]
+                                score = self.filename_iocs[regex]
+                                if score > 70:
+                                    log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
+                                elif score > 40:
+                                    log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
 
-                    # Regin .EVT FS Check
-                    if do_intense_check and len(fileData) > 11:
-
-                        # Check if file is Regin virtual .evt file system
-                        checkReginFS(fileData)
-
-                    # Yara Check -------------------------------------------------------
-                    # Size and type check
-                    if do_intense_check:
-
-                        # Read file data if hash check has been skipped
-                        if not fileData:
-                            fileData = readFileData(filePath)
-
-                        # Memory Dump Scan
-                        if fileType == "MDMP":
-                            log("INFO", "Scanning memory dump file %s" % filePath)
-
-                        # Scan with yara
+                        # Access check (also used for magic header detection)
+                        firstBytes = ""
                         try:
-                            for rules in rule_sets:
-
-                                # Yara Rule Match
-                                matches = rules.match(data=fileData,
-                                                      externals= {
-                                                          'filename': filename.lower(),
-                                                          'filepath': filePath.lower(),
-                                                          'extension': extension.lower(),
-                                                          'filetype': fileType.lower()
-                                                      })
-
-                                # If matched
-                                if matches:
-                                    for match in matches:
-
-                                        score = 70
-                                        description = "not set"
-
-                                        # Built-in rules have meta fields (cannot be expected from custom rules)
-                                        if hasattr(match, 'meta'):
-
-                                            if 'description' in match.meta:
-                                                description = match.meta['description']
-
-                                            # If a score is given
-                                            if 'score' in match.meta:
-                                                score = int(match.meta['score'])
-
-                                        # Hash string
-                                        hash_string = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
-
-                                        # Matching strings
-                                        matched_strings = ""
-                                        if hasattr(match, 'strings'):
-                                            # Get matching strings
-                                            matched_strings = getStringMatches(match.strings)
-
-                                        if score >= 70:
-                                            log("ALERT", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( match.rule, description, filePath, hash_string, matched_strings))
-
-                                        elif score >= 40:
-                                            log("WARNING", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( match.rule, description, filePath, hash_string, matched_strings))
-
+                            with open(filePath, 'rb') as f:
+                                firstBytes = f.read(4)
                         except Exception, e:
-                            if args.debug:
-                                traceback.print_exc()
+                            log("DEBUG", "Cannot open file %s (access denied)" % filePath)
 
+                        # Evaluate Type
+                        fileType = ""
+                        if firstBytes.startswith("\x4d\x5a"):
+                            fileType = "EXE"
+                        if firstBytes.startswith("\x4d\x44\x4d\x50"):
+                            fileType = "MDMP"
+                        if firstBytes.startswith('CWS'):
+                            fileType = "CWS"
+                        if firstBytes.startswith('ZWS'):
+                            fileType = "ZWS"
+
+                        # Set fileData to an empty value
+                        fileData = ""
+
+                        # Evaluations -------------------------------------------------------
+                        # Evaluate size
+                        do_intense_check = True
+                        if fileSize > ( args.s * 1024):
+                             # Print files
+                            if args.printAll:
+                                log("INFO", "Checking %s" % filePath)
+                            do_hash_check = False
+                        else:
+                            if args.printAll:
+                                log("INFO", "Scanning %s" % filePath)
+
+                        # Some file types will force intense check
+                        if fileType == "MDMP":
+                            do_intense_check = True
+
+                        # Hash Check -------------------------------------------------------
+                        # Do the check
+                        md5 = "-"
+                        sha1 = "-"
+                        sha256 = "-"
+                        if do_intense_check:
+
+                            fileData = readFileData(filePath)
+                            md5, sha1, sha256 = generateHashes(fileData)
+
+                            log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
+
+                            # False Positive Hash
+                            if md5 in self.false_hashes.keys() or sha1 in self.false_hashes.keys() or sha256 in self.false_hashes.keys():
+                                continue
+
+                            # Malware Hash
+                            matchType = None
+                            matchDesc = None
+                            matchHash = None
+                            if md5 in self.hashes.keys():
+                                matchType = "MD5"
+                                matchDesc = self.hashes[md5]
+                                matchHash = md5
+                            elif sha1 in self.hashes.keys():
+                                matchType = "SHA1"
+                                matchDesc = self.hashes[sha1]
+                                matchHash = sha1
+                            elif sha256 in self.hashes.keys():
+                                matchType = "SHA256"
+                                matchDesc = self.hashes[sha256]
+                                matchHash = sha256
+
+                            # Hash string
+                            hash_string = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
+
+                            if matchType:
+                                log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
+
+                        # Regin .EVT FS Check
+                        if do_intense_check and len(fileData) > 11 and args.reginfs:
+
+                            # Check if file is Regin virtual .evt file system
+                            checkReginFS(fileData, filePath)
+
+                        # Yara Check -------------------------------------------------------
+                        # Size and type check
+                        if do_intense_check:
+
+                            # Read file data if hash check has been skipped
+                            if not fileData:
+                                fileData = readFileData(filePath)
+
+                            # Memory Dump Scan
+                            if fileType == "MDMP":
+                                log("INFO", "Scanning memory dump file %s" % filePath)
+
+                            # Umcompressed SWF scan
+                            if fileType == "ZWS" or fileType == "CWS":
+                                log("INFO", "Scanning decompressed SWF file %s" % filePath)
+                                success, decompressedData = decompressSWFData(fileData)
+                                if success:
+                                   fileData = decompressedData
+
+                            # Scan the read data
+                            for (score, rule, description, matched_strings) in \
+                                    self.scanData(fileData, fileType, filename, filePath, extension):
+
+                                if score >= 70:
+                                    log("ALERT", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
+
+                                elif score >= 40:
+                                    log("WARNING", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
+
+
+                    except Exception, e:
+                        if args.debug:
+                            traceback.print_exc()
+
+
+    def scanData(self, fileData, fileType="-", fileName="-", filePath="-", extension="-"):
+
+        # Scan with yara
+        try:
+            for rules in self.rule_sets:
+
+                # Yara Rule Match
+                matches = rules.match(data=fileData,
+                                      externals={
+                                          'filename': fileName.lower(),
+                                          'filepath': filePath.lower(),
+                                          'extension': extension.lower(),
+                                          'filetype': fileType.lower(),
+                                      })
+
+                # If matched
+                if matches:
+                    for match in matches:
+
+                        score = 70
+                        description = "not set"
+
+                        # Built-in rules have meta fields (cannot be expected from custom rules)
+                        if hasattr(match, 'meta'):
+
+                            if 'description' in match.meta:
+                                description = match.meta['description']
+
+                            # If a score is given
+                            if 'score' in match.meta:
+                                score = int(match.meta['score'])
+
+                        # Matching strings
+                        matched_strings = ""
+                        if hasattr(match, 'strings'):
+                            # Get matching strings
+                            matched_strings = getStringMatches(match.strings)
+
+                        yield score, match.rule, description, matched_strings
+
+        except Exception, e:
+            if args.debug:
+                traceback.print_exc()
+
+    def scanProcesses(self):
+        # WMI Handler
+        c = wmi.WMI()
+        processes = c.Win32_Process()
+        t_systemroot = os.environ['SYSTEMROOT']
+
+        # WinInit PID
+        wininit_pid = 0
+        # LSASS Counter
+        lsass_count = 0
+
+        for process in processes:
+
+            try:
+
+                # Gather Process Information --------------------------------------
+                pid = process.ProcessId
+                name = process.Name
+                cmd = process.CommandLine
+                if not cmd:
+                    cmd = "N/A"
+                if not name:
+                    name = "N/A"
+                path = "none"
+                parent_pid = process.ParentProcessId
+                priority = process.Priority
+                ws_size = process.VirtualSize
+                if process.ExecutablePath:
+                    path = process.ExecutablePath
+                # Owner
+                try:
+                    owner_raw = process.GetOwner()
+                    owner = owner_raw[2]
                 except Exception, e:
-                    if args.debug:
-                        traceback.print_exc()
+                    owner = "unknown"
+                if not owner:
+                    owner = "unknown"
+
+            except Exception, e:
+                log("ALERT", "Error getting all process information. Did you run the scanner 'As Administrator'?")
+                continue
+
+            # Is parent to other processes - save PID
+            if name == "wininit.exe":
+                wininit_pid = pid
+
+            # Skip some PIDs ------------------------------------------------------
+            if pid == 0 or pid == 4:
+                log("INFO", "Skipping Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+                continue
+
+            # Skip own process ----------------------------------------------------
+            if os.getpid() == pid:
+                log("INFO", "Skipping LOKI Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+                continue
+
+            # Print info ----------------------------------------------------------
+            log("NOTICE", "Scanning Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+
+            # Special Checks ------------------------------------------------------
+            # better executable path
+            if not "\\" in cmd and path != "none":
+                cmd = path
+
+            # Skeleton Key Malware Process
+            if re.search(r'psexec .* [a-fA-F0-9]{32}', cmd, re.IGNORECASE):
+                log("WARNING", "Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd))
+
+            # File Name Checks -------------------------------------------------
+            for regex in self.filename_iocs.keys():
+                match = re.search(r'%s' % regex, cmd)
+                if match:
+                    description = self.filename_ioc_desc[regex]
+                    score = self.filename_iocs[regex]
+                    if score > 70:
+                        log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
+                    elif score > 40:
+                        log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
+
+            # Yara rule match
+            # only on processes with a small working set size
+            if int(ws_size) < ( 100 * 1048576 ): # 100 MB
+                try:
+                    alerts = []
+                    for rules in self.rule_sets:
+                        matches = rules.match(pid=pid)
+                        if matches:
+                            for match in matches:
+
+                                # Preset memory_rule
+                                memory_rule = 1
+
+                                # Built-in rules have meta fields (cannot be expected from custom rules)
+                                if hasattr(match, 'meta'):
+
+                                    # If a score is given
+                                    if 'memory' in match.meta:
+                                        memory_rule = int(match.meta['memory'])
+
+                                # If rule is meant to be applied to process memory as well
+                                if memory_rule == 1:
+
+                                    # print match.rule
+                                    alerts.append("Yara Rule MATCH: %s PID: %s NAME: %s CMD: %s" % ( match.rule, pid, name, cmd))
+
+                    if len(alerts) > 3:
+                        log("INFO", "Too many matches on process memory - most likely a false positive PID: %s NAME: %s CMD: %s" % (pid, name, cmd))
+                    elif len(alerts) > 0:
+                        for alert in alerts:
+                            log("ALERT", alert)
+                except Exception, e:
+                    log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
+            else:
+                log("DEBUG", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
+
+            ###############################################################
+            # THOR Process Anomaly Checks
+            # Source: Sysforensics http://goo.gl/P99QZQ
+
+            # Process: System
+            if name == "System" and not pid == 4:
+                log("WARNING", "System process without PID=4 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+
+            # Process: smss.exe
+            if name == "smss.exe" and not parent_pid == 4:
+                log("WARNING", "smss.exe parent PID is != 4 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+            if path != "none":
+                if name == "smss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
+                    log("WARNING", "smss.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+            if name == "smss.exe" and priority is not 11:
+                log("WARNING", "smss.exe priority is not 11 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+
+            # Process: csrss.exe
+            if path != "none":
+                if name == "csrss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
+                    log("WARNING", "csrss.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+            if name == "csrss.exe" and priority is not 13:
+                log("WARNING", "csrss.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+
+            # Process: wininit.exe
+            if path != "none":
+                if name == "wininit.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
+                    log("WARNING", "wininit.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+            if name == "wininit.exe" and priority is not 13:
+                log("NOTICE", "wininit.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+            # Is parent to other processes - save PID
+            if name == "wininit.exe":
+                wininit_pid = pid
+
+            # Process: services.exe
+            if path != "none":
+                if name == "services.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
+                    log("WARNING", "services.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+            if name == "services.exe" and priority is not 9:
+                log("WARNING", "services.exe priority is not 9 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+            if wininit_pid > 0:
+                if name == "services.exe" and not parent_pid == wininit_pid:
+                    log("WARNING", "services.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+
+            # Process: lsass.exe
+            if path != "none":
+                if name == "lsass.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
+                    log("WARNING", "lsass.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+            if name == "lsass.exe" and priority is not 9:
+                log("WARNING", "lsass.exe priority is not 9 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+            if wininit_pid > 0:
+                if name == "lsass.exe" and not parent_pid == wininit_pid:
+                    log("WARNING", "lsass.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+            # Only a single lsass process is valid - count occurrences
+            if name == "lsass.exe":
+                lsass_count += 1
+                if lsass_count > 1:
+                    log("WARNING", "lsass.exe count is higher than 1 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+
+            # Process: svchost.exe
+            if path is not "none":
+                if name == "svchost.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
+                    log("WARNING", "svchost.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+            if name == "svchost.exe" and priority is not 8:
+                log("NOTICE", "svchost.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+            if name == "svchost.exe" and not ( owner.upper().startswith("NT ") or owner.upper().startswith("NET") or owner.upper().startswith("LO") or owner.upper().startswith("SYSTEM") ):
+                log("WARNING", "svchost.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+
+            if name == "svchost.exe" and not " -k " in cmd and cmd != "N/A":
+                print cmd
+                log("WARNING", "svchost.exe process does not contain a -k in its command line PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+
+            # Process: lsm.exe
+            if path != "none":
+                if name == "lsm.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
+                    log("WARNING", "lsm.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+            if name == "lsm.exe" and priority is not 8:
+                log("NOTICE", "lsm.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+            if name == "lsm.exe" and not ( owner.startswith("NT ") or owner.startswith("LO") or owner.startswith("SYSTEM") ):
+                log("WARNING", "lsm.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+            if wininit_pid > 0:
+                if name == "lsm.exe" and not parent_pid == wininit_pid:
+                    log("WARNING", "lsm.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+
+            # Process: winlogon.exe
+            if name == "winlogon.exe" and priority is not 13:
+                log("WARNING", "winlogon.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    str(pid), name, owner, cmd, path))
+            if re.search("(Windows 7|Windows Vista)", getPlatformFull()):
+                if name == "winlogon.exe" and parent_pid > 0:
+                    for proc in processes:
+                        if parent_pid == proc.ProcessId:
+                            log("WARNING", "winlogon.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s PARENTPID: %s" % (
+                                str(pid), name, owner, cmd, path, str(parent_pid)))
+
+            # Process: explorer.exe
+            if path != "none":
+                if name == "explorer.exe" and not t_systemroot.lower() in path.lower():
+                    log("WARNING", "explorer.exe path is not %%SYSTEMROOT%% PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        str(pid), name, owner, cmd, path))
+            if name == "explorer.exe" and parent_pid > 0:
+                for proc in processes:
+                    if parent_pid == proc.ProcessId:
+                        log("NOTICE", "explorer.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                            str(pid), name, owner, cmd, path))
+
 
 
 def readFileData(filePath):
@@ -291,282 +580,6 @@ def readFileData(filePath):
         log("DEBUG", "Cannot open file %s (access denied)" % filePath)
     finally:
         return fileData
-
-
-def checkReginFS(fileData):
-
-    # Code section by Paul Rascagneres, G DATA Software
-    # Adapted to work with the fileData already read to avoid
-    # further disk I/O
-
-    fp = StringIO(fileData)
-    SectorSize=fp.read(2)[::-1]
-    MaxSectorCount=fp.read(2)[::-1]
-    MaxFileCount=fp.read(2)[::-1]
-    FileTagLength=fp.read(1)[::-1]
-    CRC32custom=fp.read(4)[::-1]
-
-    # original code:
-    # fp.close()
-    # fp = open(filePath, 'r')
-
-    # replaced with the following:
-    fp.seek(0)
-
-    data=fp.read(0x7)
-    crc = binascii.crc32(data, 0x45)
-    crc2 = '%08x' % (crc & 0xffffffff)
-
-    log("DEBUG", "Regin FS Check CRC2: %s" % crc2.encode('hex'))
-
-    if CRC32custom.encode('hex') == crc2:
-        log("ALERT", "Regin Virtual Filesystem MATCH: %s" % filePath)
-
-
-def scanProcesses(rule_sets, filename_iocs):
-    # WMI Handler
-    c = wmi.WMI()
-    processes = c.Win32_Process()
-    t_systemroot = os.environ['SYSTEMROOT']
-
-    # WinInit PID
-    wininit_pid = 0
-    # LSASS Counter
-    lsass_count = 0
-
-    for process in processes:
-
-        try:
-
-            # Gather Process Information --------------------------------------
-            pid = process.ProcessId
-            name = process.Name
-            cmd = process.CommandLine
-            if not cmd:
-                cmd = "N/A"
-            if not name:
-                name = "N/A"
-            path = "none"
-            parent_pid = process.ParentProcessId
-            priority = process.Priority
-            ws_size = process.VirtualSize
-            if process.ExecutablePath:
-                path = process.ExecutablePath
-            # Owner
-            try:
-                owner_raw = process.GetOwner()
-                owner = owner_raw[2]
-            except Exception, e:
-                owner = "unknown"
-            if not owner:
-                owner = "unknown"
-
-        except Exception, e:
-            log("ALERT", "Error getting all process information. Did you run the scanner 'As Administrator'?")
-            continue
-
-        # Is parent to other processes - save PID
-        if name == "wininit.exe":
-            wininit_pid = pid
-
-        # Skip some PIDs ------------------------------------------------------
-        if pid == 0 or pid == 4:
-            log("INFO", "Skipping Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
-            continue
-
-        # Skip own process ----------------------------------------------------
-        if os.getpid() == pid:
-            log("INFO", "Skipping LOKI Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
-            continue
-
-        # Print info ----------------------------------------------------------
-        log("NOTICE", "Scanning Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
-
-        # Special Checks ------------------------------------------------------
-        # better executable path
-        if not "\\" in cmd and path != "none":
-            cmd = path
-
-        # Skeleton Key Malware Process
-        if re.search(r'psexec .* [a-fA-F0-9]{32}', cmd, re.IGNORECASE):
-            log("WARNING", "Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd))
-
-        # File Name Checks -------------------------------------------------
-        for regex in filename_iocs.keys():
-            match = re.search(r'%s' % regex, cmd)
-            if match:
-                description = filenameIOC_desc[regex]
-                score = filename_iocs[regex]
-                if score > 70:
-                    log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
-                elif score > 40:
-                    log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
-
-        # Yara rule match
-        # only on processes with a small working set size
-        if int(ws_size) < ( 100 * 1048576 ): # 100 MB
-            try:
-                alerts = []
-                for rules in rule_sets:
-                    matches = rules.match(pid=pid)
-                    if matches:
-                        for match in matches:
-
-                            # Preset memory_rule
-                            memory_rule = 1
-
-                            # Built-in rules have meta fields (cannot be expected from custom rules)
-                            if hasattr(match, 'meta'):
-
-                                # If a score is given
-                                if 'memory' in match.meta:
-                                    memory_rule = int(match.meta['memory'])
-
-                            # If rule is meant to be applied to process memory as well
-                            if memory_rule == 1:
-
-                                # print match.rule
-                                alerts.append("Yara Rule MATCH: %s PID: %s NAME: %s CMD: %s" % ( match.rule, pid, name, cmd))
-
-                if len(alerts) > 3:
-                    log("INFO", "Too many matches on process memory - most likely a false positive PID: %s NAME: %s CMD: %s" % (pid, name, cmd))
-                elif len(alerts) > 0:
-                    for alert in alerts:
-                        log("ALERT", alert)
-            except Exception, e:
-                log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
-        else:
-            log("DEBUG", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
-
-        ###############################################################
-        # THOR Process Anomaly Checks
-        # Source: Sysforensics http://goo.gl/P99QZQ
-
-        # Process: System
-        if name == "System" and not pid == 4:
-            log("WARNING", "System process without PID=4 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-
-        # Process: smss.exe
-        if name == "smss.exe" and not parent_pid == 4:
-            log("WARNING", "smss.exe parent PID is != 4 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-        if path != "none":
-            if name == "smss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                log("WARNING", "smss.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-        if name == "smss.exe" and priority is not 11:
-            log("WARNING", "smss.exe priority is not 11 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-
-        # Process: csrss.exe
-        if path != "none":
-            if name == "csrss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                log("WARNING", "csrss.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-        if name == "csrss.exe" and priority is not 13:
-            log("WARNING", "csrss.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-
-        # Process: wininit.exe
-        if path != "none":
-            if name == "wininit.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                log("WARNING", "wininit.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-        if name == "wininit.exe" and priority is not 13:
-            log("NOTICE", "wininit.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-        # Is parent to other processes - save PID
-        if name == "wininit.exe":
-            wininit_pid = pid
-
-        # Process: services.exe
-        if path != "none":
-            if name == "services.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                log("WARNING", "services.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-        if name == "services.exe" and priority is not 9:
-            log("WARNING", "services.exe priority is not 9 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-        if wininit_pid > 0:
-            if name == "services.exe" and not parent_pid == wininit_pid:
-                log("WARNING", "services.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-
-        # Process: lsass.exe
-        if path != "none":
-            if name == "lsass.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                log("WARNING", "lsass.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-        if name == "lsass.exe" and priority is not 9:
-            log("WARNING", "lsass.exe priority is not 9 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-        if wininit_pid > 0:
-            if name == "lsass.exe" and not parent_pid == wininit_pid:
-                log("WARNING", "lsass.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-        # Only a single lsass process is valid - count occurrences
-        if name == "lsass.exe":
-            lsass_count += 1
-            if lsass_count > 1:
-                log("WARNING", "lsass.exe count is higher than 1 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-
-        # Process: svchost.exe
-        if path is not "none":
-            if name == "svchost.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                log("WARNING", "svchost.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-        if name == "svchost.exe" and priority is not 8:
-            log("NOTICE", "svchost.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-        if name == "svchost.exe" and not ( owner.upper().startswith("NT ") or owner.upper().startswith("NET") or owner.upper().startswith("LO") or owner.upper().startswith("SYSTEM") ):
-            log("WARNING", "svchost.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-
-        if name == "svchost.exe" and not " -k " in cmd and cmd != "N/A":
-            print cmd
-            log("WARNING", "svchost.exe process does not contain a -k in its command line PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-
-        # Process: lsm.exe
-        if path != "none":
-            if name == "lsm.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                log("WARNING", "lsm.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-        if name == "lsm.exe" and priority is not 8:
-            log("NOTICE", "lsm.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-        if name == "lsm.exe" and not ( owner.startswith("NT ") or owner.startswith("LO") or owner.startswith("SYSTEM") ):
-            log("WARNING", "lsm.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-        if wininit_pid > 0:
-            if name == "lsm.exe" and not parent_pid == wininit_pid:
-                log("WARNING", "lsm.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-
-        # Process: winlogon.exe
-        if name == "winlogon.exe" and priority is not 13:
-            log("WARNING", "winlogon.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                str(pid), name, owner, cmd, path))
-        if re.search("(Windows 7|Windows Vista)", getPlatformFull()):
-            if name == "winlogon.exe" and parent_pid > 0:
-                for proc in processes:
-                    if parent_pid == proc.ProcessId:
-                        log("WARNING", "winlogon.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s PARENTPID: %s" % (
-                            str(pid), name, owner, cmd, path, str(parent_pid)))
-
-        # Process: explorer.exe
-        if path != "none":
-            if name == "explorer.exe" and not t_systemroot.lower() in path.lower():
-                log("WARNING", "explorer.exe path is not %%SYSTEMROOT%% PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
-        if name == "explorer.exe" and parent_pid > 0:
-            for proc in processes:
-                if parent_pid == proc.ProcessId:
-                    log("NOTICE", "explorer.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
-
 
 def generateHashes(filedata):
     try:
@@ -635,6 +648,29 @@ def getExcludedMountpoints():
 
     mtab.close()
     return excludes
+
+
+def decompressSWFData(in_data):
+    try:
+        ver = in_data[3]
+
+        if in_data[0] == 'C':
+            # zlib SWF
+            decompressData = zlib.decompress(in_data[8:])
+        elif in_data[0] == 'Z':
+            # lzma SWF
+            decompressData = pylzma.decompress(in_data[12:])
+        elif in_data[0] == 'F':
+            # uncompressed SWF
+            decompressData = in_data[8:]
+
+        header = list(struct.unpack("<8B", in_data[0:8]))
+        header[0] = ord('F')
+        return True, struct.pack("<8B", *header) + decompressData
+
+    except Exception, e:
+        traceback.print_exc()
+        return False, "Decompression error"
 
 
 def getFileNameIOCs(ioc_file):
@@ -797,6 +833,36 @@ def getStringMatches(strings):
         return matching_strings.lstrip(" ")
     except:
         traceback.print_exc()
+
+
+def checkReginFS(fileData, filePath):
+
+    # Code section by Paul Rascagneres, G DATA Software
+    # Adapted to work with the fileData already read to avoid
+    # further disk I/O
+
+    fp = StringIO(fileData)
+    SectorSize=fp.read(2)[::-1]
+    MaxSectorCount=fp.read(2)[::-1]
+    MaxFileCount=fp.read(2)[::-1]
+    FileTagLength=fp.read(1)[::-1]
+    CRC32custom=fp.read(4)[::-1]
+
+    # original code:
+    # fp.close()
+    # fp = open(filePath, 'r')
+
+    # replaced with the following:
+    fp.seek(0)
+
+    data=fp.read(0x7)
+    crc = binascii.crc32(data, 0x45)
+    crc2 = '%08x' % (crc & 0xffffffff)
+
+    log("DEBUG", "Regin FS Check CRC2: %s" % crc2.encode('hex'))
+
+    if CRC32custom.encode('hex') == crc2:
+        log("ALERT", "Regin Virtual Filesystem MATCH: %s" % filePath)
 
 
 def removeBinaryZero(string):
@@ -966,8 +1032,8 @@ def printWelcome():
     print "  Simple IOC Scanner"
     print "  "
     print "  (C) Florian Roth"
-    print "  May 2015"
-    print "  Version 0.7.5"
+    print "  August 2015"
+    print "  Version 0.8.0"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
@@ -991,6 +1057,7 @@ if __name__ == '__main__':
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
+    parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
     parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
@@ -1012,6 +1079,9 @@ if __name__ == '__main__':
 
     log("INFO", "LOKI - Starting Loki Scan on %s" % t_hostname)
 
+    # Loki
+    loki = Loki()
+
     # Check if admin
     isAdmin = False
     if not isLinux:
@@ -1031,24 +1101,11 @@ if __name__ == '__main__':
     if not isLinux:
         setNice()
 
-    # Read IOCs -------------------------------------------------------
-    # File Name IOCs
-    ( filenameIOC_sigs, filenameIOC_desc ) = getFileNameIOCs(os.path.join(getApplicationPath(), "./signatures/filename-iocs.txt"))
-    log("INFO","File Name Characteristics initialized with %s regex patterns" % len(filenameIOC_sigs.keys()))
-    # Hash based IOCs
-    fileHashes = getHashes(os.path.join(getApplicationPath(), "./signatures/hash-iocs.txt"))
-    log("INFO","Malware Hashes initialized with %s hashes" % len(fileHashes.keys()))
-    # Hash based False Positives
-    falseHashes = getHashes(os.path.join(getApplicationPath(), "./signatures/falsepositive-hashes.txt"))
-    log("INFO","False Positive Hashes initialized with %s hashes" % len(falseHashes.keys()))
-    # Compile Yara Rules
-    yaraRules = initializeYaraRules()
-
     # Scan Processes --------------------------------------------------
     resultProc = False
     if not args.noprocscan and not isLinux:
         if isAdmin:
-            scanProcesses(yaraRules, filenameIOC_sigs)
+            loki.scanProcesses()
         else:
             log("NOTICE", "Skipping process memory check. User has no admin rights.")
 
@@ -1060,7 +1117,7 @@ if __name__ == '__main__':
 
     resultFS = False
     if not args.nofilescan:
-        scanPath(defaultPath, yaraRules, filenameIOC_sigs, fileHashes, falseHashes)
+        loki.scanPath(defaultPath)
 
     # Result ----------------------------------------------------------
     print " "
