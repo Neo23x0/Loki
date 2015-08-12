@@ -6792,3 +6792,128 @@ f7a842eb1364d1269b40a344510068e8;Threat Group 3390 Sample http://snip.ly/giNB
 8dacca7dd24844935fcd34e6c9609416;Threat Group 3390 Sample http://snip.ly/giNB
 7cffd679599fb8579abae8f32ce49026;Threat Group 3390 Sample http://snip.ly/giNB
 462fd01302bc40624a44b7960d2894cd;Threat Group 3390 Sample http://snip.ly/giNB
+
+d6365edf2d3afa6d155273814b494eb3;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - PlugX
+b4522d05a9e3a034af481a7797a445ea;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J -    
+f8b3ad7d73ba432bc3e7084f9f7dee7d;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - 
+2f9e44e0cef0b4a67b7be74bc11b8e7d;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - T5000
+cfbcb83f8515bd169afd0b22488b4430;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - gh0st - sycmentec
+0d50bd8299de64525a78845957456959;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - HTTBrowser
+6739542294a6cc5ca4f272181944b943;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - HTTPBrowser
+6c260baa4367578778b1ecdaaab37ef9;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - Plugx
+21C46A95329F3F16050A7421841A92C4;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - 
+b3bc4b5f17fd5f87ec3714c6587f6906;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - 
+af0d365a2c59709ece196037740bdb81;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - T5000
+973e0c922eb07aad530d8a1de19c7755;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - sednit
+faf53a283d4a171dc30385e3c42c487c;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - T5000
+80d234dc62c1bcec1466986f1224c205;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - gh0st - sycmentec
+07aa0340ec0bfbb2e59f1cc50382c055;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - Emdivi
+2a11d0f22b413d990437892ec6fb28a9;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - Emdivi
+76808c0ade61f433bb5be83a4464eb9e;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - EvilGrab
+5e223ef669acd309697c90cac2f9953f;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - isspace
+e43e14f6d1159ea9564bc23982b9afd5;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - PlugX
+5a22e5aee4da2fe363b77f1351265a00;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - PlugX
+ebf157abfe656d87e43a63ca91507996;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - PlugX
+6102F79567DFF2168BEB17ABA31E058F;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - 
+53fe5d10530fbef13da8c9e706a72944;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - 
+79f71f327a38c2226d36a21172d2922b;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - pivy
+d6f7a1995a869dbd411c2b46364a6dc9;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - California roll
+930525ac7bed4f1bf8bbf0a775dbea25;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - linopid
+8571bac93788be4be74562e2e0c628d5;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - crimeware?
+1b47a8c22f9905afe05fad41ff3c9e4d;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - gh0st
+ec9f882d7eb9b60431e56ed4e25f3830;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - Plugx
+b8ec26fcf2a4e855e04278f9bf5dc877;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - Unk .net malware
+87e01acad9b67953881c7d1b8e28d003;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - California roll
+cd7a5bead5b5cff37f72a8b6e666d8e3;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - Unknown
+bdc263c93bc5bd0d31a517be469a697a;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - pivy
+d22f5f14f573293231f04cc53fee17f9;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - pivy
+4dfdfd203eeeff75474b8f431b6e0750;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - California roll
+5dd963d33c31cdb9131d86241e754d81;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - California roll
+
+8839D3E213717B88A06FFC48827929891A10059E;Potao Malware http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+5C52996D9F68BA6FD0DA4982F238EC1D279A7F9D;Potao Malware http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+CE7F96B400ED51F7FAB465DEA26147984F2627BD;Potao Malware http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+D88C7C1E465BEA7BF7377C08FBA3AAF77CBF485F;Potao Malware http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+81EFB422ED2631C739CC690D0A9A5EAA07897531;Potao Malware http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+18DDCD41DCCFBBD904347EA75BC9413FF6DC8786;Potao Malware http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+E400E1DD983FD94E29345AABC77FADEB3F43C219;Potao Malware http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+EB86615F539E35A8D3E4838949382D09743502BF;Potao Malware http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+52E59CD4C864FBFC9902A144ED5E68C9DED45DEB;Potao Malware http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+642BE4B2A87B47E77814744D154094392E413AB1;Potao Malware http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+FBB399568E0A3B2E461A4EB3268ABDF07F3D5764;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+4D5E0808A03A75BFE8202E3A6D2920EDDBFC7774;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+BCC5A0CE0BCDFEA2FD1D64B5529EAC7309488273;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+F8BCDAD02DA2E0223F45F15DA4FBAB053E73CF6E;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+2CDD6AABB71FDB244BAA313EBBA13F06BCAD2612;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+9BE3800B49E84E0C014852977557F21BCDE2A775;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+4AC999A1C54AE6F54803023DC0FCF126CB77C854;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+59C07E5D69181E6C3AFA7593E26D33383722D6C5;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+E15834263F2A6CCAE07D106A71B99FE80A5F744B;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+A62E69EF1E4F4D48E2920572B9176AEDB0EEB1C6;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+900AD432B4CB2F2790FFEB0590B0A8348D9E60EB;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+856802E0BD4A774CFFFE5134D249508D89DCDA58;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+A655020D606CA180E056A5B2C2F72F94E985E9DB;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+94BBF39FFF09B3A62A583C7D45A00B2492102DD7;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+F347DA9AAD52B717641AD3DD96925AB634CEB572;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+A4D685FCA8AFE9885DB75282516006F5BC56C098;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+CC9BDBE37CBAF0CC634076950FD32D9A377DE650;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+B0413EA5C5951C57EA7201DB8BB1D8C5EF42AA1E;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+0AE4E6E6FA1B1F8161A74525D4CB5A1808ABFAF4;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+EC0563CDE3FFAFF424B97D7EB692847132344127;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+639560488A75A9E3D35E4C0D9C4934295072DD89;Potae Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+850C9F3B14F895AAA97A85AE147F07C9770FB4C7;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+BB0500A24853E404AD6CA708813F926B90B38468;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+71A5DA3CCB4347FE785C6BFFF7B741AF80B76091;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+7664C490160858EC8CFC8203F88D354AEA1CFE43;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+92A459E759320447E1FA7B0E48328AB2C20B2C64;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+BB7A089BAE3A4AF44FB9B053BB703239E03C036E;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+DB966220463DB87C2C51C19303B3A20F4577D632;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+37A3E77BFA6CA1AFBD0AF7661655815FB1D3DA83;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+181E9BCA23484156CAE005F421629DA56B5CC6B5;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+A96B3D31888D267D7488417AFE68671EB4F568BD;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+224A07F002E8DFB3F2B615B3FA71166CF1A61B6D;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+5D4724FBA02965916A15A50A6937CDB6AB609FDD;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+8BE74605D90ED762310241828340900D4B502358;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+5BE1AC1515DA2397A7C52A8B1DF384DD938FA714;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+56F6AC6197CE9CC774F72DF948B414EED576B6C3;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+F6F290A95D68373DA813782EF4723E39524D048B;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+48904399F7726B9ADF7F28C07B0599717F741B8B;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+791ECF11C04470E9EA881549AEBD1DDED3E4A5CA;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+E2B2B2C8FB1996F3A4A4E3CEE09028437A5284AE;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+5B30ECFD47988A77556FE6C0C0B950510052C91E;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+4EE82934F24E348696F1C813C24797618286A70C;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+B80A90B39FBA705F86676C5CC3E0DECA225D57FF;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+971A69547C5BC9B711A3BB6F6F2C5E3A46BF7B29;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+C1D8BE765ADCF76E5CCB2CF094191C0FEC4BF085;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+2531F40A1D9E50793D04D245FD6185AAEBCC54F4;Potao Malware USB spreader http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+D8837002A04F4C93CC3B857F6A42CED6C9F3B882;Potao Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+BA5AD566A28D7712E0A64899D4675C06139F3FF0;Potao Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+FF6F6DCBEDC24D22541013D2273C63B5F0F19FE9;Potao Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+76DA7B4ABC9B711AB1EF87B97C61DD895E508232;Potao Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+855CA024AFBA0DC09D336A0896318D5CC47F03A6;Potao Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+12240271E928979AB2347C29B5599D6AC7CD6B8E;Potao Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+A9CB079EF49CEE35BF68AC80534CBFB5FA443780;Potao Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+1B278A1A5E109F32B526660087AEA99FB8D89403;Potao Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+4332A5AD314616D9319C248D41C7D1A709124DB2;Potao Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+5BEA9423DB6D0500920578C12CB127CBAFDD125E;Potao Malware Dropper http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+2341139A0BC4BB80F5EFCE63A97AA9B5E818E79D;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+8BD2C45DE1BA7A7FD27E43ABD35AE30E0D5E03BC;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+54FEDCDB0D0F47453DD65373378D037844E813D0;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+CC3ECFB822D09CBB37916D7087EB032C1EE81AEE;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+F1C9BC7B1D3FD3D9D96ECDE3A46DFC3C33BBCD2B;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+9654B6EA49B7FEC4F92683863D10C045764CCA86;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+526C3263F63F9470D08C6BA23E68F030E76CAAF3;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+E6D2EF05CEDCD4ABF1D8E3BCAF48B768EAC598D7;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+CEBAB498E6FB1A324C84BA267A7BF5D9DF1CF264;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+324B65C4291696D5C6C29B299C2849261F816A08;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+C96C29252E24B3EEC5A21C29F7D9D30198F89232;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+CDDDE7D44EFE12B7252EA300362CF5898BDC5013;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+84A70CDC24B68207F015D6308FE5AD13DDABB771;Potao Malware Plugins http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+82F48D7787BDE5B7DEC046CBEF99963EEEB821A7;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+9666AF44FAFC37E074B79455D347C2801218D9EA;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+C02878A69EFDE20F049BC380DAE10133C32E9CC9;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+7FBABEA446206991945FB4586AEE93B61AF1B341;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+DCBD43CFE2F490A569E1C3DD6BCA6546074FD2A1;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+422B350371B3666A0BD0D56AEAAD5DEC6BD7C0D0;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+88D703ADDB26ACB7FBE35EC04D7B1AA6DE982241;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+86E3276B03F9B92B47D441BCFBB913C6C4263BFE;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
