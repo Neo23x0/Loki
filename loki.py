@@ -1084,11 +1084,9 @@ def removeNonAscii(string, stripit=False):
 
 
 def getSyslogTimestamp():
-    date_obj = datetime.datetime.now()
-    date_str = date_obj.strftime("%b %d %H:%M:%S")
-    daymod = re.compile('^([A-Z][a-z][a-z]) 0([0-9])')
-    date_str_mod = daymod.sub(r"\1  \2", date_str)
-    return date_str_mod
+    date_obj = datetime.datetime.utcnow()
+    date_str = date_obj.strftime("%Y%m%dT%H:%M:%SZ")
+    return date_str
 
 
 # MAIN ################################################################
