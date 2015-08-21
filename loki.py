@@ -40,6 +40,7 @@ import binascii
 import pylzma
 import zlib
 import struct
+import socket
 from StringIO import StringIO
 from sets import Set
 from colorama import Fore, Back, Style
@@ -63,6 +64,7 @@ class Loki():
     filename_ioc_desc = {}
     hashes = {}
     false_hashes = {}
+    c2_server = {}
 
     # Predefined paths to skip (Linux platform)
     LINUX_PATH_SKIPS_START = Set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux" ])
@@ -78,9 +80,14 @@ class Loki():
         self.getFileNameIOCs(self.ioc_path)
         logger.log("INFO","File Name Characteristics initialized with %s regex patterns" % len(self.filename_iocs.keys()))
 
+        # C2 based IOCs (all files in iocs that contain 'c2')
+        self.getC2s(self.ioc_path)
+        logger.log("INFO","C2 server indicators initialized with %s elements" % len(self.c2_server.keys()))
+
         # Hash based IOCs (all files in iocs that contain 'hash')
         self.getHashes(self.ioc_path)
         logger.log("INFO","Malware Hashes initialized with %s hashes" % len(self.hashes.keys()))
+
 
         # Hash based False Positives (all files in iocs that contain 'hash' and 'falsepositive')
         self.getHashes(self.ioc_path, false_positive=True)
@@ -382,16 +389,16 @@ class Loki():
 
             # Skip some PIDs ------------------------------------------------------
             if pid == 0 or pid == 4:
-                logger.log("INFO", "Skipping Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+                logger.log("INFO", "Skipping Process PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
                 continue
 
             # Skip own process ----------------------------------------------------
             if os.getpid() == pid:
-                logger.log("INFO", "Skipping LOKI Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+                logger.log("INFO", "Skipping LOKI Process PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
                 continue
 
             # Print info ----------------------------------------------------------
-            logger.log("NOTICE", "Scanning Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+            logger.log("INFO", "Scanning Process PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
 
             # Special Checks ------------------------------------------------------
             # better executable path
@@ -448,6 +455,10 @@ class Loki():
                     logger.log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
             else:
                 logger.log("DEBUG", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
+
+            ###############################################################
+            # THOR Process Connection Checks
+            self.getProcessConnections(process)
 
             ###############################################################
             # THOR Process Anomaly Checks
@@ -577,6 +588,117 @@ class Loki():
                     if parent_pid == proc.ProcessId:
                         logger.log("NOTICE", "explorer.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                             str(pid), name, owner, cmd, path))
+
+    def getProcessConnections(self, process):
+        try:
+
+            # Limits
+            MAXIMUM_CONNECTIONS = 20
+
+            # Counter
+            connection_count = 0
+
+            # Pid from process
+            pid = process.ProcessId
+            name = process.Name
+
+            # Get psutil info about the process
+            p = psutil.Process(pid)
+
+            # print "Checking connections of %s" % process.Name
+            for x in p.get_connections():
+
+                # Evaluate a usable command line to check
+                try:
+                    command = process.CommandLine
+                except Exception:
+                    command = p.cmdline()
+
+                if x.status == 'LISTEN':
+                    connection_count += 1
+                    logger.log("NOTICE","Listening process PID: %s NAME: %s COMMAND: %s IP: %s PORT: %s" % (
+                        str(pid), name, command, str(x.local_address[0]), str(x.local_address[1]) ))
+                    if str(x.local_address[1]) == "0":
+                        logger.log("WARNING",
+                            "Listening on Port 0 PID: %s NAME: %s COMMAND: %s  IP: %s PORT: %s" % (
+                                str(pid), name, command, str(x.local_address[0]), str(x.local_address[1]) ))
+
+                if x.status == 'ESTABLISHED':
+
+                    # Lookup Remote IP
+                    # Geo IP Lookup removed
+
+                    # Check keyword in remote address
+                    is_match, description = self.checkC2(str(x.remote_address[0]))
+                    if is_match:
+                        logger.log("ALERT",
+                            "Malware Domain/IP match in remote address PID: %s NAME: %s COMMAND: %s IP: %s PORT: %s" % (
+                                str(pid), name, command, str(x.remote_address[0]), str(x.remote_address[1])))
+
+                    # Full list
+                    connection_count += 1
+                    logger.log("NOTICE", "Established conenction PID: %s NAME: %s COMMAND: %s LIP: %s LPORT: %s RIP: %s RPORT: %s" % (
+                        str(pid), name, command, str(x.local_address[0]), str(x.local_address[1]), str(x.remote_address[0]), str(x.remote_address[1]) ))
+
+                # Maximum connection output
+                if connection_count > MAXIMUM_CONNECTIONS:
+                    logger.log("NOTICE", "Connection output threshold reached. Output truncated.")
+                    return
+
+        except Exception, e:
+            if args.debug:
+                traceback.print_exc()
+            logger.log("INFO",
+                "Process %s does not exist anymore or cannot be accessed" % str(pid))
+
+    def checkC2(self, remote_system):
+        # IP - exact match
+        if is_ip(remote_system):
+            for c2 in self.c2_server:
+                if c2 == remote_system:
+                    return True, self.c2_server
+        # Domain - remote system contains c2
+        # e.g. evildomain.com and dga1.evildomain.com
+        else:
+            for c2 in self.c2_server:
+                if c2 in remote_system:
+                    return True, self.c2_server
+
+        return False,""
+
+    def getC2s(self, ioc_directory):
+
+        try:
+            for ioc_filename in os.listdir(ioc_directory):
+                if 'c2' in ioc_filename:
+                    with open(os.path.join(ioc_directory, ioc_filename), 'r') as file:
+                        lines = file.readlines()
+
+                        for line in lines:
+                            try:
+                                # Comments and empty lines
+                                if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
+                                    continue
+
+                                # Split the IOC line
+                                row = line.split(';')
+                                c2 = row[0]
+                                comment = row[1].rstrip(" ").rstrip("\n")
+
+                                # Check length
+                                if len(c2) < 4:
+                                    logger.log("NOTICE","C2 server definition is suspiciously short - will not add %s" %c2)
+                                    continue
+
+                                # Add to the LOKI iocs
+                                self.c2_server[c2.lower()] = comment
+
+                            except Exception,e:
+                                logger.log("ERROR", "Cannot read line: %s" % line)
+
+        except Exception, e:
+            traceback.print_exc()
+            logger.log("ERROR", "Error reading Hash file: %s" % ioc_filename)
 
     def getFileNameIOCs(self, ioc_directory):
 
@@ -847,7 +969,7 @@ class LokiLogger():
         print "  "
         print "  (C) Florian Roth"
         print "  August 2015"
-        print "  Version 0.9.2"
+        print "  Version 0.10.0"
         print "  "
         print "  DISCLAIMER - USE AT YOUR OWN RISK"
         print "  "
@@ -866,6 +988,15 @@ def readFileData(filePath):
         logger.log("DEBUG", "Cannot open file %s (access denied)" % filePath)
     finally:
         return fileData
+
+
+def is_ip(string):
+    try:
+        socket.inet_aton(string)
+        return True
+    except socket.error:
+        return False
+
 
 def generateHashes(filedata):
     try:

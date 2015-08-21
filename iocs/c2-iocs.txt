@@ -1,0 +1,30 @@
+#
+# LOKI C2 IOCs
+# This file contains C2 server and decription
+#
+# FORMAT -----------------------------------------------------------------------
+#
+# C2;COMMENT
+#
+# EXAMPLES ---------------------------------------------------------------------
+#
+# 112.22.33.234;APT Case XYZ http://url.com/12345
+# evildomain.info;AV company report XYZ http://web.url/
+
+suroot.com;FireEye Operation Snowman https://goo.gl/x1v7mT
+58.64.143.244;FireEye Operation Snowman https://goo.gl/x1v7mT
+effers.com;FireEye Operation Snowman https://goo.gl/x1v7mT
+118.99.60.142;FireEye Operation Snowman https://goo.gl/x1v7mT
+58.64.200.178;FireEye Operation Snowman https://goo.gl/x1v7mT
+58.64.200.179;FireEye Operation Snowman https://goo.gl/x1v7mT
+103.20.192.4;FireEye Operation Snowman https://goo.gl/x1v7mT
+58.64.199.22;FireEye Operation Snowman https://goo.gl/x1v7mT
+58.64.199.25;FireEye Operation Snowman https://goo.gl/x1v7mT
+180.150.228.102;FireEye Operation Snowman https://goo.gl/x1v7mT
+111.118.21.105;FireEye Operation Snowman https://goo.gl/x1v7mT
+me.scieron.com;;FireEye Operation Snowman https://goo.gl/x1v7mT
+cht.blankchair.com;;FireEye Operation Snowman https://goo.gl/x1v7mT
+ali.blankchair.com;;FireEye Operation Snowman https://goo.gl/x1v7mT
+dll.freshdns.org;;FireEye Operation Snowman https://goo.gl/x1v7mT
+rt.blankchair.com;;FireEye Operation Snowman https://goo.gl/x1v7mT
+book.flnet.org;;FireEye Operation Snowman https://goo.gl/x1v7mT
