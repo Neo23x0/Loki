@@ -69,6 +69,10 @@ If you want to build it yourself:
 - [psutil](https://pypi.python.org/pypi/psutil) : process checks
 - [pywin32](http://sourceforge.net/projects/pywin32/) : path conversions (PyInstaller [issue](https://github.com/pyinstaller/pyinstaller/issues/1282); Windows only)
 
+Requirements for the OTX downloader:
+
+- [OTX Python SDK](https://github.com/AlienVault-Labs/OTX-Python-SDK)
+
 ## Usage
 
     usage: loki.exe [-h] [-p path] [-s kilobyte] [--printAll] [--noprocscan]
@@ -85,6 +89,26 @@ If you want to build it yourself:
       --nofilescan   Skip the file scan
       --noindicator  Do not show a progress indicator
       --debug        Debug output
+
+## Signature and IOCs
+
+Since version 0.9 the Yara signatures reside in the './signatures' subfolder and the IOC files for hashes and filenames are stored in the './iocs' folder. All '.yar' files placed in the './signatures' folder will be initialized together with the rule set that is already included. Use the 'score' value to define the level of the message upon a signature match.
+
+You can add hash and filename IOCs by adding files to the './iocs' subfolder. All hash IOCs and filename IOC files must be in the format used by LOKI. (see the default files)
+
+For Hash IOCs (divided by newline; hash type is detected automatically)
+```
+Hash;Description [Reference]
+```
+
+For Filename IOCs (divided by newline)
+```
+Filename as Regex;Description [Reference]
+```
+
+### Open Threat Exchange (OTX) Downloader
+
+It's a simple script that downloads your subscribed events/iocs from [Alienvault OTX](https://otx.alienvault.com/pulse/55d6657667db8c7bb9cb5af6/) and stores them in the correct format in the './iocs' subfolder. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no preformance impact)
 
 ## Screenshots
 
