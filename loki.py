@@ -76,15 +76,15 @@ class Loki():
         # Read IOCs -------------------------------------------------------
         # File Name IOCs (all files in iocs that contain 'filename')
         self.getFileNameIOCs(self.ioc_path)
-        log("INFO","File Name Characteristics initialized with %s regex patterns" % len(self.filename_iocs.keys()))
+        logger.log("INFO","File Name Characteristics initialized with %s regex patterns" % len(self.filename_iocs.keys()))
 
         # Hash based IOCs (all files in iocs that contain 'hash')
         self.getHashes(self.ioc_path)
-        log("INFO","Malware Hashes initialized with %s hashes" % len(self.hashes.keys()))
+        logger.log("INFO","Malware Hashes initialized with %s hashes" % len(self.hashes.keys()))
 
         # Hash based False Positives (all files in iocs that contain 'hash' and 'falsepositive')
         self.getHashes(self.ioc_path, false_positive=True)
-        log("INFO","False Positive Hashes initialized with %s hashes" % len(self.false_hashes.keys()))
+        logger.log("INFO","False Positive Hashes initialized with %s hashes" % len(self.false_hashes.keys()))
 
         # Compile Yara Rules
         self.initializeYaraRules()
@@ -93,7 +93,7 @@ class Loki():
     def scanPath(self, path):
 
         # Startup
-        log("INFO","Scanning %s ...  " % path)
+        logger.log("INFO","Scanning %s ...  " % path)
 
         # Counter
         c = 0
@@ -115,7 +115,7 @@ class Loki():
                         completePath = os.path.join(root, dir)
                         for skip in allExcludes:
                             if completePath.startswith(skip):
-                                log("INFO", "Skipping %s directory" % skip)
+                                logger.log("INFO", "Skipping %s directory" % skip)
                                 skipIt = True
                         if not skipIt:
                             newDirectories.append(dir)
@@ -138,7 +138,7 @@ class Loki():
                             for skip in self.LINUX_PATH_SKIPS_END:
                                 if filePath.endswith(skip):
                                     if self.LINUX_PATH_SKIPS_END[skip] == 0:
-                                        log("INFO", "Skipping %s element" % skip)
+                                        logger.log("INFO", "Skipping %s element" % skip)
                                         self.LINUX_PATH_SKIPS_END[skip] = 1
 
                             # File mode
@@ -155,7 +155,7 @@ class Loki():
                         # Skip program directory
                         # print appPath.lower() +" - "+ filePath.lower()
                         if appPath.lower() in filePath.lower():
-                            log("DEBUG", "Skipping file in program directory FILE: %s" % filePath)
+                            logger.log("DEBUG", "Skipping file in program directory FILE: %s" % filePath)
                             continue
 
                         fileSize = os.stat(filePath).st_size
@@ -168,9 +168,9 @@ class Loki():
                                 description = self.filename_ioc_desc[regex]
                                 score = self.filename_iocs[regex]
                                 if score > 70:
-                                    log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
+                                    logger.log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
                                 elif score > 40:
-                                    log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
+                                    logger.log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
 
                         # Access check (also used for magic header detection)
                         firstBytes = ""
@@ -178,7 +178,7 @@ class Loki():
                             with open(filePath, 'rb') as f:
                                 firstBytes = f.read(4)
                         except Exception, e:
-                            log("DEBUG", "Cannot open file %s (access denied)" % filePath)
+                            logger.log("DEBUG", "Cannot open file %s (access denied)" % filePath)
 
                         # Evaluate Type
                         fileType = ""
@@ -200,11 +200,11 @@ class Loki():
                         if fileSize > ( args.s * 1024):
                              # Print files
                             if args.printAll:
-                                log("INFO", "Checking %s" % filePath)
+                                logger.log("INFO", "Checking %s" % filePath)
                             do_hash_check = False
                         else:
                             if args.printAll:
-                                log("INFO", "Scanning %s" % filePath)
+                                logger.log("INFO", "Scanning %s" % filePath)
 
                         # Some file types will force intense check
                         if fileType == "MDMP":
@@ -220,7 +220,7 @@ class Loki():
                             fileData = readFileData(filePath)
                             md5, sha1, sha256 = generateHashes(fileData)
 
-                            log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
+                            logger.log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
 
                             # False Positive Hash
                             if md5 in self.false_hashes.keys() or sha1 in self.false_hashes.keys() or sha256 in self.false_hashes.keys():
@@ -247,7 +247,7 @@ class Loki():
                             hash_string = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
 
                             if matchType:
-                                log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
+                                logger.log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
 
                         # Regin .EVT FS Check
                         if do_intense_check and len(fileData) > 11 and args.reginfs:
@@ -265,11 +265,11 @@ class Loki():
 
                             # Memory Dump Scan
                             if fileType == "MDMP":
-                                log("INFO", "Scanning memory dump file %s" % filePath)
+                                logger.log("INFO", "Scanning memory dump file %s" % filePath)
 
                             # Umcompressed SWF scan
                             if fileType == "ZWS" or fileType == "CWS":
-                                log("INFO", "Scanning decompressed SWF file %s" % filePath)
+                                logger.log("INFO", "Scanning decompressed SWF file %s" % filePath)
                                 success, decompressedData = decompressSWFData(fileData)
                                 if success:
                                    fileData = decompressedData
@@ -279,10 +279,10 @@ class Loki():
                                     self.scanData(fileData, fileType, filename, filePath, extension):
 
                                 if score >= 70:
-                                    log("ALERT", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
+                                    logger.log("ALERT", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
 
                                 elif score >= 40:
-                                    log("WARNING", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
+                                    logger.log("WARNING", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
 
 
                     except Exception, e:
@@ -373,7 +373,7 @@ class Loki():
                     owner = "unknown"
 
             except Exception, e:
-                log("ALERT", "Error getting all process information. Did you run the scanner 'As Administrator'?")
+                logger.log("ALERT", "Error getting all process information. Did you run the scanner 'As Administrator'?")
                 continue
 
             # Is parent to other processes - save PID
@@ -382,16 +382,16 @@ class Loki():
 
             # Skip some PIDs ------------------------------------------------------
             if pid == 0 or pid == 4:
-                log("INFO", "Skipping Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+                logger.log("INFO", "Skipping Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
                 continue
 
             # Skip own process ----------------------------------------------------
             if os.getpid() == pid:
-                log("INFO", "Skipping LOKI Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+                logger.log("INFO", "Skipping LOKI Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
                 continue
 
             # Print info ----------------------------------------------------------
-            log("NOTICE", "Scanning Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+            logger.log("NOTICE", "Scanning Process - PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
 
             # Special Checks ------------------------------------------------------
             # better executable path
@@ -400,7 +400,7 @@ class Loki():
 
             # Skeleton Key Malware Process
             if re.search(r'psexec .* [a-fA-F0-9]{32}', cmd, re.IGNORECASE):
-                log("WARNING", "Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd))
+                logger.log("WARNING", "Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd))
 
             # File Name Checks -------------------------------------------------
             for regex in self.filename_iocs.keys():
@@ -409,16 +409,16 @@ class Loki():
                     description = self.filename_ioc_desc[regex]
                     score = self.filename_iocs[regex]
                     if score > 70:
-                        log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
+                        logger.log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
                     elif score > 40:
-                        log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
+                        logger.log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
 
             # Yara rule match
             # only on processes with a small working set size
             if int(ws_size) < ( 100 * 1048576 ): # 100 MB
                 try:
                     alerts = []
-                    for rules in self.rule_sets:
+                    for rules in self.yara_rules:
                         matches = rules.match(pid=pid)
                         if matches:
                             for match in matches:
@@ -440,14 +440,14 @@ class Loki():
                                     alerts.append("Yara Rule MATCH: %s PID: %s NAME: %s CMD: %s" % ( match.rule, pid, name, cmd))
 
                     if len(alerts) > 3:
-                        log("INFO", "Too many matches on process memory - most likely a false positive PID: %s NAME: %s CMD: %s" % (pid, name, cmd))
+                        logger.log("INFO", "Too many matches on process memory - most likely a false positive PID: %s NAME: %s CMD: %s" % (pid, name, cmd))
                     elif len(alerts) > 0:
                         for alert in alerts:
-                            log("ALERT", alert)
+                            logger.log("ALERT", alert)
                 except Exception, e:
-                    log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
+                    logger.log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
             else:
-                log("DEBUG", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
+                logger.log("DEBUG", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
 
             ###############################################################
             # THOR Process Anomaly Checks
@@ -455,37 +455,37 @@ class Loki():
 
             # Process: System
             if name == "System" and not pid == 4:
-                log("WARNING", "System process without PID=4 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("WARNING", "System process without PID=4 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
 
             # Process: smss.exe
             if name == "smss.exe" and not parent_pid == 4:
-                log("WARNING", "smss.exe parent PID is != 4 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("WARNING", "smss.exe parent PID is != 4 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
             if path != "none":
                 if name == "smss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    log("WARNING", "smss.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "smss.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
             if name == "smss.exe" and priority is not 11:
-                log("WARNING", "smss.exe priority is not 11 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("WARNING", "smss.exe priority is not 11 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
 
             # Process: csrss.exe
             if path != "none":
                 if name == "csrss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    log("WARNING", "csrss.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "csrss.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
             if name == "csrss.exe" and priority is not 13:
-                log("WARNING", "csrss.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("WARNING", "csrss.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
 
             # Process: wininit.exe
             if path != "none":
                 if name == "wininit.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    log("WARNING", "wininit.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "wininit.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
             if name == "wininit.exe" and priority is not 13:
-                log("NOTICE", "wininit.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("NOTICE", "wininit.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
             # Is parent to other processes - save PID
             if name == "wininit.exe":
@@ -494,88 +494,88 @@ class Loki():
             # Process: services.exe
             if path != "none":
                 if name == "services.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    log("WARNING", "services.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "services.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
             if name == "services.exe" and priority is not 9:
-                log("WARNING", "services.exe priority is not 9 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("WARNING", "services.exe priority is not 9 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
             if wininit_pid > 0:
                 if name == "services.exe" and not parent_pid == wininit_pid:
-                    log("WARNING", "services.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "services.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
 
             # Process: lsass.exe
             if path != "none":
                 if name == "lsass.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    log("WARNING", "lsass.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "lsass.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
             if name == "lsass.exe" and priority is not 9:
-                log("WARNING", "lsass.exe priority is not 9 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("WARNING", "lsass.exe priority is not 9 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
             if wininit_pid > 0:
                 if name == "lsass.exe" and not parent_pid == wininit_pid:
-                    log("WARNING", "lsass.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "lsass.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
             # Only a single lsass process is valid - count occurrences
             if name == "lsass.exe":
                 lsass_count += 1
                 if lsass_count > 1:
-                    log("WARNING", "lsass.exe count is higher than 1 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "lsass.exe count is higher than 1 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
 
             # Process: svchost.exe
             if path is not "none":
                 if name == "svchost.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    log("WARNING", "svchost.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "svchost.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
             if name == "svchost.exe" and priority is not 8:
-                log("NOTICE", "svchost.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("NOTICE", "svchost.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
             if name == "svchost.exe" and not ( owner.upper().startswith("NT ") or owner.upper().startswith("NET") or owner.upper().startswith("LO") or owner.upper().startswith("SYSTEM") ):
-                log("WARNING", "svchost.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("WARNING", "svchost.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
 
             if name == "svchost.exe" and not " -k " in cmd and cmd != "N/A":
                 print cmd
-                log("WARNING", "svchost.exe process does not contain a -k in its command line PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("WARNING", "svchost.exe process does not contain a -k in its command line PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
 
             # Process: lsm.exe
             if path != "none":
                 if name == "lsm.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    log("WARNING", "lsm.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "lsm.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
             if name == "lsm.exe" and priority is not 8:
-                log("NOTICE", "lsm.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("NOTICE", "lsm.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
             if name == "lsm.exe" and not ( owner.startswith("NT ") or owner.startswith("LO") or owner.startswith("SYSTEM") ):
-                log("WARNING", "lsm.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("WARNING", "lsm.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
             if wininit_pid > 0:
                 if name == "lsm.exe" and not parent_pid == wininit_pid:
-                    log("WARNING", "lsm.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "lsm.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
 
             # Process: winlogon.exe
             if name == "winlogon.exe" and priority is not 13:
-                log("WARNING", "winlogon.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                logger.log("WARNING", "winlogon.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
             if re.search("(Windows 7|Windows Vista)", getPlatformFull()):
                 if name == "winlogon.exe" and parent_pid > 0:
                     for proc in processes:
                         if parent_pid == proc.ProcessId:
-                            log("WARNING", "winlogon.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s PARENTPID: %s" % (
+                            logger.log("WARNING", "winlogon.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s PARENTPID: %s" % (
                                 str(pid), name, owner, cmd, path, str(parent_pid)))
 
             # Process: explorer.exe
             if path != "none":
                 if name == "explorer.exe" and not t_systemroot.lower() in path.lower():
-                    log("WARNING", "explorer.exe path is not %%SYSTEMROOT%% PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                    logger.log("WARNING", "explorer.exe path is not %%SYSTEMROOT%% PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                         str(pid), name, owner, cmd, path))
             if name == "explorer.exe" and parent_pid > 0:
                 for proc in processes:
                     if parent_pid == proc.ProcessId:
-                        log("NOTICE", "explorer.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                        logger.log("NOTICE", "explorer.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                             str(pid), name, owner, cmd, path))
 
     def getFileNameIOCs(self, ioc_directory):
@@ -621,11 +621,11 @@ class Loki():
                                 self.filename_ioc_desc[regex] = desc
 
                             except Exception, e:
-                                log("ERROR", "Error reading line: %s" % line)
+                                logger.log("ERROR", "Error reading line: %s" % line)
 
         except Exception, e:
             traceback.print_exc()
-            log("ERROR", "Error reading File IOC file: %s" % ioc_filename)
+            logger.log("ERROR", "Error reading File IOC file: %s" % ioc_filename)
 
     def initializeYaraRules(self):
 
@@ -660,21 +660,21 @@ class Loki():
                                                                   'filetype': filetype_dummy
                                                               })
                                 yaraRules.append(compiledRules)
-                                log("INFO", "Initialized Yara rules from %s" % file)
+                                logger.log("INFO", "Initialized Yara rules from %s" % file)
                             except Exception, e:
-                                log("ERROR", "Error in Yara file: %s" % file)
+                                logger.log("ERROR", "Error in Yara file: %s" % file)
                                 if args.debug:
                                     traceback.print_exc()
 
                     except Exception, e:
-                        log("ERROR", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
+                        logger.log("ERROR", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
                         if args.debug:
                             traceback.print_exc()
 
             self.yara_rules = yaraRules
 
         except Exception, e:
-            log("ERROR", "Error reading signature folder /signatures/")
+            logger.log("ERROR", "Error reading signature folder /signatures/")
             if args.debug:
                 traceback.print_exc()
 
@@ -707,12 +707,143 @@ class Loki():
                                     else:
                                         self.hashes[hash.lower()] = comment
                             except Exception,e:
-                                log("ERROR", "Cannot read line: %s" % line)
+                                logger.log("ERROR", "Cannot read line: %s" % line)
 
         except Exception, e:
             traceback.print_exc()
-            log("ERROR", "Error reading Hash file: %s" % ioc_filename)
+            logger.log("ERROR", "Error reading Hash file: %s" % ioc_filename)
 
+# Logger Class -----------------------------------------------------------------
+class LokiLogger():
+
+    log_file = "loki.log"
+    csv = False
+    hostname = "NOTSET"
+    alerts = 0
+    warnings = 0
+
+    def __init__(self, log_file, hostname, csv):
+        self.log_file = log_file
+        self.hostname = hostname
+        self.csv = args.csv
+
+        # Welcome
+        if not self.csv:
+            self.print_welcome()
+
+    def log(self, mes_type, message):
+
+        if not args.debug and mes_type == "DEBUG":
+            return
+
+        # Counter
+        if mes_type == "ALERT":
+            self.alerts += 1
+        if mes_type == "WARNING":
+            self.warnings += 1
+
+        # to stdout
+        self.log_to_stdout(message, mes_type)
+
+        # to file
+        self.log_to_file(message, mes_type)
+
+    def log_to_stdout(self, message, mes_type):
+
+        # Prepare Message
+        message = removeNonAsciiDrop(message)
+
+        if self.csv:
+            print "{0},{1},{2},{3}".format(getSyslogTimestamp(),self.hostname,mes_type,message)
+
+        else:
+
+            try:
+
+                key_color = Fore.WHITE
+                base_color = Fore.WHITE+Back.BLACK
+                high_color = Fore.WHITE+Back.BLACK
+
+                if mes_type == "NOTICE":
+                    base_color = Fore.CYAN+''+Back.BLACK
+                    high_color = Fore.BLACK+''+Back.CYAN
+                elif mes_type == "INFO":
+                    base_color = Fore.GREEN+''+Back.BLACK
+                    high_color = Fore.BLACK+''+Back.GREEN
+                elif mes_type == "WARNING":
+                    base_color = Fore.YELLOW+''+Back.BLACK
+                    high_color = Fore.BLACK+''+Back.YELLOW
+                elif mes_type == "ALERT":
+                    base_color = Fore.RED+''+Back.BLACK
+                    high_color = Fore.BLACK+''+Back.RED
+                elif mes_type == "DEBUG":
+                    base_color = Fore.WHITE+''+Back.BLACK
+                    high_color = Fore.BLACK+''+Back.WHITE
+                elif mes_type == "ERROR":
+                    base_color = Fore.MAGENTA+''+Back.BLACK
+                    high_color = Fore.WHITE+''+Back.MAGENTA
+                elif mes_type == "RESULT":
+                    if "clean" in message.lower():
+                        high_color = Fore.BLACK+Back.GREEN
+                        base_color = Fore.GREEN+Back.BLACK
+                    elif "suspicious" in message.lower():
+                        high_color = Fore.BLACK+Back.YELLOW
+                        base_color = Fore.YELLOW+Back.BLACK
+                    else:
+                        high_color = Fore.BLACK+Back.RED
+                        base_color = Fore.RED+Back.BLACK
+
+                # Colorize Type Word at the beginning of the line
+                type_colorer = re.compile(r'([A-Z]{3,})', re.VERBOSE)
+                mes_type = type_colorer.sub(high_color+r'[\1]'+base_color, mes_type)
+                # Colorize Key Words
+                colorer = re.compile('([A-Z_0-9]{2,}:)\s', re.VERBOSE)
+                message = colorer.sub(key_color+Style.BRIGHT+r'\1 '+base_color+Style.NORMAL, message)
+                # Break Line before REASONS
+                linebreaker = re.compile('(MD5:|SHA1:|SHA256:|MATCHES:|FILE:)', re.VERBOSE)
+                message = linebreaker.sub(r'\n\1', message)
+
+                # Print to console
+                if mes_type == "RESULT":
+                    res_message = "\b\b%s %s" % (mes_type, message)
+                    print base_color,res_message,Back.BLACK
+                    print Fore.WHITE,Style.NORMAL
+                else:
+                    print base_color,"\b\b%s %s" % (mes_type, message),Back.BLACK,Fore.WHITE,Style.NORMAL
+
+            except Exception, e:
+                traceback.print_exc()
+                print "Cannot print to cmd line - formatting error"
+
+    def log_to_file(self, message, mes_type):
+        try:
+            # Write to file
+            with open(self.log_file, "a") as logfile:
+                if self.csv:
+                    logfile.write("{0},{1},{2},{3}\n".format(getSyslogTimestamp(),self.hostname,mes_type,message))
+                else:
+                    logfile.write("%s %s LOKI: %s\n" % (getSyslogTimestamp(), self.hostname, message))
+        except Exception, e:
+            traceback.print_exc()
+            print "Cannot print to log file {0}".format(self.log_file)
+
+    def print_welcome(self):
+        print Back.GREEN + " ".ljust(79) + Back.BLACK
+        print "  "
+        print "   " + Back.GREEN + "  " + Back.BLACK + "      " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK
+        print "   " + Back.GREEN + "  " + Back.BLACK + "      " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "    " + Back.BLACK + "    " + Back.GREEN + "  " + Back.BLACK
+        print "   " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK
+        print "  "
+        print "  Simple IOC Scanner"
+        print "  "
+        print "  (C) Florian Roth"
+        print "  August 2015"
+        print "  Version 0.9.1"
+        print "  "
+        print "  DISCLAIMER - USE AT YOUR OWN RISK"
+        print "  "
+        print Back.GREEN + " ".ljust(79) + Back.BLACK
+        print Fore.WHITE+''+Back.BLACK
 
 # Helper Functions -------------------------------------------------------------
 
@@ -723,7 +854,7 @@ def readFileData(filePath):
         with open(filePath, 'rb') as f:
             fileData = f.read()
     except Exception, e:
-        log("DEBUG", "Cannot open file %s (access denied)" % filePath)
+        logger.log("DEBUG", "Cannot open file %s (access denied)" % filePath)
     finally:
         return fileData
 
@@ -743,7 +874,7 @@ def generateHashes(filedata):
 
 def walkError(err):
     if "Error 3" in str(err):
-        log("ERROR", str(err))
+        logger.log("ERROR", str(err))
     if args.debug:
         traceback.print_exc()
 
@@ -775,11 +906,11 @@ def setNice():
     try:
         pid = os.getpid()
         p = psutil.Process(pid)
-        log("INFO", "Setting LOKI process with PID: %s to priority IDLE" % pid)
+        logger.log("INFO", "Setting LOKI process with PID: %s to priority IDLE" % pid)
         p.set_nice(psutil.IDLE_PRIORITY_CLASS)
         return 1
     except Exception, e:
-        log("ERROR", "Error setting nice value of THOR process")
+        logger.log("ERROR", "Error setting nice value of THOR process")
         return 0
 
 
@@ -867,10 +998,10 @@ def checkReginFS(fileData, filePath):
     crc = binascii.crc32(data, 0x45)
     crc2 = '%08x' % (crc & 0xffffffff)
 
-    log("DEBUG", "Regin FS Check CRC2: %s" % crc2.encode('hex'))
+    logger.log("DEBUG", "Regin FS Check CRC2: %s" % crc2.encode('hex'))
 
     if CRC32custom.encode('hex') == crc2:
-        log("ALERT", "Regin Virtual Filesystem MATCH: %s" % filePath)
+        logger.log("ALERT", "Regin Virtual Filesystem MATCH: %s" % filePath)
 
 
 def removeBinaryZero(string):
@@ -908,89 +1039,10 @@ def getApplicationPath():
             # print application_path
             application_path = win32api.GetLongPathName(application_path)
         #if args.debug:
-        #    log("DEBUG", "Application Path: %s" % application_path)
+        #    logger.log("DEBUG", "Application Path: %s" % application_path)
         return application_path
     except Exception, e:
-        log("ERROR","Error while evaluation of application path")
-
-
-def log(mes_type, message):
-
-    global alerts, warnings
-
-    if not args.debug and mes_type == "DEBUG":
-        return
-
-    # Counter
-    if mes_type == "ALERT":
-        alerts += 1
-    if mes_type == "WARNING":
-        warnings += 1
-
-    # Prepare Message
-    orig_message = message
-    message = removeNonAsciiDrop(message)
-
-    try:
-
-        key_color = Fore.WHITE
-        base_color = Fore.WHITE+Back.BLACK
-        high_color = Fore.WHITE+Back.BLACK
-
-        if mes_type == "NOTICE":
-            base_color = Fore.CYAN+''+Back.BLACK
-            high_color = Fore.BLACK+''+Back.CYAN
-        elif mes_type == "INFO":
-            base_color = Fore.GREEN+''+Back.BLACK
-            high_color = Fore.BLACK+''+Back.GREEN
-        elif mes_type == "WARNING":
-            base_color = Fore.YELLOW+''+Back.BLACK
-            high_color = Fore.BLACK+''+Back.YELLOW
-        elif mes_type == "ALERT":
-            base_color = Fore.RED+''+Back.BLACK
-            high_color = Fore.BLACK+''+Back.RED
-        elif mes_type == "DEBUG":
-            base_color = Fore.WHITE+''+Back.BLACK
-            high_color = Fore.BLACK+''+Back.WHITE
-        elif mes_type == "ERROR":
-            base_color = Fore.MAGENTA+''+Back.BLACK
-            high_color = Fore.WHITE+''+Back.MAGENTA
-        elif mes_type == "RESULT":
-            if "clean" in message.lower():
-                high_color = Fore.BLACK+Back.GREEN
-                base_color = Fore.GREEN+Back.BLACK
-            elif "suspicious" in message.lower():
-                high_color = Fore.BLACK+Back.YELLOW
-                base_color = Fore.YELLOW+Back.BLACK
-            else:
-                high_color = Fore.BLACK+Back.RED
-                base_color = Fore.RED+Back.BLACK
-
-        # Colorize Type Word at the beginning of the line
-        type_colorer = re.compile(r'([A-Z]{3,})', re.VERBOSE)
-        mes_type = type_colorer.sub(high_color+r'[\1]'+base_color, mes_type)
-        # Colorize Key Words
-        colorer = re.compile('([A-Z_0-9]{2,}:)\s', re.VERBOSE)
-        message = colorer.sub(key_color+Style.BRIGHT+r'\1 '+base_color+Style.NORMAL, message)
-        # Break Line before REASONS
-        linebreaker = re.compile('(MD5:|SHA1:|SHA256:|MATCHES:|FILE:)', re.VERBOSE)
-        message = linebreaker.sub(r'\n\1', message)
-
-        # Print to console
-        if mes_type == "RESULT":
-            res_message = "\b\b%s %s" % (mes_type, message)
-            print base_color,res_message,Back.BLACK
-            print Fore.WHITE,Style.NORMAL
-        else:
-            print base_color,"\b\b%s %s" % (mes_type, message),Back.BLACK,Fore.WHITE,Style.NORMAL
-
-        # Write to file
-        with open(args.l, "a") as logfile:
-            logfile.write("%s %s LOKI: %s\n" % (getSyslogTimestamp(), t_hostname, orig_message))
-
-    except Exception, e:
-        traceback.print_exc()
-        print "Cannot print log file"
+        logger.log("ERROR","Error while evaluation of application path")
 
 
 def removeNonAscii(string, stripit=False):
@@ -1030,31 +1082,8 @@ def getSyslogTimestamp():
     return date_str_mod
 
 
-def printWelcome():
-    print Back.GREEN + " ".ljust(79) + Back.BLACK
-    print "  "
-    print "   " + Back.GREEN + "  " + Back.BLACK + "      " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK
-    print "   " + Back.GREEN + "  " + Back.BLACK + "      " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "    " + Back.BLACK + "    " + Back.GREEN + "  " + Back.BLACK
-    print "   " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK
-    print "  "
-    print "  Simple IOC Scanner"
-    print "  "
-    print "  (C) Florian Roth"
-    print "  August 2015"
-    print "  Version 0.9.0"
-    print "  "
-    print "  DISCLAIMER - USE AT YOUR OWN RISK"
-    print "  "
-    print Back.GREEN + " ".ljust(79) + Back.BLACK
-    print Fore.WHITE+''+Back.BLACK
-
-
 # MAIN ################################################################
 if __name__ == '__main__':
-
-    # Counters --------------------------------------------------------
-    warnings = 0
-    alerts = 0
 
     # Parse Arguments
     parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
@@ -1067,6 +1096,7 @@ if __name__ == '__main__':
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
     parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
     parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
+    parser.add_argument('--csv', action='store_true', help='Write CSV log format to STDOUT (machine prcoessing)', default=False)
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
     args = parser.parse_args()
@@ -1078,14 +1108,15 @@ if __name__ == '__main__':
     if os.path.exists(args.l):
         os.remove(args.l)
 
-    # Print Welcome ---------------------------------------------------
-    printWelcome()
+    # Computername
     if not isLinux:
         t_hostname = os.environ['COMPUTERNAME']
     else:
         t_hostname = os.uname()[1]
 
-    log("INFO", "LOKI - Starting Loki Scan on %s" % t_hostname)
+    # Logger
+    logger = LokiLogger(args.l, t_hostname, args.csv)
+    logger.log("INFO", "LOKI - Starting Loki Scan on %s" % t_hostname)
 
     # Loki
     loki = Loki()
@@ -1095,15 +1126,15 @@ if __name__ == '__main__':
     if not isLinux:
         if shell.IsUserAnAdmin():
             isAdmin = True
-            log("INFO", "Current user has admin rights - very good")
+            logger.log("INFO", "Current user has admin rights - very good")
         else:
-            log("NOTICE", "Program should be run 'as Administrator' to ensure all access rights to process memory and file objects.")
+            logger.log("NOTICE", "Program should be run 'as Administrator' to ensure all access rights to process memory and file objects.")
     else:
         if os.geteuid() == 0:
             isAdmin = True
-            log("INFO", "Current user is root - very good")
+            logger.log("INFO", "Current user is root - very good")
         else:
-            log("NOTICE", "Program should be run as 'root' to ensure all access rights to process memory and file objects.")
+            logger.log("NOTICE", "Program should be run as 'root' to ensure all access rights to process memory and file objects.")
 
     # Set process to nice priority ------------------------------------
     if not isLinux:
@@ -1115,7 +1146,7 @@ if __name__ == '__main__':
         if isAdmin:
             loki.scanProcesses()
         else:
-            log("NOTICE", "Skipping process memory check. User has no admin rights.")
+            logger.log("NOTICE", "Skipping process memory check. User has no admin rights.")
 
     # Scan Path -------------------------------------------------------
     # Set default
@@ -1129,14 +1160,14 @@ if __name__ == '__main__':
 
     # Result ----------------------------------------------------------
     print " "
-    if alerts:
-        log("RESULT", "INDICATORS DETECTED!")
-        log("RESULT", "Loki recommends a forensic analysis and triage with a professional triage tool like THOR APT Scanner.")
-    elif warnings:
-        log("RESULT", "SUSPICIOUS OBJECTS DETECTED!")
-        log("RESULT", "Loki recommends a deeper analysis of the suspicious objects.")
+    if logger.alerts:
+        logger.log("RESULT", "INDICATORS DETECTED!")
+        logger.log("RESULT", "Loki recommends a forensic analysis and triage with a professional triage tool like THOR APT Scanner.")
+    elif logger.warnings:
+        logger.log("RESULT", "SUSPICIOUS OBJECTS DETECTED!")
+        logger.log("RESULT", "Loki recommends a deeper analysis of the suspicious objects.")
     else:
-        log("RESULT", "SYSTEM SEEMS TO BE CLEAN.")
+        logger.log("RESULT", "SYSTEM SEEMS TO BE CLEAN.")
 
     print " "
     if not args.dontwait:
