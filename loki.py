@@ -716,16 +716,20 @@ class Loki():
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
 
+    no_log_file = False
     log_file = "loki.log"
     csv = False
     hostname = "NOTSET"
     alerts = 0
     warnings = 0
+    only_relevant = False
 
-    def __init__(self, log_file, hostname, csv):
+    def __init__(self, no_log_file, log_file, hostname, csv, only_relevant):
+        self.no_log_file = no_log_file
         self.log_file = log_file
         self.hostname = hostname
-        self.csv = args.csv
+        self.csv = csv
+        self.only_relevant = only_relevant
 
         # Welcome
         if not self.csv:
@@ -742,11 +746,16 @@ class LokiLogger():
         if mes_type == "WARNING":
             self.warnings += 1
 
+        if self.only_relevant:
+            if mes_type not in ('ALERT', 'WARNING'):
+                return
+
         # to stdout
         self.log_to_stdout(message, mes_type)
 
         # to file
-        self.log_to_file(message, mes_type)
+        if not self.no_log_file:
+            self.log_to_file(message, mes_type)
 
     def log_to_stdout(self, message, mes_type):
 
@@ -838,7 +847,7 @@ class LokiLogger():
         print "  "
         print "  (C) Florian Roth"
         print "  August 2015"
-        print "  Version 0.9.1"
+        print "  Version 0.9.2"
         print "  "
         print "  DISCLAIMER - USE AT YOUR OWN RISK"
         print "  "
@@ -1097,6 +1106,8 @@ if __name__ == '__main__':
     parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
     parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
     parser.add_argument('--csv', action='store_true', help='Write CSV log format to STDOUT (machine prcoessing)', default=False)
+    parser.add_argument('--onlyrelevant', action='store_true', help='Only print warnings or alerts', default=False)
+    parser.add_argument('--nolog', action='store_true', help='Don\'t write a local log file', default=False)
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
     args = parser.parse_args()
@@ -1115,7 +1126,7 @@ if __name__ == '__main__':
         t_hostname = os.uname()[1]
 
     # Logger
-    logger = LokiLogger(args.l, t_hostname, args.csv)
+    logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant)
     logger.log("INFO", "LOKI - Starting Loki Scan on %s" % t_hostname)
 
     # Loki
@@ -1159,16 +1170,15 @@ if __name__ == '__main__':
         loki.scanPath(defaultPath)
 
     # Result ----------------------------------------------------------
-    print " "
     if logger.alerts:
-        logger.log("RESULT", "INDICATORS DETECTED!")
+        logger.log("RESULT", "Indicators detected!")
         logger.log("RESULT", "Loki recommends a forensic analysis and triage with a professional triage tool like THOR APT Scanner.")
     elif logger.warnings:
-        logger.log("RESULT", "SUSPICIOUS OBJECTS DETECTED!")
+        logger.log("RESULT", "Suspicious objects detected!")
         logger.log("RESULT", "Loki recommends a deeper analysis of the suspicious objects.")
     else:
         logger.log("RESULT", "SYSTEM SEEMS TO BE CLEAN.")
 
-    print " "
     if not args.dontwait:
+        print " "
         raw_input("Press Enter to exit ...")
