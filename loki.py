@@ -57,27 +57,37 @@ except Exception, e:
 
 class Loki():
 
+    # Signatures
+    yara_rules = []
+    filename_iocs = {}
+    filename_ioc_desc = {}
+    hashes = {}
+    false_hashes = {}
+
     # Predefined paths to skip (Linux platform)
     LINUX_PATH_SKIPS_START = Set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux" ])
     LINUX_PATH_SKIPS_END = Set(["/initctl"])
 
     def __init__(self):
 
+        # Set IOC path
+        self.ioc_path = os.path.join(getApplicationPath(), "./iocs/")
+
         # Read IOCs -------------------------------------------------------
-        # File Name IOCs
-        ( self.filename_iocs, self.filename_ioc_desc ) = getFileNameIOCs(os.path.join(getApplicationPath(), "./signatures/filename-iocs.txt"))
+        # File Name IOCs (all files in iocs that contain 'filename')
+        self.getFileNameIOCs(self.ioc_path)
         log("INFO","File Name Characteristics initialized with %s regex patterns" % len(self.filename_iocs.keys()))
 
-        # Hash based IOCs
-        self.hashes = getHashes(os.path.join(getApplicationPath(), "./signatures/hash-iocs.txt"))
+        # Hash based IOCs (all files in iocs that contain 'hash')
+        self.getHashes(self.ioc_path)
         log("INFO","Malware Hashes initialized with %s hashes" % len(self.hashes.keys()))
 
-        # Hash based False Positives
-        self.false_hashes = getHashes(os.path.join(getApplicationPath(), "./signatures/falsepositive-hashes.txt"))
+        # Hash based False Positives (all files in iocs that contain 'hash' and 'falsepositive')
+        self.getHashes(self.ioc_path, false_positive=True)
         log("INFO","False Positive Hashes initialized with %s hashes" % len(self.false_hashes.keys()))
 
         # Compile Yara Rules
-        self.rule_sets = initializeYaraRules()
+        self.initializeYaraRules()
 
 
     def scanPath(self, path):
@@ -284,7 +294,7 @@ class Loki():
 
         # Scan with yara
         try:
-            for rules in self.rule_sets:
+            for rules in self.yara_rules:
 
                 # Yara Rule Match
                 matches = rules.match(data=fileData,
@@ -568,7 +578,143 @@ class Loki():
                         log("NOTICE", "explorer.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                             str(pid), name, owner, cmd, path))
 
+    def getFileNameIOCs(self, ioc_directory):
 
+        try:
+            for ioc_filename in os.listdir(ioc_directory):
+                if 'filename' in ioc_filename:
+                    with open(os.path.join(ioc_directory, ioc_filename), 'r') as file:
+                        lines = file.readlines()
+
+                        # Last Comment Line
+                        last_comment = ""
+
+                        for line in lines:
+                            try:
+                                # Empty
+                                if re.search(r'^[\s]*$', line):
+                                    continue
+
+                                # Comments
+                                if re.search(r'^#', line):
+                                    last_comment = line.lstrip("#").lstrip(" ").rstrip("\n")
+                                    continue
+
+                                # Elements with description
+                                if ";" in line:
+                                    row = line.split(';')
+                                    regex   = row[0]
+                                    score   = row[1].rstrip(" ").rstrip("\n")
+                                    desc    = last_comment
+
+                                    # Catch legacy lines
+                                    if not score.isdigit():
+                                        desc = score # score is description (old format)
+                                        score = 80 # default value
+
+                                # Elements without description
+                                else:
+                                    regex = line
+
+                                # Create list elements
+                                self.filename_iocs[regex] = score
+                                self.filename_ioc_desc[regex] = desc
+
+                            except Exception, e:
+                                log("ERROR", "Error reading line: %s" % line)
+
+        except Exception, e:
+            traceback.print_exc()
+            log("ERROR", "Error reading File IOC file: %s" % ioc_filename)
+
+    def initializeYaraRules(self):
+
+        yaraRules = []
+        filename_dummy = ""
+        filepath_dummy = ""
+        extension_dummy = ""
+        filetype_dummy = ""
+
+        try:
+            for root, directories, files in scandir.walk(os.path.join(getApplicationPath(), "./signatures"), onerror=walkError, followlinks=False):
+                for file in files:
+                    try:
+
+                        # Full Path
+                        yaraRuleFile = os.path.join(root, file)
+
+                        # Skip hidden, backup or system related files
+                        if file.startswith(".") or file.startswith("~") or file.startswith("_"):
+                            continue
+
+                        # Extension
+                        extension = os.path.splitext(file)[1].lower()
+
+                        # Encrypted
+                        if extension == ".yar":
+                            try:
+                                compiledRules = yara.compile(yaraRuleFile, externals= {
+                                                                  'filename': filename_dummy,
+                                                                  'filepath': filepath_dummy,
+                                                                  'extension': extension_dummy,
+                                                                  'filetype': filetype_dummy
+                                                              })
+                                yaraRules.append(compiledRules)
+                                log("INFO", "Initialized Yara rules from %s" % file)
+                            except Exception, e:
+                                log("ERROR", "Error in Yara file: %s" % file)
+                                if args.debug:
+                                    traceback.print_exc()
+
+                    except Exception, e:
+                        log("ERROR", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
+                        if args.debug:
+                            traceback.print_exc()
+
+            self.yara_rules = yaraRules
+
+        except Exception, e:
+            log("ERROR", "Error reading signature folder /signatures/")
+            if args.debug:
+                traceback.print_exc()
+
+    def getHashes(self, ioc_directory, false_positive=False):
+
+        try:
+            for ioc_filename in os.listdir(ioc_directory):
+                if 'hash' in ioc_filename:
+                    if false_positive and 'falsepositive' not in ioc_filename:
+                        continue
+                    with open(os.path.join(ioc_directory, ioc_filename), 'r') as file:
+                        lines = file.readlines()
+
+                        for line in lines:
+                            try:
+                                if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
+                                    continue
+                                row = line.split(';')
+                                hash = row[0]
+                                comment = row[1].rstrip(" ").rstrip("\n")
+                                # Empty File Hash
+                                if hash == "d41d8cd98f00b204e9800998ecf8427e" or \
+                                   hash == "da39a3ee5e6b4b0d3255bfef95601890afd80709" or \
+                                   hash == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855":
+                                    continue
+                                # Else - check which type it is
+                                if len(hash) == 32 or len(hash) == 40 or len(hash) == 64:
+                                    if false_positive:
+                                        self.false_hashes[hash.lower()] = comment
+                                    else:
+                                        self.hashes[hash.lower()] = comment
+                            except Exception,e:
+                                log("ERROR", "Cannot read line: %s" % line)
+
+        except Exception, e:
+            traceback.print_exc()
+            log("ERROR", "Error reading Hash file: %s" % ioc_filename)
+
+
+# Helper Functions -------------------------------------------------------------
 
 def readFileData(filePath):
     fileData = ""
@@ -671,144 +817,6 @@ def decompressSWFData(in_data):
     except Exception, e:
         traceback.print_exc()
         return False, "Decompression error"
-
-
-def getFileNameIOCs(ioc_file):
-
-    filesig_scores = {}
-    filesig_descriptions = {}
-
-    try:
-        with open(ioc_file, 'r') as file:
-            lines = file.readlines()
-
-        # Last Comment Line
-        last_comment = ""
-
-        for line in lines:
-            try:
-                # Empty
-                if re.search(r'^[\s]*$', line):
-                    continue
-
-                # Comments
-                if re.search(r'^#', line):
-                    last_comment = line.lstrip("#").lstrip(" ").rstrip("\n")
-                    continue
-
-                # Elements with description
-                if ";" in line:
-                    row = line.split(';')
-                    regex   = row[0]
-                    score   = row[1].rstrip(" ").rstrip("\n")
-                    desc    = last_comment
-
-                    # Catch legacy lines
-                    if not score.isdigit():
-                        desc = score # score is description (old format)
-                        score = 80 # default value
-
-                # Elements without description
-                else:
-                    regex = line
-
-                # Create list elements
-                filesig_scores[regex] = score
-                filesig_descriptions[regex] = desc
-
-            except Exception, e:
-                log("ERROR", "Error reading line: %s" % line)
-
-    except Exception, e:
-        traceback.print_exc()
-        log("ERROR", "Error reading File IOC file: %s" % ioc_file)
-
-    return (filesig_scores, filesig_descriptions)
-
-
-def initializeYaraRules():
-
-    yaraRules = []
-    filename_dummy = ""
-    filepath_dummy = ""
-    extension_dummy = ""
-    filetype_dummy = ""
-
-    try:
-        for root, directories, files in scandir.walk(os.path.join(getApplicationPath(), "./signatures"), onerror=walkError, followlinks=False):
-            for file in files:
-                try:
-
-                    # Full Path
-                    yaraRuleFile = os.path.join(root, file)
-
-                    # Skip hidden, backup or system related files
-                    if file.startswith(".") or file.startswith("~") or file.startswith("_"):
-                        continue
-
-                    # Extension
-                    extension = os.path.splitext(file)[1].lower()
-
-                    # Encrypted
-                    if extension == ".yar":
-                        try:
-                            compiledRules = yara.compile(yaraRuleFile, externals= {
-                                                              'filename': filename_dummy,
-                                                              'filepath': filepath_dummy,
-                                                              'extension': extension_dummy,
-                                                              'filetype': filetype_dummy
-                                                          })
-                            yaraRules.append(compiledRules)
-                            log("INFO", "Initialized Yara rules from %s" % file)
-                        except Exception, e:
-                            log("ERROR", "Error in Yara file: %s" % file)
-                            if args.debug:
-                                traceback.print_exc()
-
-                except Exception, e:
-                    log("ERROR", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
-                    if args.debug:
-                        traceback.print_exc()
-
-    except Exception, e:
-        log("ERROR", "Error reading signature folder /signatures/")
-        if args.debug:
-            traceback.print_exc()
-
-    return yaraRules
-
-
-def getHashes(hash_file):
-
-    hashes = {}
-
-    try:
-        with open(hash_file, 'r') as file:
-            lines = file.readlines()
-
-        for line in lines:
-            try:
-                if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
-                    continue
-                row = line.split(';')
-                hash = row[0]
-                comment = row[1].rstrip(" ").rstrip("\n")
-                # Empty File Hash
-                if hash == "d41d8cd98f00b204e9800998ecf8427e" or \
-                   hash == "da39a3ee5e6b4b0d3255bfef95601890afd80709" or \
-                   hash == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855":
-                    continue
-                # Else - check which type it is
-                if len(hash) == 32 or len(hash) == 40 or len(hash) == 64:
-                    hashes[hash.lower()] = comment
-            except Exception,e:
-                log("ERROR", "Cannot read line: %s" % line)
-
-    except Exception, e:
-        traceback.print_exc()
-        log("ERROR", "Error reading Hash file: %s" % hash_file)
-
-    return hashes
 
 
 def getStringMatches(strings):
@@ -1033,7 +1041,7 @@ def printWelcome():
     print "  "
     print "  (C) Florian Roth"
     print "  August 2015"
-    print "  Version 0.8.0"
+    print "  Version 0.9.0"
     print "  "
     print "  DISCLAIMER - USE AT YOUR OWN RISK"
     print "  "
