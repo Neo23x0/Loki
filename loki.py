@@ -42,6 +42,7 @@ import zlib
 import struct
 import socket
 from StringIO import StringIO
+import netaddr
 from sets import Set
 from colorama import Fore, Back, Style
 from colorama import init
@@ -426,6 +427,7 @@ class Loki():
                 try:
                     alerts = []
                     for rules in self.yara_rules:
+                        # continue - fast switch
                         matches = rules.match(pid=pid)
                         if matches:
                             for match in matches:
@@ -632,8 +634,8 @@ class Loki():
                     is_match, description = self.checkC2(str(x.remote_address[0]))
                     if is_match:
                         logger.log("ALERT",
-                            "Malware Domain/IP match in remote address PID: %s NAME: %s COMMAND: %s IP: %s PORT: %s" % (
-                                str(pid), name, command, str(x.remote_address[0]), str(x.remote_address[1])))
+                            "Malware Domain/IP match in remote address PID: %s NAME: %s COMMAND: %s IP: %s PORT: %s DESC: %s" % (
+                                str(pid), name, command, str(x.remote_address[0]), str(x.remote_address[1]), description))
 
                     # Full list
                     connection_count += 1
@@ -655,19 +657,23 @@ class Loki():
         # IP - exact match
         if is_ip(remote_system):
             for c2 in self.c2_server:
+                # if C2 definition is CIDR network
+                if is_cidr(c2):
+                    if ip_in_net(remote_system, c2):
+                        return True, self.c2_server[c2]
+                # if C2 is ip or else
                 if c2 == remote_system:
-                    return True, self.c2_server
+                    return True, self.c2_server[c2]
         # Domain - remote system contains c2
         # e.g. evildomain.com and dga1.evildomain.com
         else:
             for c2 in self.c2_server:
                 if c2 in remote_system:
-                    return True, self.c2_server
+                    return True, self.c2_server[c2]
 
         return False,""
 
     def getC2s(self, ioc_directory):
-
         try:
             for ioc_filename in os.listdir(ioc_directory):
                 if 'c2' in ioc_filename:
@@ -845,13 +851,15 @@ class LokiLogger():
     alerts = 0
     warnings = 0
     only_relevant = False
+    debug = False
 
-    def __init__(self, no_log_file, log_file, hostname, csv, only_relevant):
+    def __init__(self, no_log_file, log_file, hostname, csv, only_relevant, debug):
         self.no_log_file = no_log_file
         self.log_file = log_file
         self.hostname = hostname
         self.csv = csv
         self.only_relevant = only_relevant
+        self.debug = debug
 
         # Welcome
         if not self.csv:
@@ -969,7 +977,7 @@ class LokiLogger():
         print "  "
         print "  (C) Florian Roth"
         print "  August 2015"
-        print "  Version 0.10.0"
+        print "  Version 0.10.1"
         print "  "
         print "  DISCLAIMER - USE AT YOUR OWN RISK"
         print "  "
@@ -992,9 +1000,33 @@ def readFileData(filePath):
 
 def is_ip(string):
     try:
-        socket.inet_aton(string)
-        return True
-    except socket.error:
+        if netaddr.valid_ipv4(string):
+            return True
+        if netaddr.valid_ipv6(string):
+            return True
+        return False
+    except:
+        if logger.debug:
+            traceback.print_exc()
+        return False
+
+
+def is_cidr(string):
+    try:
+        if netaddr.IPNetwork(string) and "/" in string:
+            return True
+        return False
+    except:
+        return False
+
+
+def ip_in_net(ip, network):
+    try:
+        # print "Checking if ip %s is in network %s" % (ip, network)
+        if netaddr.IPAddress(ip) in netaddr.IPNetwork(network):
+            return True
+        return False
+    except:
         return False
 
 
@@ -1255,7 +1287,7 @@ if __name__ == '__main__':
         t_hostname = os.uname()[1]
 
     # Logger
-    logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant)
+    logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant, args.debug)
     logger.log("INFO", "LOKI - Starting Loki Scan on %s" % t_hostname)
 
     # Loki
