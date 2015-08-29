@@ -24,28 +24,19 @@
 # 
 # DISCLAIMER - USE AT YOUR OWN RISK.
 
-import sys
 import os
 import argparse
 import scandir
 import traceback
 import yara
-import hashlib
 import re
 import stat
-import datetime
-import platform
 import psutil
-import binascii
-import pylzma
-import zlib
-import struct
-import socket
-from StringIO import StringIO
-import netaddr
 from sets import Set
 from colorama import Fore, Back, Style
 from colorama import init
+
+from lib.helpers import *
 
 # Win32 Imports
 try:
@@ -57,48 +48,73 @@ except Exception, e:
     print "Linux System - deactivating process memory check ..."
     isLinux= True
 
+# Predefined Evil Extensions
+EVIL_EXTENSIONS = [".asp", ".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm", ".cmd", ".com", ".cpl",
+                   ".crt", ".dll", ".exe", ".hta", ".js", ".lnk", ".msc", ".ocx", ".pcd", ".pif", ".pot", ".pdf",
+                   ".reg", ".scr", ".sct", ".sys", ".url", ".vb", ".vbe", ".vbs", ".wsc", ".wsf", ".wsh", ".ct", ".t",
+                   ".input", ".war", ".jsp", ".php", ".asp", ".aspx", ".doc", ".docx", ".pdf", ".xls", ".xlsx", ".ppt",
+                   ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
+                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm" ]
+
+# HASH_TYPES = ['PDF', 'Office', 'JAR', 'DOC', 'SWF', 'EXE']
+
 class Loki():
 
     # Signatures
     yara_rules = []
     filename_iocs = {}
     filename_ioc_desc = {}
-    hashes = {}
+    hashes_md5 = {}
+    hashes_sha1 = {}
+    hashes_sha256 = {}
     false_hashes = {}
     c2_server = {}
+
+    # File type magics
+    filetype_magics = {}
+    max_filetype_magics = 0
 
     # Predefined paths to skip (Linux platform)
     LINUX_PATH_SKIPS_START = Set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux" ])
     LINUX_PATH_SKIPS_END = Set(["/initctl"])
 
-    def __init__(self):
+    def __init__(self, intense_mode):
+
+        # Scan Mode
+        self.intense_mode = intense_mode
+
+        # Get application path
+        self.app_path = get_application_path()
 
         # Set IOC path
-        self.ioc_path = os.path.join(getApplicationPath(), "./iocs/")
+        self.ioc_path = os.path.join(self.app_path, "./iocs/")
 
         # Read IOCs -------------------------------------------------------
         # File Name IOCs (all files in iocs that contain 'filename')
-        self.getFileNameIOCs(self.ioc_path)
+        self.initialize_filename_iocs(self.ioc_path)
         logger.log("INFO","File Name Characteristics initialized with %s regex patterns" % len(self.filename_iocs.keys()))
 
         # C2 based IOCs (all files in iocs that contain 'c2')
-        self.getC2s(self.ioc_path)
+        self.initialize_c2_iocs(self.ioc_path)
         logger.log("INFO","C2 server indicators initialized with %s elements" % len(self.c2_server.keys()))
 
         # Hash based IOCs (all files in iocs that contain 'hash')
-        self.getHashes(self.ioc_path)
-        logger.log("INFO","Malware Hashes initialized with %s hashes" % len(self.hashes.keys()))
-
+        self.initialize_hash_iocs(self.ioc_path)
+        logger.log("INFO","Malicious MD5 Hashes initialized with %s hashes" % len(self.hashes_md5.keys()))
+        logger.log("INFO","Malicious SHA1 Hashes initialized with %s hashes" % len(self.hashes_sha1.keys()))
+        logger.log("INFO","Malicious SHA256 Hashes initialized with %s hashes" % len(self.hashes_sha256.keys()))
 
         # Hash based False Positives (all files in iocs that contain 'hash' and 'falsepositive')
-        self.getHashes(self.ioc_path, false_positive=True)
+        self.initialize_hash_iocs(self.ioc_path, false_positive=True)
         logger.log("INFO","False Positive Hashes initialized with %s hashes" % len(self.false_hashes.keys()))
 
         # Compile Yara Rules
-        self.initializeYaraRules()
+        self.initialize_yara_rules()
 
+        # Initialize File Type Magic signatures
+        self.initialize_filetype_magics(os.path.join(self.app_path, 'file-type-signatures.txt'))
 
-    def scanPath(self, path):
+    def scan_path(self, path):
 
         # Startup
         logger.log("INFO","Scanning %s ...  " % path)
@@ -106,14 +122,11 @@ class Loki():
         # Counter
         c = 0
 
-        # Get application path
-        appPath = getApplicationPath()
-
         # Linux excludes from mtab
         if isLinux:
             allExcludes = self.LINUX_PATH_SKIPS_START | Set(getExcludedMountpoints())
 
-        for root, directories, files in scandir.walk(path, onerror=walkError, followlinks=False):
+        for root, directories, files in os.walk(path, onerror=walk_error, followlinks=False):
 
                 if isLinux:
                     # Skip paths that start with ..
@@ -162,7 +175,7 @@ class Loki():
 
                         # Skip program directory
                         # print appPath.lower() +" - "+ filePath.lower()
-                        if appPath.lower() in filePath.lower():
+                        if self.app_path.lower() in filePath.lower():
                             logger.log("DEBUG", "Skipping file in program directory FILE: %s" % filePath)
                             continue
 
@@ -170,10 +183,10 @@ class Loki():
                         # print file_size
 
                         # File Name Checks -------------------------------------------------
-                        for regex in self.filename_iocs.keys():
-                            match = re.search(r'%s' % regex, filePath)
+                        for regex in self.filename_iocs:
+                            match = regex.search(filePath)
                             if match:
-                                description = self.filename_ioc_desc[regex]
+                                description = self.filename_ioc_desc[regex.pattern]
                                 score = self.filename_iocs[regex]
                                 if score > 70:
                                     logger.log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
@@ -189,43 +202,50 @@ class Loki():
                             logger.log("DEBUG", "Cannot open file %s (access denied)" % filePath)
 
                         # Evaluate Type
-                        fileType = ""
-                        if firstBytes.startswith("\x4d\x5a"):
-                            fileType = "EXE"
-                        if firstBytes.startswith("\x4d\x44\x4d\x50"):
-                            fileType = "MDMP"
-                        if firstBytes.startswith('CWS'):
-                            fileType = "CWS"
-                        if firstBytes.startswith('ZWS'):
-                            fileType = "ZWS"
+                        fileType = get_file_type(filePath, self.filetype_magics, self.max_filetype_magics, logger)
+
+                        # Fast Scan Mode - non intense
+                        do_intense_check = True
+                        if not self.intense_mode and fileType == "UNKNOWN" and extension not in EVIL_EXTENSIONS:
+                            if args.printAll:
+                                logger.log("INFO", "Skipping file due to fast scan mode: %s" % filePath)
+                            do_intense_check = False
 
                         # Set fileData to an empty value
                         fileData = ""
 
                         # Evaluations -------------------------------------------------------
                         # Evaluate size
-                        do_intense_check = True
-                        if fileSize > ( args.s * 1024):
-                             # Print files
-                            if args.printAll:
-                                logger.log("INFO", "Checking %s" % filePath)
-                            do_hash_check = False
-                        else:
-                            if args.printAll:
-                                logger.log("INFO", "Scanning %s" % filePath)
+                        if fileSize > (args.s * 1024):
+                            # Print files
+                            do_intense_check = False
 
                         # Some file types will force intense check
                         if fileType == "MDMP":
                             do_intense_check = True
 
+                        # Intense Check switch
+                        if do_intense_check:
+                            if args.printAll:
+                                logger.log("INFO", "Scanning %s TYPE: %s SIZE: %s" % (filePath, fileType, fileSize))
+                        else:
+                            if args.printAll:
+                                logger.log("INFO", "Checking %s TYPE: %s SIZE: %s" % (filePath, fileType, fileSize))
+
                         # Hash Check -------------------------------------------------------
                         # Do the check
-                        md5 = "-"
-                        sha1 = "-"
-                        sha256 = "-"
                         if do_intense_check:
 
-                            fileData = readFileData(filePath)
+                            fileData = self.get_file_data(filePath)
+
+                            # Hash Eval
+                            matchType = None
+                            matchDesc = None
+                            matchHash = None
+                            md5 = "-"
+                            sha1 = "-"
+                            sha256 = "-"
+
                             md5, sha1, sha256 = generateHashes(fileData)
 
                             logger.log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
@@ -235,20 +255,17 @@ class Loki():
                                 continue
 
                             # Malware Hash
-                            matchType = None
-                            matchDesc = None
-                            matchHash = None
-                            if md5 in self.hashes.keys():
+                            if md5 in self.hashes_md5.keys():
                                 matchType = "MD5"
-                                matchDesc = self.hashes[md5]
+                                matchDesc = self.hashes_md5[md5]
                                 matchHash = md5
-                            elif sha1 in self.hashes.keys():
+                            elif sha1 in self.hashes_sha1.keys():
                                 matchType = "SHA1"
-                                matchDesc = self.hashes[sha1]
+                                matchDesc = self.hashes_sha1[sha1]
                                 matchHash = sha1
-                            elif sha256 in self.hashes.keys():
+                            elif sha256 in self.hashes_sha256.keys():
                                 matchType = "SHA256"
-                                matchDesc = self.hashes[sha256]
+                                matchDesc = self.hashes_sha256[sha256]
                                 matchHash = sha256
 
                             # Hash string
@@ -257,19 +274,13 @@ class Loki():
                             if matchType:
                                 logger.log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
 
-                        # Regin .EVT FS Check
-                        if do_intense_check and len(fileData) > 11 and args.reginfs:
+                            # Regin .EVT FS Check
+                            if len(fileData) > 11 and args.reginfs:
 
-                            # Check if file is Regin virtual .evt file system
-                            checkReginFS(fileData, filePath)
+                                # Check if file is Regin virtual .evt file system
+                                self.scan_regin_fs(fileData, filePath)
 
-                        # Yara Check -------------------------------------------------------
-                        # Size and type check
-                        if do_intense_check:
-
-                            # Read file data if hash check has been skipped
-                            if not fileData:
-                                fileData = readFileData(filePath)
+                            # Yara Check -------------------------------------------------------
 
                             # Memory Dump Scan
                             if fileType == "MDMP":
@@ -284,7 +295,7 @@ class Loki():
 
                             # Scan the read data
                             for (score, rule, description, matched_strings) in \
-                                    self.scanData(fileData, fileType, filename, filePath, extension):
+                                    self.scan_data(fileData, fileType, filename, filePath, extension):
 
                                 if score >= 70:
                                     logger.log("ALERT", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
@@ -292,13 +303,11 @@ class Loki():
                                 elif score >= 40:
                                     logger.log("WARNING", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
 
-
                     except Exception, e:
-                        if args.debug:
+                        if logger.debug:
                             traceback.print_exc()
 
-
-    def scanData(self, fileData, fileType="-", fileName="-", filePath="-", extension="-"):
+    def scan_data(self, fileData, fileType="-", fileName="-", filePath="-", extension="-"):
 
         # Scan with yara
         try:
@@ -307,10 +316,10 @@ class Loki():
                 # Yara Rule Match
                 matches = rules.match(data=fileData,
                                       externals={
-                                          'filename': fileName.lower(),
-                                          'filepath': filePath.lower(),
-                                          'extension': extension.lower(),
-                                          'filetype': fileType.lower(),
+                                          'filename': fileName,
+                                          'filepath': filePath,
+                                          'extension': extension,
+                                          'filetype': fileType,
                                       })
 
                 # If matched
@@ -334,15 +343,38 @@ class Loki():
                         matched_strings = ""
                         if hasattr(match, 'strings'):
                             # Get matching strings
-                            matched_strings = getStringMatches(match.strings)
+                            matched_strings = self.get_string_matches(match.strings)
 
                         yield score, match.rule, description, matched_strings
 
         except Exception, e:
-            if args.debug:
+            if logger.debug:
                 traceback.print_exc()
 
-    def scanProcesses(self):
+    def get_string_matches(self, strings):
+        try:
+            string_matches = []
+            matching_strings = ""
+            for string in strings:
+                # print string
+                extract = string[2]
+                if not extract in string_matches:
+                    string_matches.append(extract)
+
+            string_num = 1
+            for string in string_matches:
+                matching_strings += " Str" + str(string_num) + ": " + removeNonAscii(removeBinaryZero(string))
+                string_num += 1
+
+            # Limit string
+            if len(matching_strings) > 140:
+                matching_strings = matching_strings[:140] + " ... (truncated)"
+
+            return matching_strings.lstrip(" ")
+        except:
+            traceback.print_exc()
+
+    def scan_processes(self):
         # WMI Handler
         c = wmi.WMI()
         processes = c.Win32_Process()
@@ -460,7 +492,7 @@ class Loki():
 
             ###############################################################
             # THOR Process Connection Checks
-            self.getProcessConnections(process)
+            self.check_process_connections(process)
 
             ###############################################################
             # THOR Process Anomaly Checks
@@ -591,7 +623,7 @@ class Loki():
                         logger.log("NOTICE", "explorer.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                             str(pid), name, owner, cmd, path))
 
-    def getProcessConnections(self, process):
+    def check_process_connections(self, process):
         try:
 
             # Limits
@@ -631,7 +663,7 @@ class Loki():
                     # Geo IP Lookup removed
 
                     # Check keyword in remote address
-                    is_match, description = self.checkC2(str(x.remote_address[0]))
+                    is_match, description = self.check_c2(str(x.remote_address[0]))
                     if is_match:
                         logger.log("ALERT",
                             "Malware Domain/IP match in remote address PID: %s NAME: %s COMMAND: %s IP: %s PORT: %s DESC: %s" % (
@@ -653,7 +685,7 @@ class Loki():
             logger.log("INFO",
                 "Process %s does not exist anymore or cannot be accessed" % str(pid))
 
-    def checkC2(self, remote_system):
+    def check_c2(self, remote_system):
         # IP - exact match
         if is_ip(remote_system):
             for c2 in self.c2_server:
@@ -673,7 +705,7 @@ class Loki():
 
         return False,""
 
-    def getC2s(self, ioc_directory):
+    def initialize_c2_iocs(self, ioc_directory):
         try:
             for ioc_filename in os.listdir(ioc_directory):
                 if 'c2' in ioc_filename:
@@ -706,7 +738,7 @@ class Loki():
             traceback.print_exc()
             logger.log("ERROR", "Error reading Hash file: %s" % ioc_filename)
 
-    def getFileNameIOCs(self, ioc_directory):
+    def initialize_filename_iocs(self, ioc_directory):
 
         try:
             for ioc_filename in os.listdir(ioc_directory):
@@ -744,18 +776,23 @@ class Loki():
                                 else:
                                     regex = line
 
+                                # Replace environment variables
+                                regex = replaceEnvVars(regex)
+
                                 # Create list elements
-                                self.filename_iocs[regex] = score
+                                self.filename_iocs[re.compile(regex)] = score
                                 self.filename_ioc_desc[regex] = desc
 
                             except Exception, e:
+                                if logger.debug:
+                                    traceback.print_exc()
                                 logger.log("ERROR", "Error reading line: %s" % line)
 
         except Exception, e:
             traceback.print_exc()
             logger.log("ERROR", "Error reading File IOC file: %s" % ioc_filename)
 
-    def initializeYaraRules(self):
+    def initialize_yara_rules(self):
 
         yaraRules = []
         filename_dummy = ""
@@ -764,7 +801,9 @@ class Loki():
         filetype_dummy = ""
 
         try:
-            for root, directories, files in scandir.walk(os.path.join(getApplicationPath(), "./signatures"), onerror=walkError, followlinks=False):
+            for root, directories, files in \
+                    scandir.walk(os.path.join(self.app_path, "./signatures"),
+                                 onerror=walk_error, followlinks=False):
                 for file in files:
                     try:
 
@@ -806,8 +845,7 @@ class Loki():
             if args.debug:
                 traceback.print_exc()
 
-    def getHashes(self, ioc_directory, false_positive=False):
-
+    def initialize_hash_iocs(self, ioc_directory, false_positive=False):
         try:
             for ioc_filename in os.listdir(ioc_directory):
                 if 'hash' in ioc_filename:
@@ -829,17 +867,89 @@ class Loki():
                                    hash == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855":
                                     continue
                                 # Else - check which type it is
-                                if len(hash) == 32 or len(hash) == 40 or len(hash) == 64:
-                                    if false_positive:
-                                        self.false_hashes[hash.lower()] = comment
-                                    else:
-                                        self.hashes[hash.lower()] = comment
+                                if len(hash) == 32:
+                                    self.hashes_md5[hash.lower()] = comment
+                                if len(hash) == 40:
+                                    self.hashes_sha1[hash.lower()] = comment
+                                if len(hash) == 64:
+                                    self.hashes_sha256[hash.lower()] = comment
+                                if false_positive:
+                                    self.false_hashes[hash.lower()] = comment
                             except Exception,e:
                                 logger.log("ERROR", "Cannot read line: %s" % line)
 
         except Exception, e:
             traceback.print_exc()
             logger.log("ERROR", "Error reading Hash file: %s" % ioc_filename)
+
+    def initialize_filetype_magics(self, filetype_magics_file):
+        try:
+
+            with open(filetype_magics_file, 'r') as config:
+                lines = config.readlines()
+
+            for line in lines:
+                try:
+                    if re.search(r'^#', line) or re.search(r'^[\s]*$', line) or ";" not in line:
+                        continue
+
+                    ( sig_raw, description ) = line.rstrip("\n").split(";")
+                    sig = re.sub(r' ', '', sig_raw)
+
+                    if len(sig) > self.max_filetype_magics:
+                        self.max_filetype_magics = len(sig)
+
+                    # print "%s - %s" % ( sig, description )
+                    self.filetype_magics[sig] = description
+
+                except Exception,e:
+                    logger.log("ERROR", "Cannot read line: %s" % line)
+
+        except Exception, e:
+            traceback.print_exc()
+            logger.log("ERROR", "Error reading Hash file: %s" % filetype_magics_file)
+
+    def scan_regin_fs(self, fileData, filePath):
+
+        # Code section by Paul Rascagneres, G DATA Software
+        # Adapted to work with the fileData already read to avoid
+        # further disk I/O
+
+        fp = StringIO(fileData)
+        SectorSize=fp.read(2)[::-1]
+        MaxSectorCount=fp.read(2)[::-1]
+        MaxFileCount=fp.read(2)[::-1]
+        FileTagLength=fp.read(1)[::-1]
+        CRC32custom=fp.read(4)[::-1]
+
+        # original code:
+        # fp.close()
+        # fp = open(filePath, 'r')
+
+        # replaced with the following:
+        fp.seek(0)
+
+        data=fp.read(0x7)
+        crc = binascii.crc32(data, 0x45)
+        crc2 = '%08x' % (crc & 0xffffffff)
+
+        logger.log("DEBUG", "Regin FS Check CRC2: %s" % crc2.encode('hex'))
+
+        if CRC32custom.encode('hex') == crc2:
+            logger.log("ALERT", "Regin Virtual Filesystem MATCH: %s" % filePath)
+
+    def get_file_data(self, filePath):
+        fileData = ""
+        try:
+            # Read file complete
+            with open(filePath, 'rb') as f:
+                fileData = f.read()
+        except Exception, e:
+            if logger.debug:
+                traceback.print_exc()
+            logger.log("DEBUG", "Cannot open file %s (access denied)" % filePath)
+        finally:
+            return fileData
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
@@ -977,222 +1087,22 @@ class LokiLogger():
         print "  "
         print "  (C) Florian Roth"
         print "  August 2015"
-        print "  Version 0.10.1"
+        print "  Version 0.11.0"
         print "  "
         print "  DISCLAIMER - USE AT YOUR OWN RISK"
         print "  "
         print Back.GREEN + " ".ljust(79) + Back.BLACK
         print Fore.WHITE+''+Back.BLACK
 
-# Helper Functions -------------------------------------------------------------
 
-def readFileData(filePath):
-    fileData = ""
-    try:
-        # Read file complete
-        with open(filePath, 'rb') as f:
-            fileData = f.read()
-    except Exception, e:
-        logger.log("DEBUG", "Cannot open file %s (access denied)" % filePath)
-    finally:
-        return fileData
-
-
-def is_ip(string):
-    try:
-        if netaddr.valid_ipv4(string):
-            return True
-        if netaddr.valid_ipv6(string):
-            return True
-        return False
-    except:
-        if logger.debug:
-            traceback.print_exc()
-        return False
-
-
-def is_cidr(string):
-    try:
-        if netaddr.IPNetwork(string) and "/" in string:
-            return True
-        return False
-    except:
-        return False
-
-
-def ip_in_net(ip, network):
-    try:
-        # print "Checking if ip %s is in network %s" % (ip, network)
-        if netaddr.IPAddress(ip) in netaddr.IPNetwork(network):
-            return True
-        return False
-    except:
-        return False
-
-
-def generateHashes(filedata):
-    try:
-        md5 = hashlib.md5()
-        sha1 = hashlib.sha1()
-        sha256 = hashlib.sha256()
-        md5.update(filedata)
-        sha1.update(filedata)
-        sha256.update(filedata)
-        return md5.hexdigest(), sha1.hexdigest(), sha256.hexdigest()
-    except Exception, e:
-        traceback.print_exc()
-        return 0, 0, 0
-
-
-def walkError(err):
+def walk_error(err):
     if "Error 3" in str(err):
         logger.log("ERROR", str(err))
     if args.debug:
         traceback.print_exc()
 
 
-def removeNonAsciiDrop(string):
-    nonascii = "error"
-    #print "CON: ", string
-    try:
-        # Generate a new string without disturbing characters
-        nonascii = "".join(i for i in string if ord(i)<127 and ord(i)>31)
-
-    except Exception, e:
-        traceback.print_exc()
-        pass
-    #print "NON: ", nonascii
-    return nonascii
-
-
-def getPlatformFull():
-    type_info = ""
-    try:
-        type_info = "%s PROC: %s ARCH: %s" % ( " ".join(platform.win32_ver()), platform.processor(), " ".join(platform.architecture()))
-    except Exception, e:
-        type_info = " ".join(platform.win32_ver())
-    return type_info
-
-
-def setNice():
-    try:
-        pid = os.getpid()
-        p = psutil.Process(pid)
-        logger.log("INFO", "Setting LOKI process with PID: %s to priority IDLE" % pid)
-        p.set_nice(psutil.IDLE_PRIORITY_CLASS)
-        return 1
-    except Exception, e:
-        logger.log("ERROR", "Error setting nice value of THOR process")
-        return 0
-
-
-def getExcludedMountpoints():
-    excludes = []
-    mtab = open("/etc/mtab", "r")
-    for mpoint in mtab:
-        options = mpoint.split(" ")
-        if not options[0].startswith("/dev/"):
-            if not options[1] == "/":
-                excludes.append(options[1])
-
-    mtab.close()
-    return excludes
-
-
-def decompressSWFData(in_data):
-    try:
-        ver = in_data[3]
-
-        if in_data[0] == 'C':
-            # zlib SWF
-            decompressData = zlib.decompress(in_data[8:])
-        elif in_data[0] == 'Z':
-            # lzma SWF
-            decompressData = pylzma.decompress(in_data[12:])
-        elif in_data[0] == 'F':
-            # uncompressed SWF
-            decompressData = in_data[8:]
-
-        header = list(struct.unpack("<8B", in_data[0:8]))
-        header[0] = ord('F')
-        return True, struct.pack("<8B", *header) + decompressData
-
-    except Exception, e:
-        traceback.print_exc()
-        return False, "Decompression error"
-
-
-def getStringMatches(strings):
-    try:
-        string_matches = []
-        matching_strings = ""
-        for string in strings:
-            # print string
-            extract = string[2]
-            if not extract in string_matches:
-                string_matches.append(extract)
-
-        string_num = 1
-        for string in string_matches:
-            matching_strings += " Str" + str(string_num) + ": " + removeNonAscii(removeBinaryZero(string))
-            string_num += 1
-
-        # Limit string
-        if len(matching_strings) > 140:
-            matching_strings = matching_strings[:140] + " ... (truncated)"
-
-        return matching_strings.lstrip(" ")
-    except:
-        traceback.print_exc()
-
-
-def checkReginFS(fileData, filePath):
-
-    # Code section by Paul Rascagneres, G DATA Software
-    # Adapted to work with the fileData already read to avoid
-    # further disk I/O
-
-    fp = StringIO(fileData)
-    SectorSize=fp.read(2)[::-1]
-    MaxSectorCount=fp.read(2)[::-1]
-    MaxFileCount=fp.read(2)[::-1]
-    FileTagLength=fp.read(1)[::-1]
-    CRC32custom=fp.read(4)[::-1]
-
-    # original code:
-    # fp.close()
-    # fp = open(filePath, 'r')
-
-    # replaced with the following:
-    fp.seek(0)
-
-    data=fp.read(0x7)
-    crc = binascii.crc32(data, 0x45)
-    crc2 = '%08x' % (crc & 0xffffffff)
-
-    logger.log("DEBUG", "Regin FS Check CRC2: %s" % crc2.encode('hex'))
-
-    if CRC32custom.encode('hex') == crc2:
-        logger.log("ALERT", "Regin Virtual Filesystem MATCH: %s" % filePath)
-
-
-def removeBinaryZero(string):
-    return re.sub(r'\x00','',string)
-
-
-def printProgress(i):
-    if (i%4) == 0:
-        sys.stdout.write('\b/')
-    elif (i%4) == 1:
-        sys.stdout.write('\b-')
-    elif (i%4) == 2:
-        sys.stdout.write('\b\\')
-    elif (i%4) == 3:
-        sys.stdout.write('\b|')
-    sys.stdout.flush()
-
-
-def getApplicationPath():
+def get_application_path():
     try:
         application_path = ""
         if getattr(sys, 'frozen', False):
@@ -1217,48 +1127,13 @@ def getApplicationPath():
         logger.log("ERROR","Error while evaluation of application path")
 
 
-def removeNonAscii(string, stripit=False):
-    nonascii = "error"
-
-    try:
-        try:
-            # Handle according to the type
-            if isinstance(string, unicode) and not stripit:
-                nonascii = string.encode('unicode-escape')
-            elif isinstance(string, str) and not stripit:
-                nonascii = string.decode('utf-8', 'replace').encode('unicode-escape')
-            else:
-                try:
-                    nonascii = string.encode('raw_unicode_escape')
-                except Exception, e:
-                    nonascii = str("%s" % string)
-
-        except Exception, e:
-            # traceback.print_exc()
-            # print "All methods failed - removing characters"
-            # Generate a new string without disturbing characters
-            nonascii = "".join(i for i in string if ord(i)<127 and ord(i)>31)
-
-    except Exception, e:
-        traceback.print_exc()
-        pass
-
-    return nonascii
-
-
-def getSyslogTimestamp():
-    date_obj = datetime.datetime.utcnow()
-    date_str = date_obj.strftime("%Y%m%dT%H:%M:%SZ")
-    return date_str
-
-
 # MAIN ################################################################
 if __name__ == '__main__':
 
     # Parse Arguments
     parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
     parser.add_argument('-p', help='Path to scan', metavar='path', default='C:\\')
-    parser.add_argument('-s', help='Maximum file site to check in KB (default 2000 KB)', metavar='kilobyte', default=2048)
+    parser.add_argument('-s', help='Maximum file size to check in KB (default 2048 KB)', metavar='kilobyte', default=2048)
     parser.add_argument('-l', help='Log file', metavar='log-file', default='loki.log')
     parser.add_argument('--printAll', action='store_true', help='Print all files that are scanned', default=False)
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
@@ -1266,6 +1141,7 @@ if __name__ == '__main__':
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
     parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
     parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
+    parser.add_argument('--intense', action='store_true', help='Intense scan mode (also scan unknown file types and all extensions)', default=False)
     parser.add_argument('--csv', action='store_true', help='Write CSV log format to STDOUT (machine prcoessing)', default=False)
     parser.add_argument('--onlyrelevant', action='store_true', help='Only print warnings or alerts', default=False)
     parser.add_argument('--nolog', action='store_true', help='Don\'t write a local log file', default=False)
@@ -1290,8 +1166,10 @@ if __name__ == '__main__':
     logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant, args.debug)
     logger.log("INFO", "LOKI - Starting Loki Scan on %s" % t_hostname)
 
+    logger.log("NOTICE", "Started LOKI Scan on %s at %s" % (t_hostname, getSyslogTimestamp()))
+
     # Loki
-    loki = Loki()
+    loki = Loki(args.intense)
 
     # Check if admin
     isAdmin = False
@@ -1310,13 +1188,13 @@ if __name__ == '__main__':
 
     # Set process to nice priority ------------------------------------
     if not isLinux:
-        setNice()
+        setNice(logger)
 
     # Scan Processes --------------------------------------------------
     resultProc = False
     if not args.noprocscan and not isLinux:
         if isAdmin:
-            loki.scanProcesses()
+            loki.scan_processes()
         else:
             logger.log("NOTICE", "Skipping process memory check. User has no admin rights.")
 
@@ -1328,7 +1206,7 @@ if __name__ == '__main__':
 
     resultFS = False
     if not args.nofilescan:
-        loki.scanPath(defaultPath)
+        loki.scan_path(defaultPath)
 
     # Result ----------------------------------------------------------
     if logger.alerts:
@@ -1339,6 +1217,8 @@ if __name__ == '__main__':
         logger.log("RESULT", "Loki recommends a deeper analysis of the suspicious objects.")
     else:
         logger.log("RESULT", "SYSTEM SEEMS TO BE CLEAN.")
+
+    logger.log("NOTICE", "Finished LOKI Scan on %s at %s" % (t_hostname, getSyslogTimestamp()))
 
     if not args.dontwait:
         print " "

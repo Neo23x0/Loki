@@ -30,3 +30,5 @@ d566bd2f46aebcad47261775d64fd970e297542fd846fde2685e45efc4669901;REGIN False Pos
 d64d63805beef5f6ea2e791c6fe61d9f9c740e42;REGIN FP
 14f3e6b05e5693b1cbd9091bafe2649f830799a3;Malwarebytes Winlogon
 accc2e5afb242d348da00bd3edf9b8033e81320bf33f790f1ac9ed8e9db78975;Novell nwfilter
+
+c78655bc80301d76ed4fef1c1ea40a7d;Public IOC but is valid Windows 2003 svchost.exe

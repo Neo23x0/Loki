@@ -1,11 +1,34 @@
-\/Users\/Shared\/start\.sh;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
-\/Resources\/start\.sh;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
-\/Resources\/FontMap1\.cfg;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
-\/Library\/LaunchDaemons\/com\.apple\.machook\_damon\.plist;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
-\/Library\/LaunchDaemons\/com\.apple\.\ globalupdate\.plist;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
-\/usr\/bin\/globalupdate;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
-\/usr\/local\/machook\/update\/start\.sh;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
-\/Library\/MobileSubstrate\/DynamicLibraries\/sfbase\.dylib;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
+\\abiosdsk\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+\\adpu160\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+\\floppy\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+\\parclass\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+\\rio8drvx\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+\\ser8uart\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+\\usbclass\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+\\vidscfg\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+\\msrdc64\.dat;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+\\msdcsvc\.dat;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%System%\\config\\SystemAudit\.Evt;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%System%\\config\\SecurityAudit\.Evt;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%System%\\config\\SystemLog\.evt;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%System%\\config\\ApplicationLog\.evt;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%Windir%\\ime\\imesc5\\dicts\\pintlgbs\.imd;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%Windir%\\ime\\imesc5\\dicts\\pintlgbp\.imd;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%Windir%\\system32\\winhttpc\.dll;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%Windir%\\system32\\wshnetc\.dll;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%Windir%\\SysWow64\\wshnetc\.dll;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%Windir%\\system32\\svcstat\.exe;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%Windir%\\system32\\svcsstat\.exe;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+%AppData%\\Local\\Temp\\bootloader\.dec;RTF Exploit Installs Italian RAT: uWarrior http://researchcenter.paloaltonetworks.com/2015/08/rtf-exploit-installs-italian-
+%AppData%\\Roaming\\warriors\.dat;RTF Exploit Installs Italian RAT: uWarrior http://researchcenter.paloaltonetworks.com/2015/08/rtf-exploit-installs-italian-
+/Users/Shared/start\.sh;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
+/Resources/start\.sh;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
+/Resources/FontMap1\.cfg;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
+/Library/LaunchDaemons/com\.apple\.machook_damon\.plist;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
+/Library/LaunchDaemons/com\.apple\. globalupdate\.plist;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
+/usr/bin/globalupdate;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
+/usr/local/machook/update/start\.sh;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
+/Library/MobileSubstrate/DynamicLibraries/sfbase\.dylib;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
 sfbase\.dylib;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
-\/tmp\/AddressBook\.sqlitedb;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
-\/tmp\/sms\.db;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
+/tmp/AddressBook\.sqlitedb;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
+/tmp/sms\.db;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
