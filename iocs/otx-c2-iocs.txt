@@ -1,106 +1,3 @@
-login.loginto.me;Ongoing analysis of unknown exploit targeting Office 2007-2013 http://blog.ropchain.com/2015/08/16/analysis-of-exploit-targeting-office-2007-20
-23.249.225.140;Ongoing analysis of unknown exploit targeting Office 2007-2013 http://blog.ropchain.com/2015/08/16/analysis-of-exploit-targeting-office-2007-20
-deyrep24.ddns.net;Inside the spyware campaign against Argentine troublemakers https://firstlook.org/theintercept/2015/08/21/inside-the-spyware-campaign-agains
-daynews.sytes.net;Inside the spyware campaign against Argentine troublemakers https://firstlook.org/theintercept/2015/08/21/inside-the-spyware-campaign-agains
-adobe-dns-3-adobe.com;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
-78.128.92.112;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
-84.200.4.226;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
-192.52.166.66;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
-98.214.11.253;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-203.129.197.50;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-186.68.94.38;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-203.115.103.27;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-72.175.10.116;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-45.64.159.18;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-85.135.104.170;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-188.255.239.34;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-193.43.231.104;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-98.209.75.164;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-46.238.89.52;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-89.174.116.76;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-112.133.203.43;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-69.9.204.114;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-68.55.59.145;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-95.143.141.50;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-66.215.30.118;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-72.230.82.80;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-64.111.42.64;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-110.172.144.7;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-69.8.50.85;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-67.222.201.222;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-109.86.226.85;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-24.148.217.188;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-216.254.231.11;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-209.40.238.170;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-173.248.31.6;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-84.246.161.47;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-69.144.171.44;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-188.125.38.100;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-67.221.195.6;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-188.137.122.42;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-193.106.193.74;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-79.187.34.150;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-217.168.210.122;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-81.93.205.218;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-194.28.191.245;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-98.181.17.39;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-87.249.142.189;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-190.152.19.142;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-194.106.166.22;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-188.255.243.105;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-64.111.36.52;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-68.70.242.203;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-162.153.189.143;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-194.228.203.19;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-67.222.201.61;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-188.255.236.184;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-194.28.190.84;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-103.230.226.59;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-69.163.81.211;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-197.149.65.34;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-104.174.123.66;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-63.248.156.246;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-173.216.247.74;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-176.36.251.208;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-77.48.30.156;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-24.33.131.116;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-76.84.81.120;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-24.220.92.193;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-68.119.5.32;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-150.129.48.171;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-65.33.236.173;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-98.102.44.38;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-80.48.160.146;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-91.235.162.167;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-94.141.130.9;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-72.171.9.146;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-216.16.93.250;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-178.222.250.35;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-79.188.45.226;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-195.117.119.117;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-67.206.96.68;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-79.187.241.107;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-82.115.76.211;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-81.90.175.7;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-213.92.138.154;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-37.57.144.177;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-197.210.199.21;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-180.233.123.210;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-208.117.68.78;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-109.236.121.91;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-94.154.107.172;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-67.207.229.215;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-81.93.205.251;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-67.222.197.54;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-173.243.255.79;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-72.174.240.148;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-67.22.167.163;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-80.51.120.214;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-82.160.64.45;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-45.64.159.107;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-150.129.49.11;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-150.129.48.162;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
-209.27.49.117;IP of Dyre compromied routers (hardcoded in Upatre) https://pastebin.com/AvFxsgky
 193.104.41.178;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 31.170.164.100;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 37.187.37.235;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
@@ -179,6 +76,189 @@ adobe-dns-3-adobe.com;Spearphising attempt on Central Bank of Armenia employees 
 37.140.192.187;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 185.28.20.162;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 104.27.175.56;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+37.140.192.132;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+37.140.192.57;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+37.140.192.54;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+37.140.192.180;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+91.227.16.112;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+37.140.192.192;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+46.30.40.98;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+bloggarotosdegyn.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+araujomelo.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+fadangoscuzido.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+acchouveiculoszero.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+gol35.carrosturbomotosturbo.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+dbsq0013.whservidor.com;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+dbsq0008.whservidor.com;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+dbsq0010.whservidor.com;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+dbsq0004.whservidor.com;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+dbsq0017.whservidor.com;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+dbsq0015.whservidor.com;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+dbsq0009.whservidor.com;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+dbsq0007.whservidor.com;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+fandanfos.xhc.ru;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+mssql03.redehost.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+rotel.esy.es;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
+electronicfrontierfoundation.org;New Spear Phishing Campaign Pretends to be EFF https://www.eff.org/deeplinks/2015/08/new-spear-phishing-campaign-pretends-be-ef
+ftspbz.net46.net;Data-Stealing NionSpy File Infector 
+nwoccs.zapto.org;Data-Stealing NionSpy File Infector 
+37.139.15.65;Data-Stealing NionSpy File Infector 
+109.195.54.18;Data-Stealing NionSpy File Infector 
+85.214.252.4;Data-Stealing NionSpy File Infector 
+176.31.246.49;Data-Stealing NionSpy File Infector 
+178.62.233.140;Data-Stealing NionSpy File Infector 
+72.167.201.238;Data-Stealing NionSpy File Infector 
+78.46.36.35;Data-Stealing NionSpy File Infector 
+62.75.179.223;Data-Stealing NionSpy File Infector 
+79.143.191.147;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
+94.23.53.23;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
+203.151.94.120;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
+146.185.99.250;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
+31.186.99.250;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
+50.63.174.16;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
+37.143.9.63;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
+188.120.249.55;Angler Exploit Kit activity - August week 4 
+31.148.220.173;Angler Exploit Kit activity - August week 4 
+31.148.219.199;Angler Exploit Kit activity - August week 4 
+66.199.240.243;Angler Exploit Kit activity - August week 4 
+66.199.240.242;Angler Exploit Kit activity - August week 4 
+74.63.210.180;Angler Exploit Kit activity - August week 4 
+service-logins.com;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+services-mails.com;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+signin-verify.com;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+login-users.com;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+account-user.com;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+signin-users.com;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+bluehostsupport.com;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+support.qooqlemail.com;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+login.setting.verification.configuration.user.action.first.step.edit.check.privacy.view.document.setting.verification.configuration.user.login.logins-verify.com;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+reuters.users.check.login.newsia.my;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+login.logins-verify.com;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+141.105.68.8;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+162.222.194.51;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+141.105.65.57;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+141.105.66.60;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+98.214.11.253;Dyre payloads via hacked routers (coded  in Upatre bins) 
+203.129.197.50;Dyre payloads via hacked routers (coded  in Upatre bins) 
+186.68.94.38;Dyre payloads via hacked routers (coded  in Upatre bins) 
+203.115.103.27;Dyre payloads via hacked routers (coded  in Upatre bins) 
+72.175.10.116;Dyre payloads via hacked routers (coded  in Upatre bins) 
+45.64.159.18;Dyre payloads via hacked routers (coded  in Upatre bins) 
+85.135.104.170;Dyre payloads via hacked routers (coded  in Upatre bins) 
+188.255.239.34;Dyre payloads via hacked routers (coded  in Upatre bins) 
+193.43.231.104;Dyre payloads via hacked routers (coded  in Upatre bins) 
+98.209.75.164;Dyre payloads via hacked routers (coded  in Upatre bins) 
+46.238.89.52;Dyre payloads via hacked routers (coded  in Upatre bins) 
+89.174.116.76;Dyre payloads via hacked routers (coded  in Upatre bins) 
+112.133.203.43;Dyre payloads via hacked routers (coded  in Upatre bins) 
+69.9.204.114;Dyre payloads via hacked routers (coded  in Upatre bins) 
+68.55.59.145;Dyre payloads via hacked routers (coded  in Upatre bins) 
+95.143.141.50;Dyre payloads via hacked routers (coded  in Upatre bins) 
+66.215.30.118;Dyre payloads via hacked routers (coded  in Upatre bins) 
+72.230.82.80;Dyre payloads via hacked routers (coded  in Upatre bins) 
+64.111.42.64;Dyre payloads via hacked routers (coded  in Upatre bins) 
+110.172.144.7;Dyre payloads via hacked routers (coded  in Upatre bins) 
+69.8.50.85;Dyre payloads via hacked routers (coded  in Upatre bins) 
+67.222.201.222;Dyre payloads via hacked routers (coded  in Upatre bins) 
+109.86.226.85;Dyre payloads via hacked routers (coded  in Upatre bins) 
+24.148.217.188;Dyre payloads via hacked routers (coded  in Upatre bins) 
+216.254.231.11;Dyre payloads via hacked routers (coded  in Upatre bins) 
+209.40.238.170;Dyre payloads via hacked routers (coded  in Upatre bins) 
+173.248.31.6;Dyre payloads via hacked routers (coded  in Upatre bins) 
+84.246.161.47;Dyre payloads via hacked routers (coded  in Upatre bins) 
+69.144.171.44;Dyre payloads via hacked routers (coded  in Upatre bins) 
+188.125.38.100;Dyre payloads via hacked routers (coded  in Upatre bins) 
+67.221.195.6;Dyre payloads via hacked routers (coded  in Upatre bins) 
+188.137.122.42;Dyre payloads via hacked routers (coded  in Upatre bins) 
+193.106.193.74;Dyre payloads via hacked routers (coded  in Upatre bins) 
+79.187.34.150;Dyre payloads via hacked routers (coded  in Upatre bins) 
+217.168.210.122;Dyre payloads via hacked routers (coded  in Upatre bins) 
+81.93.205.218;Dyre payloads via hacked routers (coded  in Upatre bins) 
+194.28.191.245;Dyre payloads via hacked routers (coded  in Upatre bins) 
+98.181.17.39;Dyre payloads via hacked routers (coded  in Upatre bins) 
+87.249.142.189;Dyre payloads via hacked routers (coded  in Upatre bins) 
+190.152.19.142;Dyre payloads via hacked routers (coded  in Upatre bins) 
+194.106.166.22;Dyre payloads via hacked routers (coded  in Upatre bins) 
+188.255.243.105;Dyre payloads via hacked routers (coded  in Upatre bins) 
+64.111.36.52;Dyre payloads via hacked routers (coded  in Upatre bins) 
+68.70.242.203;Dyre payloads via hacked routers (coded  in Upatre bins) 
+162.153.189.143;Dyre payloads via hacked routers (coded  in Upatre bins) 
+194.228.203.19;Dyre payloads via hacked routers (coded  in Upatre bins) 
+67.222.201.61;Dyre payloads via hacked routers (coded  in Upatre bins) 
+188.255.236.184;Dyre payloads via hacked routers (coded  in Upatre bins) 
+194.28.190.84;Dyre payloads via hacked routers (coded  in Upatre bins) 
+103.230.226.59;Dyre payloads via hacked routers (coded  in Upatre bins) 
+69.163.81.211;Dyre payloads via hacked routers (coded  in Upatre bins) 
+197.149.65.34;Dyre payloads via hacked routers (coded  in Upatre bins) 
+104.174.123.66;Dyre payloads via hacked routers (coded  in Upatre bins) 
+63.248.156.246;Dyre payloads via hacked routers (coded  in Upatre bins) 
+173.216.247.74;Dyre payloads via hacked routers (coded  in Upatre bins) 
+176.36.251.208;Dyre payloads via hacked routers (coded  in Upatre bins) 
+77.48.30.156;Dyre payloads via hacked routers (coded  in Upatre bins) 
+24.33.131.116;Dyre payloads via hacked routers (coded  in Upatre bins) 
+76.84.81.120;Dyre payloads via hacked routers (coded  in Upatre bins) 
+24.220.92.193;Dyre payloads via hacked routers (coded  in Upatre bins) 
+68.119.5.32;Dyre payloads via hacked routers (coded  in Upatre bins) 
+150.129.48.171;Dyre payloads via hacked routers (coded  in Upatre bins) 
+65.33.236.173;Dyre payloads via hacked routers (coded  in Upatre bins) 
+98.102.44.38;Dyre payloads via hacked routers (coded  in Upatre bins) 
+80.48.160.146;Dyre payloads via hacked routers (coded  in Upatre bins) 
+91.235.162.167;Dyre payloads via hacked routers (coded  in Upatre bins) 
+94.141.130.9;Dyre payloads via hacked routers (coded  in Upatre bins) 
+72.171.9.146;Dyre payloads via hacked routers (coded  in Upatre bins) 
+216.16.93.250;Dyre payloads via hacked routers (coded  in Upatre bins) 
+178.222.250.35;Dyre payloads via hacked routers (coded  in Upatre bins) 
+79.188.45.226;Dyre payloads via hacked routers (coded  in Upatre bins) 
+195.117.119.117;Dyre payloads via hacked routers (coded  in Upatre bins) 
+67.206.96.68;Dyre payloads via hacked routers (coded  in Upatre bins) 
+79.187.241.107;Dyre payloads via hacked routers (coded  in Upatre bins) 
+82.115.76.211;Dyre payloads via hacked routers (coded  in Upatre bins) 
+81.90.175.7;Dyre payloads via hacked routers (coded  in Upatre bins) 
+213.92.138.154;Dyre payloads via hacked routers (coded  in Upatre bins) 
+37.57.144.177;Dyre payloads via hacked routers (coded  in Upatre bins) 
+197.210.199.21;Dyre payloads via hacked routers (coded  in Upatre bins) 
+180.233.123.210;Dyre payloads via hacked routers (coded  in Upatre bins) 
+208.117.68.78;Dyre payloads via hacked routers (coded  in Upatre bins) 
+109.236.121.91;Dyre payloads via hacked routers (coded  in Upatre bins) 
+94.154.107.172;Dyre payloads via hacked routers (coded  in Upatre bins) 
+67.207.229.215;Dyre payloads via hacked routers (coded  in Upatre bins) 
+81.93.205.251;Dyre payloads via hacked routers (coded  in Upatre bins) 
+67.222.197.54;Dyre payloads via hacked routers (coded  in Upatre bins) 
+173.243.255.79;Dyre payloads via hacked routers (coded  in Upatre bins) 
+72.174.240.148;Dyre payloads via hacked routers (coded  in Upatre bins) 
+67.22.167.163;Dyre payloads via hacked routers (coded  in Upatre bins) 
+80.51.120.214;Dyre payloads via hacked routers (coded  in Upatre bins) 
+82.160.64.45;Dyre payloads via hacked routers (coded  in Upatre bins) 
+45.64.159.107;Dyre payloads via hacked routers (coded  in Upatre bins) 
+150.129.49.11;Dyre payloads via hacked routers (coded  in Upatre bins) 
+150.129.48.162;Dyre payloads via hacked routers (coded  in Upatre bins) 
+209.27.49.117;Dyre payloads via hacked routers (coded  in Upatre bins) 
+27.109.20.53;Dyre payloads via hacked routers (coded  in Upatre bins) 
+frontlinegulf.com;Malware Meets SysAdmin \u2013 Automation Tools Gone Bad http://blogs.cisco.com/security/talos/sysadmin-phish
+apananco.no-ip.biz;Malware Meets SysAdmin \u2013 Automation Tools Gone Bad http://blogs.cisco.com/security/talos/sysadmin-phish
+notyourbusiness.net;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+kuwota.com;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+jack.servep2p.com;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+james.securitytactics.com;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+john.cable-modem.org;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+uaelab.mypsx.net;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+www.creditbeuar.com;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+login.loginto.me;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+cyber.serveexchange.com;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+23.249.225.140;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+173.192.221.51;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
+login.collegefan.org;RTF Exploit Installs Italian RAT: uWarrior http://researchcenter.paloaltonetworks.com/2015/08/rtf-exploit-installs-italian-
+login.loginto.me;RTF Exploit Installs Italian RAT: uWarrior http://researchcenter.paloaltonetworks.com/2015/08/rtf-exploit-installs-italian-
+23.249.225.140;RTF Exploit Installs Italian RAT: uWarrior http://researchcenter.paloaltonetworks.com/2015/08/rtf-exploit-installs-italian-
+63.142.245.12;RTF Exploit Installs Italian RAT: uWarrior http://researchcenter.paloaltonetworks.com/2015/08/rtf-exploit-installs-italian-
+login.loginto.me;Ongoing analysis of unknown exploit targeting Office 2007-2013 http://blog.ropchain.com/2015/08/16/analysis-of-exploit-targeting-office-2007-20
+23.249.225.140;Ongoing analysis of unknown exploit targeting Office 2007-2013 http://blog.ropchain.com/2015/08/16/analysis-of-exploit-targeting-office-2007-20
+deyrep24.ddns.net;Inside the spyware campaign against Argentine troublemakers https://firstlook.org/theintercept/2015/08/21/inside-the-spyware-campaign-agains
+daynews.sytes.net;Inside the spyware campaign against Argentine troublemakers https://firstlook.org/theintercept/2015/08/21/inside-the-spyware-campaign-agains
+adobe-dns-3-adobe.com;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
+78.128.92.112;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
+84.200.4.226;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
+192.52.166.66;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
 jeooaezzkq.uowwitcjziv.tk;Neutrino Campaign Leveraging WordPress, Flash for CryptoWall http://research.zscaler.com/2015/08/neutrino-campaign-leveraging-wordpress.html
 bdimj.tgnrjzvogtnsevl.tk;Neutrino Campaign Leveraging WordPress, Flash for CryptoWall http://research.zscaler.com/2015/08/neutrino-campaign-leveraging-wordpress.html
 cbamw.jklilfaquqn.gq;Neutrino Campaign Leveraging WordPress, Flash for CryptoWall http://research.zscaler.com/2015/08/neutrino-campaign-leveraging-wordpress.html
@@ -2020,15 +2100,6 @@ ns2.hostasa.org;SSHPsychos http://blogs.cisco.com/security/talos/sshpsychos
 162.218.112.7;SSHPsychos http://blogs.cisco.com/security/talos/sshpsychos
 103.240.141.50;SSHPsychos http://blogs.cisco.com/security/talos/sshpsychos
 103.240.141.54;SSHPsychos http://blogs.cisco.com/security/talos/sshpsychos
-79.143.191.147;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
-94.23.53.23;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
-203.151.94.120;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
-146.185.99.250;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
-31.186.99.250;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
-173.230.130.172;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
-50.63.174.16;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
-37.143.9.63;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
-176.99.6.10;CERT-FR alert on Dridex http://cert.ssi.gouv.fr/site/CERTFR-2015-ACT-024/index.html
 go-upload.ru;Trojanized PuTTY Software http://blogs.cisco.com/security/trojanized-putty-software
 aliserv2013.ru;Trojanized PuTTY Software http://blogs.cisco.com/security/trojanized-putty-software
 ngusto-uro.ru;Trojanized PuTTY Software http://blogs.cisco.com/security/trojanized-putty-software
@@ -5680,17 +5751,6 @@ kk.netbot.cc;Chicken_mm: Analysis on DDoS Attack Organization
 61.153.104.230;Chicken_mm: Analysis on DDoS Attack Organization 
 98.126.193.143;Chicken_mm: Analysis on DDoS Attack Organization 
 198.148.92.100;Chicken_mm: Analysis on DDoS Attack Organization 
-ftspbz.net46.net;Data-Stealing NionSpy File Infector 
-nwoccs.zapto.org;Data-Stealing NionSpy File Infector 
-37.139.15.65;Data-Stealing NionSpy File Infector 
-109.195.54.18;Data-Stealing NionSpy File Infector 
-85.214.252.4;Data-Stealing NionSpy File Infector 
-176.31.246.49;Data-Stealing NionSpy File Infector 
-178.62.233.140;Data-Stealing NionSpy File Infector 
-72.167.201.238;Data-Stealing NionSpy File Infector 
-46.32.233.54;Data-Stealing NionSpy File Infector 
-78.46.36.35;Data-Stealing NionSpy File Infector 
-62.75.179.223;Data-Stealing NionSpy File Infector 
 a1c5.tk;Fraud Feeds Phishing in Tax-themed Email Campaign 
 c3a1.tk;Fraud Feeds Phishing in Tax-themed Email Campaign 
 f4b7.tk;Fraud Feeds Phishing in Tax-themed Email Campaign 

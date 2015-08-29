@@ -6917,3 +6917,17 @@ DCBD43CFE2F490A569E1C3DD6BCA6546074FD2A1;Fake TrueCrypt http://contagiodump.blog
 422B350371B3666A0BD0D56AEAAD5DEC6BD7C0D0;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
 88D703ADDB26ACB7FBE35EC04D7B1AA6DE982241;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
 86E3276B03F9B92B47D441BCFBB913C6C4263BFE;Fake TrueCrypt http://contagiodump.blogspot.de/2015/08/potao-express-samples.html
+
+2c8b9d2885543d7ade3cae98225e263b;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+4b6b86c7fec1c574706cecedf44abded;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+187044596bc1328efa0ed636d8aa4a5c;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+06665b96e293b23acc80451abb413e50;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+d240f06e98c8d3e647cbf4d442d79475;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+6662c390b2bbbd291ec7987388fc75d7;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+ffb0b9b5b610191051a7bdf0806e1e47;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+b29ca4f22ae7b7b25f79c1d4a421139d;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+1c024e599ac055312a4ab75b3950040a;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+ba7bb65634ce1e30c1e5415be3d1db1d;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+b505d65721bb2453d5039a389113b566;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+b269894f434657db2b15949641a67532;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+bfbe8c3ee78750c3a520480700e440f8;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere

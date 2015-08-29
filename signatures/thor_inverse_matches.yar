@@ -357,5 +357,8 @@ rule WindowsDefender_Renamed
 	strings: 
 		$s1 = "Microsoft-Windows-Windows Defender/WHC" wide fullword
 	condition:
-		uint16(0) == 0x5a4d and $s1 and not filename == "MpCmdRun.exe" 
+		uint16(0) == 0x5a4d and $s1 and 
+		not filename == "MpCmdRun.exe" and
+		not filename == "ActionCenter.dll" and
+		not filename == "MpEvMsg.dll"
 }
