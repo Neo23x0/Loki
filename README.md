@@ -74,16 +74,16 @@ No requirements if you use the compiled EXE.
 If you want to build it yourself:
 
 - [yara](http://goo.gl/PQjmsf) : It's recommended to use the most recent version of the compiled packages for Windows (x86) - Download it from here: http://goo.gl/PQjmsf
-- [scandir](https://github.com/benhoyt/scandir) : faster alternative to os.walk()
 - [colorama](https://pypi.python.org/pypi/colorama) : to color it up
 - [psutil](https://pypi.python.org/pypi/psutil) : process checks
 - [pywin32](http://sourceforge.net/projects/pywin32/) : path conversions (PyInstaller [issue](https://github.com/pyinstaller/pyinstaller/issues/1282); Windows only)
 
-Requirements for the OTX downloader:
+Requirements for the Threat Intel receivers:
 
 - [OTX Python SDK](https://github.com/AlienVault-Labs/OTX-Python-SDK)
+- [pyMISP](https://github.com/CIRCL/PyMISP)
 
-## Usage
+# Usage
 
     usage: loki.exe [-h] [-p path] [-s kilobyte] [--printAll] [--noprocscan]
                     [--nofilescan] [--noindicator] [--debug]
@@ -104,7 +104,7 @@ Requirements for the OTX downloader:
 
 Since version 0.9 the Yara signatures reside in the './signatures' subfolder and the IOC files for hashes and filenames are stored in the './iocs' folder. All '.yar' files placed in the './signatures' folder will be initialized together with the rule set that is already included. Use the 'score' value to define the level of the message upon a signature match.
 
-You can add hash and filename IOCs by adding files to the './iocs' subfolder. All hash IOCs and filename IOC files must be in the format used by LOKI. (see the default files)
+You can add hash, c2 and filename IOCs by adding files to the './iocs' subfolder. All hash IOCs and filename IOC files must be in the format used by LOKI (see the default files). The files must have the strings "hash", "filename" or "c2" in their name to get pulled during initialization.  
 
 For Hash IOCs (divided by newline; hash type is detected automatically)
 ```
@@ -116,11 +116,50 @@ For Filename IOCs (divided by newline)
 Filename as Regex;Description [Reference]
 ```
 
-### Open Threat Exchange (OTX) Downloader
+# Threat Intel Receivers
 
-It's a simple script that downloads your subscribed events/iocs from [Alienvault OTX](https://otx.alienvault.com/pulse/55d6657667db8c7bb9cb5af6/) and stores them in the correct format in the './iocs' subfolder. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no preformance impact)
+Since version v0.10 LOKI includes various threat intel receivers using the public APIs of these services to retrieve and store the IOCs in a format that LOKI understands. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no preformance impact)
 
-## Screenshots
+Provide your API key via ```-k APIKEY``` or set it in the script header.  
+
+## Open Threat Exchange (OTX) Receiver
+
+It's a simple script that downloads your subscribed events/iocs from [Alienvault OTX](https://otx.alienvault.com) and stores them in the correct format in the './iocs' subfolder. The script is located in the "./threatintel" folder and is named "get-otx-iocs.py". (see requirements above)
+
+```
+usage: get-otx-iocs.py [-h] [-k APIKEY] [-o dir] [--verifycert] [--debug]
+
+OTX IOC Receiver
+
+optional arguments:
+  -h, --help    show this help message and exit
+  -k APIKEY     OTX API key
+  -o dir        Output directory
+  --verifycert  Verify the server certificate
+  --debug       Debug output
+```
+
+## MISP Receiver
+
+A simple script that downloads your subscribed events/iocs from a custom [MISP](https://github.com/MISP/MISP) instance and stores them in the correct format in the './iocs' subfolder. The script is located in the "./threatintel" folder and is named "get-misp-iocs.py". (see requirements above)
+
+```
+usage: get-misp-iocs.py [-h] [-u URL] [-k APIKEY] [-l tframe] [-o dir]
+                        [--verifycert] [--debug]
+
+MISP IOC Receiver
+
+optional arguments:
+  -h, --help    show this help message and exit
+  -u URL        MISP URL
+  -k APIKEY     MISP API key
+  -l tframe     Time frame (e.g. 2d, 12h - default=30d)
+  -o dir        Output directory
+  --verifycert  Verify the server certificate
+  --debug       Debug output
+```
+
+# Screenshots
 
 Loki Scan
 
@@ -146,7 +185,7 @@ Generated log file
 
 ![Screen](/screens/lokilog1.png)
 
-## Contact
+# Contact
 
 LOKI scanner on our company homepage
 [http://www.bsk-consulting.de/loki-free-ioc-scanner/](http://www.bsk-consulting.de/loki-free-ioc-scanner/)
@@ -157,13 +196,7 @@ Twitter
 
 If you are interested in a corporate solution for APT scanning, check out Loki's big brother [THOR](http://www.bsk-consulting.de/apt-scanner-thor/).
 
-# Antivirus - False Positives
-
-The compiled scanner may be detected by antivirus engines. This is caused by the fact that the scanner is a compiled python script that implement some file system and process scanning features that are also used in compiled malware code.
-
-If you don't trust the compiled executable, please compile it yourself.
-
-## Compile the Scanner
+# Compile the Scanner
 
 Download PyInstaller, switch to the pyinstaller program directory and execute:
 
@@ -176,6 +209,19 @@ This will create a `loki.exe` in the subfolder `./loki/dist`.
 To include the msvcr100.dll to improve the target os compatibility change the line in the file `./loki/loki.spec` that contains `a.bianries,` to the following:
 
     a.binaries + [('msvcr100.dll', 'C:\Windows\System32\msvcr100.dll', 'BINARY')],
+    
+# Use LOKI on Mac OS X
+
+- Download Yara sources from [here](https://github.com/plusvic/yara/releases/tag/v3.4.0)
+- Change to folder ```yara-python``` 
+- Run ```python setup.py install```
+- Also install the requirement mentioned above by ```sudo pip install colorama```
+
+# Antivirus - False Positives
+
+The compiled scanner may be detected by antivirus engines. This is caused by the fact that the scanner is a compiled python script that implement some file system and process scanning features that are also used in compiled malware code.
+
+If you don't trust the compiled executable, please compile it yourself.
 
 # License
 
