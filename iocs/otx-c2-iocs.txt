@@ -83,6 +83,8 @@
 91.227.16.112;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 37.140.192.192;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 46.30.40.98;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+37.140.192.239;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+104.200.78.119;Kazy Trojan Download Location https://www.virustotal.com/en/file/3bc528615808e61fdb6a043a19e9da9449da6a80a1347
 bloggarotosdegyn.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
 araujomelo.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
 fadangoscuzido.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
@@ -138,6 +140,7 @@ login.logins-verify.com;London Calling: Two-Factor Authentication Phishing From 
 162.222.194.51;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
 141.105.65.57;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
 141.105.66.60;London Calling: Two-Factor Authentication Phishing From Iran https://citizenlab.org/2015/08/iran_two_factor_phishing/
+didierstevenslabs.com;PDF + maldoc1 = maldoc2 http://dshield.org/forums/diary/PDF+maldoc1+maldoc2/20079/
 98.214.11.253;Dyre payloads via hacked routers (coded  in Upatre bins) 
 203.129.197.50;Dyre payloads via hacked routers (coded  in Upatre bins) 
 186.68.94.38;Dyre payloads via hacked routers (coded  in Upatre bins) 
@@ -234,6 +237,32 @@ login.logins-verify.com;London Calling: Two-Factor Authentication Phishing From 
 150.129.48.162;Dyre payloads via hacked routers (coded  in Upatre bins) 
 209.27.49.117;Dyre payloads via hacked routers (coded  in Upatre bins) 
 27.109.20.53;Dyre payloads via hacked routers (coded  in Upatre bins) 
+ledshoppen.nl;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+fgainterests.com;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+shmetterheath.ru;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+www.micropiso.cl;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+www.serenitynowbooksandgifts.com;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+prism0.housevaluesinmiami.com;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+1muthuletchm.housevaluesinsouthbeach.com;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+gobowz.hotpo.org;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+sowrite-capitalleser.housevaluesinmiami.com;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+mhsc-tuffsteins.housevaluesinmiamibeach.com;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+217.197.83.197;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+31.148.220.173;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+65.112.221.20;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+217.12.207.33;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+192.185.171.111;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+74.63.210.182;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+149.210.193.39;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+199.116.254.169;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+198.1.106.126;Actor that tried Neutrino exploit kit now back to Angler http://dshield.org/forums/diary/Actor+that+tried+Neutrino+exploit+kit+now+back+t
+11.2.202.49;Adobe Air CVE-2015-5566 http://www.security-database.com/detail.php?alert=CVE-2015-5566
+18.0.0.209;Adobe Air CVE-2015-5566 http://www.security-database.com/detail.php?alert=CVE-2015-5566
+18.0.0.199;Adobe Air CVE-2015-5566 http://www.security-database.com/detail.php?alert=CVE-2015-5566
+18.0.0.180;Adobe Air CVE-2015-5566 http://www.security-database.com/detail.php?alert=CVE-2015-5566
+www.digicom.com.hk;DSL routers contain hard-coded "XXXXairocon" credentials http://www.security-database.com/detail.php?alert=VU950576
+h20564.www2.hpe.com;HP Security Bulletin HPSBMU03409 1 https://dl.packetstormsecurity.net/1508-advisories/HPSBMU03409-1.txt
+cars.matuliauskas.com;WordPress Car Rental System SQL Injection https://packetstormsecurity.com/files/133326/WordPress-Car-Rental-System-SQL-Inj
 frontlinegulf.com;Malware Meets SysAdmin \u2013 Automation Tools Gone Bad http://blogs.cisco.com/security/talos/sysadmin-phish
 apananco.no-ip.biz;Malware Meets SysAdmin \u2013 Automation Tools Gone Bad http://blogs.cisco.com/security/talos/sysadmin-phish
 notyourbusiness.net;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
@@ -255,10 +284,79 @@ login.loginto.me;Ongoing analysis of unknown exploit targeting Office 2007-2013 
 23.249.225.140;Ongoing analysis of unknown exploit targeting Office 2007-2013 http://blog.ropchain.com/2015/08/16/analysis-of-exploit-targeting-office-2007-20
 deyrep24.ddns.net;Inside the spyware campaign against Argentine troublemakers https://firstlook.org/theintercept/2015/08/21/inside-the-spyware-campaign-agains
 daynews.sytes.net;Inside the spyware campaign against Argentine troublemakers https://firstlook.org/theintercept/2015/08/21/inside-the-spyware-campaign-agains
+h20564.www2.hpe.com;HP Security Bulletin HPSBUX03369 SSRT102037 1 https://dl.packetstormsecurity.net/1508-advisories/HPSBUX03369-SSRT102037-1.txt
+h20564.www2.hpe.com;HP Security Bulletin HPSBUX03410 SSRT102175 1 https://dl.packetstormsecurity.net/1508-advisories/HPSBUX03410-SSRT102175-1.txt
 adobe-dns-3-adobe.com;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
 78.128.92.112;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
 84.200.4.226;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
 192.52.166.66;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
+msupdt.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+helpcenter2br6932.cc;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+swupdt.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+blogs.independent.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+itunes311.appleupdt.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+www.guardian.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+www.washingtonsblog.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+cultura.elpais.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+pininfarina.dynalias.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+nav1002.ath.cx;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+www.elespectador.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+prosoccer2.dyndns.info;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+tunga.homedns.org;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+fast8.homeftp.org;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+economia.elpais.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+www.elmundo.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+world.time.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+www.publico.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+www.publicdomainregistry.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+oco-231-ms.xns01.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+itunes212.appleupdt.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+negocios.iprofesional.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+helpcenter1it6238.cz.cc;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+elpais.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+support.gandi.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+takami.podzone.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+soc.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+sociedad.elpais.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+itunes214.appleupdt.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+wwnav.selfip.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+www.internacional.elpais.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+dfup.selfip.org;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+ctronlinenews.dyndns.tv;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+sv.serveftp.org;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+internacional.elpais.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+gx5639.dyndns.tv;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+nthost.shacknet.nu;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+carrus.gotdns.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+services.serveftp.org;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+ricush.ath.cx;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+politica.elpais.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+test.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+prosoccer1.dyndns.info;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+223.25.232.161;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+202.150.214.50;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+62.149.227.3;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+196.40.84.94;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+202.75.56.231;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+200.122.160.25;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+202.75.56.123;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+82.208.40.11;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+75.126.146.114;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+37.235.63.127;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+202.75.58.153;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+210.48.153.236;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+200.46.107.115;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+200.46.107.116;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+200.46.107.117;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+81.0.233.15;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+190.10.9.209;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+202.150.211.102;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+190.105.232.46;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+pl400.dyndns.org;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+mango66.dyndns.org;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+wqq.dyndns.org;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
+cherry1962.dyndns.org;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
 jeooaezzkq.uowwitcjziv.tk;Neutrino Campaign Leveraging WordPress, Flash for CryptoWall http://research.zscaler.com/2015/08/neutrino-campaign-leveraging-wordpress.html
 bdimj.tgnrjzvogtnsevl.tk;Neutrino Campaign Leveraging WordPress, Flash for CryptoWall http://research.zscaler.com/2015/08/neutrino-campaign-leveraging-wordpress.html
 cbamw.jklilfaquqn.gq;Neutrino Campaign Leveraging WordPress, Flash for CryptoWall http://research.zscaler.com/2015/08/neutrino-campaign-leveraging-wordpress.html
@@ -921,6 +1019,7 @@ swissprox.eu;Retefe Banking Trojan http://researchcenter.paloaltonetworks.com/20
 securedtonnel.net;Retefe Banking Trojan http://researchcenter.paloaltonetworks.com/2015/08/retefe-banking-trojan-targets
 safevpn24.net;Retefe Banking Trojan http://researchcenter.paloaltonetworks.com/2015/08/retefe-banking-trojan-targets
 bxateca.net;ANDROID/Spy.Agent.X.Gen 
+18.0.0.203;Adobe Flash Heap Use-After-Free In SurfaceFilterList https://dl.packetstormsecurity.net/1508-exploits/adobesfl-uaf.txt
 comeinbaby.com;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
 www.comeinbaby.com;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
 125.39.68.200;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
@@ -1215,6 +1314,31 @@ interstate.engetic.com;Nuclear Exploit Kit activity - August 3rd week
 62.76.191.249;Nuclear Exploit Kit activity - August 3rd week 
 111.118.177.20;Nuclear Exploit Kit activity - August 3rd week 
 178.62.108.126;Nuclear Exploit Kit activity - August 3rd week 
+file.read;Mac OS X "tpwn" Privilege Escalation https://dl.packetstormsecurity.net/1508-exploits/tpwn.rb.txt
+regcon-asia.kz;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+premier-gps.com;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+bgf.com.hk;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+inspectorate-croatia.hr;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+eimigrante.pt;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+laurence-chocolate.gr;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+byloth.nl;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+chartered.co.th;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+jviincentthailand.com;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+bwfllc.co;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+fulplanet.com;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+sify.com;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+jsocket.org;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+al-rddadi.com.sa;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+www.rekings.com;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+p0.corotext.com;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+trusplus111.gotdns.ch;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+serialcheck55.serveblog.net;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+pauloo1.corotext.com;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+selkrom.ddns.net;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+185.19.85.172;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+91.236.116.185;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+111.118.183.211;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
+197.255.170.191;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
 cryptorepairsystems.com;CryptoApp ransomware:  changes & active campaign http://blog.0x3a.com/post/127019416444/development-of-the-cryptoapp-ransomware
 behesjusrat.com;Tracing Pony\u2019s Threat Cycle and Multi-Stage Infection Chain https://www.damballa.com/wp-content/uploads/2015/08/Damballa_PonyUp.pdf
 aningutterbut.com;Tracing Pony\u2019s Threat Cycle and Multi-Stage Infection Chain https://www.damballa.com/wp-content/uploads/2015/08/Damballa_PonyUp.pdf
@@ -2117,6 +2241,16 @@ dsaj2a.org;SSH Brute Force Campaign - Thai Limited https://www.fireeye.com/blog/
 info.3000uc.com;SSH Brute Force Campaign - Thai Limited https://www.fireeye.com/blog/threat-research/2015/02/anatomy_of_a_brutef.html / 
 103.25.9.228;SSH Brute Force Campaign - Thai Limited https://www.fireeye.com/blog/threat-research/2015/02/anatomy_of_a_brutef.html / 
 103.25.9.229;SSH Brute Force Campaign - Thai Limited https://www.fireeye.com/blog/threat-research/2015/02/anatomy_of_a_brutef.html / 
+222.186.21.115;CZT Botnet 
+biosnews.info;DragonOK Backdoor 
+bbs.reweblink.com;DragonOK Backdoor 
+new.hotpmsn.com;DragonOK Backdoor 
+bbs.jpaols.com;DragonOK Backdoor 
+https.reweblink.com;DragonOK Backdoor 
+http.tourecord.com;DragonOK Backdoor 
+23.229.234.160;DragonOK Backdoor 
+103.20.193.62;DragonOK Backdoor 
+58.64.156.140;DragonOK Backdoor 
 acintcdn.net;Firefox exploit found in the wild https://www.mozilla.org/en-US/security/advisories/mfsa2015-78/
 185.86.77.48;Firefox exploit found in the wild https://www.mozilla.org/en-US/security/advisories/mfsa2015-78/
 maxcdnn.com;Firefox exploit found in the wild https://www.mozilla.org/en-US/security/advisories/mfsa2015-78/
@@ -2793,6 +2927,24 @@ www.etehadyie.ir;Babar APT http://feedproxy.google.com/~r/GDataSecurityBlog/~3/z
 wut.mophecfbr.com;Compromised TV and Government-Related Sites Lead to PoisonIvy http://blog.trendmicro.com/trendlabs-security-intelligence/hacking-team-flash-at
 223.27.43.32;Compromised TV and Government-Related Sites Lead to PoisonIvy http://blog.trendmicro.com/trendlabs-security-intelligence/hacking-team-flash-at
 win7.myz.info;Compromised TV and Government-Related Sites Lead to PoisonIvy http://blog.trendmicro.com/trendlabs-security-intelligence/hacking-team-flash-at
+www.viestintavirasto.fi;Basware Banking/Maksuliikenne https://dl.packetstormsecurity.net/1507-advisories/baswarebanking-vulns.txt
+www.hs.fi;Basware Banking/Maksuliikenne https://dl.packetstormsecurity.net/1507-advisories/baswarebanking-vulns.txt
+security.dxw.com;WordPress Flickr Justified Gallery 3.3.6 Cross Site Scripting https://dl.packetstormsecurity.net/1507-exploits/wpfjg-xss.txt
+mrflapper.com;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+ihaveavoice2.com;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+selmaryachtmarket.com;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+mes-sy.com;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+avolonage.com;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+ayuso-arch.com;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+www.alec.gr;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+brigand-001-site2.smarterasp.net;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+205.144.171.57;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+50.116.104.205;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+209.200.253.29;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+104.28.20.89;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+205.144.171.10;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+205.144.171.28;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
+174.137.191.22;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
 caref1rst.com;Black Vine: Formidable cyberespionage group http://www.symantec.com/connect/blogs/black-vine-formidable-cyberespionage-group
 careflrst.com;Black Vine: Formidable cyberespionage group http://www.symantec.com/connect/blogs/black-vine-formidable-cyberespionage-group
 sharepoint-vaeit.com;Black Vine: Formidable cyberespionage group http://www.symantec.com/connect/blogs/black-vine-formidable-cyberespionage-group
@@ -2911,6 +3063,9 @@ bybbaby.com;GamaPoS: The Andromeda Botnet Connection http://documents.trendmicro
 g-tr.io;GamaPoS: The Andromeda Botnet Connection http://documents.trendmicro.com/assets/GamaPOS_Technical_Brief.pdf
 80.242.123.144;GamaPoS: The Andromeda Botnet Connection http://documents.trendmicro.com/assets/GamaPOS_Technical_Brief.pdf
 pos-softwareupdate.com;GamaPoS: The Andromeda Botnet Connection http://documents.trendmicro.com/assets/GamaPOS_Technical_Brief.pdf
+arstechnica.co.uk;After Flash, what will exploit kits focus on next? http://dshield.org/forums/diary/After+Flash+what+will+exploit+kits+focus+on+next
+18.0.0.209;After Flash, what will exploit kits focus on next? http://dshield.org/forums/diary/After+Flash+what+will+exploit+kits+focus+on+next
+18.0.0.203;After Flash, what will exploit kits focus on next? http://dshield.org/forums/diary/After+Flash+what+will+exploit+kits+focus+on+next
 wscapi.com;Microsoft Office Zero-Day CVE-2015-2424 Leveraged By Tsar Team http://www.isightpartners.com/2015/07/microsoft-office-zero-day-cve-2015-2424-le
 storsvc.org;Microsoft Office Zero-Day CVE-2015-2424 Leveraged By Tsar Team http://www.isightpartners.com/2015/07/microsoft-office-zero-day-cve-2015-2424-le
 tabsync.net;Microsoft Office Zero-Day CVE-2015-2424 Leveraged By Tsar Team http://www.isightpartners.com/2015/07/microsoft-office-zero-day-cve-2015-2424-le
@@ -2939,6 +3094,10 @@ ns1.quixjoumnf.com;Large Malvertising Campaign Leads to Angler EK & Bunitu Malwa
 95.211.233.121;Large Malvertising Campaign Leads to Angler EK & Bunitu Malware http://community.websense.com/blogs/securitylabs/archive/2015/06/10/large-malver
 85.17.142.21;Large Malvertising Campaign Leads to Angler EK & Bunitu Malware http://community.websense.com/blogs/securitylabs/archive/2015/06/10/large-malver
 95.211.58.100;Large Malvertising Campaign Leads to Angler EK & Bunitu Malware http://community.websense.com/blogs/securitylabs/archive/2015/06/10/large-malver
+target.name;VNC Keyboard Remote Code Execution https://packetstormsecurity.com/files/132664/VNC-Keyboard-Remote-Code-Execution.
+0x90.nl;VNC Keyboard Remote Code Execution https://packetstormsecurity.com/files/132664/VNC-Keyboard-Remote-Code-Execution.
+www.jedi.be;VNC Keyboard Remote Code Execution https://packetstormsecurity.com/files/132664/VNC-Keyboard-Remote-Code-Execution.
+didierstevenslabs.com;Jump List Files Are OLE Files http://dshield.org/forums/diary/Jump+List+Files+Are+OLE+Files/19911/
 rpt.perrydale.com;APT Group UPS Targets US Government with HT Flash Exploit http://researchcenter.paloaltonetworks.com/2015/07/apt-group-ups-targets-us-gove
 report.perrydale.com;APT Group UPS Targets US Government with HT Flash Exploit http://researchcenter.paloaltonetworks.com/2015/07/apt-group-ups-targets-us-gove
 194.44.130.179;APT Group UPS Targets US Government with HT Flash Exploit http://researchcenter.paloaltonetworks.com/2015/07/apt-group-ups-targets-us-gove
@@ -3001,6 +3160,10 @@ ueberwachtes.pizzadrone.be;Angler EK and other Exploit Kits integrating latest F
 placeresdagelet.anniesintimates.com;Angler EK and other Exploit Kits integrating latest Flash 0day http://malware.dontneedcoffee.com/2015/07/hackingteam-flash-0d-cve-2015-xxxx-and
 155.94.67.5;DirectRev Malvertising Uses Self Sufficient Flash 0Day https://blog.malwarebytes.org/malvertising-2/2015/07/directrev-malvertising-uses
 osce-press.org;Sednit APT Group Meets Hacking Team http://www.welivesecurity.com/2015/07/10/sednit-apt-group-meets-hacking-team/
+www.ethical-hacker.org;ntp MON_GETLIST query amplification ddos https://dl.packetstormsecurity.net/1507-exploits/ntpbomb-ddos.txt
+creativecommons.org;AirLink101 SkyIPCam1620W OS Command Injection https://packetstormsecurity.com/files/132609/AirLink101-SkyIPCam1620W-OS-Command
+macwrite.sh;AirLink101 SkyIPCam1620W OS Command Injection https://packetstormsecurity.com/files/132609/AirLink101-SkyIPCam1620W-OS-Command
+www.airlink101.com;AirLink101 SkyIPCam1620W OS Command Injection https://packetstormsecurity.com/files/132609/AirLink101-SkyIPCam1620W-OS-Command
 info.imly.org;APT Group Wekby Leveraging Adobe Flash Exploit http://www.volexity.com/blog/?p=158
 gmail.bkz88.com;APT Group Wekby Leveraging Adobe Flash Exploit http://www.volexity.com/blog/?p=158
 223.25.233.248;APT Group Wekby Leveraging Adobe Flash Exploit http://www.volexity.com/blog/?p=158
@@ -3038,6 +3201,8 @@ briach202.no-ip.info;Ding! Your RAT has been delivered http://blogs.cisco.com/se
 216.38.2.212;Ding! Your RAT has been delivered http://blogs.cisco.com/security/talos/darkkomet-rat-spam
 41.58.102.142;Ding! Your RAT has been delivered http://blogs.cisco.com/security/talos/darkkomet-rat-spam
 216.38.2.195;Ding! Your RAT has been delivered http://blogs.cisco.com/security/talos/darkkomet-rat-spam
+18.0.0.194;Security Advisory for Adobe Flash Player https://helpx.adobe.com/security/products/flash-player/apsa15-03.html
+11.2.202.46;Security Advisory for Adobe Flash Player https://helpx.adobe.com/security/products/flash-player/apsa15-03.html
 burimche.net;Blue DDoS Botnet http://botzone1.blogspot.com/2015/03/blue-ddos-botnet-stub-source-panel.html
 141.138.157.240;Blue DDoS Botnet http://botzone1.blogspot.com/2015/03/blue-ddos-botnet-stub-source-panel.html
 185.61.138.193;Blue DDoS Botnet http://botzone1.blogspot.com/2015/03/blue-ddos-botnet-stub-source-panel.html
@@ -3050,6 +3215,8 @@ bareportex.org;TorrentLocker Surges in the UK http://blog.trendmicro.com/trendla
 kergoned.net;TorrentLocker Surges in the UK http://blog.trendmicro.com/trendlabs-security-intelligence/torrentlocker-surges-
 klixoprend.com;TorrentLocker Surges in the UK http://blog.trendmicro.com/trendlabs-security-intelligence/torrentlocker-surges-
 krusperon.net;TorrentLocker Surges in the UK http://blog.trendmicro.com/trendlabs-security-intelligence/torrentlocker-surges-
+148.251.167.107;Another example of Angler exploit kit pushing CryptoWall 3.0 http://dshield.org/forums/diary/Another+example+of+Angler+exploit+kit+pushing+Cr
+148.251.167.57;Another example of Angler exploit kit pushing CryptoWall 3.0 http://dshield.org/forums/diary/Another+example+of+Angler+exploit+kit+pushing+Cr
 93.185.4.90;Malware spam: "HMRC taxes application" http://blog.dynamoo.com/2015/07/malware-spam-hmrc-taxes-application.html
 snecma-secure.appspot.com;Sakula and multiple RATs 
 facebook.from-pr.com;Sakula and multiple RATs 
@@ -3059,6 +3226,9 @@ computergraphics.in;Gorynych/DiamondFox (Hosted In Hungary Budapest) http://www.
 176.31.112.10;Digital Attack on German Parliament https://netzpolitik.org/2015/digital-attack-on-german-parliament-investigative-r
 serv.textme.pw;Sundown EK Spreads LuminosityLink RAT https://www.proofpoint.com/us/threat-insight/post/Light-After-Dark
 emenike.no-ip-biz;Sundown EK Spreads LuminosityLink RAT https://www.proofpoint.com/us/threat-insight/post/Light-After-Dark
+vulnwatch.org;Cisco default credentials - again! http://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20
+puck.nether.net;Cisco default credentials - again! http://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20
+spot.colorado.edu;Cisco default credentials - again! http://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20
 181.189.152.131;Dyre emerges as main financial Trojan threat http://www.symantec.com/connect/blogs/dyre-emerges-main-financial-trojan-threat 
 85.25.153.26;Dyre emerges as main financial Trojan threat http://www.symantec.com/connect/blogs/dyre-emerges-main-financial-trojan-threat 
 jhgfskjfshgjkfhgkjfsghf.co.vu;AV Labs: Sundown Exploit Kit Indicators 
@@ -3130,6 +3300,16 @@ documents-live.com;[Warning] infection of new Linux / Mayhem malware http://blog
 159.253.20.116;New Dridex infection vector identified https://blog.gdatasoftware.com/blog/article/new-dridex-infection-vector-identifi
 91.218.228.25;New Dridex infection vector identified https://blog.gdatasoftware.com/blog/article/new-dridex-infection-vector-identifi
 5.44.216.44;New Dridex infection vector identified https://blog.gdatasoftware.com/blog/article/new-dridex-infection-vector-identifi
+adminhome.do;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
+customreporthandler.do;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
+editdomain.do;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
+importadusers.do;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
+www.evolution-sec.com;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
+magazine.vulnerability-db.com;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
+www.vuln-lab.com;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
+www.vulnerability-lab.com;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
+erpscan.com;SYBASE SQL Anywhere 12 / 16 Denial Of Service https://dl.packetstormsecurity.net/1506-advisories/ERPSCAN-15-010.txt
+erpscan.com;SAP Mobile Platform 3.0 XXE Injection https://dl.packetstormsecurity.net/1506-advisories/ERPSCAN-15-011.txt
 162.244.32.164;POSEIDON AND BACKOFF POS 
 89.144.2.149;POSEIDON AND BACKOFF POS 
 89.144.2.148;POSEIDON AND BACKOFF POS 
@@ -4748,6 +4928,8 @@ jjeyd2u37an30.com;TeslaCrypt Ransomware http://www.secureworks.com/cyber-threat-
 94.242.216.5;TeslaCrypt Ransomware http://www.secureworks.com/cyber-threat-intelligence/threats/teslacrypt-ransomwa
 50.7.138.132;TeslaCrypt Ransomware http://www.secureworks.com/cyber-threat-intelligence/threats/teslacrypt-ransomwa
 178.63.9.48;TeslaCrypt Ransomware http://www.secureworks.com/cyber-threat-intelligence/threats/teslacrypt-ransomwa
+osuosl.org;Slackware Security Advisory - mozilla-thunderbird Updates 
+ftp.slackware.com;Slackware Security Advisory - mozilla-thunderbird Updates 
 193.230.220.38;'Los Pollos Hermanos' crypto ransomware http://www.symantec.com/connect/blogs/breaking-bad-themed-los-pollos-hermanos-cr
 biortherm.com;Cmstar Downloader: Lurid and Enfal's New Cousin http://researchcenter.paloaltonetworks.com/2015/05/cmstar-downloader-lurid-and-e
 suttgte.com;Cmstar Downloader: Lurid and Enfal's New Cousin http://researchcenter.paloaltonetworks.com/2015/05/cmstar-downloader-lurid-and-e
@@ -4830,6 +5012,241 @@ iq3ahijcfeont3xx.tor2web.blutmagie.de;Nuclear EK DELIVERS RANSOMWARE http://www.
 129.194.101.164;Dridex Payloads  - 05-15-2015 
 87.117.229.29;Dridex Payloads  - 05-15-2015 
 151.97.243.221;Dridex Payloads  - 05-15-2015 
+125.141.233.19;Shell Crew 
+184.71.210.4;Shell Crew 
+202.96.128.166;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+166.197.202.242;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+161.234.4.220;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+222.82.220.118;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.132.74.68;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+180.169.28.58;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.178.77.108;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+201.22.184.42;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+202.68.226.250;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+198.126.20.221;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.178.77.96;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+100.4.43.226;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+207.204.245.192;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.178.77.169;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+115.160.188.245;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+58.64.172.177;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.234.4.213;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+121.170.178.221;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.234.4.210;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+160.170.255.85;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+202.67.215.143;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+113.10.201.250;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+40.50.60.70;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.220.138.100;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.234.4.218;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+222.73.27.223;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+205.209.159.162;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.222.31.54;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+227.254.41.72;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+66.79.188.236;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+125.141.149.46;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+218.108.42.59;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+116.92.6.197;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+216.131.66.96;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+182.16.11.187;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+112.121.182.150;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+158.64.193.228;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+161.132.74.113;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+174.139.133.58;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+221.239.82.214;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+125.141.149.49;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+58.64.129.149;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+68.89.135.192;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+218.82.206.229;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+152.101.38.177;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+59.188.5.192;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+202.85.136.181;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+221.239.96.180;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+173.208.157.186;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+218.28.72.138;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+211.115.207.72;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+222.77.70.237;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+113.10.201.254;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+169.197.132.130;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+202.130.112.231;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+1.234.4.214;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+206.196.106.85;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.128.122.147;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+121.254.173.57;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+220.171.107.138;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.128.110.37;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+125.141.149.231;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+115.126.3.214;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+202.109.121.138;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+newwhitehouse.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+worldmaprsh.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+nskupdate.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+portright.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+betterpeony.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+webmailsvr.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+newyorkonlin.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+freesky365.gnway.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+tokyo.collegememory.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+logonin.uyghuri.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.uusuanru.nna.cc;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.discoverypeace.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+dtl.eatuo.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+msdn.homelinux.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+macaonews.8800.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+softmy.jkub.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+uyghuri.mrface.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+etdt.cable.nu;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.avasters.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+bc1516.7766.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+nbsstt.3322.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+webposter.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+uyghur1.webhop.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+webwx.3322.orgxiexie.8866.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+np6.dnsrd.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+mzyzy.vicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.bbcnewes.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+guanshan.3322.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+uygur.eicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+done.youtubesitegroup.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+webproxy.serveuser.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+englishclub.2288.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+mygoodbug.dnsd.info;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+book.websurprisemail.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+wolf001.us109.eoidc.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+uxz.fo.mooo.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+eemete.freetcp.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+desk.websurprisemail.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.uyghuri.mrface.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+alma.apple.cloudns.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+peopleunion.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+free1000.gnway.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+uxz.fo.dnsd.info;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+wodebeizi119.jkub.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+itsec.eicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+stormgo.oicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+dtl6.mooo.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+religion.xicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+test.3322.org.cn;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+br.stat-dns.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+zbing.strangled.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+connectsexy.dns-dns.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+tommark5454.xxxy.info;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+oyghur1.webhop.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+dns3.westcowboy.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+webjz.9966.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+email.googmail.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+mobile.yourtrap.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+toolsbar.dns0755.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+home.graffiti.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+statistics.netrobots.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+addi.apple.cloudns.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+greta.ikwb.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+kxwss.8800.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+mm.utf888.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+annchan.mrface.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.shine.4pu.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+copy.apple.cloudns.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.uyghur.25u.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+apple12.co.cc;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+uyghur.sov.tw;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+tt9c.2288.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+liveservices.dyndns.info;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.googmail.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+forum.universityexp.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+goodnewspaper.f3322.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+dcp.googmail.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+news.googmail.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+xinxin20080628.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+wxjz.6600.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+webmonder.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+yah00mail.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+goodnewspaper.3322.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+leelee.dnset.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+hbnjx.6600.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+gecko.jkub.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+ns1.oray.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+boy303.2288.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+humanbeing2009.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+webhelp01.freetcp.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+googlehk.dynamicdns.co.uk;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+jhska.cable.nu;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+dnsmm.bpa.nu;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.jiapin.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+star2.ksksz.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+uyghurie.51vip.biz;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+tanmii.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.info-microsoft.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+img.mic-road.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+test.3322.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+tonylee38.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.guzhijiaozihaha.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+suggest.dns1.us;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+worldview.instanthq.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+goodnewspaper.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+dtl.dnsd.me;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+uygur.51vip.biz;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+update.googmail.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+video.googmail.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+abc69696969.vicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+phinex127.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+put.adultdns.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+loadbook.strangled.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+religion.8866.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+ns.dns3-domain.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+mydeyuming.cable.nu;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+xiexie.8866.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.southstock.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+news.scvhosts.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+test195.3322.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+internet.3-a.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+softjohn.ddns.us;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+zeropan007.3322.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+gshjl.3322.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+report.dns-dns.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+forever001.dtdns.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+grt1.25u.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+tw252.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+kaba.wikaba.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+photo.googmail.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+rc.arkinixik.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+frank.3feet.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+polat.googmail.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+liveservices.dyndns.tv;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+wwzzsh.3322.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+inc.3feet.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+1nsmm.bpa.nu;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+ibmcorp.slyip.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.yahooprotect.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.uyhanur.nna.cc;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.yahooprotect.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+webwxjz.3322.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+thankyou09.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+tomsonmartin.ikwb.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+a2010226.gicp.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+blogging.blogsite.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+radio.googmail.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.yahooip.net;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.micosofts.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+apple12.crabdance.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+msejake.7766.org;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+www.yahoohello.com;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+66.79.188.23;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+98.126.20.221;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+60.170.255.85;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+125.141.149.23;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.132.74.113;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.234.4.214;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+27.254.41.7;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+69.197.132.130;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+58.64.193.228;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+211.115.207.7;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+59.188.5.19;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+221.239.82.21;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+61.234.4.220;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+66.197.202.242;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+100.4.43.2;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+soft.epac.to;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
+uyghur.epac.to;A Look at Targeted Attacks Through the Lense of an NGO https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-blon
 air88.ns01.us;Operation Tropic Trooper http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
 ph11.ns01.us;Operation Tropic Trooper http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
 info.acmetoy.com;Operation Tropic Trooper http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
@@ -4862,6 +5279,13 @@ translate.wordraference.com;Hiding in Plain Sight: Chinese APT Group's Obfuscati
 178.62.20.110;Hiding in Plain Sight: Chinese APT Group's Obfuscation Tactic 
 217.198.143.40;Hiding in Plain Sight: Chinese APT Group's Obfuscation Tactic 
 130.184.156.62;Hiding in Plain Sight: Chinese APT Group's Obfuscation Tactic 
+diebiyi.com;Mt. Vernon Media 1.12 SQL Injection 
+bluereader.org;Mt. Vernon Media 1.12 SQL Injection 
+progressive-comp.com;Mt. Vernon Media 1.12 SQL Injection 
+www.bugscan.net;Mt. Vernon Media 1.12 SQL Injection 
+www.fusionvm.com;Mt. Vernon Media 1.12 SQL Injection 
+www.tetraph.com;Mt. Vernon Media 1.12 SQL Injection 
+www.mtvernonmedia.com;Mt. Vernon Media 1.12 SQL Injection 
 net.googlereader.pw;The Naikon APT https://securelist.com/analysis/publications/69953/the-naikon-apt/
 htkg009.gicp.net;The Naikon APT https://securelist.com/analysis/publications/69953/the-naikon-apt/
 greensky27.vicp.net;The Naikon APT https://securelist.com/analysis/publications/69953/the-naikon-apt/
@@ -4939,6 +5363,8 @@ es-correos.com;TorrentLocker Correos Campaign
 88.53.215.64;Destover Sony Pictures Compromise Dropper 
 203.131.222.102;Destover Sony Pictures Compromise Dropper 
 217.96.33.164;Destover Sony Pictures Compromise Dropper 
+92.63.88.87;Malware spam: "ATTN: Outstanding Invoices - [4697E0]" http://blog.dynamoo.com/2015/05/malware-spam-attn-outstanding-invoices.html
+46.36.217.227;Malware spam: "ATTN: Outstanding Invoices - [4697E0]" http://blog.dynamoo.com/2015/05/malware-spam-attn-outstanding-invoices.html
 200.87.48.4;Messaging Application LINE Used as a Decoy for Targeted Attack 
 91.211.17.201;Dyre Botnet Using Malicious Microsoft Word Macros 
 91.226.93.14;Malware spam: "Payment details and copy of purchase" 
@@ -5125,6 +5551,8 @@ ser.bacguarp.com;PlugX Uses Legitimate Samsung Application for DLL Side-Loading 
 www1.bacguarp.com;PlugX Uses Legitimate Samsung Application for DLL Side-Loading http://researchcenter.paloaltonetworks.com/2015/05/plugx-uses-legitimate-samsung
 rfa.bacguarp.com;PlugX Uses Legitimate Samsung Application for DLL Side-Loading http://researchcenter.paloaltonetworks.com/2015/05/plugx-uses-legitimate-samsung
 line.bacguarp.com;PlugX Uses Legitimate Samsung Application for DLL Side-Loading http://researchcenter.paloaltonetworks.com/2015/05/plugx-uses-legitimate-samsung
+batardchris.servehttp.com;The Curious Case of CZ Solution https://www.fireeye.com/blog/threat-research/2014/07/the-little-signature-that-c
+ekinox.no-ip.info;The Curious Case of CZ Solution https://www.fireeye.com/blog/threat-research/2014/07/the-little-signature-that-c
 7tno4hib47vlep5o.63ghdye17.com;Threat Spotlight: TeslaCrypt http://blogs.cisco.com/security/talos/teslacrypt
 7tno4hib47vlep5o.79fhdm16.com;Threat Spotlight: TeslaCrypt http://blogs.cisco.com/security/talos/teslacrypt
 7tno4hib47vlep5o.tor2web.fi;Threat Spotlight: TeslaCrypt http://blogs.cisco.com/security/talos/teslacrypt
@@ -5572,6 +6000,34 @@ grouptumbler.com;CozyDuke F-Secure report
 200.125.133.28;CozyDuke F-Secure report 
 200.125.142.11;CozyDuke F-Secure report 
 208.77.177.24;CozyDuke F-Secure report 
+hassoon03.no-ip.info;NjRAT uncovered 
+yandload.besaba.com;NjRAT uncovered 
+samirsamir.hopto.org;NjRAT uncovered 
+xxsniper.no-ip.biz;NjRAT uncovered 
+hack-badone.no-ip.biz;NjRAT uncovered 
+ksadxxd24.no-ip.org;NjRAT uncovered 
+gdsg.no-ip.org;NjRAT uncovered 
+mohammad3badi.zapto.org;NjRAT uncovered 
+wolblid.zapto.org;NjRAT uncovered 
+wisam77.no-ip.biz;NjRAT uncovered 
+mp3.servemp3.com;NjRAT uncovered 
+saman70.no-ip.org;NjRAT uncovered 
+m3333m.no-ip.org;NjRAT uncovered 
+kurdkalar11.zapto.org;NjRAT uncovered 
+nasr23200.no-ip.org;NjRAT uncovered 
+dr-vip.no-ip.org;NjRAT uncovered 
+zackhaviland.no-ip.org;NjRAT uncovered 
+kyfen.dyndns.biz;NjRAT uncovered 
+alitatat.no-ip.org;NjRAT uncovered 
+naif.no-ip.org;NjRAT uncovered 
+special.no-ip.biz;NjRAT uncovered 
+217.66.231.255;NjRAT uncovered 
+217.66.231.100;NjRAT uncovered 
+217.66.231.245;NjRAT uncovered 
+217.66.224.0;NjRAT uncovered 
+217.66.228.0;NjRAT uncovered 
+112.213.89.144;NjRAT uncovered 
+31.170.165.90;NjRAT uncovered 
 203.156.161.49;The CozyDuke APT 
 201.76.51.10;The CozyDuke APT 
 202.76.237.216;The CozyDuke APT 
@@ -5633,6 +6089,123 @@ webmail.westinqhousenuclear.com;The Sofacy plot thickens
 privacy-yahoo.com;The Sofacy plot thickens 
 foreignreview.com;The Sofacy plot thickens 
 delivery-yahoo.com;The Sofacy plot thickens 
+viprainru.com;The NetTraveler 
+yangdex.org;The NetTraveler 
+vipyandex.com;The NetTraveler 
+gami1.com;The NetTraveler 
+globalmailru.com;The NetTraveler 
+viprambler.com;The NetTraveler 
+ramb1er.com;The NetTraveler 
+localgroupnet.com;The NetTraveler 
+eaglesey.com;The NetTraveler 
+ra1nru.com;The NetTraveler 
+msnnewes.com;The NetTraveler 
+vipmailru.com;The NetTraveler 
+cultureacess.com;The NetTraveler 
+southstock.net;The NetTraveler 
+mailyandexru.com;The NetTraveler 
+andriodphone.net;The NetTraveler 
+enterairment.net;The NetTraveler 
+tsgoogoo.net;The NetTraveler 
+drag2008.com;The NetTraveler 
+viplenta.com;The NetTraveler 
+imapupdate.com;The NetTraveler 
+buynewes.com;The NetTraveler 
+newfax.net;The NetTraveler 
+discoverypeace.org;The NetTraveler 
+yahooair.com;The NetTraveler 
+keyboardhk.com;The NetTraveler 
+inwpvpn.com;The NetTraveler 
+pkspring.net;The NetTraveler 
+pitgay.minidns.net;The NetTraveler 
+wolf001.us109.eoidc.net;The NetTraveler 
+vip222idc.s169.288idc.com;The NetTraveler 
+vpnwork.3322.org;The NetTraveler 
+spit113.minidns.net;The NetTraveler 
+sunshine.59.ydli.net;The NetTraveler 
+allen.w223.west263.cn;The NetTraveler 
+bauer.8866.org;The NetTraveler 
+www.faceboak.net;The NetTraveler 
+sghrhd.190.20081.info;The NetTraveler 
+hint09.9966.org;The NetTraveler 
+wolf0.3322.org;The NetTraveler 
+96.44.179.26;The NetTraveler 
+109.169.86.178;The NetTraveler 
+182.50.130.68;The NetTraveler 
+61.178.77.111;The NetTraveler 
+124.115.21.209;The NetTraveler 
+209.11.241.144;The NetTraveler 
+235.22.123.90;The NetTraveler 
+125.67.89.156;The NetTraveler 
+121.12.124.69;The NetTraveler 
+178.77.45.32;The NetTraveler 
+142.4.96.6;The NetTraveler 
+96.46.4.237;The NetTraveler 
+67.198.140.148;The NetTraveler 
+103.20.192.59;The NetTraveler 
+213.156.6.122;The NetTraveler 
+98.143.145.80;The NetTraveler 
+209.130.115.38;The NetTraveler 
+osgenuine.com;Red October domains 
+shellupdate.com;Red October domains 
+blackberry-update.com;Red October domains 
+msgenuine.net;Red October domains 
+wins-update.com;Red October domains 
+microsoftosupdate.com;Red October domains 
+microsoftcheck.com;Red October domains 
+xponlineupdate.com;Red October domains 
+genuine-check.com;Red October domains 
+svchost-update.com;Red October domains 
+security-mobile.com;Red October domains 
+mobileimho.ru;Red October domains 
+nt-windows-online.com;Red October domains 
+drivers-update-online.com;Red October domains 
+drivers-get.com;Red October domains 
+msonlineupdate.com;Red October domains 
+genuineservicecheck.com;Red October domains 
+dll-host-update.com;Red October domains 
+msonlinecheck.com;Red October domains 
+msonlineget.com;Red October domains 
+drivers-check.com;Red October domains 
+dll-host-check.com;Red October domains 
+dailyinfonews.net;Red October domains 
+wingenuine.com;Red October domains 
+blackberry-apps-world.com;Red October domains 
+genuineupdate.com;Red October domains 
+msinfoonline.org;Red October domains 
+dll-host.com;Red October domains 
+windowsonlineupdate.com;Red October domains 
+dllupdate.info;Red October domains 
+svchost-check.com;Red October domains 
+nt-windows-update.com;Red October domains 
+ms-software-genuine.com;Red October domains 
+winupdateos.com;Red October domains 
+scpkrp.gmx;Red October domains 
+mobile-update.com;Red October domains 
+win-driver-upgrade.com;Red October domains 
+win-check-update.com;Red October domains 
+mobileimho.com;Red October domains 
+svchost-online.com;Red October domains 
+hotinfonews.com;Red October domains 
+dll-host-udate.com;Red October domains 
+microsoft-msdn.com;Red October domains 
+os-microsoft-check.com;Red October domains 
+bb-apps-world.com;Red October domains 
+new-driver-upgrade.com;Red October domains 
+wins-driver-update.com;Red October domains 
+world-mobile-congress.com;Red October domains 
+ms-software-update.com;Red October domains 
+update-genuine.com;Red October domains 
+windowscheckupdate.com;Red October domains 
+windows-genuine.com;Red October domains 
+wins-driver-check.com;Red October domains 
+nt-windows-check.com;Red October domains 
+ms-software-check.com;Red October domains 
+os-microsoft-update.com;Red October domains 
+winupdateonline.com;Red October domains 
+csrss-upgrade-new.com;Red October domains 
+csrss-update-new.com;Red October domains 
+csrss-check-new.com;Red October domains 
 sitefmonitor.com;FighterPOS 
 msr2006.com;FighterPOS 
 ctclubedeluta.org;FighterPOS 
@@ -5787,6 +6360,224 @@ dnsdns1.passas.us;Curious Korlia
 69.197.149.98;Curious Korlia 
 196.44.49.154;Curious Korlia 
 61.90.202.198;Curious Korlia 
+syncdomain.info;Flame infrastructure 
+dnsmask.info;Flame infrastructure 
+bannerzone.in;Flame infrastructure 
+traffic-spot.biz;Flame infrastructure 
+pingserver.info;Flame infrastructure 
+bk2by.com;Flame infrastructure 
+isyncautoupdater.in;Flame infrastructure 
+bytewiser.info;Flame infrastructure 
+mysync.info;Flame infrastructure 
+nvidiastream.info;Flame infrastructure 
+chchengine.net;Flame infrastructure 
+phpmanualbox.com;Flame infrastructure 
+sec-enhanced.org;Flame infrastructure 
+spaceworldpics.com;Flame infrastructure 
+conf-net.com;Flame infrastructure 
+fastinfo.biz;Flame infrastructure 
+adhotspot.biz;Flame infrastructure 
+syncstream.info;Flame infrastructure 
+quick-net.info;Flame infrastructure 
+flushdns.info;Flame infrastructure 
+smartloader.info;Flame infrastructure 
+ultrasoft.in;Flame infrastructure 
+newsync.info;Flame infrastructure 
+nvidiadrivers.info;Flame infrastructure 
+nvidiasoft.info;Flame infrastructure 
+bytewiser.com;Flame infrastructure 
+smart-access.net;Flame infrastructure 
+syncsource.info;Flame infrastructure 
+profcenter.biz;Flame infrastructure 
+serverss.info;Flame infrastructure 
+dbdrivers.biz;Flame infrastructure 
+rendercodec.info;Flame infrastructure 
+dnsupdate.info;Flame infrastructure 
+living-business.com;Flame infrastructure 
+eventshosting.com;Flame infrastructure 
+syncprovider.info;Flame infrastructure 
+dvmdownload.net;Flame infrastructure 
+processrep.com;Flame infrastructure 
+bannerspot.in;Flame infrastructure 
+liveservice.biz;Flame infrastructure 
+crashinfo.info;Flame infrastructure 
+formsupdates.info;Flame infrastructure 
+quickboot.info;Flame infrastructure 
+newsflashsite.com;Flame infrastructure 
+dnslocation.info;Flame infrastructure 
+webhop.info;Flame infrastructure 
+traffic-spot.com;Flame infrastructure 
+localconf.com;Flame infrastructure 
+micromedia.in;Flame infrastructure 
+living-help.com;Flame infrastructure 
+fastestever.net;Flame infrastructure 
+videosync.info;Flame infrastructure 
+loginfo.info;Flame infrastructure 
+networkupdate.net;Flame infrastructure 
+videoupdates.org;Flame infrastructure 
+netproof.info;Flame infrastructure 
+confnet.net;Flame infrastructure 
+network-acs.biz;Flame infrastructure 
+newstatisticfeeder.com;Flame infrastructure 
+fine4all.com;Flame infrastructure 
+rapidmyhardware.com;Flame infrastructure 
+netsharepoint.info;Flame infrastructure 
+dnsportal.info;Flame infrastructure 
+syncupdate.info;Flame infrastructure 
+rapidmemorylink.com;Flame infrastructure 
+isyncautomation.in;Flame infrastructure 
+synclock.info;Flame infrastructure 
+specthosting.biz;Flame infrastructure 
+update-ver.biz;Flame infrastructure 
+smartservicesite.info;Flame infrastructure 
+chchengine.com;Flame infrastructure 
+flashupdates.info;Flame infrastructure 
+bizupdate.org;Flame infrastructure 
+admin-on.biz;Flame infrastructure 
+diznet.biz;Flame infrastructure 
+localgateway.info;Flame infrastructure 
+netbowse.org;Flame infrastructure 
+dailynewsupdater.com;Flame infrastructure 
+globemaster.info;Flame infrastructure 
+autosync.info;Flame infrastructure 
+serveflash.info;Flame infrastructure 
+rsscenter.webhop.info;Flame infrastructure 
+flashp.webhop.net;Flame infrastructure 
+www.certcc.ir;Flame infrastructure 
+210.245.90.168;Flame infrastructure 
+117.18.68.82;Flame infrastructure 
+199.115.114.78;Flame infrastructure 
+109.232.224.146;Flame infrastructure 
+95.211.172.143;Flame infrastructure 
+194.192.14.125;Flame infrastructure 
+91.135.66.118;Flame infrastructure 
+37.220.101.202;Flame infrastructure 
+78.46.253.75;Flame infrastructure 
+79.99.24.132;Flame infrastructure 
+69.178.156.226;Flame infrastructure 
+91.203.214.72;Flame infrastructure 
+89.201.167.42;Flame infrastructure 
+77.241.93.160;W32.Duqu: The precursor to the next Stuxnet 
+123.30.137.117;W32.Duqu: The precursor to the next Stuxnet 
+68.132.129.18;W32.Duqu: The precursor to the next Stuxnet 
+206.183.111.97;W32.Duqu: The precursor to the next Stuxnet 
+liveservice.biz;Flame Command and Control servers 
+syncdomain.info;Flame Command and Control servers 
+localconf.com;Flame Command and Control servers 
+formsupdates.info;Flame Command and Control servers 
+dnsmask.info;Flame Command and Control servers 
+newsync.info;Flame Command and Control servers 
+netsharepoint.info;Flame Command and Control servers 
+bannerzone.in;Flame Command and Control servers 
+fastinfo.biz;Flame Command and Control servers 
+newsflashsite.com;Flame Command and Control servers 
+traffic-spot.biz;Flame Command and Control servers 
+sec-enhanced.org;Flame Command and Control servers 
+globemaster.info;Flame Command and Control servers 
+conf-net.com;Flame Command and Control servers 
+pingserver.info;Flame Command and Control servers 
+eventshosting.com;Flame Command and Control servers 
+network-acs.biz;Flame Command and Control servers 
+dnsportal.info;Flame Command and Control servers 
+nvidiadrivers.info;Flame Command and Control servers 
+syncupdate.info;Flame Command and Control servers 
+rapidmemorylink.com;Flame Command and Control servers 
+bk2by.com;Flame Command and Control servers 
+traffic-spot.com;Flame Command and Control servers 
+isyncautomation.in;Flame Command and Control servers 
+quick-net.info;Flame Command and Control servers 
+loginfo.info;Flame Command and Control servers 
+crashinfo.info;Flame Command and Control servers 
+nvidiasoft.info;Flame Command and Control servers 
+bytewiser.info;Flame Command and Control servers 
+dvmdownload.net;Flame Command and Control servers 
+mysync.info;Flame Command and Control servers 
+syncsource.info;Flame Command and Control servers 
+specthosting.biz;Flame Command and Control servers 
+nvidiastream.info;Flame Command and Control servers 
+smart-access.net;Flame Command and Control servers 
+micromedia.in;Flame Command and Control servers 
+adhotspot.biz;Flame Command and Control servers 
+smartservicesite.info;Flame Command and Control servers 
+profcenter.biz;Flame Command and Control servers 
+admin-on.biz;Flame Command and Control servers 
+serverss.info;Flame Command and Control servers 
+living-help.com;Flame Command and Control servers 
+quickboot.info;Flame Command and Control servers 
+fastestever.net;Flame Command and Control servers 
+dbdrivers.biz;Flame Command and Control servers 
+rendercodec.info;Flame Command and Control servers 
+dnsupdate.info;Flame Command and Control servers 
+update-ver.biz;Flame Command and Control servers 
+videosync.info;Flame Command and Control servers 
+chchengine.net;Flame Command and Control servers 
+phpmanualbox.com;Flame Command and Control servers 
+dnslocation.info;Flame Command and Control servers 
+spaceworldpics.com;Flame Command and Control servers 
+flashupdates.info;Flame Command and Control servers 
+bizupdate.org;Flame Command and Control servers 
+isyncautoupdater.in;Flame Command and Control servers 
+webhop.net;Flame Command and Control servers 
+living-business.com;Flame Command and Control servers 
+diznet.biz;Flame Command and Control servers 
+networkupdate.net;Flame Command and Control servers 
+localgateway.info;Flame Command and Control servers 
+videoupdates.org;Flame Command and Control servers 
+synclock.info;Flame Command and Control servers 
+netproof.info;Flame Command and Control servers 
+syncstream.info;Flame Command and Control servers 
+netbowse.org;Flame Command and Control servers 
+dailynewsupdater.com;Flame Command and Control servers 
+syncprovider.info;Flame Command and Control servers 
+flushdns.info;Flame Command and Control servers 
+confnet.net;Flame Command and Control servers 
+smartloader.info;Flame Command and Control servers 
+serveflash.info;Flame Command and Control servers 
+processrep.com;Flame Command and Control servers 
+bannerspot.in;Flame Command and Control servers 
+ultrasoft.in;Flame Command and Control servers 
+newstatisticfeeder.com;Flame Command and Control servers 
+autosync.info;Flame Command and Control servers 
+fine4all.com;Flame Command and Control servers 
+rapidmyhardware.com;Flame Command and Control servers 
+chchengine.com;Flame Command and Control servers 
+rsscenter.webhop.info;Flame Command and Control servers 
+flashp.webhop.net;Flame Command and Control servers 
+bestcopytoday.com;Flame Command and Control servers 
+blogsearchtoday.com;Flame Command and Control servers 
+guest-access.net;Gauss 
+bestcomputeradvisor.info;Gauss 
+bestcomputeradvisor.com;Gauss 
+gowin7.com;Gauss 
+bestcomputeradvisro.info;Gauss 
+datajunction.org;Gauss 
+dataspotlight.net;Gauss 
+dotnetadvisor.info;Gauss 
+secuurity.net;Gauss 
+173.204.235.201;Gauss 
+182.18.166.116;Gauss 
+173.204.235.204;Gauss 
+109.71.45.115;Gauss 
+173.204.235.196;Gauss 
+internetadvertising4u.com;Stuxnet 0.5: The Missing Link 
+smartclick.org;Stuxnet 0.5: The Missing Link 
+best-advertising.net;Stuxnet 0.5: The Missing Link 
+ad-marketing.net;Stuxnet 0.5: The Missing Link 
+202.86.190.3;Deep Panda Crowdstrike report 
+1.9.5.38;Deep Panda Crowdstrike report 
+frejabe.com;El Machete https://securelist.com/blog/research/66108/el-machete/
+xmailliwx.com;El Machete https://securelist.com/blog/research/66108/el-machete/
+plushbr.com;El Machete https://securelist.com/blog/research/66108/el-machete/
+blogwhereyou.com;El Machete https://securelist.com/blog/research/66108/el-machete/
+agaliarept.com;El Machete https://securelist.com/blog/research/66108/el-machete/
+grannegral.com;El Machete https://securelist.com/blog/research/66108/el-machete/
+xha-mster.com;DEEP PANDA Uses Sakula Malware 
+foundationssl.com;DEEP PANDA Uses Sakula Malware 
+vpn.foundationssl.com;DEEP PANDA Uses Sakula Malware 
+www.xha-mster.com;DEEP PANDA Uses Sakula Malware 
+news.foundationssl.com;DEEP PANDA Uses Sakula Malware 
+180.210.206.246;DEEP PANDA Uses Sakula Malware 
+198.200.45.112;DEEP PANDA Uses Sakula Malware 
 etidfortgot.ru;Adventures in PoSeidon genealogy http://h30499.www3.hp.com/t5/HP-Security-Research-Blog/Adventures-in-PoSeidon-ge
 151.236.11.167;Adventures in PoSeidon genealogy http://h30499.www3.hp.com/t5/HP-Security-Research-Blog/Adventures-in-PoSeidon-ge
 topic.buhgalter-info.com;Operation Buhtrap http://www.welivesecurity.com/2015/04/09/operation-buhtrap/
