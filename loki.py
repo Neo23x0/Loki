@@ -26,27 +26,37 @@
 
 import os
 import argparse
-import scandir
 import traceback
 import yara
 import re
 import stat
 import psutil
 from sets import Set
+import signal as signal_module
 from colorama import Fore, Back, Style
 from colorama import init
+from sys import platform as _platform
 
 from lib.helpers import *
 
+# Platform
+platform = ""
+if _platform == "linux" or _platform == "linux2":
+    platform = "linux"
+elif _platform == "darwin":
+    platform = "osx"
+elif _platform == "win32":
+    platform = "windows"
+
 # Win32 Imports
-try:
-    import wmi
-    import win32api
-    from win32com.shell import shell
-    isLinux = False
-except Exception, e:
-    print "Linux System - deactivating process memory check ..."
-    isLinux= True
+if platform == "windows":
+    try:
+        import wmi
+        import win32api
+        from win32com.shell import shell
+    except Exception, e:
+        print "Linux System - deactivating process memory check ..."
+        platform = "linux" # crazy guess
 
 # Predefined Evil Extensions
 EVIL_EXTENSIONS = [".asp", ".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm", ".cmd", ".com", ".cpl",
@@ -123,12 +133,15 @@ class Loki():
         c = 0
 
         # Linux excludes from mtab
-        if isLinux:
+        if platform == "linux":
             allExcludes = self.LINUX_PATH_SKIPS_START | Set(getExcludedMountpoints())
+        # OSX excludes like Linux until we get some field data
+        if platform == "osx":
+            allExcludes = self.LINUX_PATH_SKIPS_START
 
         for root, directories, files in os.walk(path, onerror=walk_error, followlinks=False):
 
-                if isLinux:
+                if platform == "linux" or platform == "osx":
                     # Skip paths that start with ..
                     newDirectories = []
                     for dir in directories:
@@ -153,7 +166,7 @@ class Loki():
                         extension = os.path.splitext(filePath)[1].lower()
 
                         # Linux directory skip
-                        if isLinux:
+                        if platform == "linux" or platform == "osx":
 
                             # Skip paths that end with ..
                             for skip in self.LINUX_PATH_SKIPS_END:
@@ -802,7 +815,7 @@ class Loki():
 
         try:
             for root, directories, files in \
-                    scandir.walk(os.path.join(self.app_path, "./signatures"),
+                    os.walk(os.path.join(self.app_path, "./signatures"),
                                  onerror=walk_error, followlinks=False):
                 for file in files:
                     try:
@@ -1087,7 +1100,7 @@ class LokiLogger():
         print "  "
         print "  (C) Florian Roth"
         print "  August 2015"
-        print "  Version 0.11.0"
+        print "  Version 0.12.0"
         print "  "
         print "  DISCLAIMER - USE AT YOUR OWN RISK"
         print "  "
@@ -1109,14 +1122,9 @@ def get_application_path():
             application_path = os.path.dirname(os.path.realpath(sys.executable))
         elif __file__:
             application_path = os.path.dirname(__file__)
-        if application_path != "":
-            # Working directory change skipped due to the function to create TXT, CSV and HTML file on the local file
-            # system when thor is started from a read only network share
-            # os.chdir(application_path)
-            pass
         if application_path == "":
             application_path = os.path.dirname(os.path.realpath(__file__))
-        if "~" in application_path and not isLinux:
+        if "~" in application_path and platform == "windows":
             # print "Trying to translate"
             # print application_path
             application_path = win32api.GetLongPathName(application_path)
@@ -1127,8 +1135,21 @@ def get_application_path():
         logger.log("ERROR","Error while evaluation of application path")
 
 
+# CTRL+C Handler --------------------------------------------------------------
+def signal_handler(signal_name, frame):
+    try:
+        print "------------------------------------------------------------------------------\n"
+        logger.log('INFO', 'LOKI\'s work has been interrupted by a human. Returning to Asgard.')
+    except Exception, e:
+        print 'THOR\'s work has been interrupted by a human. Returning to Asgard.'
+    sys.exit(0)
+
+
 # MAIN ################################################################
 if __name__ == '__main__':
+
+    # Signal handler for CTRL+C
+    signal_module.signal(signal_module.SIGINT, signal_handler)
 
     # Parse Arguments
     parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
@@ -1157,23 +1178,23 @@ if __name__ == '__main__':
         os.remove(args.l)
 
     # Computername
-    if not isLinux:
-        t_hostname = os.environ['COMPUTERNAME']
-    else:
+    if platform == "linux" or platform == "osx":
         t_hostname = os.uname()[1]
+    else:
+        t_hostname = os.environ['COMPUTERNAME']
 
     # Logger
     logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant, args.debug)
-    logger.log("INFO", "LOKI - Starting Loki Scan on %s" % t_hostname)
 
-    logger.log("NOTICE", "Started LOKI Scan on %s at %s" % (t_hostname, getSyslogTimestamp()))
+    logger.log("NOTICE", "Starting Loki Scan SYSTEM: {0} TIME: {1} PLATFORM: {2}".format(
+        t_hostname, getSyslogTimestamp(), platform))
 
     # Loki
     loki = Loki(args.intense)
 
     # Check if admin
     isAdmin = False
-    if not isLinux:
+    if platform == "windows":
         if shell.IsUserAnAdmin():
             isAdmin = True
             logger.log("INFO", "Current user has admin rights - very good")
@@ -1187,12 +1208,12 @@ if __name__ == '__main__':
             logger.log("NOTICE", "Program should be run as 'root' to ensure all access rights to process memory and file objects.")
 
     # Set process to nice priority ------------------------------------
-    if not isLinux:
+    if platform == "windows":
         setNice(logger)
 
     # Scan Processes --------------------------------------------------
     resultProc = False
-    if not args.noprocscan and not isLinux:
+    if not args.noprocscan and platform == "windows":
         if isAdmin:
             loki.scan_processes()
         else:
@@ -1201,7 +1222,7 @@ if __name__ == '__main__':
     # Scan Path -------------------------------------------------------
     # Set default
     defaultPath = args.p
-    if isLinux and defaultPath == "C:\\":
+    if ( platform == "linux" or platform == "osx" ) and defaultPath == "C:\\":
         defaultPath = "/"
 
     resultFS = False
@@ -1218,7 +1239,7 @@ if __name__ == '__main__':
     else:
         logger.log("RESULT", "SYSTEM SEEMS TO BE CLEAN.")
 
-    logger.log("NOTICE", "Finished LOKI Scan on %s at %s" % (t_hostname, getSyslogTimestamp()))
+    logger.log("NOTICE", "Finished LOKI Scan SYSTEM: %s TIME: %s" % (t_hostname, getSyslogTimestamp()))
 
     if not args.dontwait:
         print " "
