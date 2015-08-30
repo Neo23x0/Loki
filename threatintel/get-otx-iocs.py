@@ -90,9 +90,9 @@ def my_escape(string):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='OTX IOC Receiver')
-    parser.add_argument('-k', help='OTX API key', metavar='kilobyte', default=OTX_KEY)
+    parser.add_argument('-k', help='OTX API key', metavar='APIKEY', default=OTX_KEY)
     # parser.add_argument('-l', help='Time frame in days (default=30)', default=30)
-    parser.add_argument('-o', help='Output directory', default='../iocs')
+    parser.add_argument('-o', metavar='dir', help='Output directory', default='../iocs')
     parser.add_argument('--verifycert', action='store_true', help='Verify the server certificate', default=False)
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 

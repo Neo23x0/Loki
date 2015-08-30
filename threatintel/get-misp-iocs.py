@@ -100,10 +100,10 @@ def my_escape(string):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='MISP IOC Receiver')
-    parser.add_argument('-u', help='MISP URL', metavar='path', default=MISP_URL)
-    parser.add_argument('-k', help='MISP API key', metavar='kilobyte', default=MISP_KEY)
-    parser.add_argument('-l', help='Time frame (e.g. 2d, 12h - default=30d)', default='30d')
-    parser.add_argument('-o', help='Output directory', default='../iocs')
+    parser.add_argument('-u', help='MISP URL', metavar='URL', default=MISP_URL)
+    parser.add_argument('-k', help='MISP API key', metavar='APIKEY', default=MISP_KEY)
+    parser.add_argument('-l', help='Time frame (e.g. 2d, 12h - default=30d)', metavar='tframe', default='30d')
+    parser.add_argument('-o', help='Output directory', metavar='dir', default='../iocs')
     parser.add_argument('--verifycert', action='store_true', help='Verify the server certificate', default=False)
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
