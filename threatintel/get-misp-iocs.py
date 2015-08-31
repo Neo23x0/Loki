@@ -79,6 +79,9 @@ class MISPReceiver():
             self.hash_iocs[value] = comment
         # Filenames
         if ioc_type in ('filename', 'filepath'):
+            # Add prefix to filenames
+            if ioc_type == "filename":
+                value = "\\{0}".format(value)
             self.filename_iocs[my_escape(value)] = comment
         # Yara
         if ioc_type in ('yara'):
