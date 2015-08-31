@@ -824,6 +824,7 @@ class Loki():
             for yara_rule_directory in self.yara_rule_directories:
                 if not os.path.exists(yara_rule_directory):
                     continue
+                logger.log("INFO", "Processing YARA rules folder {0}".format(yara_rule_directory))
                 for root, directories, files in os.walk(yara_rule_directory, onerror=walk_error, followlinks=False):
                     for file in files:
                         try:
