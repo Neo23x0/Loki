@@ -141,11 +141,11 @@ optional arguments:
 
 ## MISP Receiver
 
-A simple script that downloads your subscribed events/iocs from a custom [MISP](https://github.com/MISP/MISP) instance and stores them in the correct format in the './iocs' subfolder. The script is located in the "./threatintel" folder and is named "get-misp-iocs.py". (see requirements above)
+A simple script that downloads your subscribed events/iocs from a custom [MISP](https://github.com/MISP/MISP) instance and stores them in the correct format in the './iocs' subfolder. YARA rules stored in MISP will be written to the './iocs/yara' subfolder and automatically initialized during startup. The script is located in the "./threatintel" folder and is named "get-misp-iocs.py". (see requirements above)
 
 ```
 usage: get-misp-iocs.py [-h] [-u URL] [-k APIKEY] [-l tframe] [-o dir]
-                        [--verifycert] [--debug]
+                        [-y yara-dir] [--verifycert] [--debug]
 
 MISP IOC Receiver
 
@@ -155,6 +155,7 @@ optional arguments:
   -k APIKEY     MISP API key
   -l tframe     Time frame (e.g. 2d, 12h - default=30d)
   -o dir        Output directory
+  -y yara-dir   YARA rule output directory
   --verifycert  Verify the server certificate
   --debug       Debug output
 ```

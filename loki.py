@@ -80,6 +80,9 @@ class Loki():
     false_hashes = {}
     c2_server = {}
 
+    # Yara rule directories
+    yara_rule_directories = []
+
     # File type magics
     filetype_magics = {}
     max_filetype_magics = 0
@@ -98,6 +101,10 @@ class Loki():
 
         # Set IOC path
         self.ioc_path = os.path.join(self.app_path, "./iocs/")
+
+        # Yara rule directories
+        self.yara_rule_directories.append(os.path.join(self.app_path, "./signatures"))
+        self.yara_rule_directories.append(os.path.join(self.app_path, "./iocs/yara"))
 
         # Read IOCs -------------------------------------------------------
         # File Name IOCs (all files in iocs that contain 'filename')
@@ -814,42 +821,43 @@ class Loki():
         filetype_dummy = ""
 
         try:
-            for root, directories, files in \
-                    os.walk(os.path.join(self.app_path, "./signatures"),
-                                 onerror=walk_error, followlinks=False):
-                for file in files:
-                    try:
+            for yara_rule_directory in self.yara_rule_directories:
+                if not os.path.exists(yara_rule_directory):
+                    continue
+                for root, directories, files in os.walk(yara_rule_directory, onerror=walk_error, followlinks=False):
+                    for file in files:
+                        try:
 
-                        # Full Path
-                        yaraRuleFile = os.path.join(root, file)
+                            # Full Path
+                            yaraRuleFile = os.path.join(root, file)
 
-                        # Skip hidden, backup or system related files
-                        if file.startswith(".") or file.startswith("~") or file.startswith("_"):
-                            continue
+                            # Skip hidden, backup or system related files
+                            if file.startswith(".") or file.startswith("~") or file.startswith("_"):
+                                continue
 
-                        # Extension
-                        extension = os.path.splitext(file)[1].lower()
+                            # Extension
+                            extension = os.path.splitext(file)[1].lower()
 
-                        # Encrypted
-                        if extension == ".yar":
-                            try:
-                                compiledRules = yara.compile(yaraRuleFile, externals= {
-                                                                  'filename': filename_dummy,
-                                                                  'filepath': filepath_dummy,
-                                                                  'extension': extension_dummy,
-                                                                  'filetype': filetype_dummy
-                                                              })
-                                yaraRules.append(compiledRules)
-                                logger.log("INFO", "Initialized Yara rules from %s" % file)
-                            except Exception, e:
-                                logger.log("ERROR", "Error in Yara file: %s" % file)
-                                if args.debug:
-                                    traceback.print_exc()
+                            # Encrypted
+                            if extension == ".yar":
+                                try:
+                                    compiledRules = yara.compile(yaraRuleFile, externals= {
+                                                                      'filename': filename_dummy,
+                                                                      'filepath': filepath_dummy,
+                                                                      'extension': extension_dummy,
+                                                                      'filetype': filetype_dummy
+                                                                  })
+                                    yaraRules.append(compiledRules)
+                                    logger.log("INFO", "Initialized Yara rules from %s" % file)
+                                except Exception, e:
+                                    logger.log("ERROR", "Error in Yara file: %s" % file)
+                                    if args.debug:
+                                        traceback.print_exc()
 
-                    except Exception, e:
-                        logger.log("ERROR", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
-                        if args.debug:
-                            traceback.print_exc()
+                        except Exception, e:
+                            logger.log("ERROR", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
+                            if args.debug:
+                                traceback.print_exc()
 
             self.yara_rules = yaraRules
 
@@ -1100,7 +1108,7 @@ class LokiLogger():
         print "  "
         print "  (C) Florian Roth"
         print "  August 2015"
-        print "  Version 0.12.0"
+        print "  Version 0.12.1"
         print "  "
         print "  DISCLAIMER - USE AT YOUR OWN RISK"
         print "  "

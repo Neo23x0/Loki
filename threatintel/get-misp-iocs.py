@@ -5,7 +5,7 @@
 # Get-MISP-IOCs
 # Retrieves IOCs from MISP and stores them in appropriate format
 
-MISP_KEY = '--- YOUR API KEY ---'
+MISP_KEY = '-- YOUR API KEY ---'
 MISP_URL = 'https://misppriv.circl.lu'
 
 import sys
@@ -13,6 +13,7 @@ import json
 import argparse
 import os
 import re
+import io
 from pymisp import PyMISP
 
 class MISPReceiver():
@@ -20,6 +21,7 @@ class MISPReceiver():
     hash_iocs = {}
     filename_iocs = {}
     c2_iocs = {}
+    yara_rules = {}
 
     debugon = False
 
@@ -54,16 +56,16 @@ class MISPReceiver():
 
                 # Non split type
                 if '|' not in attribute['type']:
-                    self.add_ioc(attribute['type'], value, comment)
+                    self.add_ioc(attribute['type'], value, comment, uuid, info)
                 # Split type
                 else:
                     # Prepare values
                     type1, type2 = attribute['type'].split('|')
                     value1, value2 = value.split('|')
                     # self.add_ioc(type1, value1, comment)
-                    self.add_ioc(type2, value2, comment)
+                    self.add_ioc(type2, value2, comment, uuid, info)
 
-    def add_ioc(self, ioc_type, value, comment):
+    def add_ioc(self, ioc_type, value, comment, uuid, info):
         # Cleanup value
         value = value.encode('unicode_escape')
         # Debug
@@ -78,24 +80,62 @@ class MISPReceiver():
         # Filenames
         if ioc_type in ('filename', 'filepath'):
             self.filename_iocs[my_escape(value)] = comment
+        # Yara
+        if ioc_type in ('yara'):
+            self.add_yara_rule(value, uuid, info)
 
-    def write_iocs(self, output_path):
+    def add_yara_rule(self, yara_rule, uuid, info):
+        identifier = generate_identifier(info)
+        self.yara_rules[identifier] = ur'%s' % repair_yara_rule(yara_rule.decode('string_escape'), uuid)
+
+    def write_iocs(self, output_path, output_path_yara):
         # Write C2 IOCs
         self.write_file(os.path.join(output_path, "misp-c2-iocs.txt"), self.c2_iocs)
         # Write Filename IOCs
         self.write_file(os.path.join(output_path, "misp-filename-iocs.txt"), self.filename_iocs)
         # Write Hash IOCs
         self.write_file(os.path.join(output_path, "misp-hash-iocs.txt"), self.hash_iocs)
+        # Yara
+        if len(self.yara_rules) > 0:
+            # Create dir if not exists
+            if not os.path.exists(output_path_yara):
+                os.makedirs(output_path_yara)
+            # Loop through rules (keys are identifiers used for file names)
+            for yara_rule in self.yara_rules:
+                output_rule_filename = os.path.join(output_path_yara, "%s.yar" % yara_rule)
+                self.write_yara_rule(output_rule_filename, self.yara_rules[yara_rule])
+            print "{0} YARA rules written to directory {1}".format(len(self.yara_rules), output_path_yara)
 
     def write_file(self, ioc_file, iocs):
-        with open(ioc_file, "w") as file:
+        with open(ioc_file, 'w') as file:
             for ioc in iocs:
                 file.write("{0};{1}\n".format(ioc,iocs[ioc]))
         print "{0} IOCs written to file {1}".format(len(iocs), ioc_file)
 
+    def write_yara_rule(self, yara_file, yara_rule):
+        # Write the YARA rule
+        with io.open(yara_file, 'wb') as fh:
+            fh.write(ur'%s' % yara_rule)
+
+
+def generate_identifier(string):
+    valid_chars = '-_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    return ''.join(char for char in string if char in valid_chars)
+
+
+def repair_yara_rule(yara_rule, uuid):
+    # Wrong upper ticks when copied & pasted from a PDF
+    yara_rule = yara_rule.replace('\u201c', r'"')
+    yara_rule = yara_rule.replace('\u201d', r'"')
+    # Missing rule name
+    name = uuid.replace('-', '_')
+    yara_rule = re.sub(r'^[\W]*\{', 'rule rule_%s {' % name, yara_rule)
+    return yara_rule
+
 
 def my_escape(string):
     return re.sub(r'([\-\(\)\.\[\]\{\}\\])',r'\\\1',string)
+
 
 if __name__ == '__main__':
 
@@ -104,6 +144,7 @@ if __name__ == '__main__':
     parser.add_argument('-k', help='MISP API key', metavar='APIKEY', default=MISP_KEY)
     parser.add_argument('-l', help='Time frame (e.g. 2d, 12h - default=30d)', metavar='tframe', default='30d')
     parser.add_argument('-o', help='Output directory', metavar='dir', default='../iocs')
+    parser.add_argument('-y', help='YARA rule output directory', metavar='yara-dir', default='../iocs/yara')
     parser.add_argument('--verifycert', action='store_true', help='Verify the server certificate', default=False)
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
@@ -120,5 +161,5 @@ if __name__ == '__main__':
     misp_receiver.get_iocs_last(args.l)
 
     # Write IOC files
-    misp_receiver.write_iocs(args.o)
+    misp_receiver.write_iocs(args.o, args.y)
 
