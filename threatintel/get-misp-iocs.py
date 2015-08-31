@@ -137,7 +137,11 @@ def repair_yara_rule(yara_rule, uuid):
 
 
 def my_escape(string):
-    return re.sub(r'([\-\(\)\.\[\]\{\}\\])',r'\\\1',string)
+    # Escaping
+    string = re.sub(r'([\-\(\)\.\[\]\{\}\\])',r'\\\1',string)
+    # Fix the cases in which the value has already been escaped
+    string = re.sub(r'\\\\\\\\',r'\\\\',string)
+    return string
 
 
 if __name__ == '__main__':
