@@ -1,28 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 # -*- coding: utf-8 -*-
-#
-# Loki
-# Simple IOC Scanner
-#
-# Detection is based on three detection methods:
-#
-# 1. File Name IOC
-#    Applied to file names
-#
-# 2. Yara Check
-#    Applied to files and processes
-#
-# 3. Hash Check
-#    Compares known malicious hashes with th ones of the scanned files
-#
-# Loki combines all IOCs from ReginScanner and SkeletonKeyScanner and is the
-# little brother of THOR our full-featured corporate APT Scanner
-# 
-# Florian Roth
-# BSK Consulting GmbH
-# 
-# DISCLAIMER - USE AT YOUR OWN RISK.
+
+"""
+Loki
+Simple IOC Scanner
+
+Detection is based on three detection methods:
+
+1. File Name IOC
+   Applied to file names
+
+2. Yara Check
+   Applied to files and processes
+
+3. Hash Check
+   Compares known malicious hashes with th ones of the scanned files
+
+Loki combines all IOCs from ReginScanner and SkeletonKeyScanner and is the
+little brother of THOR our full-featured corporate APT Scanner
+
+Florian Roth
+BSK Consulting GmbH
+
+DISCLAIMER - USE AT YOUR OWN RISK.
+"""
+__version__ = '0.12.1'
 
 import os
 import argparse
@@ -209,9 +212,9 @@ class Loki():
                                 description = self.filename_ioc_desc[regex.pattern]
                                 score = self.filename_iocs[regex]
                                 if score > 70:
-                                    logger.log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
+                                    logger.log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex.pattern, description, filePath))
                                 elif score > 40:
-                                    logger.log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, filePath))
+                                    logger.log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex.pattern, description, filePath))
 
                         # Access check (also used for magic header detection)
                         firstBytes = ""
@@ -1109,7 +1112,7 @@ class LokiLogger():
         print "  "
         print "  (C) Florian Roth"
         print "  August 2015"
-        print "  Version 0.12.1"
+        print "  Version %s" % __version__
         print "  "
         print "  DISCLAIMER - USE AT YOUR OWN RISK"
         print "  "
