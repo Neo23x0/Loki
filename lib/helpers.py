@@ -182,8 +182,8 @@ def replaceEnvVars(path):
     if path[:8].lower() == "system32":
         new_path = path.replace("system32", "%s\\System32" % os.environ["SystemRoot"])
 
-    if path != new_path:
-        print "OLD: %s NEW: %s" % (path, new_path)
+    #if path != new_path:
+    #    print "OLD: %s NEW: %s" % (path, new_path)
     return new_path
 
 
