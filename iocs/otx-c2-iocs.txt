@@ -1,3 +1,5 @@
+84.11.146.62;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
+107.6.181.116;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
 193.104.41.178;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 31.170.164.100;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 37.187.37.235;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
@@ -84,6 +86,19 @@
 37.140.192.192;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 46.30.40.98;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 37.140.192.239;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+37.140.192.135;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+167.114.101.108;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
+appeur.gnway.cc;PlugX Threat\tActivity in Myanmar http://pages.arbornetworks.com/rs/082-KNA-087/images/ASERT%20Threat%20Intelligen
+webhttps.websecexp.com;PlugX Threat\tActivity in Myanmar http://pages.arbornetworks.com/rs/082-KNA-087/images/ASERT%20Threat%20Intelligen
+usafbi.websecexp.com;PlugX Threat\tActivity in Myanmar http://pages.arbornetworks.com/rs/082-KNA-087/images/ASERT%20Threat%20Intelligen
+usacia.websecexp.com;PlugX Threat\tActivity in Myanmar http://pages.arbornetworks.com/rs/082-KNA-087/images/ASERT%20Threat%20Intelligen
+usacia.websecexp.com;Defending the White Elephant https://asert.arbornetworks.com/defending-the-white-elephant/ / http://pages.arb
+appeur.gnway.cc;Defending the White Elephant https://asert.arbornetworks.com/defending-the-white-elephant/ / http://pages.arb
+webhttps.websecexp.com;Defending the White Elephant https://asert.arbornetworks.com/defending-the-white-elephant/ / http://pages.arb
+usafbi.websecexp.com;Defending the White Elephant https://asert.arbornetworks.com/defending-the-white-elephant/ / http://pages.arb
+top100.gotoip4.com;KeyRaider: iOS Malware Steals Over 225,000 Apple Accounts http://researchcenter.paloaltonetworks.com/2015/08/keyraider-ios-malware-steals-
+www.wushidou.cn;KeyRaider: iOS Malware Steals Over 225,000 Apple Accounts http://researchcenter.paloaltonetworks.com/2015/08/keyraider-ios-malware-steals-
+113.10.174.167;KeyRaider: iOS Malware Steals Over 225,000 Apple Accounts http://researchcenter.paloaltonetworks.com/2015/08/keyraider-ios-malware-steals-
 104.200.78.119;Kazy Trojan Download Location https://www.virustotal.com/en/file/3bc528615808e61fdb6a043a19e9da9449da6a80a1347
 bloggarotosdegyn.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect
 araujomelo.com.br;Banking Trojan Escelar Infects Thousands In Brazil and the US http://researchcenter.paloaltonetworks.com/2015/08/banking-trojan-escelar-infect

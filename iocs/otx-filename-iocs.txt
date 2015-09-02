@@ -1,3 +1,10 @@
+\\infected\.exx;Shifu: New Banking Trojan Is Attacking 14 Japanese Banks https://securityintelligence.com/shifu-masterful-new-banking-trojan-is-attacking
+%TEMP%\\AdobeARMM\.log;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
+%TEMP%\\wlg\.dat;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
+%TEMP%\\AdobeARM\.log;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
+Message\.xlsb;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
+C:\\windows\\tasks\\Components\.exe;Defending the White Elephant https://asert.arbornetworks.com/defending-the-white-elephant/ / http://pages.arb
+PlanProposal\\new questionnaire\\Voter Plan Proposal;Defending the White Elephant https://asert.arbornetworks.com/defending-the-white-elephant/ / http://pages.arb
 \\abiosdsk\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
 \\adpu160\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
 \\floppy\.sys;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
