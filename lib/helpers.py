@@ -173,7 +173,7 @@ def replaceEnvVars(path):
         # Check environment varibales if there is a matching var
         if env_var in os.environ:
             if os.environ[env_var]:
-                new_path = path.replace(env_var_full, os.environ[env_var])
+                new_path = path.replace(env_var_full, re.escape(os.environ[env_var]))
 
     # TYPICAL REPLACEMENTS ----------------------------------------------------
     if path[:11].lower() == "\\systemroot":
@@ -182,7 +182,8 @@ def replaceEnvVars(path):
     if path[:8].lower() == "system32":
         new_path = path.replace("system32", "%s\\System32" % os.environ["SystemRoot"])
 
-    #print "NEW: %s" % new_path
+    if path != new_path:
+        print "OLD: %s NEW: %s" % (path, new_path)
     return new_path
 
 
