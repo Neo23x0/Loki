@@ -6931,3 +6931,7 @@ ba7bb65634ce1e30c1e5415be3d1db1d;Regin - Further Investigations by Symantec Aug 
 b505d65721bb2453d5039a389113b566;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
 b269894f434657db2b15949641a67532;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
 bfbe8c3ee78750c3a520480700e440f8;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
+
+3e3c225ac14e3a6d7fd01e8958e04b9bc0a1279b8a29c4812c6a5f69d89731e2;Carbanak 2 https://goo.gl/AeXcnq
+c660127e620eda98edfe1b10812d9e1e57bb425fb711e254f682425a5aafc36e;Carbanak 2 https://goo.gl/AeXcnq
+d571113f803283c64a351736a3099cc86d9edcd84a8bd762587ce5c580c771d6;Carbanak 2 https://goo.gl/AeXcnq
