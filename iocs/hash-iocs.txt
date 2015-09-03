@@ -6932,6 +6932,7 @@ b505d65721bb2453d5039a389113b566;Regin - Further Investigations by Symantec Aug 
 b269894f434657db2b15949641a67532;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
 bfbe8c3ee78750c3a520480700e440f8;Regin - Further Investigations by Symantec Aug 2015 http://www.symantec.com/connect/blogs/regin-further-unravelling-mysteries-cybere
 
-3e3c225ac14e3a6d7fd01e8958e04b9bc0a1279b8a29c4812c6a5f69d89731e2;Carbanak 2 https://goo.gl/AeXcnq
-c660127e620eda98edfe1b10812d9e1e57bb425fb711e254f682425a5aafc36e;Carbanak 2 https://goo.gl/AeXcnq
-d571113f803283c64a351736a3099cc86d9edcd84a8bd762587ce5c580c771d6;Carbanak 2 https://goo.gl/AeXcnq
+5dcc91911ea6c80508a2785ea94cce1f1a41b6362b094552e8494d655ea04e72;RocketKitten_Keylogger
+df2fc7283fda9d827b4f3d852e64414904173c9eb8ceadf99c0b4a7e0aad96e7;RocketKitten_Keylogger
+7497fcc89a2b445e0b6922a9416334303d94431ca345ff304345e34742579601;RocketKitten_Keylogger
+67df5f0d7cade35f0310cde1122c780168c48e98b1c94a924a3720020d18d260;RocketKitten_Keylogger
