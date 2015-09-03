@@ -1,3 +1,10 @@
+af364ff503da71875b6d7c401a1e98e31450a561;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
+64ba130e627dd85c85d6534e769d239080e068dd;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
+46a995df8d9918ca0793404110904479b6adcb9f;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
+457f54e9a0f32f2648f95a8e339d9fd9aed23fa7;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
+29968b0c4157f226761073333ff2e82b588ddf8e;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
+eeb67e663b2fa980c6b228fc2e04304c8992401d;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
+db2b8f49b4e76c2f538a3a6b222c35547c802cef;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
 b9bc3f1b2aace824482c10ffa422f78b;Shifu: New Banking Trojan Is Attacking 14 Japanese Banks https://securityintelligence.com/shifu-masterful-new-banking-trojan-is-attacking
 6bd5008fe6be507a92317d1904a7eb6356b86752;Shifu: New Banking Trojan Is Attacking 14 Japanese Banks https://securityintelligence.com/shifu-masterful-new-banking-trojan-is-attacking
 46a995df8d9918ca0793404110904479b6adcb9f;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
