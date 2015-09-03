@@ -1,3 +1,6 @@
+84.11.146.62;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
+107.6.172.54;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
+107.6.181.116;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
 84.11.146.62;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
 107.6.181.116;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
 193.104.41.178;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
