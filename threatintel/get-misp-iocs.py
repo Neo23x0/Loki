@@ -5,7 +5,7 @@
 # Get-MISP-IOCs
 # Retrieves IOCs from MISP and stores them in appropriate format
 
-MISP_KEY = '-- YOUR API KEY ---'
+MISP_KEY = '--- YOUR API KEY ---'
 MISP_URL = 'https://misppriv.circl.lu'
 
 import sys
@@ -25,9 +25,20 @@ class MISPReceiver():
 
     debugon = False
 
-    def __init__(self, misp_key, misp_url, misp_verify_cert, debugon=False):
+    # Output
+    siem_mode = False
+    separator = ";"
+    use_headers = False
+    use_filename_regex = True
+
+    def __init__(self, misp_key, misp_url, misp_verify_cert, siem_mode=False, debugon=False):
         self.misp = PyMISP(misp_url, misp_key, misp_verify_cert, 'json')
         self.debugon = debugon
+        if siem_mode:
+            self.siem_mode = True
+            self.separator = ","
+            self.use_headers = True
+            self.use_filename_regex = False
 
     def get_iocs_last(self, last):
 
@@ -80,9 +91,13 @@ class MISPReceiver():
         # Filenames
         if ioc_type in ('filename', 'filepath'):
             # Add prefix to filenames
-            if ioc_type == "filename":
-                value = "\\{0}".format(value)
-            self.filename_iocs[my_escape(value)] = comment
+            if not re.search(r'^([a-zA-Z]:|%)', value):
+                if not self.siem_mode:
+                    value = "\\\\{0}".format(value)
+            if self.use_filename_regex:
+                self.filename_iocs[my_escape(value)] = comment
+            else:
+                self.filename_iocs[value.decode('string_escape')] = comment
         # Yara
         if ioc_type in ('yara'):
             self.add_yara_rule(value, uuid, info)
@@ -93,11 +108,11 @@ class MISPReceiver():
 
     def write_iocs(self, output_path, output_path_yara):
         # Write C2 IOCs
-        self.write_file(os.path.join(output_path, "misp-c2-iocs.txt"), self.c2_iocs)
+        self.write_file(os.path.join(output_path, "misp-c2-iocs.txt"), self.c2_iocs, "c2")
         # Write Filename IOCs
-        self.write_file(os.path.join(output_path, "misp-filename-iocs.txt"), self.filename_iocs)
+        self.write_file(os.path.join(output_path, "misp-filename-iocs.txt"), self.filename_iocs, "filename")
         # Write Hash IOCs
-        self.write_file(os.path.join(output_path, "misp-hash-iocs.txt"), self.hash_iocs)
+        self.write_file(os.path.join(output_path, "misp-hash-iocs.txt"), self.hash_iocs, "hash")
         # Yara
         if len(self.yara_rules) > 0:
             # Create dir if not exists
@@ -109,10 +124,12 @@ class MISPReceiver():
                 self.write_yara_rule(output_rule_filename, self.yara_rules[yara_rule])
             print "{0} YARA rules written to directory {1}".format(len(self.yara_rules), output_path_yara)
 
-    def write_file(self, ioc_file, iocs):
+    def write_file(self, ioc_file, iocs, ioc_type):
         with open(ioc_file, 'w') as file:
+            if self.use_headers:
+                file.write("{0}{1}description\n".format(ioc_type, self.separator))
             for ioc in iocs:
-                file.write("{0};{1}\n".format(ioc,iocs[ioc]))
+                file.write("{0}{2}{1}\n".format(ioc,iocs[ioc],self.separator))
         print "{0} IOCs written to file {1}".format(len(iocs), ioc_file)
 
     def write_yara_rule(self, yara_file, yara_rule):
@@ -152,6 +169,7 @@ if __name__ == '__main__':
     parser.add_argument('-l', help='Time frame (e.g. 2d, 12h - default=30d)', metavar='tframe', default='30d')
     parser.add_argument('-o', help='Output directory', metavar='dir', default='../iocs')
     parser.add_argument('-y', help='YARA rule output directory', metavar='yara-dir', default='../iocs/yara')
+    parser.add_argument('--siem', action='store_true', help='CSV Output for use in SIEM systems (Splunk)', default=False)
     parser.add_argument('--verifycert', action='store_true', help='Verify the server certificate', default=False)
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
@@ -162,7 +180,8 @@ if __name__ == '__main__':
         sys.exit(0)
 
     # Create a receiver
-    misp_receiver = MISPReceiver(misp_key=args.k, misp_url=args.u, misp_verify_cert=args.verifycert, debugon=args.debug)
+    misp_receiver = MISPReceiver(misp_key=args.k, misp_url=args.u, misp_verify_cert=args.verifycert,
+                                 siem_mode=args.siem, debugon=args.debug)
 
     # Retrieve the events and store the IOCs
     misp_receiver.get_iocs_last(args.l)
