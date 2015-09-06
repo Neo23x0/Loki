@@ -26,9 +26,22 @@ class OTXReceiver():
     filename_iocs = ""
     c2_iocs = ""
 
-    def __init__(self, api_key, debug):
+    # Output format
+    separator = ";"
+    use_csv_header = False
+    extension = "txt"
+    hash_upper = False
+    filename_regex_out = True
+
+    def __init__(self, api_key, siem_mode, debug):
         self.debug = debug
         self.otx = OTXv2(api_key)
+        if siem_mode:
+            self.separator = ","
+            self.use_csv_header = True
+            self.extension = "csv"
+            self.hash_upper = True
+            self.filename_regex_out = False
 
     def get_iocs_last(self):
         # mtime = (datetime.now() - timedelta(days=days_to_load)).isoformat()
@@ -37,11 +50,11 @@ class OTXReceiver():
         print "Download complete - %s events received" % len(self.events)
         json_normalize(self.events)
 
-    def write_iocs(self, ioc_folder, separator, use_csv_header):
+    def write_iocs(self, ioc_folder):
 
-        hash_ioc_file = os.path.join(ioc_folder, "otx-hash-iocs.txt")
-        filename_ioc_file = os.path.join(ioc_folder, "otx-filename-iocs.txt")
-        c2_ioc_file = os.path.join(ioc_folder, "otx-c2-iocs.txt")
+        hash_ioc_file = os.path.join(ioc_folder, "otx-hash-iocs.{0}".format(self.extension))
+        filename_ioc_file = os.path.join(ioc_folder, "otx-filename-iocs.{0}".format(self.extension))
+        c2_ioc_file = os.path.join(ioc_folder, "otx-c2-iocs.{0}".format(self.extension))
 
         print "Processing indicators ..."
         for event in self.events:
@@ -49,19 +62,27 @@ class OTXReceiver():
                 for indicator in event["indicators"]:
                     if indicator["type"] in ('FileHash-MD5', 'FileHash-SHA1', 'FileHash-SHA256'):
 
+                        hash = indicator["indicator"]
+                        if self.hash_upper:
+                            hash = indicator["indicator"].upper()
+
                         self.hash_iocs += "{0}{3}{1} {2}\n".format(
-                            indicator["indicator"],
+                            hash,
                             event["name"].encode('unicode-escape'),
                             " / ".join(event["references"])[:80],
-                            separator)
+                            self.separator)
 
                     if indicator["type"] == 'FilePath':
 
+                        filename = indicator["indicator"]
+                        if self.filename_regex_out:
+                            filename = my_escape(indicator["indicator"])
+
                         self.filename_iocs += "{0}{3}{1} {2}\n".format(
-                            my_escape(indicator["indicator"]),
+                            filename,
                             event["name"].encode('unicode-escape'),
                             " / ".join(event["references"])[:80],
-                            separator)
+                            self.separator)
 
                     if indicator["type"] in ('domain', 'hostname', 'IPv4', 'IPv6', 'CIDR'):
 
@@ -69,25 +90,25 @@ class OTXReceiver():
                             indicator["indicator"],
                             event["name"].encode('unicode-escape'),
                             " / ".join(event["references"])[:80],
-                            separator)
+                            self.separator)
 
             except Exception, e:
                 traceback.print_exc()
 
         # Write to files
         with open(hash_ioc_file, "w") as hash_fh:
-            if use_csv_header:
-                hash_fh.write('hash{0}description\n'.format(separator))
+            if self.use_csv_header:
+                hash_fh.write('hash{0}description\n'.format(self.separator))
             hash_fh.write(self.hash_iocs)
             print "{0} hash iocs written to {1}".format(self.hash_iocs.count('\n'), hash_ioc_file)
         with open(filename_ioc_file, "w") as fn_fh:
-            if use_csv_header:
-                fn_fh.write('filename{0}description\n'.format(separator))
+            if self.use_csv_header:
+                fn_fh.write('filename{0}description\n'.format(self.separator))
             fn_fh.write(self.filename_iocs)
             print "{0} filename iocs written to {1}".format(self.filename_iocs.count('\n'), filename_ioc_file)
         with open(c2_ioc_file, "w") as c2_fh:
-            if use_csv_header:
-                c2_fh.write('host{0}description\n'.format(separator))
+            if self.use_csv_header:
+                c2_fh.write('host{0}description\n'.format(self.separator))
             c2_fh.write(self.c2_iocs)
             print "{0} c2 iocs written to {1}".format(self.c2_iocs.count('\n'), c2_ioc_file)
 
@@ -103,8 +124,7 @@ if __name__ == '__main__':
     # parser.add_argument('-l', help='Time frame in days (default=30)', default=30)
     parser.add_argument('-o', metavar='dir', help='Output directory', default='../iocs')
     parser.add_argument('--verifycert', action='store_true', help='Verify the server certificate', default=False)
-    parser.add_argument('--csvheader', action='store_true', default=False, help='Add column headers')
-    parser.add_argument('-s', metavar='separator', default=';', help='Define separator')
+    parser.add_argument('--siem', action='store_true', default=False, help='Add column headers')
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
     args = parser.parse_args()
@@ -114,11 +134,11 @@ if __name__ == '__main__':
         sys.exit(0)
 
     # Create a receiver
-    otx_receiver = OTXReceiver(api_key=args.k, debug=args.debug)
+    otx_receiver = OTXReceiver(api_key=args.k, siem_mode=args.siem, debug=args.debug)
 
     # Retrieve the events and store the IOCs
     # otx_receiver.get_iocs_last(int(args.l))
     otx_receiver.get_iocs_last()
 
     # Write IOC files
-    otx_receiver.write_iocs(ioc_folder=args.o, separator=args.s, use_csv_header=args.csvheader)
+    otx_receiver.write_iocs(ioc_folder=args.o)
