@@ -32,10 +32,8 @@ rule Cloaked_as_JPG {
                 author = "Florian Roth (eval section from Didier Stevens)"
                 date = "2015/02/29"
                 score = 70
-        strings:
-                $ext = "extension: .jpg"
         condition:
-                $ext and uint16be(0x00) != 0xFFD8
+                uint16be(0x00) != 0xFFD8 and extension matches /\.jpg/i
 }
 
 rule GIFCloaked_Webshell {
