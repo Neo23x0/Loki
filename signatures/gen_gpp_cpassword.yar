@@ -8,6 +8,12 @@ rule Groups_cpassword {
         score = 50
     strings:
         $s1 = / cpassword=\"[^\"]/ ascii
+        $s2 = " changeLogon=" ascii
+        $s3 = " description=" ascii
+        $s4 = " acctDisabled=" ascii
     condition:
-        $s1 and filepath contains "SYSVOL" and extension matches /\.xml/
+        uint32be(0) == 0x3C3F786D  /* <?xm */
+        and filesize < 1000KB
+        and all of ($s*)  
 }
+
