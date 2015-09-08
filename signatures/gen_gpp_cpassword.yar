@@ -7,7 +7,7 @@ rule Groups_cpassword {
         date = "2015-09-08"
         score = 50
     strings:
-        $s1 = /cpassword=\"[^\"]/ ascii
+        $s1 = / cpassword=\"[^\"]/ ascii
     condition:
         $s1 and filepath contains "SYSVOL" and extension matches /\.xml/
 }
