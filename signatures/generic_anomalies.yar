@@ -31,9 +31,11 @@ rule Cloaked_as_JPG {
                 description = "Detects a cloaked file as JPG"
                 author = "Florian Roth (eval section from Didier Stevens)"
                 date = "2015/02/29"
-                score = 70
+                score = 50
         condition:
-                uint16be(0x00) != 0xFFD8 and extension matches /\.jpg/i
+                uint16be(0x00) != 0xFFD8 and 
+                extension matches /\.jpg/i /* and
+                not filepath contains "ASP.NET" */
 }
 
 rule GIFCloaked_Webshell {
