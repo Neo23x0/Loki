@@ -25,7 +25,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.12.1'
+__version__ = '0.12.2'
 
 import os
 import argparse
@@ -318,7 +318,7 @@ class Loki():
 
                             # Scan the read data
                             for (score, rule, description, matched_strings) in \
-                                    self.scan_data(fileData, fileType, filename, filePath, extension):
+                                    self.scan_data(fileData, fileType, filename, filePath, extension, md5):
 
                                 if score >= 70:
                                     logger.log("ALERT", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
@@ -330,7 +330,7 @@ class Loki():
                         if logger.debug:
                             traceback.print_exc()
 
-    def scan_data(self, fileData, fileType="-", fileName="-", filePath="-", extension="-"):
+    def scan_data(self, fileData, fileType="-", fileName="-", filePath="-", extension="-", md5="-"):
 
         # Scan with yara
         try:
@@ -343,6 +343,7 @@ class Loki():
                                           'filepath': filePath,
                                           'extension': extension,
                                           'filetype': fileType,
+                                          'md5': md5
                                       })
 
                 # If matched
@@ -818,10 +819,7 @@ class Loki():
     def initialize_yara_rules(self):
 
         yaraRules = []
-        filename_dummy = ""
-        filepath_dummy = ""
-        extension_dummy = ""
-        filetype_dummy = ""
+        dummy = ""
 
         try:
             for yara_rule_directory in self.yara_rule_directories:
@@ -846,10 +844,11 @@ class Loki():
                             if extension == ".yar":
                                 try:
                                     compiledRules = yara.compile(yaraRuleFile, externals= {
-                                                                      'filename': filename_dummy,
-                                                                      'filepath': filepath_dummy,
-                                                                      'extension': extension_dummy,
-                                                                      'filetype': filetype_dummy
+                                                                      'filename': dummy,
+                                                                      'filepath': dummy,
+                                                                      'extension': dummy,
+                                                                      'filetype': dummy,
+                                                                      'md5': dummy
                                                                   })
                                     yaraRules.append(compiledRules)
                                     logger.log("INFO", "Initialized Yara rules from %s" % file)
