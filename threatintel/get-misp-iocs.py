@@ -8,6 +8,7 @@
 MISP_KEY = '--- YOUR API KEY ---'
 MISP_URL = 'https://misppriv.circl.lu'
 
+
 import sys
 import json
 import argparse
@@ -84,9 +85,16 @@ class MISPReceiver():
             print "{0} = {1}".format(ioc_type, value)
         # C2s
         if ioc_type in ('hostname', 'ip-dst', 'domain'):
+            if value == '127.0.0.1':
+                return
             self.c2_iocs[value] = comment
         # Hash
         if ioc_type in ('md5', 'sha1', 'sha256'):
+            # No empty files
+            if value == 'd41d8cd98f00b204e9800998ecf8427e' or \
+                            value == 'da39a3ee5e6b4b0d3255bfef95601890afd80709' or \
+                            value == 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855':
+                return
             self.hash_iocs[value] = comment
         # Filenames
         if ioc_type in ('filename', 'filepath'):
