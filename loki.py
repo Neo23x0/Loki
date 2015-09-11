@@ -25,7 +25,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.12.2'
+__version__ = '0.13.0'
 
 import os
 import argparse
@@ -261,6 +261,9 @@ class Loki():
 
                             fileData = self.get_file_data(filePath)
 
+                            # First bytes
+                            first_bytes = "%s / %s" % (fileData[:20].encode('hex'), removeNonAsciiDrop(fileData[:20]) )
+
                             # Hash Eval
                             matchType = None
                             matchDesc = None
@@ -320,11 +323,18 @@ class Loki():
                             for (score, rule, description, matched_strings) in \
                                     self.scan_data(fileData, fileType, filename, filePath, extension, md5):
 
-                                if score >= 70:
-                                    logger.log("ALERT", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
+                                # Message
+                                message = "Yara Rule MATCH: %s TYPE: %s DESCRIPTION: %s FILE: %s FIRST_BYTES: %s %s " \
+                                          "MATCHES: %s" % \
+                                          (rule, fileType, description, filePath, first_bytes, hash_string,
+                                           matched_strings)
 
+                                if score >= 75:
+                                    logger.log("ALERT", message)
+                                elif score > 60:
+                                    logger.log("WARNING", message)
                                 elif score >= 40:
-                                    logger.log("WARNING", "Yara Rule MATCH: %s DESCRIPTION: %s FILE: %s %s MATCHES: %s" % ( rule, description, filePath, hash_string, matched_strings))
+                                    logger.log("NOTICE", message)
 
                     except Exception, e:
                         if logger.debug:
@@ -984,6 +994,7 @@ class LokiLogger():
     hostname = "NOTSET"
     alerts = 0
     warnings = 0
+    notices = 0
     only_relevant = False
     debug = False
 
@@ -1009,6 +1020,8 @@ class LokiLogger():
             self.alerts += 1
         if mes_type == "WARNING":
             self.warnings += 1
+        if mes_type == "NOTICE":
+            self.notices += 1
 
         if self.only_relevant:
             if mes_type not in ('ALERT', 'WARNING'):
@@ -1073,7 +1086,7 @@ class LokiLogger():
                 colorer = re.compile('([A-Z_0-9]{2,}:)\s', re.VERBOSE)
                 message = colorer.sub(key_color+Style.BRIGHT+r'\1 '+base_color+Style.NORMAL, message)
                 # Break Line before REASONS
-                linebreaker = re.compile('(MD5:|SHA1:|SHA256:|MATCHES:|FILE:)', re.VERBOSE)
+                linebreaker = re.compile('(MD5:|SHA1:|SHA256:|MATCHES:|FILE:|FIRST_BYTES:|DESCRIPTION:)', re.VERBOSE)
                 message = linebreaker.sub(r'\n\1', message)
 
                 # Print to console

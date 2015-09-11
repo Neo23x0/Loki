@@ -352,7 +352,7 @@ rule WindowsDefender_Renamed
 	meta:
 		description = "Renamed Windows Defender - maybe disabled by attackers or malware"
 		author = "Florian Roth"
-		score = 60
+		score = 40
 		date = "2015/03/31"
 	strings: 
 		$s1 = "Microsoft-Windows-Windows Defender/WHC" wide fullword
