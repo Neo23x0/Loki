@@ -1,3 +1,4 @@
+https://dl\.packetstormsecurity\.net/1509\-exploits/dotnet\-mvc\-redos\-cve2015\-2526\-ms15\-101\-malerisch\.pdf;.NET MVC Denial Of Service 
 \\Microsoft\\Netmeeting\\1328\-0013\\mstun32\.dll;FIREEYE: Office Encapsulated PostScript & Priv Escalation 0days https://www.fireeye.com/blog/threat-research/2015/09/attack_exploitingmi.html
 \\infected\.exx;Shifu: New Banking Trojan Is Attacking 14 Japanese Banks https://securityintelligence.com/shifu-masterful-new-banking-trojan-is-attacking
 %TEMP%\\AdobeARMM\.log;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
