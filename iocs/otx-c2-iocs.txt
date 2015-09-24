@@ -1,3 +1,148 @@
+mukosoma.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+duteraneh.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+fedorena.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+manafasia.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+neyetta.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+liopnret.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+monogera.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+pallodare.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+votublist.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+nanoputanas.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+boblaktto.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+potopland.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+pannogen.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+superzhopper.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+claus-management.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+garbux.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+feredac.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+hirobakan.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+bolobranca.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+giga-flock.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+fanera-distribution.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+nuratrben.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+noisymemo.org;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+megakatana.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+koplodaro.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+becadogale.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+xezikalanre.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+fergerama.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+golokird.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+opilki-limited.com;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
+rootshell.be;Detecting XCodeGhost Activity 
+truesec.be;Detecting XCodeGhost Activity 
+init.icloud-analysis.com;Detecting XCodeGhost Activity 
+52.2.85.22;Detecting XCodeGhost Activity 
+104.238.125.92;Detecting XCodeGhost Activity 
+52.6.167.64;Detecting XCodeGhost Activity 
+52.68.131.221;Detecting XCodeGhost Activity 
+52.4.74.88;Detecting XCodeGhost Activity 
+193.104.41.178;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+31.170.164.100;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.187.37.235;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+31.170.165.234;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+195.154.188.71;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+91.231.86.213;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+91.233.249.42;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+31.170.166.232;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+46.161.41.158;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+185.36.100.181;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+185.28.20.44;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.11;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.12;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+91.206.200.182;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+217.20.163.33;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.56;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+81.177.165.32;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.76;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+31.220.20.86;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.6;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.194;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+46.244.10.252;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.91;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+198.204.249.93;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+31.170.164.139;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+5.101.152.43;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.131;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.9.53.211;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+31.170.165.130;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+31.170.165.144;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+91.194.250.188;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+46.161.41.39;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.175;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+195.64.154.80;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+185.28.20.58;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+46.30.40.97;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.170;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+31.220.16.180;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+78.140.140.248;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+78.140.191.12;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+185.36.100.108;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+81.177.135.151;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.67;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+178.208.83.13;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+178.63.56.206;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.62;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+31.170.164.208;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+178.208.83.33;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+46.38.48.11;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+176.31.36.87;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.207;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+5.79.85.10;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+195.208.221.228;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+46.244.10.222;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+46.244.10.224;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+194.58.112.167;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.84;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+188.128.177.230;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+5.79.85.8;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+109.68.190.244;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+5.196.97.248;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+212.22.85.178;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+46.30.40.92;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.27;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+185.72.144.127;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.191;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.133;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.174;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.241;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.209;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+64.187.238.122;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.143.10.55;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.186;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.121;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.224;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.187;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+185.28.20.162;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+104.27.175.56;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.132;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.57;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.54;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.180;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+91.227.16.112;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.192;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+46.30.40.98;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.239;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.140.192.135;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+167.114.101.108;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+46.30.44.162;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+37.48.89.29;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html / 
+init.icloud-diagnostics.com;XcodeGhost Modifies Xcode, Infects Apple iOS Apps http://researchcenter.paloaltonetworks.com/2015/09/novel-malware-xcodeghost-modi
+init.icloud-analysis.com;XcodeGhost Modifies Xcode, Infects Apple iOS Apps http://researchcenter.paloaltonetworks.com/2015/09/novel-malware-xcodeghost-modi
+init.crash-analytics.com;XcodeGhost Modifies Xcode, Infects Apple iOS Apps http://researchcenter.paloaltonetworks.com/2015/09/novel-malware-xcodeghost-modi
+pressmil.com;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+patriotp.com;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+notebookhk.net;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+fedpress.net;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+leeghost.com;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+dicemention.com;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+www.tvzvezda.net;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+www.rusarmy.net;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+www.forum-mil.net;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+www.arms-expo.net;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+www.militarynewes.com;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+business-isa.mynetav.org;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+business-rsa.onmypc.org;Targeted Attack Distributes PlugX in Russia https://www.proofpoint.com/us/threat-insight/post/PlugX-in-Russia
+bbsystems.info;The Trojan Games: Odlanor malware cheats at poker http://www.welivesecurity.com/2015/09/17/the-trojan-games-odlanor-malware-cheats
 gtalklite.com;Operation Iron Tiger http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
 ys168.com;Operation Iron Tiger http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
 gameofthrones.ddns.net;Operation Iron Tiger http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
@@ -12,6 +157,40 @@ pi.mai1.info;Operation Iron Tiger http://www.trendmicro.com/cloud-content/us/pdf
 180.150.226.27;Operation Iron Tiger http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
 phpxss.lofter.com;Operation Iron Tiger http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
 xssok.blogspot.com;Operation Iron Tiger http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
+nasdaqblog.net;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+grouptumbler.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+airtravelabroad.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+beijingnewsblog.net;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+ustradecomp.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+nestedmail.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+leveldelta.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+nostressjob.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+natureinhome.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+deervalleyassociation.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+nytunion.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+overpict.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+greencastleadvantage.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+sixsquare.net;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+oilnewsblog.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+serials.hacked.jp;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+store.extremesportsevents.net;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+juliet.usexy.cc;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
+login.do;ManageEngine OpManager Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/manage_engine_opmanager_rce.rb.
+loginpage.do;ManageEngine OpManager Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/manage_engine_opmanager_rce.rb.
+h20564.www2.hpe.com;HP Security Bulletin HPSBGN03393 2 https://dl.packetstormsecurity.net/1509-advisories/HPSBGN03393-2.txt
+process.pid;MS15-078 Microsoft Windows Font Driver Buffer Overflow https://dl.packetstormsecurity.net/1509-exploits/ms15_078_atmfd_bof.rb.txt
+end.call;MS15-078 Microsoft Windows Font Driver Buffer Overflow https://dl.packetstormsecurity.net/1509-exploits/ms15_078_atmfd_bof.rb.txt
+www.nccgroup.trust;MS15-078 Microsoft Windows Font Driver Buffer Overflow https://dl.packetstormsecurity.net/1509-exploits/ms15_078_atmfd_bof.rb.txt
+runquery.do;ManageEngine EventLog Analyzer 10.6 Build 10060 SQL QE https://dl.packetstormsecurity.net/1509-exploits/manageengine-sql.txt
+bonitas2.zohocorp.com;ManageEngine EventLog Analyzer 10.6 Build 10060 SQL QE https://dl.packetstormsecurity.net/1509-exploits/manageengine-sql.txt
+zeuscart.com;ZeusCart 4.0 Cross Site Scripting https://dl.packetstormsecurity.net/1509-exploits/zeuscart4-xss.txt
+blog.curesec.com;ZeusCart 4.0 Cross Site Scripting https://dl.packetstormsecurity.net/1509-exploits/zeuscart4-xss.txt
+teenpornotube.org;TeslaCrypt 2.0: Cyber Crime Malware Behavior http://www.isightpartners.com/2015/09/teslacrypt-2-0-cyber-crime-malware-behavio
+ledshoppen.nl;TeslaCrypt 2.0: Cyber Crime Malware Behavior http://www.isightpartners.com/2015/09/teslacrypt-2-0-cyber-crime-malware-behavio
+shmetterheath.ru;TeslaCrypt 2.0: Cyber Crime Malware Behavior http://www.isightpartners.com/2015/09/teslacrypt-2-0-cyber-crime-malware-behavio
+ezglobalmarketing.com;TeslaCrypt 2.0: Cyber Crime Malware Behavior http://www.isightpartners.com/2015/09/teslacrypt-2-0-cyber-crime-malware-behavio
+fgainterests.com;TeslaCrypt 2.0: Cyber Crime Malware Behavior http://www.isightpartners.com/2015/09/teslacrypt-2-0-cyber-crime-malware-behavio
+serenitynowbooksandgifts.com;TeslaCrypt 2.0: Cyber Crime Malware Behavior http://www.isightpartners.com/2015/09/teslacrypt-2-0-cyber-crime-malware-behavio
 keemail.me;Ransomware File Screening List - Windows Server's File Server https://isc.sans.edu/forums/Ransomware+File+Screening+List+Windows+Servers+File+
 rootshell.be;The Wordpress Plugins Playground https://isc.sans.edu/forums/diary/The+Wordpress+Plugins+Playground/20147/
 truesec.be;The Wordpress Plugins Playground https://isc.sans.edu/forums/diary/The+Wordpress+Plugins+Playground/20147/
@@ -456,94 +635,6 @@ app.theworldfun.com;Payloads from MS15-093 (PlugX) https://blog.bit9.com/2015/09
 107.6.181.116;The Spy Kittens Are Back: Rocket Kitten 2 http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-pape
 84.11.146.62;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
 107.6.181.116;The Kittens Strike Back https://www.trendmicro.com/vinfo/us/security/news/cyber-attacks/rocket-kitten-co
-193.104.41.178;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-31.170.164.100;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.187.37.235;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-31.170.165.234;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-195.154.188.71;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-91.231.86.213;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-91.233.249.42;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-31.170.166.232;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-46.161.41.158;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-185.36.100.181;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-185.28.20.44;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.11;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.12;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-91.206.200.182;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-217.20.163.33;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.56;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-81.177.165.32;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.76;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-31.220.20.86;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.6;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.194;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-46.244.10.252;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.91;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-198.204.249.93;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-31.170.164.139;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-5.101.152.43;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.131;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.9.53.211;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-31.170.165.130;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-31.170.165.144;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-91.194.250.188;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-46.161.41.39;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.175;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-195.64.154.80;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-185.28.20.58;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-46.30.40.97;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.170;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-31.220.16.180;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-78.140.140.248;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-78.140.191.12;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-185.36.100.108;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-81.177.135.151;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.67;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-178.208.83.13;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-178.63.56.206;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.62;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-31.170.164.208;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-178.208.83.33;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-46.38.48.11;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-176.31.36.87;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.207;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-5.79.85.10;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-195.208.221.228;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-46.244.10.222;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-46.244.10.224;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-194.58.112.167;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.84;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-188.128.177.230;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-5.79.85.8;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-109.68.190.244;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-5.196.97.248;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-212.22.85.178;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-46.30.40.92;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.27;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-185.72.144.127;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.191;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.133;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.174;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.241;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.209;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-64.187.238.122;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.143.10.55;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.186;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.121;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.224;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.187;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-185.28.20.162;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-104.27.175.56;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.132;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.57;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.54;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.180;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-91.227.16.112;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.192;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-46.30.40.98;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.239;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-37.140.192.135;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
-167.114.101.108;SteamStealers http://bartblaze.blogspot.com/2014/11/malware-spreading-via-steam-chat.html
 appeur.gnway.cc;PlugX Threat\tActivity in Myanmar http://pages.arbornetworks.com/rs/082-KNA-087/images/ASERT%20Threat%20Intelligen
 webhttps.websecexp.com;PlugX Threat\tActivity in Myanmar http://pages.arbornetworks.com/rs/082-KNA-087/images/ASERT%20Threat%20Intelligen
 usafbi.websecexp.com;PlugX Threat\tActivity in Myanmar http://pages.arbornetworks.com/rs/082-KNA-087/images/ASERT%20Threat%20Intelligen
