@@ -1,3 +1,80 @@
+4edb139f6d459f3a7dd31abba29a4c6c3046072f;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+e01bf8c25aacdb56a460f01832c0a0285a17949f;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+1195c4627be54f26b29d0dc56752d233547ff6a4;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+cf4d668c6e0f7912c13ce2b73add4972bc3d6f4e;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+2c378afb16742b138f8e5f35887687f98a3bfc14;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+fbfffa648288a9eb4e3e61b1087fc5607f5b24cb;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+9ce905e8f8aa6e6af04a5724156113ce3c237aca;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+0ffa9e646e881568c1f65055917547b04d89a8a2150af45faa66beb2733e7427;Defaulting on Passwords (Part 1): r0_bot http://blog.cari.net/carisirt-defaulting-on-passwords-part-1-r0_bot/
+5c8c41253aa68adeb955e7d1c7b8e084e06537f75eff12c3f3a0f3cb30cb2152;Defaulting on Passwords (Part 1): r0_bot http://blog.cari.net/carisirt-defaulting-on-passwords-part-1-r0_bot/
+9c2848962733846bf50b490fd8f6c7ce9ecade2d3f2f530f5ecbba283af87d3a;Defaulting on Passwords (Part 1): r0_bot http://blog.cari.net/carisirt-defaulting-on-passwords-part-1-r0_bot/
+86fbdd7df9486a17e9c408c7e50635e26402fdf297c9e97f1a5256100401dcc5;Defaulting on Passwords (Part 1): r0_bot http://blog.cari.net/carisirt-defaulting-on-passwords-part-1-r0_bot/
+77850f738ba42fd9da299b2282314709ad8dc93623b318b116bfc25c5280c541;Meet GreenDispenser: A New Breed of ATM Malware https://www.proofpoint.com/us/threat-insight/post/Meet-GreenDispenser
+20a1490b666f8c75c47b682cf10a48b7b0278068cb260b14d8d0584ee6c006a5;Meet GreenDispenser: A New Breed of ATM Malware https://www.proofpoint.com/us/threat-insight/post/Meet-GreenDispenser
+7544e7a798b791cb36caaa1860974f33d30bc4659ceab3063d1ab4fd71c8c7e0;Meet GreenDispenser: A New Breed of ATM Malware https://www.proofpoint.com/us/threat-insight/post/Meet-GreenDispenser
+50db1f5e9692f217f356a592e413e6c9cb31105a94efc70a5ca1c2c73d95d572;Meet GreenDispenser: A New Breed of ATM Malware https://www.proofpoint.com/us/threat-insight/post/Meet-GreenDispenser
+b7e61f65e147885ec1fe6a787b62d9ee82d1f34f1c9ba8068d3570adca87c54f;Meet GreenDispenser: A New Breed of ATM Malware https://www.proofpoint.com/us/threat-insight/post/Meet-GreenDispenser
+dd7bb7544d27114a3ac7c95302c215c1bbd4ddf7bcd8c5fdc3df1c9935c60359;Chinese Actors attacks on US Government and EU Media http://researchcenter.paloaltonetworks.com/2015/09/chinese-actors-use-3102-malwa
+bcba4361ba4d0344bb0ed1080fa2fcd3dbdf7e1e91b4d1c85ff8e7091de24ef7;Chinese Actors attacks on US Government and EU Media http://researchcenter.paloaltonetworks.com/2015/09/chinese-actors-use-3102-malwa
+6ec4ec93409227e225d1d9fcf23ac3b73bbcf534e38628ca51e161efa1239f29;Chinese Actors attacks on US Government and EU Media http://researchcenter.paloaltonetworks.com/2015/09/chinese-actors-use-3102-malwa
+4a4f4a1a0db0d8b169c214d495049dc7bc1a55d011c0db3ad2aea0e2587afab6;Chinese Actors attacks on US Government and EU Media http://researchcenter.paloaltonetworks.com/2015/09/chinese-actors-use-3102-malwa
+2656335c9faf75a29d47002f3a54c503cbeee419fa841de0d8f9a3d4dee19c89;Chinese Actors attacks on US Government and EU Media http://researchcenter.paloaltonetworks.com/2015/09/chinese-actors-use-3102-malwa
+084f01caf66abfd1f0f3669edfba9e07ea0b436820180d2af066d91642a79794;Chinese Actors attacks on US Government and EU Media http://researchcenter.paloaltonetworks.com/2015/09/chinese-actors-use-3102-malwa
+6f1b5f73bf33112737418b52b2f2de4e10747d979789531f8992691dda6a0dbb;Chinese Actors attacks on US Government and EU Media http://researchcenter.paloaltonetworks.com/2015/09/chinese-actors-use-3102-malwa
+7db917f8fdd62f321e7547d9bea572670051c44080b1df91f69fad9894fd4fff;Chinese Actors attacks on US Government and EU Media http://researchcenter.paloaltonetworks.com/2015/09/chinese-actors-use-3102-malwa
+0e2ee528f56a77e4ce0d074ac36d919e484a2cfdbc6fb109bb7cd0b1406a8a62;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+7b73bf2d80a03eb477242967628da79924fbe06cc67c4dcdd2bdefccd6e0e1af;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+de8a242af3794a8be921df0cfa51885f;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+b35f2de87343a674f5c1d809a5666349;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+e645e619856fc2e8101a4e7902120ac3;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+92861d0a999591aeb72988b56d458040;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+fb450ecb2639c0a550cec0497e95460e;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+a2378fd84cebe4b58c372d1c9b923542;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+def6e8ad26337890eb262b8f8dd39c17;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+66523a430459f284a3610c2070ca1ea7;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+7890eda704de4fe3f0af555c0be6ccba;PROJECT CAMERASHY: CLOSING THE APERTURE ON CHINA\u2019S UNIT 78020 http://threatconnect.com/camerashy/?utm_campaign=CameraShy
+109d248b9dabb019e4d2d82552c63d84ab14e931af40c6f3a09a3df3a40212f2;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+d7de32c9ab9265d1dd900688c91d3468e05f88f98bd67bbd883450db44df045e;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+d3c184840805a280895387bf321a15a3dfc6af28314983c535e332cbcee7faf0;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+39fc67689c28a31183a7e1d499e8a4bfeb06fc629cf567c1b6c245edb6564d16;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+c21891edf9a88953fe49c2aa24ed51e093004a865269ac88a5f3fc149762bd2b;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+8dc2cef74f9e577b431ad3569c894dc07c8c429ef04235936587ac0e70e2993c;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+343674e2b89e6e786ba08718e0672f3ff21a826c6a4e6e4f41dbd5af3157031d;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+1710997941193e52e6251638cf80e8ea6a520624f5ebe4583f974252cb8d4881;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+94f0f5f4849632fd68cce11f6247bb90e426842aa8aee8974f5b0abea2a85748;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+56a3ee282a25fbb234651fe3771574056576aa68e25e05587c5a443ddd0f59fc;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+1f3b4ceea2e3054162260bb827a5c867d5615b15c68e065d97a99a892d5cad4e;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+03eff13ea629acfff6416d95f674195b4fbaa158914e8f9d5ac1f5e094a60fae;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+16c687fdb35ec21482b5b07aee274fdc4fc8c5c0928cb5de441c5b3e84ba98ad;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+f05e913be22eebb19143886b75ca59842d9ce6cf355c23375aa80fdbccad3ec0;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+658f63baa9dd4fcc031114ea579e3423d19cb81128a5c577cc5ad10c669b950f;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+ff73aa398636a01595d4762a925e1e1b976f85306663c22e7200db74c093f27e;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+9cd995095d351b31512fc8866f21bc90624306408a6552879a7dc9317848d877;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+e6e65932473a14d2d104c11234a391fc68c6874f06054a7a019facf5da9498a8;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+2ae0f580728c43b3a3888dfbe76ad689;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+41bf348254b921bbd21350a70f843683;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+cd89897a2b6946a332354e0609c0b8b4;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+3a401a679d147b070eb8ccae5df3dc43;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+aefea9d795624da16d878dc9bb81bf87;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+9cbfd66f35a36d9f75a89f342da9c784;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+745e9a47febb444c42fb0561c3cea794;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+c19896fdd3b96b9324c6b79cc39eca5b;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+195432955e70ec72018ead058f7abc2d;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+ee8e4e3801c0101998b7dfee33f35f95;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+5586e93ac84317348904adfe01c9715c;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+f8df9e2d21018badc7555a9233a8b53e;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+d7facf652d3947a53f85431ba8a4cd4a;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+8721901a2caaeb98a19e0fb909ce2569;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+9b72df484915ce589ade74e65ecdfaed;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+0d7c889e8a9be51a58041d55095f104f;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+f8879f759b00ed9d406dd14ce450584b;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+2f6323af124f9fd57edb1482827f9481;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+10edaf2b4c25375644faf78a25790061;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+ba3c1894310d38aa814ad3c58f1c8469;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+1516174c4a7f781c5f3ea6ac8447867b;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+f05ac3ac794ee8456db4d0331830d2d8;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+87cc79d6f6795fea0df109e181d1a3e8;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
+d5afd7ba5b3bd24cd4fa5201882e1a9d;Android trojan drops in, despite Google Bouncer http://www.welivesecurity.com/2015/09/22/android-trojan-drops-in-despite-googles
 9c9aaabb60ca27324da0cdfdd9715b6d0c9c6941217411ef5bf20930d0eadab0;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
 864dff5cc930c259e34fd04840a5115f61236e6affbb6fed3af49c78e0aa1460;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/
 5759b592fba82f44bae0edfa862bf77b;Pkybot: A new banking malware https://asert.arbornetworks.com/peeking-at-pkybot/

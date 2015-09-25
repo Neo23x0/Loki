@@ -1,3 +1,14 @@
+\\ringcentral_msg\.doc;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+\\termination_letter\.doc;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+\\unpaid_logmein_invoice\.doc;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+\\lmi_billing_invoice\.doc;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+\\ringcentral_text_7093687357\.doc;Microsoft Word Intruder: Operation Pony Express https://nakedsecurity.sophos.com/2015/09/25/microsoft-word-intruder-gets-down-to
+\\this\.morning\.rar;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+\\this\.morning\.exe;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+\\RtlUpd\.exe;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+C:\\Program Files\\Realtek\\AudRTx86\.dll;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+C:\\Program Files\\Realtek\\Rttr\.zip;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
+C:\\Program Files\\Realtek\\rfmencrypt_secret\.key;Operation Arid Viper Slithers Back into View https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-
 https://dl\.packetstormsecurity\.net/1509\-exploits/dotnet\-mvc\-redos\-cve2015\-2526\-ms15\-101\-malerisch\.pdf;.NET MVC Denial Of Service 
 \\Microsoft\\Netmeeting\\1328\-0013\\mstun32\.dll;FIREEYE: Office Encapsulated PostScript & Priv Escalation 0days https://www.fireeye.com/blog/threat-research/2015/09/attack_exploitingmi.html
 \\infected\.exx;Shifu: New Banking Trojan Is Attacking 14 Japanese Banks https://securityintelligence.com/shifu-masterful-new-banking-trojan-is-attacking
