@@ -71,6 +71,7 @@ EVIL_EXTENSIONS = [".asp", ".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat"
 
 # HASH_TYPES = ['PDF', 'Office', 'JAR', 'DOC', 'SWF', 'EXE']
 
+
 class Loki():
 
     # Signatures
