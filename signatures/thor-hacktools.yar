@@ -1,7 +1,7 @@
-/* 
+/*
 
-   THOR APT Scanner - Hack Tool Extract 
-   This rulset is a subset of all hack tool rules included in our 
+   THOR APT Scanner - Hack Tool Extract
+   This rulset is a subset of all hack tool rules included in our
    APT Scanner THOR - the full featured APT scanner.
 
    We will frequently update this file with new rules rated TLP:WHITE
@@ -18,19 +18,19 @@
 
 rule WindowsCredentialEditor
 {
-    meta: 
+    meta:
     	description = "Windows Credential Editor" threat_level = 10 score = 90
     strings:
 		$a = "extract the TGT session key"
 		$b = "Windows Credentials Editor"
-    condition: 
+    condition:
     	$a or $b
 }
 
 rule Amplia_Security_Tool
 {
-    meta: 
-		description = "Amplia Security Tool" 
+    meta:
+		description = "Amplia Security Tool"
 		score = 60
 		nodeepdive = 1
     strings:
@@ -74,7 +74,7 @@ rule PScan_Portscan_1 {
 }
 
 rule HackTool_Samples {
-	meta: 
+	meta:
 		description = "Hacktool"
 		score = 50
 	strings:
@@ -104,7 +104,7 @@ rule HackTool_Samples {
 		$x = "Impersonation Tokens Available"
 		$y = "failed to parse pwdump format string"
 		$z = "Dumping password"
-	condition: 
+	condition:
 		1 of them
 }
 
@@ -116,11 +116,11 @@ rule HackTool_Producers {
 	$a3 = "ntsecurity.nu"
 	$a4 = "gentilkiwi.com"
 	$a6 = "Marcus Murray"
-	condition: 
-	1 of ($a*) and 
+	condition:
+	1 of ($a*) and
 	not extension contains ".ini" and
 	not extension contains ".xml" and
-	not extension contains ".sqlite" 	
+	not extension contains ".sqlite"
 }
 
 /* Disclosed hack tool set */
@@ -240,7 +240,7 @@ rule CGISscan_CGIScan {
 		author = "yarGen Yara Rule Generator by Florian Roth"
 		hash = "338820e4e8e7c943074d5a5bc832458a"
 	strings:
-		$s1 = "Wang Products" fullword wide	
+		$s1 = "Wang Products" fullword wide
 		$s2 = "WSocketResolveHost: Cannot convert host address '%s'"
 		$s3 = "tcp is the only protocol supported thru socks server"
 	condition:
@@ -447,7 +447,7 @@ rule crack_Loader {
 }
 
 rule CN_GUI_Scanner {
-	meta: 
+	meta:
 		description = "Detects an unknown GUI scanner tool - CN background"
 		author = "Florian Roth"
 		hash = "3c67bbb1911cdaef5e675c56145e1112"
@@ -461,10 +461,10 @@ rule CN_GUI_Scanner {
 		$s1w = ").exe" fullword wide
 	condition:
 		all of them
-}	
+}
 
 rule CN_Packed_Scanner {
-	meta: 
+	meta:
 		description = "Suspiciously packed executable"
 		author = "Florian Roth"
 		hash = "6323b51c116a77e3fba98f7bb7ff4ac6"
@@ -491,7 +491,7 @@ rule Tiny_Network_Tool_Generic {
 		hash2 = "8e635b9a1e5aa5ef84bfa619bd2a1f92"
 	strings:
 		$magic	= { 4d 5a }
-	
+
 		$s0 = "KERNEL32.DLL" fullword ascii
 		$s1 = "CRTDLL.DLL" fullword ascii
 		$s3 = "LoadLibraryA" fullword ascii
@@ -499,7 +499,7 @@ rule Tiny_Network_Tool_Generic {
 
 		$y1 = "WININET.DLL" fullword ascii
 		$y2 = "atoi" fullword ascii
-		
+
 		$x1 = "ADVAPI32.DLL" fullword ascii
 		$x2 = "USER32.DLL" fullword ascii
 		$x3 = "wsock32.dll" fullword ascii
@@ -510,7 +510,7 @@ rule Tiny_Network_Tool_Generic {
 		$z2 = "USER32.DLL" fullword ascii
 		$z3 = "FreeSid" fullword ascii
 		$z4 = "ToAscii" fullword ascii
-		
+
 	condition:
 		( $magic at 0 ) and all of ($s*) and ( all of ($y*) or all of ($x*) or all of ($z*) ) and filesize < 15KB
 }
@@ -760,7 +760,7 @@ rule iKAT_priv_esc_tasksch {
 		description = "Task Schedulder Local Exploit - Windows local priv-esc using Task Scheduler, published by webDevil. Supports Windows 7 and Vista."
 		author = "Florian Roth"
 		date = "05.11.14"
-		score = 75		
+		score = 75
 		reference = "http://ikat.ha.cked.net/Windows/functions/ikatfiles.html"
 		hash = "84ab94bff7abf10ffe4446ff280f071f9702cf8b"
 	strings:
@@ -775,7 +775,7 @@ rule iKAT_priv_esc_tasksch {
 		$s13 = "output.writeline \" Should work on Vista/Win7/2008 x86/x64\"" fullword ascii
 		$s11 = "Set objExecObject = objShell.Exec(\"cmd /c schtasks /query /XML /TN wDw00t\")" fullword ascii
 		$s12 = "objShell.Run \"schtasks /create /TN wDw00t /sc monthly /tr \"\"\"+biatchFile+\"" ascii
-		$s14 = "a.WriteLine (\"net localgroup administrators /add v4l\")" fullword ascii		
+		$s14 = "a.WriteLine (\"net localgroup administrators /add v4l\")" fullword ascii
 		$s20 = "Set ts = fso.createtextfile (\"wDw00t.xml\")" fullword ascii
 	condition:
 		2 of them
@@ -786,7 +786,7 @@ rule iKAT_command_lines_agent {
 		description = "iKAT hack tools set agent - file ikat.exe"
 		author = "Florian Roth"
 		date = "05.11.14"
-		score = 75		
+		score = 75
 		reference = "http://ikat.ha.cked.net/Windows/functions/ikatfiles.html"
 		hash = "c802ee1e49c0eae2a3fc22d2e82589d857f96d94"
 	strings:
@@ -814,10 +814,10 @@ rule iKAT_cmd_as_dll {
 		$s1 = "cmd.exe" fullword wide
 		$s2 = "ReactOS Development Team" fullword wide
 		$s3 = "ReactOS Command Processor" fullword wide
-		
+
 		$ext = "extension: .dll" nocase
 	condition:
-		all of ($s*) and $ext 
+		all of ($s*) and $ext
 }
 
 rule iKAT_tools_nmap {
@@ -1547,10 +1547,10 @@ rule EditServer {
 		$s13 = "Service Name: %s" fullword ascii
 		$s14 = "Server Password: %s" fullword ascii
 		$s17 = "Inject Process Name: %s" fullword ascii
-		
+
 		$x1 = "WinEggDrop Shell Congirator" fullword ascii
 	condition:
-		5 of ($s*) or $x1 
+		5 of ($s*) or $x1
 }
 
 rule sig_238_letmein {
@@ -1852,9 +1852,9 @@ rule UnPack_rar_Folder_InjectT {
 		$s7 = "Fail To Set The Port" fullword ascii
 		$s11 = "\\psapi.dll" fullword ascii
 		$s20 = "TInject.Dll" fullword ascii
-		
+
 		$x1 = "Software\\Microsoft\\Internet Explorer\\WinEggDropShell" fullword ascii
-		$x2 = "injectt.exe" fullword ascii		
+		$x2 = "injectt.exe" fullword ascii
 	condition:
 		( 1 of ($x*) ) and ( 3 of ($s*) )
 }
@@ -2622,14 +2622,14 @@ rule Ammyy_Admin_AA_v3 {
 		date = "2014/12/22"
 		score = 55
 		hash1 = "b130611c92788337c4f6bb9e9454ff06eb409166"
-		hash2 = "07539abb2623fe24b9a05e240f675fa2d15268cb"		
+		hash2 = "07539abb2623fe24b9a05e240f675fa2d15268cb"
 	strings:
 		$x1 = "S:\\Ammyy\\sources\\target\\TrService.cpp" fullword ascii
 		$x2 = "S:\\Ammyy\\sources\\target\\TrDesktopCopyRect.cpp" fullword ascii
 		$x3 = "Global\\Ammyy.Target.IncomePort" fullword ascii
 		$x4 = "S:\\Ammyy\\sources\\target\\TrFmFileSys.cpp" fullword ascii
 		$x5 = "Please enter password for accessing remote computer" fullword ascii
-		
+
 		$s1 = "CreateProcess1()#3 %d error=%d" fullword ascii
 		$s2 = "CHttpClient::SendRequest2(%s, %s, %d) error: invalid host name." fullword ascii
 		$s3 = "ERROR: CreateProcessAsUser() error=%d, session=%d" fullword ascii
@@ -2770,7 +2770,7 @@ rule CN_Portscan : APT
         ($s1 at 0) and $s2
 }
 
-rule WMI_vbs : APT 
+rule WMI_vbs : APT
 {
     meta:
         description = "WMI Tool - APT"
@@ -2779,9 +2779,9 @@ rule WMI_vbs : APT
         confidential = false
 		score = 70
     strings:
-		$s3 = "WScript.Echo \"   $$\\      $$\\ $$\\      $$\\ $$$$$$\\ $$$$$$$$\\ $$\\   $$\\ $$$$$$$$\\  $$$$$$"  
+		$s3 = "WScript.Echo \"   $$\\      $$\\ $$\\      $$\\ $$$$$$\\ $$$$$$$$\\ $$\\   $$\\ $$$$$$$$\\  $$$$$$"
     condition:
-        all of them	
+        all of them
 }
 
 rule CN_Toolset__XScanLib_XScanLib_XScanLib {
@@ -2884,7 +2884,7 @@ rule DarkComet_Keylogger_File
 /* Mimikatz */
 
 rule Mimikatz_Memory_Rule_1 : APT {
-	meta: 
+	meta:
 		author = "Florian Roth"
 		date = "12/22/2014"
 		score = 70
@@ -2931,17 +2931,17 @@ rule mimikatz
 		description		= "mimikatz"
 		author			= "Benjamin DELPY (gentilkiwi)"
 		tool_author		= "Benjamin DELPY (gentilkiwi)"
-
+      score          = 80
 	strings:
 		$exe_x86_1		= { 89 71 04 89 [0-3] 30 8d 04 bd }
 		$exe_x86_2		= { 89 79 04 89 [0-3] 38 8d 04 b5 }
-		
+
 		$exe_x64_1		= { 4c 03 d8 49 [0-3] 8b 03 48 89 }
 		$exe_x64_2		= { 4c 8b df 49 [0-3] c1 e3 04 48 [0-3] 8b cb 4c 03 [0-3] d8 }
 
 		$dll_1			= { c7 0? 00 00 01 00 [4-14] c7 0? 01 00 00 00 }
 		$dll_2			= { c7 0? 10 02 00 00 ?? 89 4? }
-		
+
 		$sys_x86		= { a0 00 00 00 24 02 00 00 40 00 00 00 [0-4] b8 00 00 00 6c 02 00 00 40 00 00 00 }
 		$sys_x64		= { 88 01 00 00 3c 04 00 00 40 00 00 00 [0-4] e8 02 00 00 f8 02 00 00 40 00 00 00 }
 
@@ -3019,7 +3019,7 @@ rule Mimikatz_Logfile
 		author = "Florian Roth"
 		score = 80
 		date = "2015/03/31"
-	strings: 
+	strings:
 		$s1 = "SID               :" ascii fullword
 		$s2 = "* NTLM     :" ascii fullword
 		$s3 = "Authentication Id :" ascii fullword
@@ -3048,3 +3048,19 @@ rule AppInitHook {
 		uint16(0) == 0x5a4d and filesize < 500KB and 4 of them
 }
 
+rule VSSown_VBS {
+	meta:
+		description = "Detects VSSown.vbs script - used to export shadow copy elements like NTDS to take away and crack elsewhere"
+		author = "Florian Roth"
+		date = "2015-10-01"
+		score = 75
+	strings:
+		$s0 = "Select * from Win32_Service Where Name ='VSS'" ascii
+		$s1 = "Select * From Win32_ShadowCopy" ascii
+		$s2 = "cmd /C mklink /D " ascii
+		$s3 = "ClientAccessible" ascii
+		$s4 = "WScript.Shell" ascii
+		$s5 = "Win32_Process" ascii
+	condition:
+		all of them
+}
