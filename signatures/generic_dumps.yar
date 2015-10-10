@@ -1,3 +1,4 @@
+/* Disabled due to Benjamin Delphys sig overlap
 rule LSASS_memory_dump_file {
 	meta:
 		description = "Detects a LSASS memory dump file"
@@ -10,7 +11,7 @@ rule LSASS_memory_dump_file {
 		$s2 = "wdigest.DLL" wide nocase
 	condition:
         uint32(0) == 0x504D444D and all of them
-}
+} */
 
 rule NTLM_Dump_Output {
 	meta:
