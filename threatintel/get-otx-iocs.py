@@ -19,6 +19,10 @@ import argparse
 
 OTX_KEY = "--- YOUR API KEY ---"
 
+HASH_BLACKLIST = [ 'e617348b8947f28e2a280dd93c75a6ad', '125da188e26bd119ce8cad7eeb1fc2dfa147ad47',
+                   '06f7826c2862d184a49e3672c0aa6097b11e7771a4bf613ec37941236c1a8e20' ]
+
+
 class OTXReceiver():
 
     # IOC Strings
@@ -60,7 +64,8 @@ class OTXReceiver():
         for event in self.events:
             try:
                 for indicator in event["indicators"]:
-                    if indicator["type"] in ('FileHash-MD5', 'FileHash-SHA1', 'FileHash-SHA256'):
+                    if indicator["type"] in ('FileHash-MD5', 'FileHash-SHA1', 'FileHash-SHA256') and \
+                                    indicator["indicator"] not in HASH_BLACKLIST:
 
                         hash = indicator["indicator"]
                         if self.hash_upper:
