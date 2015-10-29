@@ -199,7 +199,7 @@ If you are interested in a corporate solution for APT scanning, check out Loki's
 
 # Compile the Scanner
 
-Download PyInstaller, switch to the pyinstaller program directory and execute:
+Download PyInstaller [v2.1](https://github.com/pyinstaller/pyinstaller/releases/tag/v2.1), switch to the pyinstaller program directory and execute:
 
     python ./pyinstaller.py -F C:\path\to\loki.py
 
