@@ -3009,7 +3009,8 @@ rule lsadump
 		$hex_bkey		= { 4b 53 53 4d [20-70] 05 00 01 00}
 
 	condition:
-		($str_sam_inc and not $str_sam_exc) or $hex_api_call or $str_msv_lsa or $hex_bkey
+		( ($str_sam_inc and not $str_sam_exc) or $hex_api_call or $str_msv_lsa or $hex_bkey )
+      and not uint16(0) == 0x5a4d
 }
 
 rule Mimikatz_Logfile
