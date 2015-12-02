@@ -195,7 +195,7 @@ AppData\\[\w]+\.exe;45
 \\msx32\.exe;45
 \.XOR$;45
 
-# Suspected Anthem Deep Panda APT 
+# Suspected Anthem Deep Panda APT
 \\lot1\.tmp;45
 
 # Trojan Characteristics
@@ -311,7 +311,7 @@ Microsoft\\MediaPlayer\\updatewindws\.exe;100
 \\FILE_127\.127\.ppsx;60
 (Temp|Tmp|TEMP)\\destsx\.inf;50
 (Temp|Tmp|TEMP)\\Alsa\\doub\.tmp;60
-(Temp|Tmp|TEMP)\\muysf\\ipbuy.exe;70 
+(Temp|Tmp|TEMP)\\muysf\\ipbuy.exe;70
 \\Order Details\.xls\.pps;60
 
 # Sofacy - Malware Bundestag http://goo.gl/OtmPzq
@@ -341,3 +341,10 @@ C:\\Program Files (x86)\\LNVSuite\\LnrAuth\.dll;60
 C:\\Program Files (x86)\\LNVSuite\\LnrAuthSvc\.dll;60
 C:\\Program Files (x86)\\LNVSuite\\LnrUpdt\.exe;60
 C:\\Program Files (x86)\\LNVSuite\\LnrUpdtP\.exe;60
+
+# F-Secure Wonknu APT Backdoor:W32/Wonknu.A https://goo.gl/JjVikT
+\\programdata\\kav\.exe;85
+\\Java_Down\.exe;80
+
+# Phishing Wave Dez 2015
+\\p0o6543f\.exe;85
