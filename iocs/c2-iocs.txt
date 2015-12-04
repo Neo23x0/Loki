@@ -22,9 +22,14 @@ effers.com;FireEye Operation Snowman https://goo.gl/x1v7mT
 58.64.199.25;FireEye Operation Snowman https://goo.gl/x1v7mT
 180.150.228.102;FireEye Operation Snowman https://goo.gl/x1v7mT
 111.118.21.105;FireEye Operation Snowman https://goo.gl/x1v7mT
-me.scieron.com;;FireEye Operation Snowman https://goo.gl/x1v7mT
-cht.blankchair.com;;FireEye Operation Snowman https://goo.gl/x1v7mT
-ali.blankchair.com;;FireEye Operation Snowman https://goo.gl/x1v7mT
+me.scieron.com;FireEye Operation Snowman https://goo.gl/x1v7mT
+cht.blankchair.com;FireEye Operation Snowman https://goo.gl/x1v7mT
+ali.blankchair.com;FireEye Operation Snowman https://goo.gl/x1v7mT
 dll.freshdns.org;;FireEye Operation Snowman https://goo.gl/x1v7mT
-rt.blankchair.com;;FireEye Operation Snowman https://goo.gl/x1v7mT
-book.flnet.org;;FireEye Operation Snowman https://goo.gl/x1v7mT
+rt.blankchair.com;FireEye Operation Snowman https://goo.gl/x1v7mT
+book.flnet.org;FireEye Operation Snowman https://goo.gl/x1v7mT
+
+drivres-update.info;Sofacy report Dec 2015 https://goo.gl/WSvEM8
+intelnetservice.com;Sofacy report Dec 2015 https://goo.gl/WSvEM8
+intelsupport.net;Sofacy report Dec 2015 https://goo.gl/WSvEM8
+softupdates.info;Sofacy report Dec 2015 https://goo.gl/WSvEM8

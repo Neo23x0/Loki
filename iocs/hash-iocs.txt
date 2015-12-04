@@ -6189,7 +6189,7 @@ d87b310aa81ae6254fff27b7d57f76035f544073;APT28 FireEye https://goo.gl/LXeeW7
 7e68371ba3a988ff88e0fb54e2507f0d;Operation OceanLotus Chinese APT install_flashplayer.exe
 0529b1d393f405bc2b2b33709dd57153;Operation OceanLotus Chinese APT rtx.exe
 9fea62c042a8eda1d3f5ae54bad1e959;Operation OceanLotus Chinese APT sinopec.exe
-486bb089b22998ec2560afa59008eafa;Operation OceanLotus Chinese APT 
+486bb089b22998ec2560afa59008eafa;Operation OceanLotus Chinese APT
 b778d0de33b66ffdaaf76ba01e7c5b7b;Operation OceanLotus Chinese APT USBDeview.exe
 53e5718adf6f5feb2e3bb3396a229ba8;Operation OceanLotus Chinese APT DSC00229.exe
 d39edc7922054a0f14a5b000a28e3329;Operation OceanLotus Chinese APT install_flashplayer13x37.exe
@@ -6216,7 +6216,7 @@ fae726d1056118a819498592dbf2a0d62b53d105;Fidelis Threat Advisory http://goo.gl/Z
 ad9c15b11075bc9c99c547fbffc43b3f;Fidelis Threat Advisory http://goo.gl/ZjJyti %TEMP%\cedt370r(3).exe
 e9096babf98566536ae4af997c1f8667;Fidelis Threat Advisory http://goo.gl/ZjJyti %TEMP%/destsx.inf
 d8e1b4bf4f9bbea0bb0f77460494b169;Fidelis Threat Advisory http://goo.gl/ZjJyti %APPDATA%\Alsa\doub.tmp
-67ddf6fce4e6efb352d78d9574c3f841;Fidelis Threat Advisory http://goo.gl/ZjJyti %APPDATA%\muysf\ipbuy.exe 
+67ddf6fce4e6efb352d78d9574c3f841;Fidelis Threat Advisory http://goo.gl/ZjJyti %APPDATA%\muysf\ipbuy.exe
 3d0a657b13b31a05f8ef7a02fe7bbe12d1574f18;Fidelis Threat Advisory http://goo.gl/ZjJyti Order Details.xls.pps
 
 089a14f69a31ea5e9a5b375dc0c46e45;Kaspersky Duqu2 APT Report IOC https://goo.gl/7yKyOj
@@ -6794,15 +6794,15 @@ f7a842eb1364d1269b40a344510068e8;Threat Group 3390 Sample http://snip.ly/giNB
 462fd01302bc40624a44b7960d2894cd;Threat Group 3390 Sample http://snip.ly/giNB
 
 d6365edf2d3afa6d155273814b494eb3;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - PlugX
-b4522d05a9e3a034af481a7797a445ea;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J -    
-f8b3ad7d73ba432bc3e7084f9f7dee7d;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - 
+b4522d05a9e3a034af481a7797a445ea;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J -
+f8b3ad7d73ba432bc3e7084f9f7dee7d;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J -
 2f9e44e0cef0b4a67b7be74bc11b8e7d;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - T5000
 cfbcb83f8515bd169afd0b22488b4430;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - gh0st - sycmentec
 0d50bd8299de64525a78845957456959;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - HTTBrowser
 6739542294a6cc5ca4f272181944b943;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - HTTPBrowser
 6c260baa4367578778b1ecdaaab37ef9;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - Plugx
-21C46A95329F3F16050A7421841A92C4;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - 
-b3bc4b5f17fd5f87ec3714c6587f6906;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - 
+21C46A95329F3F16050A7421841A92C4;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J -
+b3bc4b5f17fd5f87ec3714c6587f6906;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J -
 af0d365a2c59709ece196037740bdb81;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - T5000
 973e0c922eb07aad530d8a1de19c7755;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - sednit
 faf53a283d4a171dc30385e3c42c487c;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - T5000
@@ -6814,8 +6814,8 @@ faf53a283d4a171dc30385e3c42c487c;APT3 Phishing campaign malware payload http://g
 e43e14f6d1159ea9564bc23982b9afd5;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - PlugX
 5a22e5aee4da2fe363b77f1351265a00;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - PlugX
 ebf157abfe656d87e43a63ca91507996;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - PlugX
-6102F79567DFF2168BEB17ABA31E058F;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - 
-53fe5d10530fbef13da8c9e706a72944;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - 
+6102F79567DFF2168BEB17ABA31E058F;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J -
+53fe5d10530fbef13da8c9e706a72944;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J -
 79f71f327a38c2226d36a21172d2922b;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - pivy
 d6f7a1995a869dbd411c2b46364a6dc9;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - California roll
 930525ac7bed4f1bf8bbf0a775dbea25;APT3 Phishing campaign malware payload http://goo.gl/WFOj8J - linopid
@@ -6936,3 +6936,14 @@ bfbe8c3ee78750c3a520480700e440f8;Regin - Further Investigations by Symantec Aug 
 df2fc7283fda9d827b4f3d852e64414904173c9eb8ceadf99c0b4a7e0aad96e7;RocketKitten_Keylogger
 7497fcc89a2b445e0b6922a9416334303d94431ca345ff304345e34742579601;RocketKitten_Keylogger
 67df5f0d7cade35f0310cde1122c780168c48e98b1c94a924a3720020d18d260;RocketKitten_Keylogger
+
+c3ae4a37094ecfe95c2badecf40bf5bb;Sofacy group report Dec 2015 - https://goo.gl/WSvEM8 - AZZY 4.3 installer
+ce8b99df8642c065b6af43fde1f786a3;Sofacy group report Dec 2015 - https://goo.gl/WSvEM8 - New generation (4.3) AZZY implants
+f6f88caf49a3e32174387cacfa144a89;Sofacy group report Dec 2015 - https://goo.gl/WSvEM8 - Dropped C&C helper DLL for AZZY 4.3
+8c4d896957c36ec4abeb07b2802268b9;Sofacy group report Dec 2015 - https://goo.gl/WSvEM8 - Dropped C&C helper DLL for AZZY 4.3
+0369620eb139c3875a62e36bb7abdae8;Sofacy group report Dec 2015 - https://goo.gl/WSvEM8 - File collectors / USB stealers
+8b238931a7f64fddcad3057a96855f6c;Sofacy group report Dec 2015 - https://goo.gl/WSvEM8 - File collectors / USB stealers
+ce151285e8f0e7b2b90162ba171a4b90;Sofacy group report Dec 2015 - https://goo.gl/WSvEM8 - File collectors / USB stealers
+f6f88caf49a3e32174387cacfa144a89;Sofacy group report Dec 2015 - https://goo.gl/WSvEM8 - File collectors / USB stealers
+a96f4b8ac7aa9dbf4624424b7602d4f7;Sofacy group report Dec 2015 - https://goo.gl/WSvEM8 - Stand-alone AZZY backdoors
+9d2f9e19db8c20dc0d20d50869c7a373;Sofacy group report Dec 2015 - https://goo.gl/WSvEM8 - Stand-alone AZZY backdoors
