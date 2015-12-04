@@ -348,3 +348,17 @@ C:\\Program Files (x86)\\LNVSuite\\LnrUpdtP\.exe;60
 
 # Phishing Wave Dez 2015
 \\p0o6543f\.exe;85
+
+# Sofacy group report Dec 2015 - https://goo.gl/WSvEM8
+AppData\\Local\\Microsoft\\Windows\\msdeltemp\.dll;80
+\\msdeltemp\.dll;50
+\\tf394kv\.dll;75
+AppData\\dllhost\.exe;80
+AppData\\sechost\.exe;80
+Temp\\dllhost\.exe;80
+Temp\\sechost\.exe;80
+AppData\\chkdbg.log;60
+AppData\\svchost\.exe;80
+Temp\\svchost\.exe;80
+AppData\\conhost\.dll;80
+Temp\\conhost\.dll;80
