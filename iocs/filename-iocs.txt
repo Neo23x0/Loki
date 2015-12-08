@@ -362,3 +362,16 @@ AppData\\svchost\.exe;80
 Temp\\svchost\.exe;80
 AppData\\conhost\.dll;80
 Temp\\conhost\.dll;80
+
+# FireEye Report admin@338 https://goo.gl/JAlw3s
+\\upload\.rar;70
+
+# Microsoft Intelligence Report http://goo.gl/jcS0lO
+\\SupUpNvidia\.exe;80
+\\svchosl\.exe;80
+\\svehost\.exe;80
+\\run_x64\.exe;55
+\\run_x86\.exe;55
+\\advstorshell\.exe;65
+\\runrun\.exe;60
+\\MicrosoftSup\.dll;70
