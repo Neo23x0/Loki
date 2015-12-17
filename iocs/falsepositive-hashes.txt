@@ -32,3 +32,6 @@ d64d63805beef5f6ea2e791c6fe61d9f9c740e42;REGIN FP
 accc2e5afb242d348da00bd3edf9b8033e81320bf33f790f1ac9ed8e9db78975;Novell nwfilter
 
 c78655bc80301d76ed4fef1c1ea40a7d;Public IOC but is valid Windows 2003 svchost.exe
+e617348b8947f28e2a280dd93c75a6ad;Empty MS Word Document
+0d4c486a24a711a45fd83acdf4d18506;Legitimate Flash
+ca0c67ba7aeba6aed5ddb852e6eea811;Legitimate Flash
