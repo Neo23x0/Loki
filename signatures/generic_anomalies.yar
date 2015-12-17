@@ -33,8 +33,10 @@ rule Cloaked_as_JPG {
                 date = "2015/02/29"
                 score = 50
         condition:
-                uint16be(0x00) != 0xFFD8 and 
-                extension matches /\.jpg/i /* and
+                uint16be(0x00) != 0xFFD8 and
+                extension matches /\.jpg/i and
+                filetype != "GIF"
+                /* and
                 not filepath contains "ASP.NET" */
 }
 
