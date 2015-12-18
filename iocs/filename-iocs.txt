@@ -375,3 +375,9 @@ Temp\\conhost\.dll;80
 \\advstorshell\.exe;65
 \\runrun\.exe;60
 \\MicrosoftSup\.dll;70
+
+# Inocnation Report - Fidelis Cybersecurity https://goo.gl/HA82xf
+Temp\\Center[0-9]{6,11}\.dat;65
+AppData\\adobe\\adobe\.dat;65
+
+# End

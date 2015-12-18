@@ -6960,3 +6960,9 @@ e27fb16dce7fff714f4b05f2cef53e1919a34d7ec0e595f2eaa155861a213e59;Derusbi Trojan 
 476bf24a4b1e9f4bc2a61b152115e1fe;Derusbi Trojan http://goo.gl/b3pVyL
 7bd55818c5971b63dc45cf57cbeb950b;Derusbi Trojan http://goo.gl/b3pVyL
 4c0b2e9d2ef909d15270d4dd7fa5a4a5;Derusbi Trojan http://goo.gl/b3pVyL
+
+A7BD555866AE1C161F78630A638850E7;Inocnation Report - Fidelis Cybersecurity https://goo.gl/HA82xf
+4F4BF27B738FF8F2A89D1BC487B054A8;Inocnation Report - Fidelis Cybersecurity https://goo.gl/HA82xf
+75D3D1F23628122A64A2F1B7EF33F5CF;Inocnation Report - Fidelis Cybersecurity https://goo.gl/HA82xf
+D9821468315CCD3B9EA03161566EF18E;Inocnation Report - Fidelis Cybersecurity https://goo.gl/HA82xf
+B9AF5F5FD434A65D7AA1B55F5441C90A;Inocnation Report - Fidelis Cybersecurity https://goo.gl/HA82xf
