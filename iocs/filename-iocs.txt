@@ -661,8 +661,6 @@ AppData\\adobe\\adobe\.dat;65
 \\javase\.exe;50
 \\javaup\.exe;50
 \\javavm\.exe;50
-\\javaw\.exe;50
-\\javaws\.exe;50
 \\javawz\.exe;50
 \\javax\.exe;50
 \\javo\.exe;50
@@ -864,8 +862,6 @@ AppData\\adobe\\adobe\.dat;65
 \\svchosr\.exe;50
 \\svchoss\.exe;50
 \\svchosst\.exe;50
-\\svchost\.exe;50
-\\svchost\.exe;50
 \\svchöst\.exe;50
 \\svchost_\.exe;50
 \\svchost_cz\.exe;50
@@ -1108,7 +1104,6 @@ AppData\\adobe\\adobe\.dat;65
 \\winb\.exe;50
 \\winc\.exe;50
 \\wince\.exe;50
-\\wind\.exe;50
 \\wind3\.exe;50
 \\windf\.exe;50
 \\windm\.exe;50
@@ -1147,7 +1142,6 @@ AppData\\adobe\\adobe\.dat;65
 \\winra\.exe;50
 \\winrm\.exe;50
 \\winrr\.exe;50
-\\wins\.exe;50
 \\wins7\.exe;50
 \\winsh\.exe;50
 \\winsp\.exe;50
