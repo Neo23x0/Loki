@@ -19,7 +19,7 @@ condition:
     or
     (uint32be(0) == 0x44434401 and
      uint32be(12)== 0x50413330)    // magic: DCD PA30
-}  
+}
 
 /* Rules -------------------------------------------------------------------- */
 
@@ -54,7 +54,7 @@ rule svchost_ANOMALY {
 		filename == "svchost.exe" and not 1 of ($win*) and not WINDOWS_UPDATE_BDC
 }
 
-/* removed 1 rule here */	
+/* removed 1 rule here */
 
 rule explorer_ANOMALY {
 	meta:
@@ -94,7 +94,7 @@ rule Utilman_ANOMALY {
 	strings:
 		$win7 = "utilman.exe" wide fullword
 		$win2000 = "Start with Utility Manager" fullword wide
-		$win2012 = "utilman2.exe" fullword wide		
+		$win2012 = "utilman2.exe" fullword wide
 	condition:
 		filename == "utilman.exe" and not 1 of ($win*) and not WINDOWS_UPDATE_BDC
 }
@@ -109,7 +109,7 @@ rule osk_ANOMALY {
 		$s1 = "Accessibility On-Screen Keyboard" wide fullword
 		$s2 = "\\oskmenu" wide fullword
 		$s3 = "&About On-Screen Keyboard..." wide fullword
-		$s4 = "Software\\Microsoft\\Osk" wide	
+		$s4 = "Software\\Microsoft\\Osk" wide
 	condition:
 		filename == "osk.exe" and not 1 of ($s*) and not WINDOWS_UPDATE_BDC
 }
@@ -123,7 +123,7 @@ rule magnify_ANOMALY {
 	strings:
 		$win7 = "Microsoft Screen Magnifier" wide fullword
 		$win2000 = "Microsoft Magnifier" wide fullword
-		$winxp = "Software\\Microsoft\\Magnify" wide	
+		$winxp = "Software\\Microsoft\\Magnify" wide
 	condition:
 		filename =="magnify.exe" and not 1 of ($win*) and not WINDOWS_UPDATE_BDC
 }
@@ -139,7 +139,7 @@ rule narrator_ANOMALY {
 		$win2000 = "&About Narrator..." wide fullword
 		$win2012 = "Screen Reader" wide fullword
 		$winxp = "Software\\Microsoft\\Narrator"
-		$winxp_en = "SOFTWARE\\Microsoft\\Speech\\Voices" wide	
+		$winxp_en = "SOFTWARE\\Microsoft\\Speech\\Voices" wide
 	condition:
 		filename == "narrator.exe" and not 1 of ($win*) and not WINDOWS_UPDATE_BDC
 }
@@ -153,9 +153,9 @@ rule notepad_ANOMALY {
 	strings:
 		$win7 = "HELP_ENTRY_ID_NOTEPAD_HELP" wide fullword
 		$win2000 = "Do you want to create a new file?" wide fullword
-		$win2003 = "Do you want to save the changes?" wide 
+		$win2003 = "Do you want to save the changes?" wide
 		$winxp = "Software\\Microsoft\\Notepad" wide
-		$winxp_de = "Software\\Microsoft\\Notepad" wide 
+		$winxp_de = "Software\\Microsoft\\Notepad" wide
 	condition:
 		filename == "notepad.exe" and not 1 of ($win*) and not WINDOWS_UPDATE_BDC
 }
@@ -185,7 +185,7 @@ rule conhost_ANOMALY {
 		reference = "not set"
 		date = "2015/03/16"
 		hash = "1bd846aa22b1d63a1f900f6d08d8bfa8082ae4db"
-	strings:	
+	strings:
 		$s2 = "Console Window Host" fullword wide
 	condition:
 		filename == "conhost.exe" and not 1 of ($s*) and not WINDOWS_UPDATE_BDC
@@ -198,7 +198,7 @@ rule wininit_ANOMALY {
 		reference = "not set"
 		date = "2015/03/16"
 		hash = "2de5c051c0d7d8bcc14b1ca46be8ab9756f29320"
-	strings:	
+	strings:
 		$s1 = "Windows Start-Up Application" fullword wide
 	condition:
 		filename == "wininit.exe" and not 1 of ($s*) and not WINDOWS_UPDATE_BDC
@@ -211,11 +211,11 @@ rule winlogon_ANOMALY {
 		reference = "not set"
 		date = "2015/03/16"
 		hash = "af210c8748d77c2ff93966299d4cd49a8c722ef6"
-	strings:		
+	strings:
 		$s1 = "AuthzAccessCheck failed" fullword
 		$s2 = "Windows Logon Application" fullword wide
 	condition:
-		filename == "winlogon.exe" and not 1 of ($s*) 
+		filename == "winlogon.exe" and not 1 of ($s*)
 		and not WINDOWS_UPDATE_BDC
 		and not filepath contains "Malwarebytes"
 }
@@ -227,7 +227,7 @@ rule SndVol_ANOMALY {
 		reference = "not set"
 		date = "2015/03/16"
 		hash = "e057c90b675a6da19596b0ac458c25d7440b7869"
-	strings:	
+	strings:
 		$s1 = "Volume Control Applet" fullword wide
 	condition:
 		filename == "sndvol.exe" and not 1 of ($s*) and not WINDOWS_UPDATE_BDC
@@ -240,7 +240,7 @@ rule doskey_ANOMALY {
 		reference = "not set"
 		date = "2015/03/16"
 		hash = "f2d1995325df0f3ca6e7b11648aa368b7e8f1c7f"
-	strings:		
+	strings:
 		$s3 = "Keyboard History Utility" fullword wide
 	condition:
 		filename == "doskey.exe" and not 1 of ($s*) and not WINDOWS_UPDATE_BDC
@@ -269,7 +269,7 @@ rule taskmgr_ANOMALY {
 		reference = "not set"
 		date = "2015/03/16"
 		hash = "e8b4d84a28e5ea17272416ec45726964fdf25883"
-	strings:		
+	strings:
 		$s0 = "Windows Task Manager" fullword wide
 		$s1 = "taskmgr.chm" fullword
 		$s2 = "TmEndTaskHandler::" ascii
@@ -292,11 +292,11 @@ rule APT_Cloaked_PsExec
 		$s0 = "psexesvc.exe" wide fullword
 		$s1 = "Sysinternals PsExec" wide fullword
 	condition:
-		uint16(0) == 0x5a4d and $s0 and $s1 
+		uint16(0) == 0x5a4d and $s0 and $s1
 		and not filename matches /^(psexec.exe|psexesvc.exe)$/is
 }
 
-/* removed 6 rules here */	
+/* removed 6 rules here */
 
 rule APT_Cloaked_SuperScan
 	{
@@ -337,12 +337,13 @@ rule SAM_Hive_Backup
 		reference = "https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump"
 		score = 60
 		date = "2015/03/31"
-	strings: 
+	strings:
 		$s1 = "\\SystemRoot\\System32\\Config\\SAM" wide fullword
 	condition:
 		uint32(0) == 0x66676572 and $s1 in (0..100) and
 			not filename contains "sam.log" and
-			not filename contains "_sam" and 
+         not filename contains "SAM.LOG" and
+			not filename contains "_sam" and
 			not filename == "SAM" and
 			not filename == "sam"
 }
@@ -354,10 +355,10 @@ rule WindowsDefender_Renamed
 		author = "Florian Roth"
 		score = 40
 		date = "2015/03/31"
-	strings: 
+	strings:
 		$s1 = "Microsoft-Windows-Windows Defender/WHC" wide fullword
 	condition:
-		uint16(0) == 0x5a4d and $s1 and 
+		uint16(0) == 0x5a4d and $s1 and
 		not filename == "MpCmdRun.exe" and
 		not filename == "ActionCenter.dll" and
 		not filename == "MpEvMsg.dll"
