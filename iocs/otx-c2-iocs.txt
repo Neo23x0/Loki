@@ -3739,12 +3739,6 @@ paremmuus-haibun.casefollowup.com;2015-08-13 - ANGLER EK FROM 176.9.197.68 SENDS
 148.251.154.104;Locker: an Android ransomware full of surprises http://blog.fortinet.com/post/locker-an-android-ransomware-full-of-surprises / h
 198.27.81.172;Locker: an Android ransomware full of surprises http://blog.fortinet.com/post/locker-an-android-ransomware-full-of-surprises / h
 eldos.com;destover https://securelist.com/blog/research/67985/destover/
-crl4.digicert.com;destover https://securelist.com/blog/research/67985/destover/
-crl3.digicert.com;destover https://securelist.com/blog/research/67985/destover/
-www.digicert.com;destover https://securelist.com/blog/research/67985/destover/
-ocsp.digicert.com;destover https://securelist.com/blog/research/67985/destover/
-crl.globalsign.net;destover https://securelist.com/blog/research/67985/destover/
-cacerts.digicert.com;destover https://securelist.com/blog/research/67985/destover/
 208.105.226.235;destover https://securelist.com/blog/research/67985/destover/
 88.53.215.64;destover https://securelist.com/blog/research/67985/destover/
 217.96.33.164;destover https://securelist.com/blog/research/67985/destover/
