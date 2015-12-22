@@ -97,7 +97,7 @@ def setNice(logger):
         pid = os.getpid()
         p = psutil.Process(pid)
         logger.log("INFO", "Setting LOKI process with PID: %s to priority IDLE" % pid)
-        p.set_nice(psutil.IDLE_PRIORITY_CLASS)
+        p.nice(psutil.IDLE_PRIORITY_CLASS)
         return 1
     except Exception, e:
         if logger.debug:
