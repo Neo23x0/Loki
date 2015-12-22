@@ -25,7 +25,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.13.0'
+__version__ = '0.13.1'
 
 import os
 import argparse
@@ -60,6 +60,10 @@ if platform == "windows":
     except Exception, e:
         print "Linux System - deactivating process memory check ..."
         platform = "linux" # crazy guess
+
+if platform == "":
+    print "Unable to determine platform - LOKI is lost."
+    sys.exit(1)
 
 # Predefined Evil Extensions
 EVIL_EXTENSIONS = [".asp", ".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm", ".cmd", ".com", ".cpl",
@@ -332,7 +336,7 @@ class Loki():
 
                                 if score >= 75:
                                     logger.log("ALERT", message)
-                                elif score > 60:
+                                elif score >= 60:
                                     logger.log("WARNING", message)
                                 elif score >= 40:
                                     logger.log("NOTICE", message)
