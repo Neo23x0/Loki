@@ -994,8 +994,6 @@ k2aninsrc0mtqj3.ddns.net;Ties Between Corebot and Darknet Crypt Service https://
 oxy0qt16mfsfm23fgvo.ddns.net;Ties Between Corebot and Darknet Crypt Service https://www.damballa.com/corebot-and-darknet/
 www.os-s.net;RedHat Enterprise Linux 7.1 Denial Of Service https://cxsecurity.com/issue/WLB-2015100070
 www.os-s.de;RedHat Enterprise Linux 7.1 Denial Of Service https://cxsecurity.com/issue/WLB-2015100070
-www.csnc.ch;Netgear N300 Authentication Bypass https://dl.packetstormsecurity.net/1510-exploits/netgearn300-bypass.txt
-www.shellshocklabs.com;Netgear N300 Authentication Bypass https://dl.packetstormsecurity.net/1510-exploits/netgearn300-bypass.txt
 novartis-it.com;Cisco Web VPNs Leveraged for Access and Persistence http://www.volexity.com/blog/?p=179
 ja.googleupmail.com;Cisco Web VPNs Leveraged for Access and Persistence http://www.volexity.com/blog/?p=179
 renkneu.operaa.net;Cisco Web VPNs Leveraged for Access and Persistence http://www.volexity.com/blog/?p=179
@@ -1074,17 +1072,6 @@ say.f322.net;When ELF.BillGates met Windows http://thisissecurity.net/2015/09/30
 lkzuw.mc;IconLover 5.42 - Local Buffer Overflow Exploit https://www.exploit-db.com/exploits/38349/
 uapkc2.li;Watchguard XCS Remote Command Execution https://www.exploit-db.com/exploits/38346/
 www.schneider-electric.com;InduSoft Web Studio Remote Agent Remote Code Exec Vulnerability http://www.zerodayinitiative.com/advisories/ZDI-15-451/
-file.read;PCMan FTP Server 2.0.7 Directory Traversal https://dl.packetstormsecurity.net/1509-exploits/pcman_dir_traversal.py.txt
-www.nullsecurity.net;DNS Spider Multithreaded Bruteforcer 0.7 https://dl.packetstormsecurity.net/UNIX/scanners/dnsspider-0.7.py.txt
-runquery.do;ManageEngine EventLog Analyzer Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/manageengine_eventlog_analyzer_
-index3.do;ManageEngine EventLog Analyzer Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/manageengine_eventlog_analyzer_
-poc.pl;WinRAR SFX 5.21 Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/VL-1608.txt
-magazine.vulnerability-db.com;WinRAR SFX 5.21 Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/VL-1608.txt
-www.evolution-sec.com;WinRAR SFX 5.21 Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/VL-1608.txt
-www.reza.es;WinRAR SFX 5.21 Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/VL-1608.txt
-www.vuln-lab.com;WinRAR SFX 5.21 Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/VL-1608.txt
-www.vulnerability-lab.com;WinRAR SFX 5.21 Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/VL-1608.txt
-www.centreon.com;Centreon 2.6.1 Command Injection https://dl.packetstormsecurity.net/1509-exploits/ZSL-2015-5265.txt
 www.jfkdsajfk5263.com;Infected Korean Website Installs Banking Malware http://www.cyphort.com/koreatimes-installs-venik/
 142.0.137.66;Infected Korean Website Installs Banking Malware http://www.cyphort.com/koreatimes-installs-venik/
 142.0.137.67;Infected Korean Website Installs Banking Malware http://www.cyphort.com/koreatimes-installs-venik/
@@ -1403,16 +1390,6 @@ oilnewsblog.com;THE DUKES: 7 years of Russian cyberespionage https://www.f-secur
 serials.hacked.jp;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
 store.extremesportsevents.net;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
 juliet.usexy.cc;THE DUKES: 7 years of Russian cyberespionage https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf
-login.do;ManageEngine OpManager Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/manage_engine_opmanager_rce.rb.
-loginpage.do;ManageEngine OpManager Remote Code Execution https://dl.packetstormsecurity.net/1509-exploits/manage_engine_opmanager_rce.rb.
-h20564.www2.hpe.com;HP Security Bulletin HPSBGN03393 2 https://dl.packetstormsecurity.net/1509-advisories/HPSBGN03393-2.txt
-process.pid;MS15-078 Microsoft Windows Font Driver Buffer Overflow https://dl.packetstormsecurity.net/1509-exploits/ms15_078_atmfd_bof.rb.txt
-end.call;MS15-078 Microsoft Windows Font Driver Buffer Overflow https://dl.packetstormsecurity.net/1509-exploits/ms15_078_atmfd_bof.rb.txt
-www.nccgroup.trust;MS15-078 Microsoft Windows Font Driver Buffer Overflow https://dl.packetstormsecurity.net/1509-exploits/ms15_078_atmfd_bof.rb.txt
-runquery.do;ManageEngine EventLog Analyzer 10.6 Build 10060 SQL QE https://dl.packetstormsecurity.net/1509-exploits/manageengine-sql.txt
-bonitas2.zohocorp.com;ManageEngine EventLog Analyzer 10.6 Build 10060 SQL QE https://dl.packetstormsecurity.net/1509-exploits/manageengine-sql.txt
-zeuscart.com;ZeusCart 4.0 Cross Site Scripting https://dl.packetstormsecurity.net/1509-exploits/zeuscart4-xss.txt
-blog.curesec.com;ZeusCart 4.0 Cross Site Scripting https://dl.packetstormsecurity.net/1509-exploits/zeuscart4-xss.txt
 teenpornotube.org;TeslaCrypt 2.0: Cyber Crime Malware Behavior http://www.isightpartners.com/2015/09/teslacrypt-2-0-cyber-crime-malware-behavio
 ledshoppen.nl;TeslaCrypt 2.0: Cyber Crime Malware Behavior http://www.isightpartners.com/2015/09/teslacrypt-2-0-cyber-crime-malware-behavio
 shmetterheath.ru;TeslaCrypt 2.0: Cyber Crime Malware Behavior http://www.isightpartners.com/2015/09/teslacrypt-2-0-cyber-crime-malware-behavio
@@ -2104,8 +2081,6 @@ mhsc-tuffsteins.housevaluesinmiamibeach.com;Actor that tried Neutrino exploit ki
 18.0.0.199;Adobe Air CVE-2015-5566 http://www.security-database.com/detail.php?alert=CVE-2015-5566
 18.0.0.180;Adobe Air CVE-2015-5566 http://www.security-database.com/detail.php?alert=CVE-2015-5566
 www.digicom.com.hk;DSL routers contain hard-coded "XXXXairocon" credentials http://www.security-database.com/detail.php?alert=VU950576
-h20564.www2.hpe.com;HP Security Bulletin HPSBMU03409 1 https://dl.packetstormsecurity.net/1508-advisories/HPSBMU03409-1.txt
-cars.matuliauskas.com;WordPress Car Rental System SQL Injection https://packetstormsecurity.com/files/133326/WordPress-Car-Rental-System-SQL-Inj
 frontlinegulf.com;Malware Meets SysAdmin \u2013 Automation Tools Gone Bad http://blogs.cisco.com/security/talos/sysadmin-phish
 apananco.no-ip.biz;Malware Meets SysAdmin \u2013 Automation Tools Gone Bad http://blogs.cisco.com/security/talos/sysadmin-phish
 notyourbusiness.net;RATs, Hackers and Rihanna http://blog.fortinet.com/post/the-curious-case-of-the-document-exploiting-an-unk
@@ -2127,8 +2102,6 @@ login.loginto.me;Ongoing analysis of unknown exploit targeting Office 2007-2013 
 23.249.225.140;Ongoing analysis of unknown exploit targeting Office 2007-2013 http://blog.ropchain.com/2015/08/16/analysis-of-exploit-targeting-office-2007-20
 deyrep24.ddns.net;Inside the spyware campaign against Argentine troublemakers https://firstlook.org/theintercept/2015/08/21/inside-the-spyware-campaign-agains
 daynews.sytes.net;Inside the spyware campaign against Argentine troublemakers https://firstlook.org/theintercept/2015/08/21/inside-the-spyware-campaign-agains
-h20564.www2.hpe.com;HP Security Bulletin HPSBUX03369 SSRT102037 1 https://dl.packetstormsecurity.net/1508-advisories/HPSBUX03369-SSRT102037-1.txt
-h20564.www2.hpe.com;HP Security Bulletin HPSBUX03410 SSRT102175 1 https://dl.packetstormsecurity.net/1508-advisories/HPSBUX03410-SSRT102175-1.txt
 adobe-dns-3-adobe.com;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
 78.128.92.112;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
 84.200.4.226;Spearphising attempt on Central Bank of Armenia employees https://www.bluecoat.com/security-blog/2015-08-21/tinted-cve-decoy-spearphising-
@@ -2862,14 +2835,12 @@ swissprox.eu;Retefe Banking Trojan http://researchcenter.paloaltonetworks.com/20
 securedtonnel.net;Retefe Banking Trojan http://researchcenter.paloaltonetworks.com/2015/08/retefe-banking-trojan-targets
 safevpn24.net;Retefe Banking Trojan http://researchcenter.paloaltonetworks.com/2015/08/retefe-banking-trojan-targets
 bxateca.net;ANDROID/Spy.Agent.X.Gen 
-18.0.0.203;Adobe Flash Heap Use-After-Free In SurfaceFilterList https://dl.packetstormsecurity.net/1508-exploits/adobesfl-uaf.txt
 comeinbaby.com;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
 www.comeinbaby.com;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
 125.39.68.200;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
 124.248.245.78;OS X / Wirelurker (OS X) / dropped by start.sh / c2 domain / c2 hostname / v2 update url / initial
 115.144.107.55;New Internet Explorer zero-day exploited in Hong Kong attacks http://www.symantec.com/connect/blogs/new-internet-explorer-zero-day-exploited-h
 27.255.94.74;New Internet Explorer zero-day exploited in Hong Kong attacks http://www.symantec.com/connect/blogs/new-internet-explorer-zero-day-exploited-h
-file.read;Mac OS X "tpwn" Privilege Escalation https://dl.packetstormsecurity.net/1508-exploits/tpwn.rb.txt
 regcon-asia.kz;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
 premier-gps.com;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
 bgf.com.hk;Adwind: another payload for botnet-based malspam http://dshield.org/forums/diary/Adwind+another+payload+for+botnetbased+malspam/2
@@ -4569,9 +4540,6 @@ www.etehadyie.ir;Babar APT http://feedproxy.google.com/~r/GDataSecurityBlog/~3/z
 wut.mophecfbr.com;Compromised TV and Government-Related Sites Lead to PoisonIvy http://blog.trendmicro.com/trendlabs-security-intelligence/hacking-team-flash-at
 223.27.43.32;Compromised TV and Government-Related Sites Lead to PoisonIvy http://blog.trendmicro.com/trendlabs-security-intelligence/hacking-team-flash-at
 win7.myz.info;Compromised TV and Government-Related Sites Lead to PoisonIvy http://blog.trendmicro.com/trendlabs-security-intelligence/hacking-team-flash-at
-www.viestintavirasto.fi;Basware Banking/Maksuliikenne https://dl.packetstormsecurity.net/1507-advisories/baswarebanking-vulns.txt
-www.hs.fi;Basware Banking/Maksuliikenne https://dl.packetstormsecurity.net/1507-advisories/baswarebanking-vulns.txt
-security.dxw.com;WordPress Flickr Justified Gallery 3.3.6 Cross Site Scripting https://dl.packetstormsecurity.net/1507-exploits/wpfjg-xss.txt
 mrflapper.com;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
 ihaveavoice2.com;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
 selmaryachtmarket.com;Malicious spam serve zip archives of javascript files http://dshield.org/forums/diary/Malicious+spam+continues+to+serve+zip+archives+o
@@ -4736,9 +4704,6 @@ ns1.quixjoumnf.com;Large Malvertising Campaign Leads to Angler EK & Bunitu Malwa
 95.211.233.121;Large Malvertising Campaign Leads to Angler EK & Bunitu Malware http://community.websense.com/blogs/securitylabs/archive/2015/06/10/large-malver
 85.17.142.21;Large Malvertising Campaign Leads to Angler EK & Bunitu Malware http://community.websense.com/blogs/securitylabs/archive/2015/06/10/large-malver
 95.211.58.100;Large Malvertising Campaign Leads to Angler EK & Bunitu Malware http://community.websense.com/blogs/securitylabs/archive/2015/06/10/large-malver
-target.name;VNC Keyboard Remote Code Execution https://packetstormsecurity.com/files/132664/VNC-Keyboard-Remote-Code-Execution.
-0x90.nl;VNC Keyboard Remote Code Execution https://packetstormsecurity.com/files/132664/VNC-Keyboard-Remote-Code-Execution.
-www.jedi.be;VNC Keyboard Remote Code Execution https://packetstormsecurity.com/files/132664/VNC-Keyboard-Remote-Code-Execution.
 didierstevenslabs.com;Jump List Files Are OLE Files http://dshield.org/forums/diary/Jump+List+Files+Are+OLE+Files/19911/
 rpt.perrydale.com;APT Group UPS Targets US Government with HT Flash Exploit http://researchcenter.paloaltonetworks.com/2015/07/apt-group-ups-targets-us-gove
 report.perrydale.com;APT Group UPS Targets US Government with HT Flash Exploit http://researchcenter.paloaltonetworks.com/2015/07/apt-group-ups-targets-us-gove
@@ -4802,10 +4767,6 @@ ueberwachtes.pizzadrone.be;Angler EK and other Exploit Kits integrating latest F
 placeresdagelet.anniesintimates.com;Angler EK and other Exploit Kits integrating latest Flash 0day http://malware.dontneedcoffee.com/2015/07/hackingteam-flash-0d-cve-2015-xxxx-and
 155.94.67.5;DirectRev Malvertising Uses Self Sufficient Flash 0Day https://blog.malwarebytes.org/malvertising-2/2015/07/directrev-malvertising-uses
 osce-press.org;Sednit APT Group Meets Hacking Team http://www.welivesecurity.com/2015/07/10/sednit-apt-group-meets-hacking-team/
-www.ethical-hacker.org;ntp MON_GETLIST query amplification ddos https://dl.packetstormsecurity.net/1507-exploits/ntpbomb-ddos.txt
-creativecommons.org;AirLink101 SkyIPCam1620W OS Command Injection https://packetstormsecurity.com/files/132609/AirLink101-SkyIPCam1620W-OS-Command
-macwrite.sh;AirLink101 SkyIPCam1620W OS Command Injection https://packetstormsecurity.com/files/132609/AirLink101-SkyIPCam1620W-OS-Command
-www.airlink101.com;AirLink101 SkyIPCam1620W OS Command Injection https://packetstormsecurity.com/files/132609/AirLink101-SkyIPCam1620W-OS-Command
 info.imly.org;APT Group Wekby Leveraging Adobe Flash Exploit http://www.volexity.com/blog/?p=158
 gmail.bkz88.com;APT Group Wekby Leveraging Adobe Flash Exploit http://www.volexity.com/blog/?p=158
 223.25.233.248;APT Group Wekby Leveraging Adobe Flash Exploit http://www.volexity.com/blog/?p=158
@@ -4942,16 +4903,6 @@ documents-live.com;[Warning] infection of new Linux / Mayhem malware http://blog
 159.253.20.116;New Dridex infection vector identified https://blog.gdatasoftware.com/blog/article/new-dridex-infection-vector-identifi
 91.218.228.25;New Dridex infection vector identified https://blog.gdatasoftware.com/blog/article/new-dridex-infection-vector-identifi
 5.44.216.44;New Dridex infection vector identified https://blog.gdatasoftware.com/blog/article/new-dridex-infection-vector-identifi
-adminhome.do;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
-customreporthandler.do;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
-editdomain.do;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
-importadusers.do;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
-www.evolution-sec.com;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
-magazine.vulnerability-db.com;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
-www.vuln-lab.com;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
-www.vulnerability-lab.com;ManageEngine SupportCenter Plus 7.90 XSS https://dl.packetstormsecurity.net/1506-exploits/VL-1501.txt
-erpscan.com;SYBASE SQL Anywhere 12 / 16 Denial Of Service https://dl.packetstormsecurity.net/1506-advisories/ERPSCAN-15-010.txt
-erpscan.com;SAP Mobile Platform 3.0 XXE Injection https://dl.packetstormsecurity.net/1506-advisories/ERPSCAN-15-011.txt
 162.244.32.164;POSEIDON AND BACKOFF POS 
 89.144.2.149;POSEIDON AND BACKOFF POS 
 89.144.2.148;POSEIDON AND BACKOFF POS 
