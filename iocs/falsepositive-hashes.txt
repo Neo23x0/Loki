@@ -36,3 +36,5 @@ e617348b8947f28e2a280dd93c75a6ad;Empty MS Word Document
 0d4c486a24a711a45fd83acdf4d18506;Legitimate Flash
 ca0c67ba7aeba6aed5ddb852e6eea811;Legitimate Flash
 b8a9e91134e7c89440a0f95470d5e47b;Zlib
+
+fab221b5fb21d68e7866804d3066938786d93540fb816c10561df233f740d63f;MalwareBytes - Anti-Malware with system file names
