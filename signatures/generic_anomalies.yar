@@ -4,7 +4,7 @@ rule Embedded_EXE_Cloaking {
                 description = "Detects an embedded executable in a non-executable file"
                 author = "Florian Roth"
                 date = "2015/02/27"
-                score = 80
+                score = 65
         strings:
                 $noex_png = { 89 50 4E 47 }
                 $noex_pdf = { 25 50 44 46 }
@@ -31,7 +31,7 @@ rule Cloaked_as_JPG {
                 description = "Detects a cloaked file as JPG"
                 author = "Florian Roth (eval section from Didier Stevens)"
                 date = "2015/02/29"
-                score = 50
+                score = 40
         condition:
                 uint16be(0x00) != 0xFFD8 and
                 extension matches /\.jpg/i and
@@ -45,7 +45,7 @@ rule GIFCloaked_Webshell {
 		description = "Detects a webshell that cloakes itself with GIF header(s) - Based on Dark Security Team Webshell"
 		author = "Florian Roth"
 		hash = "f1c95b13a71ca3629a0bb79601fcacf57cdfcf768806a71b26f2448f8c1d5d24"
-		score = 50
+		score = 60
 	strings:
 		$magic = "GIF"
 		$s0 = "input type"
@@ -54,4 +54,131 @@ rule GIFCloaked_Webshell {
 		$s3 = "LANGUAGE='VBScript'"
 	condition:
 		( $magic at 0 ) and ( 1 of ($s*) )
+}
+
+/*
+	Yara Rule Set
+	Author: Florian Roth
+	Date: 2015-12-21
+	Identifier: Uncommon File Sizes
+*/
+
+rule Suspicious_Size_explorer_exe {
+	meta:
+		description = "Detects uncommon file size of explorer.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-21"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "explorer.exe"
+      and ( filesize < 1000KB or filesize > 3000KB )
+}
+
+rule Suspicious_Size_chrome_exe {
+	meta:
+		description = "Detects uncommon file size of chrome.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-21"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "chrome.exe"
+      and ( filesize < 500KB or filesize > 1300KB )
+}
+
+rule Suspicious_Size_csrss_exe {
+	meta:
+		description = "Detects uncommon file size of csrss.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-21"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "csrss.exe"
+      and ( filesize > 18KB )
+}
+
+rule Suspicious_Size_iexplore_exe {
+	meta:
+		description = "Detects uncommon file size of iexplore.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-21"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "iexplore.exe"
+      and ( filesize < 75KB or filesize > 910KB )
+}
+
+rule Suspicious_Size_firefox_exe {
+	meta:
+		description = "Detects uncommon file size of firefox.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-21"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "firefox.exe"
+      and ( filesize < 265KB or filesize > 910KB )
+}
+
+rule Suspicious_Size_java_exe {
+	meta:
+		description = "Detects uncommon file size of java.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-21"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "java.exe"
+      and ( filesize < 140KB or filesize > 900KB )
+}
+
+rule Suspicious_Size_lsass_exe {
+	meta:
+		description = "Detects uncommon file size of lsass.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-21"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "lsass.exe"
+      and ( filesize < 17KB or filesize > 45KB )
+}
+
+rule Suspicious_Size_svchost_exe {
+	meta:
+		description = "Detects uncommon file size of svchost.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-21"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "svchost.exe"
+      and ( filesize < 14KB or filesize > 38KB )
+}
+
+rule Suspicious_Size_winlogon_exe {
+	meta:
+		description = "Detects uncommon file size of winlogon.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-21"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "winlogon.exe"
+      and ( filesize < 279KB or filesize > 510KB )
+}
+
+rule Suspicious_Size_igfxhk_exe {
+	meta:
+		description = "Detects uncommon file size of igfxhk.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-21"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "igfxhk.exe"
+      and ( filesize < 200KB or filesize > 265KB )
 }
