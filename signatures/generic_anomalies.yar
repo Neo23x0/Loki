@@ -55,7 +55,6 @@ rule GIFCloaked_Webshell {
 	condition:
 		( $magic at 0 ) and ( 1 of ($s*) )
 }
-
 /*
 	Yara Rule Set
 	Author: Florian Roth
@@ -144,7 +143,7 @@ rule Suspicious_Size_lsass_exe {
 	condition:
 		uint16(0) == 0x5a4d
       and filename == "lsass.exe"
-      and ( filesize < 17KB or filesize > 45KB )
+      and ( filesize < 13KB or filesize > 45KB )
 }
 
 rule Suspicious_Size_svchost_exe {
@@ -181,4 +180,76 @@ rule Suspicious_Size_igfxhk_exe {
 		uint16(0) == 0x5a4d
       and filename == "igfxhk.exe"
       and ( filesize < 200KB or filesize > 265KB )
+}
+
+rule Suspicious_Size_servicehost_dll {
+	meta:
+		description = "Detects uncommon file size of servicehost.dll"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-23"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "servicehost.dll"
+      and filesize > 150KB
+}
+
+rule Suspicious_Size_rundll32_exe {
+	meta:
+		description = "Detects uncommon file size of rundll32.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-23"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "rundll32.exe"
+      and ( filesize < 30KB or filesize > 55KB )
+}
+
+rule Suspicious_Size_taskhost_exe {
+	meta:
+		description = "Detects uncommon file size of taskhost.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-23"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "taskhost.exe"
+      and ( filesize < 45KB or filesize > 85KB )
+}
+
+rule Suspicious_Size_spoolsv_exe {
+	meta:
+		description = "Detects uncommon file size of spoolsv.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-23"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "spoolsv.exe"
+      and ( filesize < 50KB or filesize > 800KB )
+}
+
+rule Suspicious_Size_smss_exe {
+	meta:
+		description = "Detects uncommon file size of smss.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-23"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "smss.exe"
+      and ( filesize < 40KB or filesize > 140KB )
+}
+
+rule Suspicious_Size_wininit_exe {
+	meta:
+		description = "Detects uncommon file size of wininit.exe"
+		author = "Florian Roth"
+      score = 60
+		date = "2015-12-23"
+	condition:
+		uint16(0) == 0x5a4d
+      and filename == "wininit.exe"
+      and ( filesize < 90KB or filesize > 145KB )
 }
