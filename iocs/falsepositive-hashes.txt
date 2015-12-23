@@ -38,3 +38,5 @@ ca0c67ba7aeba6aed5ddb852e6eea811;Legitimate Flash
 b8a9e91134e7c89440a0f95470d5e47b;Zlib
 
 fab221b5fb21d68e7866804d3066938786d93540fb816c10561df233f740d63f;MalwareBytes - Anti-Malware with system file names
+
+a2f830a3fe6aaeb6cd4e17a22eeafeb2;MS15-078 / MS15-077 exploit - generic signature False Positive - Drweb32.dll (Ahead Nero)
