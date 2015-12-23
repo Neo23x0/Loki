@@ -41,215 +41,216 @@ rule Cloaked_as_JPG {
 }
 
 rule GIFCloaked_Webshell {
-	meta:
-		description = "Detects a webshell that cloakes itself with GIF header(s) - Based on Dark Security Team Webshell"
-		author = "Florian Roth"
-		hash = "f1c95b13a71ca3629a0bb79601fcacf57cdfcf768806a71b26f2448f8c1d5d24"
-		score = 60
-	strings:
-		$magic = "GIF"
-		$s0 = "input type"
-		$s1 = "<%eval request"
-		$s2 = "<%eval(Request.Item["
-		$s3 = "LANGUAGE='VBScript'"
-	condition:
-		( $magic at 0 ) and ( 1 of ($s*) )
+    meta:
+        description = "Detects a webshell that cloakes itself with GIF header(s) - Based on Dark Security Team Webshell"
+        author = "Florian Roth"
+        hash = "f1c95b13a71ca3629a0bb79601fcacf57cdfcf768806a71b26f2448f8c1d5d24"
+        score = 60
+    strings:
+        $magic = "GIF"
+        $s0 = "input type"
+        $s1 = "<%eval request"
+        $s2 = "<%eval(Request.Item["
+        $s3 = "LANGUAGE='VBScript'"
+    condition:
+        ( $magic at 0 ) and ( 1 of ($s*) )
 }
+
 /*
-	Yara Rule Set
-	Author: Florian Roth
-	Date: 2015-12-21
-	Identifier: Uncommon File Sizes
+    Yara Rule Set
+    Author: Florian Roth
+    Date: 2015-12-21
+    Identifier: Uncommon File Sizes
 */
 
 rule Suspicious_Size_explorer_exe {
-	meta:
-		description = "Detects uncommon file size of explorer.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-21"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "explorer.exe"
-      and ( filesize < 1000KB or filesize > 3000KB )
+    meta:
+        description = "Detects uncommon file size of explorer.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-21"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "explorer.exe"
+        and ( filesize < 1000KB or filesize > 3000KB )
 }
 
 rule Suspicious_Size_chrome_exe {
-	meta:
-		description = "Detects uncommon file size of chrome.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-21"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "chrome.exe"
-      and ( filesize < 500KB or filesize > 1300KB )
+    meta:
+        description = "Detects uncommon file size of chrome.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-21"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "chrome.exe"
+        and ( filesize < 500KB or filesize > 1300KB )
 }
 
 rule Suspicious_Size_csrss_exe {
-	meta:
-		description = "Detects uncommon file size of csrss.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-21"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "csrss.exe"
-      and ( filesize > 18KB )
+    meta:
+        description = "Detects uncommon file size of csrss.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-21"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "csrss.exe"
+        and ( filesize > 18KB )
 }
 
 rule Suspicious_Size_iexplore_exe {
-	meta:
-		description = "Detects uncommon file size of iexplore.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-21"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "iexplore.exe"
-      and ( filesize < 75KB or filesize > 910KB )
+    meta:
+        description = "Detects uncommon file size of iexplore.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-21"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "iexplore.exe"
+        and ( filesize < 75KB or filesize > 910KB )
 }
 
 rule Suspicious_Size_firefox_exe {
-	meta:
-		description = "Detects uncommon file size of firefox.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-21"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "firefox.exe"
-      and ( filesize < 265KB or filesize > 910KB )
+    meta:
+        description = "Detects uncommon file size of firefox.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-21"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "firefox.exe"
+        and ( filesize < 265KB or filesize > 910KB )
 }
 
 rule Suspicious_Size_java_exe {
-	meta:
-		description = "Detects uncommon file size of java.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-21"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "java.exe"
-      and ( filesize < 140KB or filesize > 900KB )
+    meta:
+        description = "Detects uncommon file size of java.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-21"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "java.exe"
+        and ( filesize < 140KB or filesize > 900KB )
 }
 
 rule Suspicious_Size_lsass_exe {
-	meta:
-		description = "Detects uncommon file size of lsass.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-21"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "lsass.exe"
-      and ( filesize < 13KB or filesize > 45KB )
+    meta:
+        description = "Detects uncommon file size of lsass.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-21"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "lsass.exe"
+        and ( filesize < 13KB or filesize > 45KB )
 }
 
 rule Suspicious_Size_svchost_exe {
-	meta:
-		description = "Detects uncommon file size of svchost.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-21"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "svchost.exe"
-      and ( filesize < 14KB or filesize > 40KB )
+    meta:
+        description = "Detects uncommon file size of svchost.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-21"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "svchost.exe"
+        and ( filesize < 14KB or filesize > 40KB )
 }
 
 rule Suspicious_Size_winlogon_exe {
-	meta:
-		description = "Detects uncommon file size of winlogon.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-21"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "winlogon.exe"
-      and ( filesize < 279KB or filesize > 510KB )
+    meta:
+        description = "Detects uncommon file size of winlogon.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-21"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "winlogon.exe"
+        and ( filesize < 279KB or filesize > 510KB )
 }
 
 rule Suspicious_Size_igfxhk_exe {
-	meta:
-		description = "Detects uncommon file size of igfxhk.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-21"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "igfxhk.exe"
-      and ( filesize < 200KB or filesize > 265KB )
+    meta:
+        description = "Detects uncommon file size of igfxhk.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-21"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "igfxhk.exe"
+        and ( filesize < 200KB or filesize > 265KB )
 }
 
 rule Suspicious_Size_servicehost_dll {
-	meta:
-		description = "Detects uncommon file size of servicehost.dll"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-23"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "servicehost.dll"
-      and filesize > 150KB
+    meta:
+        description = "Detects uncommon file size of servicehost.dll"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-23"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "servicehost.dll"
+        and filesize > 150KB
 }
 
 rule Suspicious_Size_rundll32_exe {
-	meta:
-		description = "Detects uncommon file size of rundll32.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-23"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "rundll32.exe"
-      and ( filesize < 30KB or filesize > 60KB )
+    meta:
+        description = "Detects uncommon file size of rundll32.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-23"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "rundll32.exe"
+        and ( filesize < 30KB or filesize > 60KB )
 }
 
 rule Suspicious_Size_taskhost_exe {
-	meta:
-		description = "Detects uncommon file size of taskhost.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-23"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "taskhost.exe"
-      and ( filesize < 45KB or filesize > 85KB )
+    meta:
+        description = "Detects uncommon file size of taskhost.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-23"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "taskhost.exe"
+        and ( filesize < 45KB or filesize > 85KB )
 }
 
 rule Suspicious_Size_spoolsv_exe {
-	meta:
-		description = "Detects uncommon file size of spoolsv.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-23"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "spoolsv.exe"
-      and ( filesize < 50KB or filesize > 800KB )
+    meta:
+        description = "Detects uncommon file size of spoolsv.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-23"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "spoolsv.exe"
+        and ( filesize < 50KB or filesize > 800KB )
 }
 
 rule Suspicious_Size_smss_exe {
-	meta:
-		description = "Detects uncommon file size of smss.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-23"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "smss.exe"
-      and ( filesize < 40KB or filesize > 140KB )
+    meta:
+        description = "Detects uncommon file size of smss.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-23"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "smss.exe"
+        and ( filesize < 40KB or filesize > 140KB )
 }
 
 rule Suspicious_Size_wininit_exe {
-	meta:
-		description = "Detects uncommon file size of wininit.exe"
-		author = "Florian Roth"
-      score = 60
-		date = "2015-12-23"
-	condition:
-		uint16(0) == 0x5a4d
-      and filename == "wininit.exe"
-      and ( filesize < 90KB or filesize > 250KB )
+    meta:
+        description = "Detects uncommon file size of wininit.exe"
+        author = "Florian Roth"
+        score = 60
+        date = "2015-12-23"
+    condition:
+        uint16(0) == 0x5a4d
+        and filename == "wininit.exe"
+        and ( filesize < 90KB or filesize > 250KB )
 }
