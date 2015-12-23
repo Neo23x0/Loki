@@ -155,7 +155,7 @@ rule Suspicious_Size_svchost_exe {
 	condition:
 		uint16(0) == 0x5a4d
       and filename == "svchost.exe"
-      and ( filesize < 14KB or filesize > 38KB )
+      and ( filesize < 14KB or filesize > 40KB )
 }
 
 rule Suspicious_Size_winlogon_exe {
@@ -203,7 +203,7 @@ rule Suspicious_Size_rundll32_exe {
 	condition:
 		uint16(0) == 0x5a4d
       and filename == "rundll32.exe"
-      and ( filesize < 30KB or filesize > 55KB )
+      and ( filesize < 30KB or filesize > 60KB )
 }
 
 rule Suspicious_Size_taskhost_exe {
@@ -251,5 +251,5 @@ rule Suspicious_Size_wininit_exe {
 	condition:
 		uint16(0) == 0x5a4d
       and filename == "wininit.exe"
-      and ( filesize < 90KB or filesize > 145KB )
+      and ( filesize < 90KB or filesize > 250KB )
 }
