@@ -144,7 +144,7 @@ rule Suspicious_Size_lsass_exe {
     condition:
         uint16(0) == 0x5a4d
         and filename == "lsass.exe"
-        and ( filesize < 13KB or filesize > 45KB )
+        and ( filesize < 13KB or filesize > 58KB )
 }
 
 rule Suspicious_Size_svchost_exe {
