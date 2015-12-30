@@ -168,7 +168,7 @@ rule Suspicious_Size_winlogon_exe {
     condition:
         uint16(0) == 0x5a4d
         and filename == "winlogon.exe"
-        and ( filesize < 279KB or filesize > 510KB )
+        and ( filesize < 279KB or filesize > 580KB )
 }
 
 rule Suspicious_Size_igfxhk_exe {
