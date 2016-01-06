@@ -132,7 +132,7 @@ rule Suspicious_Size_java_exe {
     condition:
         uint16(0) == 0x5a4d
         and filename == "java.exe"
-        and ( filesize < 140KB or filesize > 900KB )
+        and ( filesize < 130KB or filesize > 900KB )
 }
 
 rule Suspicious_Size_lsass_exe {
