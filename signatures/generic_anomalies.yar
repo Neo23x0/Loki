@@ -1,4 +1,14 @@
+/*
 
+   Generic Anomalies
+
+   Florian Roth
+   BSK Consulting GmbH
+
+	License: Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+	Copyright and related rights waived via https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+*/
 rule Embedded_EXE_Cloaking {
         meta:
                 description = "Detects an embedded executable in a non-executable file"

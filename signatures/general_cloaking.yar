@@ -1,3 +1,15 @@
+/*
+
+   Generic Cloaking
+
+   Florian Roth
+   BSK Consulting GmbH
+
+	License: Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+	Copyright and related rights waived via https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+*/
+
 rule EXE_cloaked_as_TXT {
 	meta:
 		description = "Executable with TXT extension"
