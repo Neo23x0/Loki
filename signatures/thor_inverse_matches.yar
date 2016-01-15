@@ -9,6 +9,9 @@
 	https://www.bsk-consulting.de/2014/08/28/scan-system-files-manipulations-yara-inverse-matching-22/
 
 	Notice: These rules require an external variable called "filename"
+
+   License: Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+	Copyright and related rights waived via https://creativecommons.org/licenses/by-nc-sa/4.0/
 */
 
 private rule WINDOWS_UPDATE_BDC
