@@ -648,7 +648,6 @@ AppData\\adobe\\adobe\.dat;65
 \\javaa\.exe;45
 \\javaaa\.exe;45
 \\javaap\.exe;45
-\\javac\.exe;45
 \\javacp\.exe;45
 \\javag\.exe;45
 \\javaii\.exe;45
