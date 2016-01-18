@@ -25,7 +25,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.13.1'
+__version__ = '0.13.2'
 
 import os
 import argparse
@@ -615,7 +615,9 @@ class Loki():
             if name == "svchost.exe" and priority is not 8:
                 logger.log("NOTICE", "svchost.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
-            if name == "svchost.exe" and not ( owner.upper().startswith("NT ") or owner.upper().startswith("NET") or owner.upper().startswith("LO") or owner.upper().startswith("SYSTEM") ):
+            if name == "svchost.exe" and not ( owner.upper().startswith("NT ") or owner.upper().startswith("NET") or
+                                                   owner.upper().startswith("LO") or
+                                                   owner.upper().startswith("SYSTEM") or "UnistackSvcGroup" in cmd):
                 logger.log("WARNING", "svchost.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
 
@@ -1261,7 +1263,8 @@ if __name__ == '__main__':
     # Result ----------------------------------------------------------
     if logger.alerts:
         logger.log("RESULT", "Indicators detected!")
-        logger.log("RESULT", "Loki recommends a forensic analysis and triage with a professional triage tool like THOR APT Scanner.")
+        logger.log("RESULT", "Loki recommends checking the elements on Virustotal.com or Google and triage with a "
+                             "professional triage tool like THOR APT Scanner in corporate networks.")
     elif logger.warnings:
         logger.log("RESULT", "Suspicious objects detected!")
         logger.log("RESULT", "Loki recommends a deeper analysis of the suspicious objects.")
