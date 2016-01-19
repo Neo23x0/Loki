@@ -350,19 +350,3 @@ rule SAM_Hive_Backup
 			not filename == "SAM" and
 			not filename == "sam"
 }
-
-rule WindowsDefender_Renamed
-{
-	meta:
-		description = "Renamed Windows Defender - maybe disabled by attackers or malware"
-		author = "Florian Roth"
-		score = 40
-		date = "2015/03/31"
-	strings:
-		$s1 = "Microsoft-Windows-Windows Defender/WHC" wide fullword
-	condition:
-		uint16(0) == 0x5a4d and $s1 and
-		not filename == "MpCmdRun.exe" and
-		not filename == "ActionCenter.dll" and
-		not filename == "MpEvMsg.dll"
-}

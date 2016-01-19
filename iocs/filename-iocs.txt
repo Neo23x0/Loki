@@ -1212,4 +1212,26 @@ AppData\\adobe\\adobe\.dat;65
 \\wnlgon\.exe;45
 \\wnlogin\.exe;45
 
+# Typical Malware Names
+\\ex[p]?[l1]orer[a-z0-9]{1,3}\.exe;60
+\\ex[p]?[^l]orer;60
+\\ex[p]?l[^o]rer;60
+\\iexp[1l]ore[a-z0-9]{1,3}\.exe;60
+\\iexp[^l]ore;60
+\\iexpl[^o]re;60
+\\l[^s]?ass\.exe;55
+\\lsa[^s]?s\.exe;55
+\\l[s]?ass[a-z0-9]\.exe;65
+\\sv[^c]host\.exe;55
+\\svch[^o]st\.exe;45
+\\svc[a-z]host\.exe;45
+\\svch0s;60
+\\svchost[a-z0-9]{1,3}\.exe;55
+\\win[0-9_]{0,3}\.exe;55
+\\win1ogo;45
+\\win[^l]ogon\.exe;55
+\\winl[^o]gon\.exe;55
+\\winlog[^o]n\.exe;55
+\\winlogon[0-9_a-z]{1,3}\.exe;55
+
 # End

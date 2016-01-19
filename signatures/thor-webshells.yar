@@ -4,13 +4,13 @@
    This rulset is a subset of all hack tool rules included in our
    APT Scanner THOR - the full featured APT scanner
 
-   We will frequently update this file with new rules rated TLP:WHITE
-
    Florian Roth
    BSK Consulting GmbH
-   Web: bsk-consulting.de
 
-   revision: 20150122
+   revision: 20160115
+
+	License: Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+	Copyright and related rights waived via https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 */
 
