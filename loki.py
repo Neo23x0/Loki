@@ -1148,12 +1148,9 @@ def walk_error(err):
 
 def get_application_path():
     try:
-        application_path = ""
         if getattr(sys, 'frozen', False):
             application_path = os.path.dirname(os.path.realpath(sys.executable))
-        elif __file__:
-            application_path = os.path.dirname(__file__)
-        if application_path == "":
+        else:
             application_path = os.path.dirname(os.path.realpath(__file__))
         if "~" in application_path and platform == "windows":
             # print "Trying to translate"
