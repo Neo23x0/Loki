@@ -25,7 +25,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.13.2'
+__version__ = '0.13.3'
 
 import os
 import argparse
