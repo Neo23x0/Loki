@@ -1,8 +1,8 @@
-/* Anthem Deep Panda APT */
+/* Deep Panda APT */
 
 rule DeepPanda_sl_txt_packed {
 	meta:
-		description = "Anthem Hack Deep Panda - ScanLine sl-txt-packed"
+		description = "Hack Deep Panda - ScanLine sl-txt-packed"
 		author = "Florian Roth"
 		date = "2015/02/08"
 		hash = "ffb1d8ea3039d3d5eb7196d27f5450cac0ea4f34"
@@ -19,9 +19,9 @@ rule DeepPanda_sl_txt_packed {
 		all of them
 }
 
-rule Anthem_DeepPanda_lot1 {
+rule DeepPanda_lot1 {
 	meta:
-		description = "Anthem Hack Deep Panda - lot1.tmp-pwdump"
+		description = "Hack Deep Panda - lot1.tmp-pwdump"
 		author = "Florian Roth"
 		date = "2015/02/08"
 		hash = "5d201a0fb0f4a96cefc5f73effb61acff9c818e1"
@@ -46,7 +46,7 @@ rule Anthem_DeepPanda_lot1 {
 
 rule DeepPanda_htran_exe {
 	meta:
-		description = "Anthem Hack Deep Panda - htran-exe"
+		description = "Hack Deep Panda - htran-exe"
 		author = "Florian Roth"
 		date = "2015/02/08"
 		hash = "38e21f0b87b3052b536408fdf59185f8b3d210b9"
@@ -73,9 +73,9 @@ rule DeepPanda_htran_exe {
 		10 of them
 }
 
-rule Anthem_DeepPanda_Trojan_Kakfum {
+rule DeepPanda_Trojan_Kakfum {
 	meta:
-		description = "Anthem Hack Deep Panda - Trojan.Kakfum sqlsrv32.dll"
+		description = "Hack Deep Panda - Trojan.Kakfum sqlsrv32.dll"
 		author = "Florian Roth"
 		date = "2015/02/08"
 		hash1 = "ab58b6aa7dcc25d8f6e4b70a24e0ccede0d5f6129df02a9e61293c1d7d7640a2"
