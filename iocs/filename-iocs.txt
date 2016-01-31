@@ -1172,7 +1172,6 @@ AppData\\adobe\\adobe\.dat;65
 \\winiogon\.exe;45
 \\winl0g0n\.exe;45
 \\winl0gin\.exe;45
-\\winl0gon\.exe;45
 \\winlgon\.exe;45
 \\winligon\.exe;45
 \\winlngon\.exe;45
