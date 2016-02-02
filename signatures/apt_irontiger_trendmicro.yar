@@ -16,7 +16,7 @@ rule IronTiger_ChangePort_Toolkit_driversinstall
 {
 	meta:
 		author = "Cyber Safety Solutions, Trend Micro"
-		description = "Iron Tiger Malware - Changeport Toolkit driverinstall"	
+		description = "Iron Tiger Malware - Changeport Toolkit driverinstall"
 		reference = "http://goo.gl/T5fSJC"
 	strings:
 		$str1 = "openmydoor" nocase wide ascii
@@ -111,20 +111,6 @@ rule IronTiger_GetPassword_x64
 		uint16(0) == 0x5a4d and ((any of ($str*)) or (all of ($bla*)))
 }
 
-rule IronTiger_GetUserInfo
-{
-	meta:
-		author = "Cyber Safety Solutions, Trend Micro"
-		description = "Iron Tiger Malware - GetUserInfo"
-		reference = "http://goo.gl/T5fSJC"
-	strings:
-		$str1 = "getuserinfo username" nocase wide ascii
-		$str2 = "joe@joeware.net" nocase wide ascii
-		$str3 = "If . specified for userid," nocase wide ascii
-	condition:
-		uint16(0) == 0x5a4d and (any of ($str*))
-}
-
 rule IronTiger_Gh0stRAT_variant
 {
 	meta:
@@ -205,7 +191,7 @@ rule IronTiger_PlugX_DosEmulator
 {
 	meta:
 		author = "Cyber Safety Solutions, Trend Micro"
-		description = "Iron Tiger Malware - PlugX DosEmulator"	
+		description = "Iron Tiger Malware - PlugX DosEmulator"
 		reference = "http://goo.gl/T5fSJC"
 	strings:
 		$str1 = "Dos Emluator Ver" nocase wide ascii
@@ -301,4 +287,3 @@ rule IronTiger_wmiexec
 	condition:
 		2 of ($str*)
 }
-
