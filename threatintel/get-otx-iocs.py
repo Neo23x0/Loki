@@ -9,8 +9,8 @@
 # https://otx.alienvault.com
 
 from OTXv2 import OTXv2
-from pandas.io.json import json_normalize
-from datetime import datetime, timedelta
+# from pandas.io.json import json_normalize
+# from datetime import datetime, timedelta
 import re
 import os
 import sys
@@ -52,7 +52,7 @@ class OTXReceiver():
         print "Starting OTX feed download ..."
         self.events = self.otx.getall()
         print "Download complete - %s events received" % len(self.events)
-        json_normalize(self.events)
+        # json_normalize(self.events)
 
     def write_iocs(self, ioc_folder):
 
