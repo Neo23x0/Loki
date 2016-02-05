@@ -37,9 +37,9 @@ class OTXReceiver():
     hash_upper = False
     filename_regex_out = True
 
-    def __init__(self, api_key, siem_mode, debug):
+    def __init__(self, api_key, siem_mode, debug, proxy):
         self.debug = debug
-        self.otx = OTXv2(api_key)
+        self.otx = OTXv2(api_key, proxy)
         if siem_mode:
             self.separator = ","
             self.use_csv_header = True
@@ -128,8 +128,10 @@ if __name__ == '__main__':
     parser.add_argument('-k', help='OTX API key', metavar='APIKEY', default=OTX_KEY)
     # parser.add_argument('-l', help='Time frame in days (default=30)', default=30)
     parser.add_argument('-o', metavar='dir', help='Output directory', default='../iocs')
+    parser.add_argument('-p', metavar='proxy', help='Proxy server (e.g. http://proxy:8080 or '
+                                                    'http://user:pass@proxy:8080', default=None)
     parser.add_argument('--verifycert', action='store_true', help='Verify the server certificate', default=False)
-    parser.add_argument('--siem', action='store_true', default=False, help='Add column headers')
+    parser.add_argument('--siem', action='store_true', default=False, help='CSV Output for use in SIEM systems (Splunk)')
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
     args = parser.parse_args()
@@ -139,7 +141,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     # Create a receiver
-    otx_receiver = OTXReceiver(api_key=args.k, siem_mode=args.siem, debug=args.debug)
+    otx_receiver = OTXReceiver(api_key=args.k, siem_mode=args.siem, debug=args.debug, proxy=args.p)
 
     # Retrieve the events and store the IOCs
     # otx_receiver.get_iocs_last(int(args.l))
