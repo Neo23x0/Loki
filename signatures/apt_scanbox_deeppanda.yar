@@ -13,20 +13,20 @@ rule ScanBox_Malware_Generic {
 		/* Sample 1 */
 		$s0 = "http://142.91.76.134/p.dat" fullword ascii
 		$s1 = "HttpDump 1.1" fullword ascii
-		
+
 		/* Sample 2 */
 		$s3 = "SecureInput .exe" fullword wide
 		$s4 = "http://extcitrix.we11point.com/vpn/index.php?ref=1" fullword ascii
-		
+
 		/* Sample 3 */
 		$s5 = "%SystemRoot%\\System32\\svchost.exe -k msupdate" fullword ascii
-		$s6 = "ServiceMaix" fullword ascii		
-		
+		$s6 = "ServiceMaix" fullword ascii
+
 		/* Certificate and Keywords */
 		$x1 = "Management Support Team1" fullword ascii
 		$x2 = "DTOPTOOLZ Co.,Ltd.0" fullword ascii
-		$s3 = "SEOUL1" fullword ascii
+		$x3 = "SEOUL1" fullword ascii
 	condition:
-		( 1 of ($s*) and 2 of ($x*) ) or 
+		( 1 of ($s*) and 2 of ($x*) ) or
 		( 3 of ($x*) )
 }

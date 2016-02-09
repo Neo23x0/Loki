@@ -7,7 +7,7 @@ rule OPCLEAVER_BackDoorLogger
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "BackDoorLogger"
 		$s2 = "zhuAddress"
@@ -22,7 +22,7 @@ rule OPCLEAVER_Jasus
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "pcap_dump_open"
 		$s2 = "Resolving IPs to poison..."
@@ -38,7 +38,7 @@ rule OPCLEAVER_LoggerModule
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "%s-%02d%02d%02d%02d%02d.r"
 		$s2 = "C:\\Users\\%s\\AppData\\Cookies\\"
@@ -53,7 +53,7 @@ rule OPCLEAVER_NetC
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "NetC.exe" wide
 		$s2 = "Net Service"
@@ -68,7 +68,7 @@ rule OPCLEAVER_ShellCreator2
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "ShellCreator2.Properties"
 		$s2 = "set_IV"
@@ -83,7 +83,7 @@ rule OPCLEAVER_SmartCopy2
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "SmartCopy2.Properties"
 		$s2 = "ZhuFrameWork"
@@ -98,7 +98,7 @@ rule OPCLEAVER_SynFlooder
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "Unable to resolve [ %s ]. ErrorCode %d"
 		$s2 = "your target’s IP is : %s"
@@ -114,7 +114,7 @@ rule OPCLEAVER_TinyZBot
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "NetScp" wide
 		$s2 = "TinyZBot.Properties.Resources.resources"
@@ -136,7 +136,7 @@ rule OPCLEAVER_ZhoupinExploitCrew
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "zhoupin exploit crew" nocase
 		$s2 = "zhopin exploit crew" nocase
@@ -151,7 +151,7 @@ rule OPCLEAVER_antivirusdetector
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "getShadyProcess"
 		$s2 = "getSystemAntiviruses"
@@ -167,7 +167,7 @@ rule OPCLEAVER_csext
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "COM+ System Extentions"
 		$s2 = "csext.exe"
@@ -183,7 +183,7 @@ rule OPCLEAVER_kagent
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "kill command is in last machine, going back"
 		$s2 = "message data length in B64: %d Bytes"
@@ -198,7 +198,7 @@ rule OPCLEAVER_mimikatzWrapper
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "mimikatzWrapper"
 		$s2 = "get_mimikatz"
@@ -213,7 +213,7 @@ rule OPCLEAVER_pvz_in
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "LAST_TIME=00/00/0000:00:00PM$"
 		$s2 = "if %%ERRORLEVEL%% == 1 GOTO line"
@@ -228,7 +228,7 @@ rule OPCLEAVER_pvz_out
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "Network Connectivity Module" wide
 		$s2 = "OSPPSVC" wide
@@ -243,7 +243,7 @@ rule OPCLEAVER_wndTest
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "[Alt]" wide
 		$s2 = "<< %s >>:" wide
@@ -259,7 +259,7 @@ rule OPCLEAVER_zhCat
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "Mozilla/4.0 ( compatible; MSIE 7.0; AOL 8.0 )" ascii fullword
 		$s2 = "ABC ( A Big Company )" wide fullword
@@ -274,7 +274,7 @@ rule OPCLEAVER_zhLookUp
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "zhLookUp.Properties"
 	condition:
@@ -288,7 +288,7 @@ rule OPCLEAVER_zhmimikatz
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Cylance Inc."
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "MimikatzRunner"
 		$s2 = "zhmimikatz"
@@ -303,11 +303,11 @@ rule OPCLEAVER_Parviz_Developer
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Florian Roth"
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "Users\\parviz\\documents\\" nocase
 	condition:
-		$s1 
+		$s1
 }
 
 rule OPCLEAVER_CCProxy_Config
@@ -317,7 +317,7 @@ rule OPCLEAVER_CCProxy_Config
 		reference = "http://cylance.com/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
 		date = "2014/12/02"
 		author = "Florian Roth"
-		score = "70"
+		score = 70
 	strings:
 		$s1 = "UserName=User-001" fullword ascii
 		$s2 = "Web=1" fullword ascii
@@ -325,5 +325,5 @@ rule OPCLEAVER_CCProxy_Config
 		$s4 = "FTP=0" fullword ascii
 		$x1 = "IPAddressLow=78.109.194.114" fullword ascii
 	condition:
-		all of ($s*) or $x1 
+		all of ($s*) or $x1
 }

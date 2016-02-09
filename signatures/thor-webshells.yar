@@ -5032,7 +5032,7 @@ rule DarkSecurityTeam_Webshell {
 		1 of them
 }
 
-rule GIFCloaked_Webshell {
+rule GIFCloaked_Webshell_A {
 	meta:
 		description = "Looks like a webshell cloaked as GIF"
 		author = "Florian Roth"
@@ -6655,7 +6655,7 @@ rule DarkSpy105 {
 	condition:
 		all of them
 }
-rule EditServer {
+rule EditServer_EXE {
 	meta:
 		description = "Webshells Auto-generated - file EditServer.exe"
 		author = "Yara Bulk Rule Generator by Florian Roth"
