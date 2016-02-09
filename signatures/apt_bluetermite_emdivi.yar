@@ -42,8 +42,8 @@ rule Emdivi_Gen1 {
 		hash4 = "90d07ea2bb80ed52b007f57d0d9a79430cd50174825c43d5746a16ee4f94ea86"
 	strings:
 		$x1 = "wmic nteventlog where filename=\"SecEvent\" call cleareventlog" fullword wide
-		$s0 = "del %Temp%\\*.exe %Temp%\\*.dll %Temp%\\*.bat %Temp%\\*.ps1 %Temp%\\*.cmd /f /q" fullword wide
-		$s3 = "userControl-v80.exe" fullword ascii
+		$x2 = "del %Temp%\\*.exe %Temp%\\*.dll %Temp%\\*.bat %Temp%\\*.ps1 %Temp%\\*.cmd /f /q" fullword wide
+		$x3 = "userControl-v80.exe" fullword ascii
 
 		$s1 = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727.42)" fullword wide
 		$s2 = "http://www.msftncsi.com" fullword wide
@@ -97,12 +97,12 @@ rule Emdivi_Gen3 {
 		$s4 = "\\auto.cfg" fullword ascii
 		$s5 = "/ncsi.txt" fullword ascii
 		$s6 = "/en-us/default.aspx" fullword ascii
-		$s7 = "cmd /c" fullword ascii	
+		$s7 = "cmd /c" fullword ascii
 		$s9 = "APPDATA" fullword ascii /* Goodware String - occured 25 times */
 	condition:
-		uint16(0) == 0x5a4d and filesize < 850KB and 
+		uint16(0) == 0x5a4d and filesize < 850KB and
 		(
-			( $x1 and 1 of ($s*) ) or 
+			( $x1 and 1 of ($s*) ) or
 			( 4 of ($s*) )
 		)
 }
