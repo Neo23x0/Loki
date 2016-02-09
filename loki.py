@@ -25,7 +25,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.13.3'
+__version__ = '0.13.4'
 
 import os
 import argparse
@@ -34,6 +34,7 @@ import yara
 import re
 import stat
 import psutil
+import codecs
 from sets import Set
 import signal as signal_module
 from colorama import Fore, Back, Style
@@ -525,6 +526,8 @@ class Loki():
                         for alert in alerts:
                             logger.log("ALERT", alert)
                 except Exception, e:
+                    if logger.debug:
+                        traceback.print_exc()
                     logger.log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
             else:
                 logger.log("DEBUG", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
@@ -681,7 +684,7 @@ class Loki():
             p = psutil.Process(pid)
 
             # print "Checking connections of %s" % process.Name
-            for x in p.get_connections():
+            for x in p.connections():
 
                 # Evaluate a usable command line to check
                 try:
@@ -692,11 +695,11 @@ class Loki():
                 if x.status == 'LISTEN':
                     connection_count += 1
                     logger.log("NOTICE","Listening process PID: %s NAME: %s COMMAND: %s IP: %s PORT: %s" % (
-                        str(pid), name, command, str(x.local_address[0]), str(x.local_address[1]) ))
-                    if str(x.local_address[1]) == "0":
+                        str(pid), name, command, str(x.laddr[0]), str(x.laddr[1]) ))
+                    if str(x.laddr[1]) == "0":
                         logger.log("WARNING",
                             "Listening on Port 0 PID: %s NAME: %s COMMAND: %s  IP: %s PORT: %s" % (
-                                str(pid), name, command, str(x.local_address[0]), str(x.local_address[1]) ))
+                                str(pid), name, command, str(x.laddr[0]), str(x.laddr[1]) ))
 
                 if x.status == 'ESTABLISHED':
 
@@ -704,16 +707,16 @@ class Loki():
                     # Geo IP Lookup removed
 
                     # Check keyword in remote address
-                    is_match, description = self.check_c2(str(x.remote_address[0]))
+                    is_match, description = self.check_c2(str(x.raddr[0]))
                     if is_match:
                         logger.log("ALERT",
                             "Malware Domain/IP match in remote address PID: %s NAME: %s COMMAND: %s IP: %s PORT: %s DESC: %s" % (
-                                str(pid), name, command, str(x.remote_address[0]), str(x.remote_address[1]), description))
+                                str(pid), name, command, str(x.raddr[0]), str(x.raddr[1]), description))
 
                     # Full list
                     connection_count += 1
                     logger.log("NOTICE", "Established conenction PID: %s NAME: %s COMMAND: %s LIP: %s LPORT: %s RIP: %s RPORT: %s" % (
-                        str(pid), name, command, str(x.local_address[0]), str(x.local_address[1]), str(x.remote_address[0]), str(x.remote_address[1]) ))
+                        str(pid), name, command, str(x.laddr[0]), str(x.laddr[1]), str(x.raddr[0]), str(x.raddr[1]) ))
 
                 # Maximum connection output
                 if connection_count > MAXIMUM_CONNECTIONS:
@@ -1045,6 +1048,7 @@ class LokiLogger():
 
         # Prepare Message
         message = removeNonAsciiDrop(message)
+        codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
 
         if self.csv:
             print "{0},{1},{2},{3}".format(getSyslogTimestamp(),self.hostname,mes_type,message)
