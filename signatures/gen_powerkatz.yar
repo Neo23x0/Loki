@@ -20,7 +20,6 @@ rule Powerkatz_DLL_Generic {
 	strings:
 		$s1 = "%3u - Directory '%s' (*.kirbi)" fullword wide
 		$s2 = "%*s  pPublicKey         : " fullword wide
-		$s3 = "ad_hoc_network_formed" fullword wide
 		$s4 = "<3 eo.oe ~ ANSSI E>" fullword wide
 		$s5 = "\\*.kirbi" fullword wide
 
