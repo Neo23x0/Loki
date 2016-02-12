@@ -38,7 +38,9 @@ rule iexplore_ANOMALY {
 		$win2003_win7_u3 = "translation" wide fullword nocase
 		$win2003_win7_u4 = "varfileinfo" wide fullword nocase
 	condition:
-		filename == "iexplore.exe" and not 1 of ($win*) and not WINDOWS_UPDATE_BDC
+		filename == "iexplore.exe"
+      and not filepath contains "teamviewer" 
+      and not 1 of ($win*) and not WINDOWS_UPDATE_BDC
 }
 
 rule svchost_ANOMALY {
@@ -69,7 +71,9 @@ rule explorer_ANOMALY {
 		$s1 = "EXPLORER.EXE" wide fullword
 		$s2 = "Windows Explorer" wide fullword
 	condition:
-		filename == "explorer.exe" and not 1 of ($s*) and not WINDOWS_UPDATE_BDC
+		filename == "explorer.exe"
+      and not filepath contains "teamviewer"
+      and not 1 of ($s*) and not WINDOWS_UPDATE_BDC
 }
 
 rule sethc_ANOMALY {
