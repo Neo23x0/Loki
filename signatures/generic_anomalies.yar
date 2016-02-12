@@ -82,6 +82,7 @@ rule Suspicious_Size_explorer_exe {
     condition:
         uint16(0) == 0x5a4d
         and filename == "explorer.exe"
+        and not filepath contains "teamviewer"
         and ( filesize < 1000KB or filesize > 3000KB )
 }
 
@@ -118,6 +119,7 @@ rule Suspicious_Size_iexplore_exe {
     condition:
         uint16(0) == 0x5a4d
         and filename == "iexplore.exe"
+        and not filepath contains "teamviewer"
         and ( filesize < 75KB or filesize > 910KB )
 }
 
