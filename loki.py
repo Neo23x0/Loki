@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
 # -*- coding: utf-8 -*-
 
 """
@@ -414,6 +413,23 @@ class Loki():
         except:
             traceback.print_exc()
 
+    def check_svchost_owner(self, owner):
+        ## Locale setting
+        import ctypes
+        import locale
+        windll = ctypes.windll.kernel32
+        if locale.windows_locale[ windll.GetUserDefaultUILanguage() ] == 'fr_FR':
+            return (owner.upper().startswith("SERVICE LOCAL") or 
+                owner.upper().startswith(u"SERVICE RÉSEAU") or
+#                owner.upper().startswith(u"Système") or ##Not matching
+                owner == u"Système" or
+                owner.upper().startswith(u"AUTORITE NT\Système"))
+        else:
+            return ( owner.upper().startswith("NT ") or owner.upper().startswith("NET") or
+                owner.upper().startswith("LO") or
+                owner.upper().startswith("SYSTEM"))
+
+
     def scan_processes(self):
         # WMI Handler
         c = wmi.WMI()
@@ -618,9 +634,7 @@ class Loki():
             if name == "svchost.exe" and priority is not 8:
                 logger.log("NOTICE", "svchost.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
-            if name == "svchost.exe" and not ( owner.upper().startswith("NT ") or owner.upper().startswith("NET") or
-                                                   owner.upper().startswith("LO") or
-                                                   owner.upper().startswith("SYSTEM") or "UnistackSvcGroup" in cmd):
+            if name == "svchost.exe" and not ( self.check_svchost_owner(owner) or "UnistackSvcGroup" in cmd):
                 logger.log("WARNING", "svchost.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
 
@@ -1047,7 +1061,7 @@ class LokiLogger():
     def log_to_stdout(self, message, mes_type):
 
         # Prepare Message
-        message = removeNonAsciiDrop(message)
+        #message = removeNonAsciiDrop(message)
         codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
 
         if self.csv:
@@ -1115,7 +1129,7 @@ class LokiLogger():
     def log_to_file(self, message, mes_type):
         try:
             # Write to file
-            with open(self.log_file, "a") as logfile:
+            with codecs.open(self.log_file, "a", encoding='utf-8') as logfile:
                 if self.csv:
                     logfile.write("{0},{1},{2},{3}\n".format(getSyslogTimestamp(),self.hostname,mes_type,message))
                 else:
@@ -1208,7 +1222,7 @@ if __name__ == '__main__':
     # Remove old log file
     if os.path.exists(args.l):
         os.remove(args.l)
-
+	
     # Computername
     if platform == "linux" or platform == "osx":
         t_hostname = os.uname()[1]
