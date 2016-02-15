@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.14.0'
+__version__ = '0.15.0'
 
 import os
 import argparse
@@ -108,11 +108,11 @@ class Loki():
         self.app_path = get_application_path()
 
         # Set IOC path
-        self.ioc_path = os.path.join(self.app_path, "./iocs/")
+        self.ioc_path = os.path.join(self.app_path, "./signature-base/iocs/")
 
         # Yara rule directories
-        self.yara_rule_directories.append(os.path.join(self.app_path, "./signatures"))
-        self.yara_rule_directories.append(os.path.join(self.app_path, "./iocs/yara"))
+        self.yara_rule_directories.append(os.path.join(self.app_path, "./signature-base/yara"))
+        self.yara_rule_directories.append(os.path.join(self.app_path, "./signature-base/iocs/yara"))
 
         # Read IOCs -------------------------------------------------------
         # File Name IOCs (all files in iocs that contain 'filename')
@@ -137,7 +137,7 @@ class Loki():
         self.initialize_yara_rules()
 
         # Initialize File Type Magic signatures
-        self.initialize_filetype_magics(os.path.join(self.app_path, 'file-type-signatures.txt'))
+        self.initialize_filetype_magics(os.path.join(self.app_path, './signature-base/file-type-signatures.txt'))
 
     def scan_path(self, path):
 
