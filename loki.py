@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.15.0'
+__version__ = '0.15.1'
 
 import os
 import argparse
@@ -137,7 +137,7 @@ class Loki():
         self.initialize_yara_rules()
 
         # Initialize File Type Magic signatures
-        self.initialize_filetype_magics(os.path.join(self.app_path, './signature-base/file-type-signatures.txt'))
+        self.initialize_filetype_magics(os.path.join(self.app_path, './signature-base/misc/file-type-signatures.txt'))
 
     def scan_path(self, path):
 
