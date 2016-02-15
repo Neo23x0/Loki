@@ -1,3 +1,29 @@
+zooboo.passinggas.net;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+appletree.onthenetas.com;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+bluefield.byinter.net;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+ustar5.passas.us;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+eventlog.findhere.org;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+grassland.onthenetas.com;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+groupspace.findhere.org;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+dnt5b.myfw.us;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+chairman.onthenetas.com;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+photograph.myfw.us;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+booking.passinggas.net;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+www.danangqt.net;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+webonline.onthenetas.com;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+203.124.14.214;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+203.124.14.229;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+103.243.24.179;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+118.193.221.233;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+123.1.159.210;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+140.131.39.11;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+123.1.159.153;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+210.209.121.92;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+163.20.127.27;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+210.209.121.31;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+101.55.33.95;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+101.55.121.79;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
+101.55.33.92;Emissary Trojan/ Operation Lotus Blossom Update http://researchcenter.paloaltonetworks.com/2016/02/emissary-trojan-changelog-did
 g890ios20.com;Mokes: New Family of Cross-Platform Desktop Backdoors Discovered https://securelist.com/blog/research/73503/from-linux-to-windows-new-family-of-c
 jessiman901.com;Mokes: New Family of Cross-Platform Desktop Backdoors Discovered https://securelist.com/blog/research/73503/from-linux-to-windows-new-family-of-c
 web01.kruul.com;Exploring Bergard: Old Malware with New Tricks https://www.proofpoint.com/us/exploring-bergard-old-malware-new-tricks

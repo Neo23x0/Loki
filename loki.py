@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.13.4'
+__version__ = '0.14.0'
 
 import os
 import argparse
@@ -420,10 +420,10 @@ class Loki():
         windll = ctypes.windll.kernel32
         if locale.windows_locale[ windll.GetUserDefaultUILanguage() ] == 'fr_FR':
             return (owner.upper().startswith("SERVICE LOCAL") or 
-                owner.upper().startswith(u"SERVICE RÉSEAU") or
-#                owner.upper().startswith(u"Système") or ##Not matching
-                owner == u"Système" or
-                owner.upper().startswith(u"AUTORITE NT\Système"))
+                owner.upper().startswith(u"SERVICE RÃSEAU") or
+#                owner.upper().startswith(u"SystÃ¨me") or ##Not matching
+                owner == u"SystÃ¨me" or
+                owner.upper().startswith(u"AUTORITE NT\SystÃ¨me"))
         else:
             return ( owner.upper().startswith("NT ") or owner.upper().startswith("NET") or
                 owner.upper().startswith("LO") or
