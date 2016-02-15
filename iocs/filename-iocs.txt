@@ -21,7 +21,7 @@
 # ProgramData\\Mail\\MailAg\\;80
 # (Anwendungsdaten|Application Data|APPDATA)\\sydmain\.dll;80
 # (TEMP|Temp)\\[^\\]+\.(xmd|yls)$;80
-# (LOCAL SETTINGS\\Temp|Local Settings\\Temp|Local\\Temp)\\(word\.exe|winword\.exe);80
+# (LOCAL SETTINGS\\Temp|Local Settings\\Temp|Local\\Temp)\\(word\.exe|winword\.exe)[^\.];80
 #
 
 # Ncat Example
