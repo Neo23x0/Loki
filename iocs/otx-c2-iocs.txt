@@ -2125,7 +2125,6 @@ economia.elpais.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/ab
 www.elmundo.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
 world.time.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
 www.publico.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
-www.publicdomainregistry.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
 oco-231-ms.xns01.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
 itunes212.appleupdt.com;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
 negocios.iprofesional.linkconf.net;Careto - The Masked APT http://www.kaspersky.com/about/news/virus/2014/Kaspersky-Lab-Uncovers-The-Mask-O
