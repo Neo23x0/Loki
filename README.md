@@ -113,9 +113,11 @@ Requirements for the Threat Intel receivers:
 
 ## Signature and IOCs
 
-Since version 0.9 the Yara signatures reside in the './signatures' subfolder and the IOC files for hashes and filenames are stored in the './iocs' folder. All '.yar' files placed in the './signatures' folder will be initialized together with the rule set that is already included. Use the 'score' value to define the level of the message upon a signature match.
+Since version 0.15 the Yara signatures reside in the sub-repository [signature-base](https://github.com/Neo23x0/signature-base). You will not get the sub-repository by downloading the LOKI as ZIP file. It will be included when you clone the repository. 
 
-You can add hash, c2 and filename IOCs by adding files to the './iocs' subfolder. All hash IOCs and filename IOC files must be in the format used by LOKI (see the default files). The files must have the strings "hash", "filename" or "c2" in their name to get pulled during initialization.  
+The IOC files for hashes and filenames are stored in the './signature-base/iocs' folder. All '.yar' files placed in the './signature-base/yara' folder will be initialized together with the rule set that is already included. Use the 'score' value to define the level of the message upon a signature match. 
+
+You can add hash, c2 and filename IOCs by adding files to the './signature-base/iocs' subfolder. All hash IOCs and filename IOC files must be in the format used by LOKI (see the default files). The files must have the strings "hash", "filename" or "c2" in their name to get pulled during initialization.  
 
 For Hash IOCs (divided by newline; hash type is detected automatically)
 ```
@@ -130,6 +132,8 @@ Filename as Regex;Description [Reference]
 # Threat Intel Receivers
 
 Since version v0.10 LOKI includes various threat intel receivers using the public APIs of these services to retrieve and store the IOCs in a format that LOKI understands. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no preformance impact)
+
+The threat intel receivers have also been moved to the [signature-base](https://github.com/Neo23x0/signature-base) sub repository with version 0.15 and can be found in "./signature-base/threatintel".   
 
 Provide your API key via ```-k APIKEY``` or set it in the script header.  
 
