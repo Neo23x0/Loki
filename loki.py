@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.15.1'
+__version__ = '0.15.2'
 
 import os
 import argparse
@@ -1035,6 +1035,9 @@ class LokiLogger():
             self.print_welcome()
 
     def log(self, mes_type, message):
+
+        # Remove all non-ASCII characters
+        message = removeNonAsciiDrop(message)
 
         if not args.debug and mes_type == "DEBUG":
             return
