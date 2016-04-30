@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.15.2'
+__version__ = '0.15.3'
 
 import os
 import argparse
@@ -325,21 +325,24 @@ class Loki():
                                    fileData = decompressedData
 
                             # Scan the read data
-                            for (score, rule, description, matched_strings) in \
-                                    self.scan_data(fileData, fileType, filename, filePath, extension, md5):
+                            try:
+                                for (score, rule, description, matched_strings) in \
+                                        self.scan_data(fileData, fileType, filename, filePath, extension, md5):
 
-                                # Message
-                                message = "Yara Rule MATCH: %s TYPE: %s DESCRIPTION: %s FILE: %s FIRST_BYTES: %s %s " \
-                                          "MATCHES: %s" % \
-                                          (rule, fileType, description, filePath, first_bytes, hash_string,
-                                           matched_strings)
+                                    # Message
+                                    message = "Yara Rule MATCH: %s TYPE: %s DESCRIPTION: %s FILE: %s FIRST_BYTES: %s %s " \
+                                              "MATCHES: %s" % \
+                                              (rule, fileType, description, filePath, first_bytes, hash_string,
+                                               matched_strings)
 
-                                if score >= 75:
-                                    logger.log("ALERT", message)
-                                elif score >= 60:
-                                    logger.log("WARNING", message)
-                                elif score >= 40:
-                                    logger.log("NOTICE", message)
+                                    if score >= 75:
+                                        logger.log("ALERT", message)
+                                    elif score >= 60:
+                                        logger.log("WARNING", message)
+                                    elif score >= 40:
+                                        logger.log("NOTICE", message)
+                            except Exception, e:
+                                logger.log("ERROR", "Cannot YARA scan file: %s" % removeNonAsciiDrop(filePath))
 
                     except Exception, e:
                         if logger.debug:
