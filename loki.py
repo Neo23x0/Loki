@@ -1076,6 +1076,7 @@ class LokiLogger():
         # Prepare Message
         #message = removeNonAsciiDrop(message)
         codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
+        message = message.encode(sys.stdout.encoding, errors='replace')
 
         if self.csv:
             print "{0},{1},{2},{3}".format(getSyslogTimestamp(),self.hostname,mes_type,message)
