@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.15.3'
+__version__ = '0.15.5'
 
 import os
 import argparse
@@ -327,7 +327,8 @@ class Loki():
                             # Scan the read data
                             try:
                                 for (score, rule, description, matched_strings) in \
-                                    self.scan_data(fileData, fileType, filename, filePath, extension, md5):
+                                        self.scan_data(fileData, fileType, removeNonAsciiDrop(filename),
+                                                       removeNonAscii(filePath), extension, md5):
 
                                     # Message
                                     message = "Yara Rule MATCH: %s TYPE: %s DESCRIPTION: %s FILE: %s FIRST_BYTES: %s %s " \
@@ -423,7 +424,7 @@ class Loki():
         windll = ctypes.windll.kernel32
         locale = locale.windows_locale[ windll.GetUserDefaultUILanguage() ]
         if locale == 'fr_FR':
-            return (owner.upper().startswith("SERVICE LOCAL") or 
+            return (owner.upper().startswith("SERVICE LOCAL") or
                 owner.upper().startswith(u"SERVICE RÃSEAU") or
 #                owner.upper().startswith(u"SystÃ¨me") or ##Not matching
                 owner == u"SystÃ¨me" or
@@ -1075,6 +1076,7 @@ class LokiLogger():
         # Prepare Message
         #message = removeNonAsciiDrop(message)
         codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
+        message = message.encode(sys.stdout.encoding, errors='replace')
 
         if self.csv:
             print "{0},{1},{2},{3}".format(getSyslogTimestamp(),self.hostname,mes_type,message)
@@ -1234,7 +1236,7 @@ if __name__ == '__main__':
     # Remove old log file
     if os.path.exists(args.l):
         os.remove(args.l)
-	
+
     # Computername
     if platform == "linux" or platform == "osx":
         t_hostname = os.uname()[1]
