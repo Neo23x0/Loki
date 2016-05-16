@@ -1,3 +1,3 @@
 [submodule "signature-base"]
 	path = signature-base
-	url = https://github.com/Neo23x0/signature-base
+	url = git://github.com/Neo23x0/signature-base

@@ -1,5 +1,0 @@
-netaddr
-psutil
-pylzma
-yara
-
