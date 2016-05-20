@@ -775,89 +775,94 @@ class Loki():
     def initialize_c2_iocs(self, ioc_directory):
         try:
             for ioc_filename in os.listdir(ioc_directory):
-                if 'c2' in ioc_filename:
-                    with codecs.open(os.path.join(ioc_directory, ioc_filename), 'r', encoding='utf-8') as file:
-                        lines = file.readlines()
+                try:
+                    if 'c2' in ioc_filename:
+                        with codecs.open(os.path.join(ioc_directory, ioc_filename), 'r', encoding='utf-8') as file:
+                            lines = file.readlines()
 
-                        for line in lines:
-                            try:
-                                # Comments and empty lines
-                                if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
-                                    continue
+                            for line in lines:
+                                try:
+                                    # Comments and empty lines
+                                    if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
+                                        continue
 
-                                # Split the IOC line
-                                row = line.split(';')
-                                c2 = row[0]
-                                comment = row[1].rstrip(" ").rstrip("\n")
+                                    # Split the IOC line
+                                    row = line.split(';')
+                                    c2 = row[0]
+                                    comment = row[1].rstrip(" ").rstrip("\n")
 
-                                # Check length
-                                if len(c2) < 4:
-                                    logger.log("NOTICE","C2 server definition is suspiciously short - will not add %s" %c2)
-                                    continue
+                                    # Check length
+                                    if len(c2) < 4:
+                                        logger.log("NOTICE","C2 server definition is suspiciously short - will not add %s" %c2)
+                                        continue
 
-                                # Add to the LOKI iocs
-                                self.c2_server[c2.lower()] = comment
+                                    # Add to the LOKI iocs
+                                    self.c2_server[c2.lower()] = comment
 
-                            except Exception,e:
-                                logger.log("ERROR", "Cannot read line: %s" % line)
+                                except Exception,e:
+                                    logger.log("ERROR", "Cannot read line: %s" % line)
 
-        except Exception, e:
-            traceback.print_exc()
-            logger.log("ERROR", "Error reading Hash file: %s" % ioc_filename)
+                except Exception, e:
+                    traceback.print_exc()
+                    logger.log("ERROR", "Error reading Hash file: %s" % ioc_filename)
+        except OSError, e:
+            logger.log("ERROR", "No such file or directory")
 
     def initialize_filename_iocs(self, ioc_directory):
-
         try:
             for ioc_filename in os.listdir(ioc_directory):
-                if 'filename' in ioc_filename:
-                    with codecs.open(os.path.join(ioc_directory, ioc_filename), 'r', encoding='utf-8') as file:
-                        lines = file.readlines()
+                try:        
+                    if 'filename' in ioc_filename:
+                        with codecs.open(os.path.join(ioc_directory, ioc_filename), 'r', encoding='utf-8') as file:
+                            lines = file.readlines()
 
-                        # Last Comment Line
-                        last_comment = ""
+                            # Last Comment Line
+                            last_comment = ""
 
-                        for line in lines:
-                            try:
-                                # Empty
-                                if re.search(r'^[\s]*$', line):
-                                    continue
+                            for line in lines:
+                                try:
+                                    # Empty
+                                    if re.search(r'^[\s]*$', line):
+                                        continue
 
-                                # Comments
-                                if re.search(r'^#', line):
-                                    last_comment = line.lstrip("#").lstrip(" ").rstrip("\n")
-                                    continue
+                                    # Comments
+                                    if re.search(r'^#', line):
+                                        last_comment = line.lstrip("#").lstrip(" ").rstrip("\n")
+                                        continue
 
-                                # Elements with description
-                                if ";" in line:
-                                    row = line.split(';')
-                                    regex   = row[0]
-                                    score   = row[1].rstrip(" ").rstrip("\n")
-                                    desc    = last_comment
+                                    # Elements with description
+                                    if ";" in line:
+                                        row = line.split(';')
+                                        regex   = row[0]
+                                        score   = row[1].rstrip(" ").rstrip("\n")
+                                        desc    = last_comment
 
-                                    # Catch legacy lines
-                                    if not score.isdigit():
-                                        desc = score # score is description (old format)
-                                        score = 80 # default value
+                                        # Catch legacy lines
+                                        if not score.isdigit():
+                                            desc = score # score is description (old format)
+                                            score = 80 # default value
 
-                                # Elements without description
-                                else:
-                                    regex = line
+                                    # Elements without description
+                                    else:
+                                        regex = line
 
-                                # Replace environment variables
-                                regex = replaceEnvVars(regex)
+                                    # Replace environment variables
+                                    regex = replaceEnvVars(regex)
 
-                                # Create list elements
-                                self.filename_iocs[re.compile(regex)] = score
-                                self.filename_ioc_desc[regex] = desc
+                                    # Create list elements
+                                    self.filename_iocs[re.compile(regex)] = score
+                                    self.filename_ioc_desc[regex] = desc
 
-                            except Exception, e:
-                                if logger.debug:
-                                    traceback.print_exc()
-                                logger.log("ERROR", "Error reading line: %s" % line)
+                                except Exception, e:
+                                    if logger.debug:
+                                        traceback.print_exc()
+                                    logger.log("ERROR", "Error reading line: %s" % line)
 
-        except Exception, e:
-            traceback.print_exc()
-            logger.log("ERROR", "Error reading File IOC file: %s" % ioc_filename)
+                except Exception, e:
+                    traceback.print_exc()
+                    logger.log("ERROR", "Error reading File IOC file: %s" % ioc_filename)
+        except OSError, e:
+            logger.log("ERROR", "No such file or directory")
 
     def initialize_yara_rules(self):
 
@@ -915,63 +920,68 @@ class Loki():
     def initialize_hash_iocs(self, ioc_directory, false_positive=False):
         try:
             for ioc_filename in os.listdir(ioc_directory):
-                if 'hash' in ioc_filename:
-                    if false_positive and 'falsepositive' not in ioc_filename:
-                        continue
-                    with codecs.open(os.path.join(ioc_directory, ioc_filename), 'r', encoding='utf-8') as file:
-                        lines = file.readlines()
+                try:
+                    if 'hash' in ioc_filename:
+                        if false_positive and 'falsepositive' not in ioc_filename:
+                            continue
+                        with codecs.open(os.path.join(ioc_directory, ioc_filename), 'r', encoding='utf-8') as file:
+                            lines = file.readlines()
 
-                        for line in lines:
-                            try:
-                                if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
-                                    continue
-                                row = line.split(';')
-                                hash = row[0]
-                                comment = row[1].rstrip(" ").rstrip("\n")
-                                # Empty File Hash
-                                if hash == "d41d8cd98f00b204e9800998ecf8427e" or \
-                                   hash == "da39a3ee5e6b4b0d3255bfef95601890afd80709" or \
-                                   hash == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855":
-                                    continue
-                                # Else - check which type it is
-                                if len(hash) == 32:
-                                    self.hashes_md5[hash.lower()] = comment
-                                if len(hash) == 40:
-                                    self.hashes_sha1[hash.lower()] = comment
-                                if len(hash) == 64:
-                                    self.hashes_sha256[hash.lower()] = comment
-                                if false_positive:
-                                    self.false_hashes[hash.lower()] = comment
-                            except Exception,e:
-                                logger.log("ERROR", "Cannot read line: %s" % line)
+                            for line in lines:
+                                try:
+                                    if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
+                                        continue
+                                    row = line.split(';')
+                                    hash = row[0]
+                                    comment = row[1].rstrip(" ").rstrip("\n")
+                                    # Empty File Hash
+                                    if hash == "d41d8cd98f00b204e9800998ecf8427e" or \
+                                       hash == "da39a3ee5e6b4b0d3255bfef95601890afd80709" or \
+                                       hash == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855":
+                                        continue
+                                    # Else - check which type it is
+                                    if len(hash) == 32:
+                                        self.hashes_md5[hash.lower()] = comment
+                                    if len(hash) == 40:
+                                        self.hashes_sha1[hash.lower()] = comment
+                                    if len(hash) == 64:
+                                        self.hashes_sha256[hash.lower()] = comment
+                                    if false_positive:
+                                        self.false_hashes[hash.lower()] = comment
+                                except Exception,e:
+                                    logger.log("ERROR", "Cannot read line: %s" % line)
 
-        except Exception, e:
-            traceback.print_exc()
-            logger.log("ERROR", "Error reading Hash file: %s" % ioc_filename)
-
+                except Exception, e:
+                    traceback.print_exc()
+                    logger.log("ERROR", "Error reading Hash file: %s" % ioc_filename)
+        except OSError, e:
+            logger.log("ERROR", "No such file or directory")    
     def initialize_filetype_magics(self, filetype_magics_file):
         try:
+            try:
 
-            with open(filetype_magics_file, 'r') as config:
-                lines = config.readlines()
+                with open(filetype_magics_file, 'r') as config:
+                    lines = config.readlines()
 
-            for line in lines:
-                try:
-                    if re.search(r'^#', line) or re.search(r'^[\s]*$', line) or ";" not in line:
-                        continue
+                for line in lines:
+                    try:
+                        if re.search(r'^#', line) or re.search(r'^[\s]*$', line) or ";" not in line:
+                            continue
 
-                    ( sig_raw, description ) = line.rstrip("\n").split(";")
-                    sig = re.sub(r' ', '', sig_raw)
+                        ( sig_raw, description ) = line.rstrip("\n").split(";")
+                        sig = re.sub(r' ', '', sig_raw)
 
-                    if len(sig) > self.max_filetype_magics:
-                        self.max_filetype_magics = len(sig)
+                        if len(sig) > self.max_filetype_magics:
+                            self.max_filetype_magics = len(sig)
 
-                    # print "%s - %s" % ( sig, description )
-                    self.filetype_magics[sig] = description
+                        # print "%s - %s" % ( sig, description )
+                        self.filetype_magics[sig] = description
 
-                except Exception,e:
-                    logger.log("ERROR", "Cannot read line: %s" % line)
+                    except Exception,e:
+                        logger.log("ERROR", "Cannot read line: %s" % line)
 
+            except IOError, e:
+                logger.log("ERROR", "No such file or directory")
         except Exception, e:
             traceback.print_exc()
             logger.log("ERROR", "Error reading Hash file: %s" % filetype_magics_file)
