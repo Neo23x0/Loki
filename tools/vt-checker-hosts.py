@@ -378,7 +378,7 @@ if __name__ == '__main__':
     parser.add_argument('--nocache', action='store_true', help='Do not use the load the cache db (vt-check-cache.pkl)',
                         default=False)
     parser.add_argument('--nocsv', action='store_true', help='Do not write a CSV with the results', default=False)
-    parser.add_argument('--dups', action='store_true', help='Do not skip duplicate hashes', default=False)
+    parser.add_argument('--dups', action='store_true', help='Do not skip duplicate elements (ips/hosts)', default=False)
     parser.add_argument('--noresolve', action='store_true', help='Do not perform DNS resolve test on found domain '
                                                                  'names', default=False)
     parser.add_argument('--ping', action='store_true', help='Perform ping check on IPs (speeds up process if many '
