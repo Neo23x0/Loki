@@ -6,7 +6,7 @@ __VERSION__ = "0.3 July 2016"
 
 """
 Install dependencies with:
-pip install simplejson bs4 colorama
+pip install simplejson bs4 colorama pickle
 """
 
 import simplejson
@@ -15,7 +15,9 @@ import urllib2
 import time
 import re
 import os
+import signal
 import sys
+import pickle
 from bs4 import BeautifulSoup
 import traceback
 import argparse
@@ -83,12 +85,41 @@ def process_permalink(url, debug=False):
         return info
 
 
+def saveCache(cache, fileName):
+    """
+    Saves the cache database as pickle dump to a file
+    :param cache:
+    :param fileName:
+    :return:
+    """
+    with open(fileName, 'wb') as fh:
+        pickle.dump(cache, fh, pickle.HIGHEST_PROTOCOL)
+
+
+def loadCache(fileName):
+    """
+    Load cache database as pickle dump from file
+    :param fileName:
+    :return:
+    """
+    try:
+        with open(fileName, 'rb') as fh:
+            return pickle.load(fh), True
+    except Exception, e:
+        # traceback.print_exc()
+        return {}, False
+
+
+def signal_handler(signal, frame):
+    print "\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c)
+    saveCache(cache, args.c)
+    sys.exit(0)
+
+
 def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
     """
     Process the input file line by line
     """
-    # Caches
-    hash_cache_ratio = {}
 
     for line in lines:
 
@@ -108,11 +139,11 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             continue
 
         # Cache
-        if hash in hash_cache_ratio:
+        if hash in cache:
             if dups:
                 # Colorized head of each hash check 
                 print_highlighted("\nHASH: {0} COMMENT: {1}".format(hash, comment))
-                print_highlighted("RESULT: %s (from cache)" % hash_cache_ratio[hash])
+                print_highlighted("RESULT: %s (from cache)" % cache[hash])
             continue
         else:
             # Colorized head of each hash check 
@@ -143,7 +174,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         filenames = "-"
         rating = "unknown"
         positives = 0
-        res_color = Back.GREEN
+        res_color = Back.CYAN
         # print simplejson.dumps(response_dict, sort_keys=True, indent=4)
         if response_dict.get("response_code") > 0:
             # AV matches
@@ -161,6 +192,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
                 virus = " / ".join(virus_names)
             # Type
             rating = "clean"
+            res_color = Back.GREEN
             if positives > 0:
                 rating = "suspicious"
                 res_color = Back.YELLOW
@@ -190,13 +222,14 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
                 fh_results.write(result_line)
 
         # Add to hash cache
-        hash_cache_ratio[hash] = result
+        cache[hash] = result
 
         # Wait some time for the next request
         time.sleep(WAIT_TIME)
 
 if __name__ == '__main__':
 
+    signal.signal(signal.SIGINT, signal_handler)
     init(autoreset=False)
 
     print Style.RESET_ALL
@@ -208,7 +241,11 @@ if __name__ == '__main__':
     print Style.RESET_ALL + " "
 
     parser = argparse.ArgumentParser(description='Virustotal Online Checker')
-    parser.add_argument('-f', help='File to process (hash line by line OR csv with hash in each line - auto-detects position and comment)', metavar='path', default='')
+    parser.add_argument('-f', help='File to process (hash line by line OR csv with hash in each line - auto-detects '
+                                   'position and comment)', metavar='path', default='')
+    parser.add_argument('-c', help='Name of the cache database file (default: vt-hash-db.pkl)', metavar='cache-db',
+                        default='vt-hash-db.pkl')
+    parser.add_argument('--nocache', action='store_true', help='Do not use cache database file', default=False)
     parser.add_argument('--nocsv', action='store_true', help='Do not write a CSV with the results', default=False)
     parser.add_argument('--dups', action='store_true', help='Do not skip duplicate hashes', default=False) 
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
@@ -231,6 +268,18 @@ if __name__ == '__main__':
     if not os.path.exists(args.f):
         print "[E] Cannot find input file {0}".format(args.f)
         sys.exit(1)
+
+    # Caches
+    cache = {}
+    # Trying to load cache from pickle dump
+    if not args.nocache:
+        cache, success = loadCache(args.c)
+        if success:
+            print "[+] {0} cache entries read from cache database: {1}".format(len(cache), args.c)
+        else:
+            print "[-] No cache database found"
+            print "[+] Analyzed hashes will be written to cache database: {0}".format(args.c)
+        print "[+] You can always interrupt the scan by pressing CTRL+C without loosing the scan state"
     
     # Open input file
     try:
@@ -241,16 +290,25 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # Result file
+    # Result file
     if not args.nocsv:
         result_file = "check-results_{0}.csv".format(os.path.splitext(os.path.basename(args.f))[0])
-        print "Writing results to file: {0}".format(result_file)
-        try:
-            with open(result_file, 'w') as fh_results:
-                fh_results.write("Hash;Rating;Comment;Positives;Virus;File Names;First Submitted;Last Submitted\n")
-        except Exception, e:
-            print "[E] Cannot write export file {0}".format(result_file)
+        if os.path.exists(result_file):
+            print "[+] Found results CSV from previous run: {0}".format(result_file)
+            print "[+] Appending results to file: {0}".format(result_file)
+        else:
+            print "[+] Writing results to new file: {0}".format(result_file)
+            try:
+                with open(result_file, 'w') as fh_results:
+                    fh_results.write("Hash;Rating;Comment;Positives;Virus;File Names;First Submitted;Last Submitted\n")
+            except Exception, e:
+                print "[E] Cannot write export file {0}".format(result_file)
 
     # Process the input lines
     process_lines(lines, result_file, args.nocsv, args.dups, args.debug)
+
+    # Write Cache
+    print "\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c)
+    saveCache(cache, args.c)
 
     print Style.RESET_ALL
