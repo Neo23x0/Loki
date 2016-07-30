@@ -110,6 +110,18 @@ def loadCache(fileName):
         return {}, False
 
 
+def removeNonAsciiDrop(string):
+    nonascii = "error"
+    # print "CON: ", string
+    try:
+        # Generate a new string without disturbing characters and allow new lines
+        nonascii = "".join(i for i in string if (ord(i) < 127 and ord(i) > 31) or ord(i) == 10 or ord(i) == 13)
+    except Exception, e:
+        traceback.print_exc()
+        pass
+    return nonascii
+
+
 def signal_handler(signal, frame):
     print "\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c)
     saveCache(cache, args.c)
@@ -209,7 +221,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             # Result 
             result = "%s / %s" % ( response_dict.get("positives"), response_dict.get("total") )
             print_highlighted("VIRUS: {0}".format(virus))
-            print_highlighted("FILENAMES: {0}".format(filenames))
+            print_highlighted("FILENAMES: {0}".format(removeNonAsciiDrop(filenames)))
             print_highlighted("FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(first_submitted, last_submitted))
         
         # Print the highlighted result line
