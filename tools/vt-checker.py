@@ -216,12 +216,12 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
                 print "[D] Processing permalink {0}".format(response_dict.get("permalink"))
             info = process_permalink(response_dict.get("permalink"), debug)
             # File Names
-            filenames = ", ".join(info['filenames'][:5]).replace(';', '_')
+            filenames = removeNonAsciiDrop(", ".join(info['filenames'][:5]).replace(';', '_'))
             first_submitted = info['firstsubmission']
             # Result 
             result = "%s / %s" % ( response_dict.get("positives"), response_dict.get("total") )
             print_highlighted("VIRUS: {0}".format(virus))
-            print_highlighted("FILENAMES: {0}".format(removeNonAsciiDrop(filenames)))
+            print_highlighted("FILENAMES: {0}".format(filenames))
             print_highlighted("FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(first_submitted, last_submitted))
         
         # Print the highlighted result line
