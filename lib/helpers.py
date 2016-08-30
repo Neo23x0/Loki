@@ -158,6 +158,14 @@ def printProgress(i):
     sys.stdout.flush()
 
 
+def transformOS(regex, platform):
+    # Replace '\' with '/' on Linux/Unix/OSX
+    if platform != "windows":
+        regex = regex.replace(r'\\', r'/')
+        regex = regex.replace(r'C:', '')
+    return regex
+
+
 def replaceEnvVars(path):
 
     # Setting new path to old path for default

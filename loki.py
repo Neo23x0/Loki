@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.15.5'
+__version__ = '0.15.6'
 
 import os
 import argparse
@@ -846,6 +846,9 @@ class Loki():
                                 # Replace environment variables
                                 regex = replaceEnvVars(regex)
 
+                                # OS specific transforms
+                                regex = transformOS(regex, platform)
+
                                 # Create list elements
                                 self.filename_iocs[re.compile(regex)] = score
                                 self.filename_ioc_desc[regex] = desc
@@ -1018,6 +1021,7 @@ class Loki():
         finally:
             return fileData
 
+
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
 
@@ -1162,7 +1166,7 @@ class LokiLogger():
         print "  Simple IOC Scanner"
         print "  "
         print "  (C) Florian Roth"
-        print "  August 2015"
+        print "  August 2016"
         print "  Version %s" % __version__
         print "  "
         print "  DISCLAIMER - USE AT YOUR OWN RISK"
