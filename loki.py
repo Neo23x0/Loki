@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.15.6'
+__version__ = '0.15.7'
 
 import os
 import argparse
@@ -106,6 +106,12 @@ class Loki():
 
         # Get application path
         self.app_path = get_application_path()
+
+        # Check if signature database is present
+        if os.listdir(os.path.join(self.app_path, "./signature-base/")) == []:
+            logger.log("WARNING", "The 'signature-base' subdirectory is empty. Download the signature database and "
+                                  "extract it to this sub directory or simply clone the LOKI github repository instead "
+                                  "of a ZIP download. URL: https://github.com/Neo23x0/signature-base")
 
         # Set IOC path
         self.ioc_path = os.path.join(self.app_path, "./signature-base/iocs/")
@@ -861,6 +867,8 @@ class Loki():
         except Exception, e:
             traceback.print_exc()
             logger.log("ERROR", "Error reading File IOC file: %s" % ioc_filename)
+            logger.log("ERROR", "Please make sure that you cloned the repo or downloaded the sub repository: See "
+                                "https://github.com/Neo23x0/Loki/issues/51")
 
     def initialize_yara_rules(self):
 
@@ -1166,7 +1174,7 @@ class LokiLogger():
         print "  Simple IOC Scanner"
         print "  "
         print "  (C) Florian Roth"
-        print "  August 2016"
+        print "  September 2016"
         print "  Version %s" % __version__
         print "  "
         print "  DISCLAIMER - USE AT YOUR OWN RISK"
