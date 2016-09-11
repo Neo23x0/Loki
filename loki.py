@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.15.7'
+__version__ = '0.16.0'
 
 import os
 import argparse
@@ -39,6 +39,7 @@ import signal as signal_module
 from colorama import Fore, Back, Style
 from colorama import init
 from sys import platform as _platform
+from git import cmd
 
 from lib.helpers import *
 
@@ -1207,6 +1208,17 @@ def get_application_path():
         logger.log("ERROR","Error while evaluation of application path")
 
 
+def update_signatures():
+    try:
+        g = cmd.Git(os.path.join(get_application_path(), './signature-base/'))
+        pull_result = g.pull("https://github.com/Neo23x0/signature-base")
+        print pull_result
+    except Exception, e:
+        if args.debug:
+            traceback.print_exc()
+        return False
+    return True
+
 # CTRL+C Handler --------------------------------------------------------------
 def signal_handler(signal_name, frame):
     try:
@@ -1238,6 +1250,7 @@ if __name__ == '__main__':
     parser.add_argument('--csv', action='store_true', help='Write CSV log format to STDOUT (machine prcoessing)', default=False)
     parser.add_argument('--onlyrelevant', action='store_true', help='Only print warnings or alerts', default=False)
     parser.add_argument('--nolog', action='store_true', help='Don\'t write a local log file', default=False)
+    parser.add_argument('--update', action='store_true', default=False, help='Update the signatures from the "signature-base" sub repository')
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
     args = parser.parse_args()
@@ -1257,6 +1270,15 @@ if __name__ == '__main__':
 
     # Logger
     logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant, args.debug)
+
+    # Update
+    if args.update:
+        success = update_signatures()
+        if success:
+            logger.log("INFO", "Update successful")
+        else:
+            logger.log("ERROR", "Update failed - run with (--debug) to see details")
+        sys.exit(0)
 
     logger.log("NOTICE", "Starting Loki Scan SYSTEM: {0} TIME: {1} PLATFORM: {2}".format(
         t_hostname, getSyslogTimestamp(), platform))
