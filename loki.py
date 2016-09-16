@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.16.0'
+__version__ = '0.16.1'
 
 import os
 import argparse
@@ -838,13 +838,13 @@ class Loki():
                                 if ";" in line:
                                     row = line.split(';')
                                     regex   = row[0]
-                                    score   = row[1].rstrip(" ").rstrip("\n")
+                                    score   = row[1].rstrip(" ").rstrip("\n\r")
                                     desc    = last_comment
 
                                     # Catch legacy lines
                                     if not score.isdigit():
                                         desc = score # score is description (old format)
-                                        score = 80 # default value
+                                        score = 60 # default value
 
                                 # Elements without description
                                 else:
