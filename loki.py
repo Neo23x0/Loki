@@ -40,6 +40,8 @@ from colorama import Fore, Back, Style
 from colorama import init
 from sys import platform as _platform
 from git import cmd
+import sys
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 from lib.helpers import *
 
