@@ -139,6 +139,35 @@ For Filename IOCs (divided by newline)
 Filename as Regex;Description [Reference]
 ```
 
+# User-Defined Scan Excludes
+
+Since version v0.16.2 LOKI supports the definition of user-defined excludes via "excludes.cfg" in the new "./config" folder. Each line represents a regular expression thats gets applied to the full file path during the directory walk. This way you can exclude certain directories regardless of their drive name, file extensions in certain folders and all files and directories that belong to a product that is sensitive to antivirus scanning. 
+
+The '''exclude.cfg''' looks like this:
+
+    # Excluded directories
+    #
+    # - add directories you want to exclude from the scan
+    # - double escape back slashes
+    # - values are case-insensitive
+    # - remember to use back slashes on Windows and slashes on Linux / Unix / OSX
+    # - each line contains a regex that matches somewhere in the full path (case insensitive)
+    #   e.g.:
+    #   Regex: \\System32\\
+    #   Matches C:\Windows\System32\cmd.exe
+    #
+    #   Regex: /var/log/[^/]+\.log
+    #   Matches: /var/log/test.log
+    #   Not Matches: /var/log/test.gz
+    #
+    
+    # Useful examples (google "antivirus exclusion recommendations" to find more for your products)
+    \\Ntfrs\\
+    \\Ntds\\
+    \\EDB[^\.]+\.log
+    Sysvol\\Staging\\Nntfrs_cmp
+    \\System Volume Information\\DFSR
+
 # Threat Intel Receivers
 
 Since version v0.10 LOKI includes various threat intel receivers using the public APIs of these services to retrieve and store the IOCs in a format that LOKI understands. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no preformance impact)
