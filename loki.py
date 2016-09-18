@@ -1216,18 +1216,24 @@ class LokiLogger():
 
     def print_welcome(self):
         print Back.GREEN + " ".ljust(79) + Back.BLACK
+
+        print Fore.GREEN
+        print "    _    ___  _  _____                             "
+        print "   | |  / _ \| |/ /_ _|                            "
+        print "   | |_| (_) | ' < | |                             "
+        print "   |____\___/|_|\_\___|                            "
+        print "    ___ ___   ___   ___                            "
+        print "   |_ _/ _ \ / __| / __| __ __ _ _ _  _ _  ___ _ _ "
+        print "    | | (_) | (__  \__ \/ _/ _` | ' \| ' \/ -_) '_|"
+        print "   |___\___/ \___| |___/\__\__,_|_||_|_||_\___|_|  "
+        print "                                                   "
+
+        print Fore.WHITE
+        print "   (C) Florian Roth"
+        print "   September 2016"
+        print "   Version %s" % __version__
         print "  "
-        print "   " + Back.GREEN + "  " + Back.BLACK + "      " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK
-        print "   " + Back.GREEN + "  " + Back.BLACK + "      " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "    " + Back.BLACK + "    " + Back.GREEN + "  " + Back.BLACK
-        print "   " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "      " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK + "  " + Back.GREEN + "  " + Back.BLACK
-        print "  "
-        print "  Simple IOC Scanner"
-        print "  "
-        print "  (C) Florian Roth"
-        print "  September 2016"
-        print "  Version %s" % __version__
-        print "  "
-        print "  DISCLAIMER - USE AT YOUR OWN RISK"
+        print "   DISCLAIMER - USE AT YOUR OWN RISK"
         print "  "
         print Back.GREEN + " ".ljust(79) + Back.BLACK
         print Fore.WHITE+''+Back.BLACK
