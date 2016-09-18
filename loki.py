@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.16.1'
+__version__ = '0.16.2'
 
 import os
 import argparse
@@ -92,6 +92,11 @@ class Loki():
     # Yara rule directories
     yara_rule_directories = []
 
+    # Excludes (list of regex that match within the whole path) (user-defined via excluces.cfg)
+    fullExcludes = []
+    # Platform specific excludes (match the beginning of the full path) (not user-defined)
+    startExcludes = []
+
     # File type magics
     filetype_magics = {}
     max_filetype_magics = 0
@@ -113,6 +118,16 @@ class Loki():
             logger.log("WARNING", "The 'signature-base' subdirectory is empty. Download the signature database and "
                                   "extract it to this sub directory or simply clone the LOKI github repository instead "
                                   "of a ZIP download. URL: https://github.com/Neo23x0/signature-base")
+
+        # Excludes
+        self.initialize_excludes(os.path.join(self.app_path, "./config/excludes.cfg"))
+
+        # Linux excludes from mtab
+        if platform == "linux":
+            self.startExcludes = self.LINUX_PATH_SKIPS_START | Set(getExcludedMountpoints())
+        # OSX excludes like Linux until we get some field data
+        if platform == "osx":
+            self.startExcludes = self.LINUX_PATH_SKIPS_START
 
         # Set IOC path
         self.ioc_path = os.path.join(self.app_path, "./signature-base/iocs/")
@@ -154,207 +169,218 @@ class Loki():
         # Counter
         c = 0
 
-        # Linux excludes from mtab
-        if platform == "linux":
-            allExcludes = self.LINUX_PATH_SKIPS_START | Set(getExcludedMountpoints())
-        # OSX excludes like Linux until we get some field data
-        if platform == "osx":
-            allExcludes = self.LINUX_PATH_SKIPS_START
-
         for root, directories, files in os.walk(unicode(path), onerror=walk_error, followlinks=False):
 
-                if platform == "linux" or platform == "osx":
-                    # Skip paths that start with ..
-                    newDirectories = []
-                    for dir in directories:
-                        skipIt = False
-                        completePath = os.path.join(root, dir)
-                        for skip in allExcludes:
-                            if completePath.startswith(skip):
-                                logger.log("INFO", "Skipping %s directory" % skip)
-                                skipIt = True
-                        if not skipIt:
-                            newDirectories.append(dir)
-                    directories[:] = newDirectories
+            # Skip paths that start with ..
+            newDirectories = []
+            for dir in directories:
+                skipIt = False
 
-                # Loop through files
-                for filename in files:
-                    try:
+                # Generate a complete path for comparisons
+                completePath = os.path.join(root, dir).lower() + os.sep
 
-                        # Get the file and path
-                        filePath = os.path.join(root,filename)
+                # Platform specific excludes
+                for skip in self.startExcludes:
+                    if completePath.startswith(skip):
+                        logger.log("INFO", "Skipping %s directory" % skip)
+                        skipIt = True
 
-                        # Get Extension
-                        extension = os.path.splitext(filePath)[1].lower()
+                if not skipIt:
+                    newDirectories.append(dir)
+            directories[:] = newDirectories
 
-                        # Linux directory skip
-                        if platform == "linux" or platform == "osx":
+            # Loop through files
+            for filename in files:
+                try:
 
-                            # Skip paths that end with ..
-                            for skip in self.LINUX_PATH_SKIPS_END:
-                                if filePath.endswith(skip):
-                                    if self.LINUX_PATH_SKIPS_END[skip] == 0:
-                                        logger.log("INFO", "Skipping %s element" % skip)
-                                        self.LINUX_PATH_SKIPS_END[skip] = 1
+                    # Get the file and path
+                    filePath = os.path.join(root,filename)
 
-                            # File mode
-                            mode = os.stat(filePath).st_mode
-                            if stat.S_ISCHR(mode) or stat.S_ISBLK(mode) or stat.S_ISFIFO(mode) or stat.S_ISLNK(mode) or stat.S_ISSOCK(mode):
-                                continue
+                    # Get Extension
+                    extension = os.path.splitext(filePath)[1].lower()
 
-                        # Counter
-                        c += 1
+                    # Skip marker
+                    skipIt = False
 
-                        if not args.noindicator:
-                            printProgress(c)
+                    # User defined excludes
+                    for skip in self.fullExcludes:
+                        if skip.search(filePath):
+                            logger.log("DEBUG", "Skipping element %s" % filePath)
+                            skipIt = True
 
-                        # Skip program directory
-                        # print appPath.lower() +" - "+ filePath.lower()
-                        if self.app_path.lower() in filePath.lower():
-                            logger.log("DEBUG", "Skipping file in program directory FILE: %s" % filePath)
+                    # Linux directory skip
+                    if platform == "linux" or platform == "osx":
+
+                        # Skip paths that end with ..
+                        for skip in self.LINUX_PATH_SKIPS_END:
+                            if filePath.endswith(skip):
+                                if self.LINUX_PATH_SKIPS_END[skip] == 0:
+                                    logger.log("INFO", "Skipping %s element" % skip)
+                                    self.LINUX_PATH_SKIPS_END[skip] = 1
+                                    skipIt = True
+
+                        # File mode
+                        mode = os.stat(filePath).st_mode
+                        if stat.S_ISCHR(mode) or stat.S_ISBLK(mode) or stat.S_ISFIFO(mode) or stat.S_ISLNK(mode) or stat.S_ISSOCK(mode):
                             continue
 
-                        fileSize = os.stat(filePath).st_size
-                        # print file_size
+                    # Skip
+                    if skipIt:
+                        continue
 
-                        # File Name Checks -------------------------------------------------
-                        for regex in self.filename_iocs:
-                            match = regex.search(filePath)
-                            if match:
-                                description = self.filename_ioc_desc[regex.pattern]
-                                score = self.filename_iocs[regex]
-                                if score > 70:
-                                    logger.log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex.pattern, description, filePath))
-                                elif score > 40:
-                                    logger.log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex.pattern, description, filePath))
+                    # Counter
+                    c += 1
 
-                        # Access check (also used for magic header detection)
-                        firstBytes = ""
-                        try:
-                            with open(filePath, 'rb') as f:
-                                firstBytes = f.read(4)
-                        except Exception, e:
-                            logger.log("DEBUG", "Cannot open file %s (access denied)" % filePath)
+                    if not args.noindicator:
+                        printProgress(c)
 
-                        # Evaluate Type
-                        fileType = get_file_type(filePath, self.filetype_magics, self.max_filetype_magics, logger)
+                    # Skip program directory
+                    # print appPath.lower() +" - "+ filePath.lower()
+                    if self.app_path.lower() in filePath.lower():
+                        logger.log("DEBUG", "Skipping file in program directory FILE: %s" % filePath)
+                        continue
 
-                        # Fast Scan Mode - non intense
-                        do_intense_check = True
-                        if not self.intense_mode and fileType == "UNKNOWN" and extension not in EVIL_EXTENSIONS:
-                            if args.printAll:
-                                logger.log("INFO", "Skipping file due to fast scan mode: %s" % filePath)
-                            do_intense_check = False
+                    fileSize = os.stat(filePath).st_size
+                    # print file_size
 
-                        # Set fileData to an empty value
-                        fileData = ""
+                    # File Name Checks -------------------------------------------------
+                    for regex in self.filename_iocs:
+                        match = regex.search(filePath)
+                        if match:
+                            description = self.filename_ioc_desc[regex.pattern]
+                            score = self.filename_iocs[regex]
+                            if score > 70:
+                                logger.log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex.pattern, description, filePath))
+                            elif score > 40:
+                                logger.log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex.pattern, description, filePath))
 
-                        # Evaluations -------------------------------------------------------
-                        # Evaluate size
-                        if fileSize > (args.s * 1024):
-                            # Print files
-                            do_intense_check = False
-
-                        # Some file types will force intense check
-                        if fileType == "MDMP":
-                            do_intense_check = True
-
-                        # Intense Check switch
-                        if do_intense_check:
-                            if args.printAll:
-                                logger.log("INFO", "Scanning %s TYPE: %s SIZE: %s" % (filePath, fileType, fileSize))
-                        else:
-                            if args.printAll:
-                                logger.log("INFO", "Checking %s TYPE: %s SIZE: %s" % (filePath, fileType, fileSize))
-
-                        # Hash Check -------------------------------------------------------
-                        # Do the check
-                        if do_intense_check:
-
-                            fileData = self.get_file_data(filePath)
-
-                            # First bytes
-                            first_bytes = "%s / %s" % (fileData[:20].encode('hex'), removeNonAsciiDrop(fileData[:20]) )
-
-                            # Hash Eval
-                            matchType = None
-                            matchDesc = None
-                            matchHash = None
-                            md5 = "-"
-                            sha1 = "-"
-                            sha256 = "-"
-
-                            md5, sha1, sha256 = generateHashes(fileData)
-
-                            logger.log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
-
-                            # False Positive Hash
-                            if md5 in self.false_hashes.keys() or sha1 in self.false_hashes.keys() or sha256 in self.false_hashes.keys():
-                                continue
-
-                            # Malware Hash
-                            if md5 in self.hashes_md5.keys():
-                                matchType = "MD5"
-                                matchDesc = self.hashes_md5[md5]
-                                matchHash = md5
-                            elif sha1 in self.hashes_sha1.keys():
-                                matchType = "SHA1"
-                                matchDesc = self.hashes_sha1[sha1]
-                                matchHash = sha1
-                            elif sha256 in self.hashes_sha256.keys():
-                                matchType = "SHA256"
-                                matchDesc = self.hashes_sha256[sha256]
-                                matchHash = sha256
-
-                            # Hash string
-                            hash_string = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
-
-                            if matchType:
-                                logger.log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
-
-                            # Regin .EVT FS Check
-                            if len(fileData) > 11 and args.reginfs:
-
-                                # Check if file is Regin virtual .evt file system
-                                self.scan_regin_fs(fileData, filePath)
-
-                            # Yara Check -------------------------------------------------------
-
-                            # Memory Dump Scan
-                            if fileType == "MDMP":
-                                logger.log("INFO", "Scanning memory dump file %s" % filePath)
-
-                            # Umcompressed SWF scan
-                            if fileType == "ZWS" or fileType == "CWS":
-                                logger.log("INFO", "Scanning decompressed SWF file %s" % filePath)
-                                success, decompressedData = decompressSWFData(fileData)
-                                if success:
-                                   fileData = decompressedData
-
-                            # Scan the read data
-                            try:
-                                for (score, rule, description, matched_strings) in \
-                                        self.scan_data(fileData, fileType, removeNonAsciiDrop(filename),
-                                                       removeNonAscii(filePath), extension, md5):
-
-                                    # Message
-                                    message = "Yara Rule MATCH: %s TYPE: %s DESCRIPTION: %s FILE: %s FIRST_BYTES: %s %s " \
-                                              "MATCHES: %s" % \
-                                              (rule, fileType, description, filePath, first_bytes, hash_string,
-                                               matched_strings)
-
-                                    if score >= 75:
-                                        logger.log("ALERT", message)
-                                    elif score >= 60:
-                                        logger.log("WARNING", message)
-                                    elif score >= 40:
-                                        logger.log("NOTICE", message)
-                            except Exception, e:
-                                logger.log("ERROR", "Cannot YARA scan file: %s" % removeNonAsciiDrop(filePath))
-
+                    # Access check (also used for magic header detection)
+                    firstBytes = ""
+                    try:
+                        with open(filePath, 'rb') as f:
+                            firstBytes = f.read(4)
                     except Exception, e:
-                        if logger.debug:
-                            traceback.print_exc()
+                        logger.log("DEBUG", "Cannot open file %s (access denied)" % filePath)
+
+                    # Evaluate Type
+                    fileType = get_file_type(filePath, self.filetype_magics, self.max_filetype_magics, logger)
+
+                    # Fast Scan Mode - non intense
+                    do_intense_check = True
+                    if not self.intense_mode and fileType == "UNKNOWN" and extension not in EVIL_EXTENSIONS:
+                        if args.printAll:
+                            logger.log("INFO", "Skipping file due to fast scan mode: %s" % filePath)
+                        do_intense_check = False
+
+                    # Set fileData to an empty value
+                    fileData = ""
+
+                    # Evaluations -------------------------------------------------------
+                    # Evaluate size
+                    if fileSize > (args.s * 1024):
+                        # Print files
+                        do_intense_check = False
+
+                    # Some file types will force intense check
+                    if fileType == "MDMP":
+                        do_intense_check = True
+
+                    # Intense Check switch
+                    if do_intense_check:
+                        if args.printAll:
+                            logger.log("INFO", "Scanning %s TYPE: %s SIZE: %s" % (filePath, fileType, fileSize))
+                    else:
+                        if args.printAll:
+                            logger.log("INFO", "Checking %s TYPE: %s SIZE: %s" % (filePath, fileType, fileSize))
+
+                    # Hash Check -------------------------------------------------------
+                    # Do the check
+                    if do_intense_check:
+
+                        fileData = self.get_file_data(filePath)
+
+                        # First bytes
+                        first_bytes = "%s / %s" % (fileData[:20].encode('hex'), removeNonAsciiDrop(fileData[:20]) )
+
+                        # Hash Eval
+                        matchType = None
+                        matchDesc = None
+                        matchHash = None
+                        md5 = "-"
+                        sha1 = "-"
+                        sha256 = "-"
+
+                        md5, sha1, sha256 = generateHashes(fileData)
+
+                        logger.log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
+
+                        # False Positive Hash
+                        if md5 in self.false_hashes.keys() or sha1 in self.false_hashes.keys() or sha256 in self.false_hashes.keys():
+                            continue
+
+                        # Malware Hash
+                        if md5 in self.hashes_md5.keys():
+                            matchType = "MD5"
+                            matchDesc = self.hashes_md5[md5]
+                            matchHash = md5
+                        elif sha1 in self.hashes_sha1.keys():
+                            matchType = "SHA1"
+                            matchDesc = self.hashes_sha1[sha1]
+                            matchHash = sha1
+                        elif sha256 in self.hashes_sha256.keys():
+                            matchType = "SHA256"
+                            matchDesc = self.hashes_sha256[sha256]
+                            matchHash = sha256
+
+                        # Hash string
+                        hash_string = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
+
+                        if matchType:
+                            logger.log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
+
+                        # Regin .EVT FS Check
+                        if len(fileData) > 11 and args.reginfs:
+
+                            # Check if file is Regin virtual .evt file system
+                            self.scan_regin_fs(fileData, filePath)
+
+                        # Yara Check -------------------------------------------------------
+
+                        # Memory Dump Scan
+                        if fileType == "MDMP":
+                            logger.log("INFO", "Scanning memory dump file %s" % filePath)
+
+                        # Umcompressed SWF scan
+                        if fileType == "ZWS" or fileType == "CWS":
+                            logger.log("INFO", "Scanning decompressed SWF file %s" % filePath)
+                            success, decompressedData = decompressSWFData(fileData)
+                            if success:
+                               fileData = decompressedData
+
+                        # Scan the read data
+                        try:
+                            for (score, rule, description, matched_strings) in \
+                                    self.scan_data(fileData, fileType, removeNonAsciiDrop(filename),
+                                                   removeNonAscii(filePath), extension, md5):
+
+                                # Message
+                                message = "Yara Rule MATCH: %s TYPE: %s DESCRIPTION: %s FILE: %s FIRST_BYTES: %s %s " \
+                                          "MATCHES: %s" % \
+                                          (rule, fileType, description, filePath, first_bytes, hash_string,
+                                           matched_strings)
+
+                                if score >= 75:
+                                    logger.log("ALERT", message)
+                                elif score >= 60:
+                                    logger.log("WARNING", message)
+                                elif score >= 40:
+                                    logger.log("NOTICE", message)
+                        except Exception, e:
+                            logger.log("ERROR", "Cannot YARA scan file: %s" % removeNonAsciiDrop(filePath))
+
+                except Exception, e:
+                    if logger.debug:
+                        traceback.print_exc()
 
     def scan_data(self, fileData, fileType="-", fileName="-", filePath="-", extension="-", md5="-"):
 
@@ -987,6 +1013,29 @@ class Loki():
         except Exception, e:
             traceback.print_exc()
             logger.log("ERROR", "Error reading Hash file: %s" % filetype_magics_file)
+
+    def initialize_excludes(self, excludes_file):
+        try:
+            excludes = []
+            with open(excludes_file, 'r') as config:
+                lines = config.read().splitlines()
+
+            for line in lines:
+                if re.search(r'^[\s]*#', line):
+                    continue
+                try:
+                    # If the line contains something
+                    if re.search(r'\w', line):
+                        regex = re.compile(line, re.IGNORECASE)
+                        excludes.append(regex)
+                except Exception, e:
+                    logger.log("ERROR", "Cannot compile regex: %s" % line)
+
+            self.fullExcludes = excludes
+
+        except Exception, e:
+            traceback.print_exc()
+            logger.log("ERROR", "Error reading excludes file: %s" % excludes_file)
 
     def scan_regin_fs(self, fileData, filePath):
 
