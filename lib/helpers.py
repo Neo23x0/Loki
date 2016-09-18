@@ -108,14 +108,17 @@ def setNice(logger):
 
 def getExcludedMountpoints():
     excludes = []
-    mtab = open("/etc/mtab", "r")
-    for mpoint in mtab:
-        options = mpoint.split(" ")
-        if not options[0].startswith("/dev/"):
-            if not options[1] == "/":
-                excludes.append(options[1])
-
-    mtab.close()
+    try:
+        mtab = open("/etc/mtab", "r")
+        for mpoint in mtab:
+            options = mpoint.split(" ")
+            if not options[0].startswith("/dev/"):
+                if not options[1] == "/":
+                    excludes.append(options[1])
+    except Exception, e:
+        print "Error while reading /etc/mtab"
+    finally:
+        mtab.close()
     return excludes
 
 
