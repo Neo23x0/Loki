@@ -161,7 +161,7 @@ The '''exclude.cfg''' looks like this:
     #   Not Matches: /var/log/test.gz
     #
     
-    # Useful examples (google "antivirus exclusion recommendations" to find more for your products)
+    # Useful examples
     \\Ntfrs\\
     \\Ntds\\
     \\EDB[^\.]+\.log
