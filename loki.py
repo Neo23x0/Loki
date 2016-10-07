@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.16.2'
+__version__ = '0.17.0'
 
 import os
 import argparse
@@ -899,7 +899,7 @@ class Loki():
 
     def initialize_yara_rules(self):
 
-        yaraRules = []
+        yaraRules = ""
         dummy = ""
 
         try:
@@ -921,29 +921,49 @@ class Loki():
                             # Extension
                             extension = os.path.splitext(file)[1].lower()
 
+                            # Test Compile
+                            try:
+                                compiledRules = yara.compile(yaraRuleFile, externals={
+                                    'filename': dummy,
+                                    'filepath': dummy,
+                                    'extension': dummy,
+                                    'filetype': dummy,
+                                    'md5': dummy
+                                })
+                                logger.log("INFO", "Initializing Yara rule %s" % file)
+                            except Exception, e:
+                                traceback.print_exc()
+                                continue
+
                             # Encrypted
                             if extension == ".yar":
-                                try:
-                                    compiledRules = yara.compile(yaraRuleFile, externals= {
-                                                                      'filename': dummy,
-                                                                      'filepath': dummy,
-                                                                      'extension': dummy,
-                                                                      'filetype': dummy,
-                                                                      'md5': dummy
-                                                                  })
-                                    yaraRules.append(compiledRules)
-                                    logger.log("INFO", "Initialized Yara rules from %s" % file)
-                                except Exception, e:
-                                    logger.log("ERROR", "Error in Yara file: %s" % file)
-                                    if args.debug:
-                                        traceback.print_exc()
+                                with open(yaraRuleFile, 'r') as rulefile:
+                                    data = rulefile.read()
+                                    yaraRules += data
 
                         except Exception, e:
                             logger.log("ERROR", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
                             if args.debug:
                                 traceback.print_exc()
 
-            self.yara_rules = yaraRules
+            # Compile
+            try:
+                compiledRules = yara.compile(source=yaraRules, externals={
+                    'filename': dummy,
+                    'filepath': dummy,
+                    'extension': dummy,
+                    'filetype': dummy,
+                    'md5': dummy
+                })
+                logger.log("INFO", "Initialized all Yara rules at once")
+            except Exception, e:
+                traceback.print_exc()
+                logger.log("ERROR", "Error in Yara file: %s" % file)
+            if args.debug:
+                traceback.print_exc()
+
+            # Add as Lokis YARA rules
+            self.yara_rules.append(compiledRules)
 
         except Exception, e:
             logger.log("ERROR", "Error reading signature folder /signatures/")
@@ -1230,7 +1250,7 @@ class LokiLogger():
 
         print Fore.WHITE
         print "   (C) Florian Roth"
-        print "   September 2016"
+        print "   October 2016"
         print "   Version %s" % __version__
         print "  "
         print "   DISCLAIMER - USE AT YOUR OWN RISK"
