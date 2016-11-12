@@ -40,6 +40,8 @@ from colorama import Fore, Back, Style
 from colorama import init
 from sys import platform as _platform
 from git import cmd
+import sys
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 from lib.helpers import *
 
@@ -458,10 +460,11 @@ class Loki():
         locale = locale.windows_locale[ windll.GetUserDefaultUILanguage() ]
         if locale == 'fr_FR':
             return (owner.upper().startswith("SERVICE LOCAL") or
-                owner.upper().startswith(u"SERVICE RÃSEAU") or
-#                owner.upper().startswith(u"SystÃ¨me") or ##Not matching
-                owner == u"SystÃ¨me" or
-                owner.upper().startswith(u"AUTORITE NT\SystÃ¨me"))
+                owner.upper().startswith(u"SERVICE RÉSEAU") or
+                re.match(r"SERVICE R.SEAU", owner) or
+                owner == u"Système"  or
+                owner.upper().startswith(u"AUTORITE NT\Système") or
+                re.match(r"AUTORITE NT\\Syst.me", owner))
         elif locale == 'ru_RU':
             return (owner.upper().startswith("NET") or
                 owner == u"система" or
