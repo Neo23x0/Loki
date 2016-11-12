@@ -24,7 +24,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.17.0'
+__version__ = '0.17.1'
 
 import os
 import argparse
@@ -811,32 +811,34 @@ class Loki():
     def initialize_c2_iocs(self, ioc_directory):
         try:
             for ioc_filename in os.listdir(ioc_directory):
-                if 'c2' in ioc_filename:
-                    with codecs.open(os.path.join(ioc_directory, ioc_filename), 'r', encoding='utf-8') as file:
-                        lines = file.readlines()
+                try:
+                    if 'c2' in ioc_filename:
+                        with codecs.open(os.path.join(ioc_directory, ioc_filename), 'r', encoding='utf-8') as file:
+                            lines = file.readlines()
 
-                        for line in lines:
-                            try:
-                                # Comments and empty lines
-                                if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
-                                    continue
+                            for line in lines:
+                                try:
+                                    # Comments and empty lines
+                                    if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
+                                        continue
 
-                                # Split the IOC line
-                                row = line.split(';')
-                                c2 = row[0]
-                                comment = row[1].rstrip(" ").rstrip("\n")
+                                    # Split the IOC line
+                                    row = line.split(';')
+                                    c2 = row[0]
+                                    comment = row[1].rstrip(" ").rstrip("\n")
 
-                                # Check length
-                                if len(c2) < 4:
-                                    logger.log("NOTICE","C2 server definition is suspiciously short - will not add %s" %c2)
-                                    continue
+                                    # Check length
+                                    if len(c2) < 4:
+                                        logger.log("NOTICE","C2 server definition is suspiciously short - will not add %s" %c2)
+                                        continue
 
-                                # Add to the LOKI iocs
-                                self.c2_server[c2.lower()] = comment
+                                    # Add to the LOKI iocs
+                                    self.c2_server[c2.lower()] = comment
 
-                            except Exception,e:
-                                logger.log("ERROR", "Cannot read line: %s" % line)
-
+                                except Exception,e:
+                                    logger.log("ERROR", "Cannot read line: %s" % line)
+                except OSError, e:
+                    logger.log("ERROR", "No such file or directory")
         except Exception, e:
             traceback.print_exc()
             logger.log("ERROR", "Error reading Hash file: %s" % ioc_filename)
@@ -951,6 +953,7 @@ class Loki():
 
             # Compile
             try:
+                logger.log("INFO", "Initializing all YARA rules at once (composed string of all rule files)")
                 compiledRules = yara.compile(source=yaraRules, externals={
                     'filename': dummy,
                     'filepath': dummy,
@@ -961,7 +964,8 @@ class Loki():
                 logger.log("INFO", "Initialized all Yara rules at once")
             except Exception, e:
                 traceback.print_exc()
-                logger.log("ERROR", "Error in Yara file: %s" % file)
+                logger.log("ERROR", "Error during YARA rule compilation - please fix the issue in the rule set")
+                sys.exit(1)
             if args.debug:
                 traceback.print_exc()
 
@@ -1253,7 +1257,7 @@ class LokiLogger():
 
         print Fore.WHITE
         print "   (C) Florian Roth"
-        print "   October 2016"
+        print "   November 2016"
         print "   Version %s" % __version__
         print "  "
         print "   DISCLAIMER - USE AT YOUR OWN RISK"
