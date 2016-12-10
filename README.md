@@ -26,11 +26,16 @@ Additional Checks:
 
 The Windows binary is compiled with PyInstaller 2.1 and should run as x86 application on both x86 and x64 based systems.
 
+### Download
+
+You find precompiled versions of LOKI in the [releases](https://github.com/Neo23x0/loki/releases) section.
+
 ## How-To Run LOKI and Analyse the Reports
 
 ### Run
 
-  - Clone the LOKI repository (if you download LOKI as ZIP file, make sure to download the sub-repository [signature-base"](https://github.com/Neo23x0/signature-base) as well and place it in the respective subfolder)
+  - Download the latest release from the [releases](https://github.com/Neo23x0/loki/releases) section
+  - Run it once to download and initialize the signature-base repository
   - Provide the folder to a target system that should be scanned: removable media, network share, folder on target system
   - Right-click on loki.exe and select "Run as Administrator" or open a command line "cmd.exe" as Administrator and run it from there (you can also run LOKI without administrative privileges but some checks will be disabled and relevant objects on disk will not be accessible)
 
