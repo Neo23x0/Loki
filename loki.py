@@ -23,6 +23,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
+
 __version__ = '0.18.1'
 
 import os
