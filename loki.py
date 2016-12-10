@@ -23,7 +23,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.18.0'
+__version__ = '0.18.1'
 
 import os
 import argparse
@@ -38,7 +38,7 @@ import signal as signal_module
 from colorama import Fore, Back, Style
 from colorama import init
 from sys import platform as _platform
-from git import cmd
+from git import cmd, Repo
 import sys
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
@@ -115,10 +115,18 @@ class Loki():
         self.app_path = get_application_path()
 
         # Check if signature database is present
-        if os.listdir(os.path.join(self.app_path, "./signature-base/")) == []:
-            logger.log("WARNING", "The 'signature-base' subdirectory is empty. Download the signature database and "
-                                  "extract it to this sub directory or simply clone the LOKI github repository instead "
-                                  "of a ZIP download. URL: https://github.com/Neo23x0/signature-base")
+        sig_dir = os.path.join(self.app_path, "./signature-base/")
+        if not os.path.exists(sig_dir) or os.listdir(sig_dir) == []:
+            logger.log("WARNING", "The 'signature-base' subdirectory doesn't exist or is empty. "
+                                  "Trying to retrieve the signature database automatically.")
+            success_init = update_signatures()
+            if success_init:
+                logger.log("INFO", "Signature-Base repository initialised successful")
+            else:
+                logger.log("ERROR", "Signature-Base initialisation failed. "
+                                    "Try running 'loki --update --debug' manually to initialise the signature "
+                                    "repository and see the errors.")
+                sys.exit(1)
 
         # Excludes
         self.initialize_excludes(os.path.join(self.app_path, "./config/excludes.cfg"))
@@ -1315,9 +1323,14 @@ def get_application_path():
 
 def update_signatures():
     try:
-        g = cmd.Git(os.path.join(get_application_path(), './signature-base/'))
-        pull_result = g.pull("https://github.com/Neo23x0/signature-base")
-        print pull_result
+        sig_dir = os.path.join(get_application_path(), './signature-base/')
+        if not os.path.exists(sig_dir):
+            clone_result = Repo.clone_from("https://github.com/Neo23x0/signature-base", sig_dir)
+            # print clone_result
+        else:
+            g = cmd.Git(sig_dir)
+            pull_result = g.pull("https://github.com/Neo23x0/signature-base")
+            # print pull_result
     except Exception, e:
         if args.debug:
             traceback.print_exc()
@@ -1382,6 +1395,7 @@ if __name__ == '__main__':
 
     # Update
     if args.update:
+        logger.log("INFO", "Retrieving signature database from git repo https://github.com/Neo23x0/signature-base")
         success = update_signatures()
         if success:
             logger.log("INFO", "Update successful")
