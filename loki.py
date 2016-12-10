@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
@@ -24,7 +23,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-__version__ = '0.17.1'
+__version__ = '0.18.0'
 
 import os
 import argparse
@@ -194,9 +193,14 @@ class Loki():
             # Loop through files
             for filename in files:
                 try:
+                    # Findings
+                    reasons = []
+                    # Total Score
+                    total_score = 0
 
                     # Get the file and path
                     filePath = os.path.join(root,filename)
+                    filePathCleaned = filePath.encode('ascii', errors='replace')
 
                     # Get Extension
                     extension = os.path.splitext(filePath)[1].lower()
@@ -239,7 +243,7 @@ class Loki():
                     # Skip program directory
                     # print appPath.lower() +" - "+ filePath.lower()
                     if self.app_path.lower() in filePath.lower():
-                        logger.log("DEBUG", "Skipping file in program directory FILE: %s" % filePath)
+                        logger.log("DEBUG", "Skipping file in program directory FILE: %s" % filePathCleaned)
                         continue
 
                     fileSize = os.stat(filePath).st_size
@@ -251,10 +255,8 @@ class Loki():
                         if match:
                             description = self.filename_ioc_desc[regex.pattern]
                             score = self.filename_iocs[regex]
-                            if score > 70:
-                                logger.log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex.pattern, description, filePath))
-                            elif score > 40:
-                                logger.log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex.pattern, description, filePath))
+                            reasons.append("File Name IOC matched PATTERN: %s SUBSCORE: %s DESC: %s" % (regex.pattern, score, description))
+                            total_score += int(score)
 
                     # Access check (also used for magic header detection)
                     firstBytes = ""
@@ -262,7 +264,7 @@ class Loki():
                         with open(filePath, 'rb') as f:
                             firstBytes = f.read(4)
                     except Exception, e:
-                        logger.log("DEBUG", "Cannot open file %s (access denied)" % filePath)
+                        logger.log("DEBUG", "Cannot open file %s (access denied)" % filePathCleaned)
 
                     # Evaluate Type
                     fileType = get_file_type(filePath, self.filetype_magics, self.max_filetype_magics, logger)
@@ -271,7 +273,7 @@ class Loki():
                     do_intense_check = True
                     if not self.intense_mode and fileType == "UNKNOWN" and extension not in EVIL_EXTENSIONS:
                         if args.printAll:
-                            logger.log("INFO", "Skipping file due to fast scan mode: %s" % filePath)
+                            logger.log("INFO", "Skipping file due to fast scan mode: %s" % filePathCleaned)
                         do_intense_check = False
 
                     # Set fileData to an empty value
@@ -290,10 +292,10 @@ class Loki():
                     # Intense Check switch
                     if do_intense_check:
                         if args.printAll:
-                            logger.log("INFO", "Scanning %s TYPE: %s SIZE: %s" % (filePath, fileType, fileSize))
+                            logger.log("INFO", "Scanning %s TYPE: %s SIZE: %s" % (filePathCleaned, fileType, fileSize))
                     else:
                         if args.printAll:
-                            logger.log("INFO", "Checking %s TYPE: %s SIZE: %s" % (filePath, fileType, fileSize))
+                            logger.log("INFO", "Checking %s TYPE: %s SIZE: %s" % (filePathCleaned, fileType, fileSize))
 
                     # Hash Check -------------------------------------------------------
                     # Do the check
@@ -302,7 +304,7 @@ class Loki():
                         fileData = self.get_file_data(filePath)
 
                         # First bytes
-                        first_bytes = "%s / %s" % (fileData[:20].encode('hex'), removeNonAsciiDrop(fileData[:20]) )
+                        firstBytesString = "%s / %s" % (fileData[:20].encode('hex'), removeNonAsciiDrop(fileData[:20]) )
 
                         # Hash Eval
                         matchType = None
@@ -313,8 +315,6 @@ class Loki():
                         sha256 = "-"
 
                         md5, sha1, sha256 = generateHashes(fileData)
-
-                        logger.log("DEBUG", "MD5: %s SHA1: %s SHA256: %s FILE: %s" % ( md5, sha1, sha256, filePath ))
 
                         # False Positive Hash
                         if md5 in self.false_hashes.keys() or sha1 in self.false_hashes.keys() or sha256 in self.false_hashes.keys():
@@ -335,10 +335,12 @@ class Loki():
                             matchHash = sha256
 
                         # Hash string
-                        hash_string = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
+                        hashString = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
 
                         if matchType:
-                            logger.log("ALERT", "Malware Hash TYPE: %s HASH: %s FILE: %s DESC: %s" % ( matchType, matchHash, filePath, matchDesc))
+                            reasons.append("Malware Hash TYPE: %s HASH: %s SUBSCORE: 100 DESC: %s" % (
+                            matchType, matchHash, matchDesc))
+                            total_score += 100
 
                         # Regin .EVT FS Check
                         if len(fileData) > 11 and args.reginfs:
@@ -350,11 +352,11 @@ class Loki():
 
                         # Memory Dump Scan
                         if fileType == "MDMP":
-                            logger.log("INFO", "Scanning memory dump file %s" % filePath)
+                            logger.log("INFO", "Scanning memory dump file %s" % filePathCleaned)
 
                         # Umcompressed SWF scan
                         if fileType == "ZWS" or fileType == "CWS":
-                            logger.log("INFO", "Scanning decompressed SWF file %s" % filePath)
+                            logger.log("INFO", "Scanning decompressed SWF file %s" % filePathCleaned)
                             success, decompressedData = decompressSWFData(fileData)
                             if success:
                                fileData = decompressedData
@@ -362,23 +364,42 @@ class Loki():
                         # Scan the read data
                         try:
                             for (score, rule, description, matched_strings) in \
-                                    self.scan_data(fileData, fileType, removeNonAsciiDrop(filename),
-                                                   removeNonAscii(filePath), extension, md5):
-
+                                    self.scan_data(fileData, fileType, filePathCleaned,
+                                                   filePathCleaned, extension, md5):
                                 # Message
-                                message = "Yara Rule MATCH: %s TYPE: %s DESCRIPTION: %s FILE: %s FIRST_BYTES: %s %s " \
-                                          "MATCHES: %s" % \
-                                          (rule, fileType, description, filePath, first_bytes, hash_string,
-                                           matched_strings)
+                                message = "Yara Rule MATCH: %s SUBSCORE: %s DESCRIPTION: %s" % (rule, score, description)
+                                # Matches
+                                if matched_strings:
+                                    message += " MATCHES: %s" % matched_strings
 
-                                if score >= 75:
-                                    logger.log("ALERT", message)
-                                elif score >= 60:
-                                    logger.log("WARNING", message)
-                                elif score >= 40:
-                                    logger.log("NOTICE", message)
+                                total_score += score
+                                reasons.append(message)
+
                         except Exception, e:
-                            logger.log("ERROR", "Cannot YARA scan file: %s" % removeNonAsciiDrop(filePath))
+                            logger.log("ERROR", "Cannot YARA scan file: %s" % filePathCleaned)
+
+                    # Info Line -----------------------------------------------------------------------
+                    fileInfo = "FILE: %s SCORE: %s TYPE: %s SIZE: %s FIRST_BYTES: %s %s %s" % (
+                        filePath, total_score, fileType, fileSize, firstBytesString, hashString, getAgeString(filePath))
+
+                    # Now print the total result
+                    if total_score >= args.a:
+                        message_type = "ALERT"
+                    elif total_score >= args.w:
+                        message_type = "WARNING"
+                    elif total_score >= args.n:
+                        message_type = "NOTICE"
+
+                    if total_score < args.n:
+                        continue
+
+                    # Reasons to message body
+                    message_body = fileInfo
+                    for i, r in enumerate(reasons):
+                        if i < 2 or args.allresons:
+                            message_body += "REASON_{0}: {1}".format(i+1, r)
+
+                    logger.log(message_type, message_body)
 
                 except Exception, e:
                     if logger.debug:
@@ -1154,7 +1175,7 @@ class LokiLogger():
                 return
 
         # to stdout
-        self.log_to_stdout(message, mes_type)
+        self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type)
 
         # to file
         if not self.no_log_file:
@@ -1210,12 +1231,12 @@ class LokiLogger():
                 # Colorize Type Word at the beginning of the line
                 type_colorer = re.compile(r'([A-Z]{3,})', re.VERBOSE)
                 mes_type = type_colorer.sub(high_color+r'[\1]'+base_color, mes_type)
+                # Break Line before REASONS
+                linebreaker = re.compile('(MD5:|SHA1:|SHA256:|MATCHES:|FILE:|FIRST_BYTES:|DESCRIPTION:|REASON_[0-9]+)', re.VERBOSE)
+                message = linebreaker.sub(r'\n\1', message)
                 # Colorize Key Words
                 colorer = re.compile('([A-Z_0-9]{2,}:)\s', re.VERBOSE)
                 message = colorer.sub(key_color+Style.BRIGHT+r'\1 '+base_color+Style.NORMAL, message)
-                # Break Line before REASONS
-                linebreaker = re.compile('(MD5:|SHA1:|SHA256:|MATCHES:|FILE:|FIRST_BYTES:|DESCRIPTION:)', re.VERBOSE)
-                message = linebreaker.sub(r'\n\1', message)
 
                 # Print to console
                 if mes_type == "RESULT":
@@ -1223,7 +1244,7 @@ class LokiLogger():
                     print base_color,res_message,Back.BLACK
                     print Fore.WHITE,Style.NORMAL
                 else:
-                    print base_color,"\b\b%s %s" % (mes_type, message),Back.BLACK,Fore.WHITE,Style.NORMAL
+                    sys.stdout.write("%s\b\b%s %s%s%s%s\n" % (base_color, mes_type, message, Back.BLACK,Fore.WHITE,Style.NORMAL))
 
             except Exception, e:
                 traceback.print_exc()
@@ -1236,7 +1257,7 @@ class LokiLogger():
                 if self.csv:
                     logfile.write(u"{0},{1},{2},{3}\n".format(getSyslogTimestamp(),self.hostname,mes_type,message))
                 else:
-                    logfile.write(u"%s %s LOKI: %s\n" % (getSyslogTimestamp(), self.hostname, message))
+                    logfile.write(u"%s %s LOKI: %s: %s\n" % (getSyslogTimestamp(), self.hostname, mes_type.title(), message))
         except Exception, e:
             traceback.print_exc()
             print "Cannot print to log file {0}".format(self.log_file)
@@ -1245,19 +1266,21 @@ class LokiLogger():
         print Back.GREEN + " ".ljust(79) + Back.BLACK
 
         print Fore.GREEN
-        print "    _    ___  _  _____                             "
-        print "   | |  / _ \| |/ /_ _|                            "
-        print "   | |_| (_) | ' < | |                             "
-        print "   |____\___/|_|\_\___|                            "
-        print "    ___ ___   ___   ___                            "
-        print "   |_ _/ _ \ / __| / __| __ __ _ _ _  _ _  ___ _ _ "
-        print "    | | (_) | (__  \__ \/ _/ _` | ' \| ' \/ -_) '_|"
-        print "   |___\___/ \___| |___/\__\__,_|_||_|_||_\___|_|  "
-        print "                                                   "
+        print "      __    ____  __ __ ____                                    "
+        print "     / /   / __ \/ //_//  _/                                    "
+        print "    / /   / / / / ,<   / /                                      "
+        print "   / /___/ /_/ / /| |_/ /                                       "
+        print "  /_____/\____/_/ |_/___/                                       "
+        print "      ________  ______   _____                                  "
+        print "     /  _/ __ \/ ____/  / ___/_________ _____  ____  ___  _____ "
+        print "     / // / / / /       \__ \/ ___/ __ `/ __ \/ __ \/ _ \/ ___/ "
+        print "   _/ // /_/ / /___    ___/ / /__/ /_/ / / / / / / /  __/ /     "
+        print "  /___/\____/\____/   /____/\___/\__,_/_/ /_/_/ /_/\___/_/      "
+        print "                                                                "
 
         print Fore.WHITE
         print "   (C) Florian Roth"
-        print "   November 2016"
+        print "   December 2016"
         print "   Version %s" % __version__
         print "  "
         print "   DISCLAIMER - USE AT YOUR OWN RISK"
@@ -1322,7 +1345,11 @@ if __name__ == '__main__':
     parser.add_argument('-p', help='Path to scan', metavar='path', default='C:\\')
     parser.add_argument('-s', help='Maximum file size to check in KB (default 2048 KB)', metavar='kilobyte', default=2048)
     parser.add_argument('-l', help='Log file', metavar='log-file', default='loki.log')
+    parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
+    parser.add_argument('-w', help='Warning score', metavar='warning-level', default=70)
+    parser.add_argument('-n', help='Notice score', metavar='notice-level', default=40)
     parser.add_argument('--printAll', action='store_true', help='Print all files that are scanned', default=False)
+    parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
@@ -1406,6 +1433,7 @@ if __name__ == '__main__':
         loki.scan_path(defaultPath)
 
     # Result ----------------------------------------------------------
+    logger.log("NOTICE", "Results: {0} alerts, {1} warnings, {2} notices".format(logger.alerts, logger.warnings, logger.notices))
     if logger.alerts:
         logger.log("RESULT", "Indicators detected!")
         logger.log("RESULT", "Loki recommends checking the elements on Virustotal.com or Google and triage with a "
