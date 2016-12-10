@@ -94,32 +94,37 @@ Requirements for the Threat Intel receivers:
 
 # Usage
 
-    usage: loki.exe [-h] [-p path] [-s kilobyte] [-l log-file] [--printAll]
-                    [--noprocscan] [--nofilescan] [--noindicator] [--reginfs]
-                    [--dontwait] [--intense] [--csv] [--onlyrelevant] [--nolog]
-                    [--update] [--debug]
+    usage: loki.exe [-h] [-p path] [-s kilobyte] [-l log-file] [-a alert-level]
+                    [-w warning-level] [-n notice-level] [--printAll]
+                    [--allreasons] [--noprocscan] [--nofilescan] [--noindicator]
+                    [--reginfs] [--dontwait] [--intense] [--csv] [--onlyrelevant]
+                    [--nolog] [--update] [--debug]    
 
-    Loki - Simple IOC Scanner
+    Loki - Simple IOC Scanner    
 
     optional arguments:
-      -h, --help      show this help message and exit
-      -p path         Path to scan
-      -s kilobyte     Maximum file size to check in KB (default 2048 KB)
-      -l log-file     Log file
-      --printAll      Print all files that are scanned
-      --noprocscan    Skip the process scan
-      --nofilescan    Skip the file scan
-      --noindicator   Do not show a progress indicator
-      --reginfs       Do check for Regin virtual file system
-      --dontwait      Do not wait on exit
-      --intense       Intense scan mode (also scan unknown file types and all
-                      extensions)
-      --csv           Write CSV log format to STDOUT (machine prcoessing)
-      --onlyrelevant  Only print warnings or alerts
-      --nolog         Don't write a local log file
-      --update        Update the signatures from the "signature-base" sub
-                      repository
-      --debug         Debug output
+      -h, --help        show this help message and exit
+      -p path           Path to scan
+      -s kilobyte       Maximum file size to check in KB (default 2048 KB)
+      -l log-file       Log file
+      -a alert-level    Alert score
+      -w warning-level  Warning score
+      -n notice-level   Notice score
+      --printAll        Print all files that are scanned
+      --allreasons      Print all reasons that caused the score
+      --noprocscan      Skip the process scan
+      --nofilescan      Skip the file scan
+      --noindicator     Do not show a progress indicator
+      --reginfs         Do check for Regin virtual file system
+      --dontwait        Do not wait on exit
+      --intense         Intense scan mode (also scan unknown file types and all
+                        extensions)
+      --csv             Write CSV log format to STDOUT (machine prcoessing)
+      --onlyrelevant    Only print warnings or alerts
+      --nolog           Don't write a local log file
+      --update          Update the signatures from the "signature-base" sub
+                        repository
+      --debug           Debug output
 
 ## Signature and IOCs
 
@@ -218,15 +223,11 @@ optional arguments:
 
 Loki Scan
 
-![Screen](/screens/lokiscan2.png)
+![Screen](/screens/lokititle.png)
 
-Regin Matches
+Command Line Scan Output
 
-![Screen](/screens/lokiscan1.png)
-
-Regin False Positives
-
-![Screen](/screens/lokiscan3.png)
+![Screen](/screens/lokicmd.png)
 
 Hash based IOCs
 
