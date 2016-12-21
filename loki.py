@@ -24,7 +24,7 @@ BSK Consulting GmbH
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
 
-__version__ = '0.18.1'
+__version__ = '0.18.2'
 
 import os
 import argparse
@@ -405,8 +405,8 @@ class Loki():
                     # Reasons to message body
                     message_body = fileInfo
                     for i, r in enumerate(reasons):
-                        if i < 2 or args.allresons:
-                            message_body += "REASON_{0}: {1}".format(i+1, r)
+                        if i < 2 or args.allreasons:
+                            message_body += "REASON_{0}: {1}".format(i+1, r.encode('ascii', errors='replace'))
 
                     logger.log(message_type, message_body)
 
@@ -1039,6 +1039,11 @@ class Loki():
                                     self.false_hashes[hash.lower()] = comment
                             except Exception,e:
                                 logger.log("ERROR", "Cannot read line: %s" % line)
+
+                    # Debug
+                    if logger.debug:
+                        logger.log("DEBUG", "Initialized %s hash IOCs from file %s"
+                                   % (str(len(self.hashes_md5)+len(self.hashes_sha1)+len(self.hashes_sha256)), ioc_filename))
 
         except Exception, e:
             traceback.print_exc()
