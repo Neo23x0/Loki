@@ -274,7 +274,9 @@ To include the msvcr100.dll to improve the target os compatibility change the li
 # Use LOKI on Mac OS X
 
 - Download Yara sources from [here](https://github.com/plusvic/yara/releases/tag/v3.4.0)
-- Change to folder ```yara-python``` 
+- Install openssl (brew install openssl, then sudo cp -r /usr/local/Cellar/openssl/1.0.2h_1/include /usr/local)
+- ./build.sh
+- Change to folder ```yara-python```
 - Run ```python setup.py install```
 - Also install the requirement mentioned above by ```sudo pip install colorama```
 
