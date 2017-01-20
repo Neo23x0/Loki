@@ -276,9 +276,12 @@ To include the msvcr100.dll to improve the target os compatibility change the li
 - Download Yara sources from [here](https://github.com/plusvic/yara/releases/tag/v3.4.0)
 - Install openssl (brew install openssl, then sudo cp -r /usr/local/Cellar/openssl/1.0.2h_1/include /usr/local)
 - ./build.sh
+- sudo make install
 - Change to folder ```yara-python```
 - Run ```python setup.py install```
-- Also install the requirement mentioned above by ```sudo pip install colorama```
+- Also install the requirements, ```sudo pip install colorama``` gitpython, netaddr, pylzma etc...
+- Download and unpack https://github.com/Neo23x0/signature-base into Loki folder
+- cd loki folder, sudo python loki.py -p /
 
 # Antivirus - False Positives
 
