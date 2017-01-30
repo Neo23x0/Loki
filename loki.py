@@ -24,23 +24,26 @@ BSK Consulting GmbH
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
 
-__version__ = '0.18.2'
-
+import sys
 import os
 import argparse
 import traceback
-import yara
+import yara         # install 'yara-python' module not the outdated 'yara' module
 import re
 import stat
 import psutil
 import codecs
-from sets import Set
 import signal as signal_module
+import urllib2
+import zipfile
+import shutil
+from StringIO import StringIO
 from colorama import Fore, Back, Style
 from colorama import init
 from sys import platform as _platform
-from git import cmd, Repo
-import sys
+
+__version__ = '0.19.0'
+
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 from lib.helpers import *
@@ -76,6 +79,8 @@ EVIL_EXTENSIONS = [".asp", ".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat"
                    ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
                    ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm" ]
 
+UPDATE_URL = "https://github.com/Neo23x0/signature-base/archive/master.zip"
+
 # HASH_TYPES = ['PDF', 'Office', 'JAR', 'DOC', 'SWF', 'EXE']
 
 
@@ -104,8 +109,8 @@ class Loki():
     max_filetype_magics = 0
 
     # Predefined paths to skip (Linux platform)
-    LINUX_PATH_SKIPS_START = Set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux" ])
-    LINUX_PATH_SKIPS_END = Set(["/initctl"])
+    LINUX_PATH_SKIPS_START = set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux" ])
+    LINUX_PATH_SKIPS_END = set(["/initctl"])
 
     def __init__(self, intense_mode):
 
@@ -134,7 +139,7 @@ class Loki():
 
         # Linux excludes from mtab
         if platform == "linux":
-            self.startExcludes = self.LINUX_PATH_SKIPS_START | Set(getExcludedMountpoints())
+            self.startExcludes = self.LINUX_PATH_SKIPS_START | set(getExcludedMountpoints())
         # OSX excludes like Linux until we get some field data
         if platform == "osx":
             self.startExcludes = self.LINUX_PATH_SKIPS_START
@@ -1294,7 +1299,7 @@ class LokiLogger():
 
         print Fore.WHITE
         print "   (C) Florian Roth"
-        print "   December 2016"
+        print "   January 2017"
         print "   Version %s" % __version__
         print "  "
         print "   DISCLAIMER - USE AT YOUR OWN RISK"
@@ -1329,14 +1334,39 @@ def get_application_path():
 
 def update_signatures():
     try:
-        sig_dir = os.path.join(get_application_path(), './signature-base/')
-        if not os.path.exists(sig_dir):
-            clone_result = Repo.clone_from("https://github.com/Neo23x0/signature-base", sig_dir)
-            # print clone_result
-        else:
-            g = cmd.Git(sig_dir)
-            pull_result = g.pull("https://github.com/Neo23x0/signature-base")
-            # print pull_result
+        # Preparations
+        sigDir = os.path.join(get_application_path(), './signature-base/')
+        for outDir in ['', 'iocs', 'yara', 'misc']:
+            fullOutDir = os.path.join(sigDir, outDir)
+            if not os.path.exists(fullOutDir):
+                os.makedirs(fullOutDir)
+
+        # Downloading current repository
+        logger.log("INFO", "Downloading %s ..." % UPDATE_URL)
+        response = urllib2.urlopen(UPDATE_URL)
+
+        # Read ZIP file
+        zipUpdate = zipfile.ZipFile(StringIO(response.read()))
+        for zipFilePath in zipUpdate.namelist():
+            sigName = os.path.basename(zipFilePath)
+            if zipFilePath.endswith("/"):
+                continue
+            logger.log("DEBUG", "Extracting %s ..." % zipFilePath)
+            if "/iocs/" in zipFilePath and zipFilePath.endswith(".txt"):
+                targetFile = os.path.join(sigDir, "iocs", sigName)
+            elif "/yara/" in zipFilePath and zipFilePath.endswith(".yar"):
+                targetFile = os.path.join(sigDir, "yara", sigName)
+            elif "/misc/" in zipFilePath and zipFilePath.endswith(".txt"):
+                targetFile = os.path.join(sigDir, "misc", sigName)
+            else:
+                continue
+
+            # Extract file
+            source = zipUpdate.open(zipFilePath)
+            target = file(targetFile, "wb")
+            with source, target:
+                shutil.copyfileobj(source, target)
+
     except Exception, e:
         if args.debug:
             traceback.print_exc()
