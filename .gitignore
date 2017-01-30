@@ -4,3 +4,21 @@
 *.pkl
 
 tools/vt-checker_flo\.py
+
+*.log
+
+backup/base64-stats.py
+
+backup/loki copy.py
+
+build_sfx.bat
+loki.zip
+dist
+run_loki.bat
+*.exe
+test
+loki
+dummy
+tools/*.txt
+tools/*.db
+tools/*_flo.py
