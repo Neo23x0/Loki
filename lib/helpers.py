@@ -20,6 +20,7 @@ from StringIO import StringIO
 import netaddr
 import datetime
 import platform
+import time
 
 # Helper Functions -------------------------------------------------------------
 
@@ -31,8 +32,7 @@ def is_ip(string):
             return True
         return False
     except:
-        if logger.debug:
-            traceback.print_exc()
+        traceback.print_exc()
         return False
 
 
@@ -248,3 +248,31 @@ def getSyslogTimestamp():
     date_obj = datetime.datetime.utcnow()
     date_str = date_obj.strftime("%Y%m%dT%H:%M:%SZ")
     return date_str
+
+
+def getAge(filePath):
+    try:
+        stats=os.stat(filePath)
+
+        # Created
+        ctime=stats.st_ctime
+        # Modified
+        mtime=stats.st_mtime
+        # Accessed
+        atime=stats.st_atime
+
+    except Exception, e:
+        # traceback.print_exc()
+        return (0, 0, 0)
+
+    # print "%s %s %s" % ( ctime, mtime, atime )
+    return (ctime, mtime, atime)
+
+def getAgeString(filePath):
+    ( ctime, mtime, atime ) = getAge(filePath)
+    timestring = ""
+    try:
+        timestring = "CREATED: %s MODIFIED: %s ACCESSED: %s" % ( time.ctime(ctime), time.ctime(mtime), time.ctime(atime) )
+    except Exception,e:
+        timestring = "CREATED: not_available MODIFIED: not_available ACCESSED: not_available"
+    return timestring

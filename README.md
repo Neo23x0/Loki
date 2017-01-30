@@ -26,11 +26,16 @@ Additional Checks:
 
 The Windows binary is compiled with PyInstaller 2.1 and should run as x86 application on both x86 and x64 based systems.
 
+### Download
+
+Download the latest version of LOKI from the [releases](https://github.com/Neo23x0/Loki/releases) section.
+
 ## How-To Run LOKI and Analyse the Reports
 
 ### Run
 
-  - Clone the LOKI repository (if you download LOKI as ZIP file, make sure to download the sub-repository [signature-base"](https://github.com/Neo23x0/signature-base) as well and place it in the respective subfolder)
+  - Download the latest LOKI version from the [releases](https://github.com/Neo23x0/Loki/releases) section
+  - Run it once to retrieve the latest signature base repository
   - Provide the folder to a target system that should be scanned: removable media, network share, folder on target system
   - Right-click on loki.exe and select "Run as Administrator" or open a command line "cmd.exe" as Administrator and run it from there (you can also run LOKI without administrative privileges but some checks will be disabled and relevant objects on disk will not be accessible)
 
@@ -94,36 +99,41 @@ Requirements for the Threat Intel receivers:
 
 # Usage
 
-    usage: loki.exe [-h] [-p path] [-s kilobyte] [-l log-file] [--printAll]
-                    [--noprocscan] [--nofilescan] [--noindicator] [--reginfs]
-                    [--dontwait] [--intense] [--csv] [--onlyrelevant] [--nolog]
-                    [--update] [--debug]
+    usage: loki.exe [-h] [-p path] [-s kilobyte] [-l log-file] [-a alert-level]
+                    [-w warning-level] [-n notice-level] [--printAll]
+                    [--allreasons] [--noprocscan] [--nofilescan] [--noindicator]
+                    [--reginfs] [--dontwait] [--intense] [--csv] [--onlyrelevant]
+                    [--nolog] [--update] [--debug]    
 
-    Loki - Simple IOC Scanner
+    Loki - Simple IOC Scanner    
 
     optional arguments:
-      -h, --help      show this help message and exit
-      -p path         Path to scan
-      -s kilobyte     Maximum file size to check in KB (default 2048 KB)
-      -l log-file     Log file
-      --printAll      Print all files that are scanned
-      --noprocscan    Skip the process scan
-      --nofilescan    Skip the file scan
-      --noindicator   Do not show a progress indicator
-      --reginfs       Do check for Regin virtual file system
-      --dontwait      Do not wait on exit
-      --intense       Intense scan mode (also scan unknown file types and all
-                      extensions)
-      --csv           Write CSV log format to STDOUT (machine prcoessing)
-      --onlyrelevant  Only print warnings or alerts
-      --nolog         Don't write a local log file
-      --update        Update the signatures from the "signature-base" sub
-                      repository
-      --debug         Debug output
+      -h, --help        show this help message and exit
+      -p path           Path to scan
+      -s kilobyte       Maximum file size to check in KB (default 2048 KB)
+      -l log-file       Log file
+      -a alert-level    Alert score
+      -w warning-level  Warning score
+      -n notice-level   Notice score
+      --printAll        Print all files that are scanned
+      --allreasons      Print all reasons that caused the score
+      --noprocscan      Skip the process scan
+      --nofilescan      Skip the file scan
+      --noindicator     Do not show a progress indicator
+      --reginfs         Do check for Regin virtual file system
+      --dontwait        Do not wait on exit
+      --intense         Intense scan mode (also scan unknown file types and all
+                        extensions)
+      --csv             Write CSV log format to STDOUT (machine prcoessing)
+      --onlyrelevant    Only print warnings or alerts
+      --nolog           Don't write a local log file
+      --update          Update the signatures from the "signature-base" sub
+                        repository
+      --debug           Debug output
 
 ## Signature and IOCs
 
-Since version 0.15 the Yara signatures reside in the sub-repository [signature-base](https://github.com/Neo23x0/signature-base). You will not get the sub-repository by downloading the LOKI as ZIP file. It will be included when you clone the repository. 
+Since version 0.15 the Yara signatures reside in the sub-repository [signature-base](https://github.com/Neo23x0/signature-base). You can just download the LOKI release ZIP archive and run LOKI once to download the 'signature-base' sub repository with all the signatures. 
 
 The IOC files for hashes and filenames are stored in the './signature-base/iocs' folder. All '.yar' files placed in the './signature-base/yara' folder will be initialized together with the rule set that is already included. Use the 'score' value to define the level of the message upon a signature match. 
 
@@ -218,15 +228,11 @@ optional arguments:
 
 Loki Scan
 
-![Screen](/screens/lokiscan2.png)
+![Screen](/screens/lokititle.png)
 
-Regin Matches
+Command Line Scan Output
 
-![Screen](/screens/lokiscan1.png)
-
-Regin False Positives
-
-![Screen](/screens/lokiscan3.png)
+![Screen](/screens/lokicmd.png)
 
 Hash based IOCs
 
@@ -268,9 +274,14 @@ To include the msvcr100.dll to improve the target os compatibility change the li
 # Use LOKI on Mac OS X
 
 - Download Yara sources from [here](https://github.com/plusvic/yara/releases/tag/v3.4.0)
-- Change to folder ```yara-python``` 
+- Install openssl (brew install openssl, then sudo cp -r /usr/local/Cellar/openssl/1.0.2h_1/include /usr/local)
+- ./build.sh
+- sudo make install
+- Change to folder ```yara-python```
 - Run ```python setup.py install```
-- Also install the requirement mentioned above by ```sudo pip install colorama```
+- Also install the requirements, ```sudo pip install colorama``` gitpython, netaddr, pylzma etc...
+- Download and unpack https://github.com/Neo23x0/signature-base into Loki folder
+- cd loki folder, sudo python loki.py -p /
 
 # Antivirus - False Positives
 
