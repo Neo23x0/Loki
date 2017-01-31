@@ -1334,38 +1334,58 @@ def get_application_path():
 
 def update_signatures():
     try:
-        # Preparations
-        sigDir = os.path.join(get_application_path(), './signature-base/')
-        for outDir in ['', 'iocs', 'yara', 'misc']:
-            fullOutDir = os.path.join(sigDir, outDir)
-            if not os.path.exists(fullOutDir):
-                os.makedirs(fullOutDir)
 
         # Downloading current repository
-        logger.log("INFO", "Downloading %s ..." % UPDATE_URL)
-        response = urllib2.urlopen(UPDATE_URL)
+        try:
+            logger.log("INFO", "Downloading %s ..." % UPDATE_URL)
+            response = urllib2.urlopen(UPDATE_URL)
+        except Exception, e:
+            if args.debug:
+                traceback.print_exc()
+            logger.log("ERROR", "Error downloading the signature database - check your Internet connection")
+            sys.exit(1)
+
+        # Preparations
+        try:
+            sigDir = os.path.join(get_application_path(), './signature-base/')
+            for outDir in ['', 'iocs', 'yara', 'misc']:
+                fullOutDir = os.path.join(sigDir, outDir)
+                if not os.path.exists(fullOutDir):
+                    os.makedirs(fullOutDir)
+        except Exception, e:
+            if args.debug:
+                traceback.print_exc()
+            logger.log("ERROR", "Error while creating the signature-base directories")
+            sys.exit(1)
 
         # Read ZIP file
-        zipUpdate = zipfile.ZipFile(StringIO(response.read()))
-        for zipFilePath in zipUpdate.namelist():
-            sigName = os.path.basename(zipFilePath)
-            if zipFilePath.endswith("/"):
-                continue
-            logger.log("DEBUG", "Extracting %s ..." % zipFilePath)
-            if "/iocs/" in zipFilePath and zipFilePath.endswith(".txt"):
-                targetFile = os.path.join(sigDir, "iocs", sigName)
-            elif "/yara/" in zipFilePath and zipFilePath.endswith(".yar"):
-                targetFile = os.path.join(sigDir, "yara", sigName)
-            elif "/misc/" in zipFilePath and zipFilePath.endswith(".txt"):
-                targetFile = os.path.join(sigDir, "misc", sigName)
-            else:
-                continue
+        try:
+            zipUpdate = zipfile.ZipFile(StringIO(response.read()))
+            for zipFilePath in zipUpdate.namelist():
+                sigName = os.path.basename(zipFilePath)
+                if zipFilePath.endswith("/"):
+                    continue
+                logger.log("DEBUG", "Extracting %s ..." % zipFilePath)
+                if "/iocs/" in zipFilePath and zipFilePath.endswith(".txt"):
+                    targetFile = os.path.join(sigDir, "iocs", sigName)
+                elif "/yara/" in zipFilePath and zipFilePath.endswith(".yar"):
+                    targetFile = os.path.join(sigDir, "yara", sigName)
+                elif "/misc/" in zipFilePath and zipFilePath.endswith(".txt"):
+                    targetFile = os.path.join(sigDir, "misc", sigName)
+                else:
+                    continue
 
-            # Extract file
-            source = zipUpdate.open(zipFilePath)
-            target = file(targetFile, "wb")
-            with source, target:
-                shutil.copyfileobj(source, target)
+                # Extract file
+                source = zipUpdate.open(zipFilePath)
+                target = file(targetFile, "wb")
+                with source, target:
+                    shutil.copyfileobj(source, target)
+
+        except Exception, e:
+            if args.debug:
+                traceback.print_exc()
+            logger.log("ERROR", "Error while extracting the signature files from the download package")
+            sys.exit(1)
 
     except Exception, e:
         if args.debug:
