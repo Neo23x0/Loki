@@ -42,7 +42,7 @@ from colorama import Fore, Back, Style
 from colorama import init
 from sys import platform as _platform
 
-__version__ = '0.19.0'
+__version__ = '0.19.1'
 
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
@@ -1299,7 +1299,7 @@ class LokiLogger():
 
         print Fore.WHITE
         print "   (C) Florian Roth"
-        print "   January 2017"
+        print "   February 2017"
         print "   Version %s" % __version__
         print "  "
         print "   DISCLAIMER - USE AT YOUR OWN RISK"
@@ -1374,6 +1374,10 @@ def update_signatures():
                     targetFile = os.path.join(sigDir, "misc", sigName)
                 else:
                     continue
+
+                # New file
+                if not os.path.exists(targetFile):
+                    logger.log("INFO", "New signature file: %s" % sigName)
 
                 # Extract file
                 source = zipUpdate.open(zipFilePath)
