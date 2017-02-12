@@ -415,7 +415,7 @@ if __name__ == '__main__':
         else:
             print "[-] No cache database found"
             print "[+] Analyzed IPs/domains will be written to cache database: {0}".format(args.c)
-        print "[+] You can always interrupt the scan by pressing CTRL+C without loosing the scan state"
+        print "[+] You can always interrupt the scan by pressing CTRL+C without losing the scan state"
     
     # Open input file
     try:
