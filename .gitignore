@@ -22,3 +22,4 @@ dummy
 tools/*.txt
 tools/*.db
 tools/*_flo.py
+*.xlsx
