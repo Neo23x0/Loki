@@ -2,16 +2,15 @@
 """Checks Hashes read from an input file on Virustotal"""
 
 __AUTHOR__ = 'Florian Roth'
-__VERSION__ = "0.5 February 2017"
+__VERSION__ = "0.6 February 2017"
 
 """
+Modified by Hannah Ward: clean up, removal of simplejson, urllib2 with requests
+
 Install dependencies with:
-pip install simplejson bs4 colorama pickle
+pip install requests bs4 colorama
 """
 
-import simplejson
-import urllib
-import urllib2
 import time
 import re
 import os
@@ -64,14 +63,12 @@ def process_permalink(url, debug=False):
     """
     headers = {'User-Agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
                'Referrer': 'https://www.virustotal.com/en/'}
-    request = urllib2.Request(url, None, headers)
     info = {'filenames': ['-'], 'firstsubmission': '-', 'harmless': False, 'signed': False, 'revoked': False,
             'expired': False, 'mssoft': False}
     try:
-        response = urllib2.urlopen(request)
-        source_code = response.read()
+        source_code = requests.get(url, headers=headers)
         # Extract info from source code
-        soup = BeautifulSoup(source_code, 'html.parser')
+        soup = BeautifulSoup(source_code.text, 'html.parser')
         # Get file names
         elements = soup.find_all('td')
         for i, row in enumerate(elements):
@@ -190,11 +187,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         success = False
         while not success:
             try:
-                data = urllib.urlencode(parameters)
-                req = urllib2.Request(URL, data)
-                response = urllib2.urlopen(req)
-                json = response.read()
-                response_dict = simplejson.loads(json)
+                response_dict = requests.get(parameters, params=parameters).json()
                 success = True
             except Exception, e:
                 if debug:
@@ -214,7 +207,6 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         md5 = "-"
         sha1 = "-"
         sha256 = "-"
-        # print simplejson.dumps(response_dict, sort_keys=True, indent=4)
         if response_dict.get("response_code") > 0:
             # Hashes
             md5 = response_dict.get("md5")
