@@ -11,6 +11,7 @@ Install dependencies with:
 pip install requests bs4 colorama
 """
 
+import requests
 import time
 import re
 import os
@@ -187,7 +188,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         success = False
         while not success:
             try:
-                response_dict = requests.get(parameters, params=parameters).json()
+                response_dict = requests.get(URL, params=parameters).json()
                 success = True
             except Exception, e:
                 if debug:
