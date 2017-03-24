@@ -2,7 +2,7 @@
 """Checks Hashes read from an input file on Virustotal"""
 
 __AUTHOR__ = 'Florian Roth'
-__VERSION__ = "0.6 February 2017"
+__VERSION__ = "0.7 March 2017"
 
 """
 Modified by Hannah Ward: clean up, removal of simplejson, urllib2 with requests
@@ -208,6 +208,12 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         md5 = "-"
         sha1 = "-"
         sha256 = "-"
+        harmless = ""
+        signed = ""
+        revoked = ""
+        expired = ""
+        mssoft = ""
+
         if response_dict.get("response_code") > 0:
             # Hashes
             md5 = response_dict.get("md5")
@@ -246,24 +252,21 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             result = "%s / %s" % (response_dict.get("positives"), response_dict.get("total"))
             print_highlighted("VIRUS: {0}".format(virus))
             print_highlighted("FILENAMES: {0}".format(filenames))
-            print_highlighted("FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(first_submitted, last_submitted))
+            print_highlighted("FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(first_submitted, last_submitte))
 
+            # Perlaink analysis results
+            if info['harmless']:
+                harmless = " HARMLESS"
+            if info['signed']:
+                signed = " SIGNED"
+            if info['revoked']:
+                revoked = " SIG_REVOKED"
+            if info['expired']:
+                expired = " SIG_EXPIRED"
+            if info["mssoft"]:
+                mssoft = "MS_SOFTWARE_CATALOGUE"
+                
         # Print the highlighted result line
-        harmless = ""
-        signed = ""
-        revoked = ""
-        expired = ""
-        mssoft = ""
-        if info['harmless']:
-            harmless = " HARMLESS"
-        if info['signed']:
-            signed = " SIGNED"
-        if info['revoked']:
-            revoked = " SIG_REVOKED"
-        if info['expired']:
-            expired = " SIG_EXPIRED"
-        if info["mssoft"]:
-            mssoft = "MS_SOFTWARE_CATALOGUE"
         print_highlighted("RESULT: %s %s%s%s%s%s" % (result, harmless, signed, revoked, expired, mssoft),
                           hl_color=res_color)
 
