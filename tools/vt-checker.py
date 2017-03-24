@@ -252,7 +252,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             result = "%s / %s" % (response_dict.get("positives"), response_dict.get("total"))
             print_highlighted("VIRUS: {0}".format(virus))
             print_highlighted("FILENAMES: {0}".format(filenames))
-            print_highlighted("FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(first_submitted, last_submitte))
+            print_highlighted("FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(first_submitted, last_submitted))
 
             # Perlaink analysis results
             if info['harmless']:
