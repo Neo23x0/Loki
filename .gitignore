@@ -4,3 +4,9 @@
 *.pkl
 
 tools/vt-checker_flo\.py
+
+\.idea/
+
+loki\.log
+
+*.pyc
