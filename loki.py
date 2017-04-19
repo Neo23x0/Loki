@@ -809,7 +809,7 @@ class Loki():
 
                     # Full list
                     connection_count += 1
-                    logger.log("NOTICE", "Established conenction PID: %s NAME: %s COMMAND: %s LIP: %s LPORT: %s RIP: %s RPORT: %s" % (
+                    logger.log("NOTICE", "Established connection PID: %s NAME: %s COMMAND: %s LIP: %s LPORT: %s RIP: %s RPORT: %s" % (
                         str(pid), name, command, str(x.laddr[0]), str(x.laddr[1]), str(x.raddr[0]), str(x.raddr[1]) ))
 
                 # Maximum connection output
