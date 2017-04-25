@@ -42,11 +42,12 @@ from colorama import Fore, Back, Style
 from colorama import init
 from sys import platform as _platform
 
-__version__ = '0.19.1'
+__version__ = '0.20.1'
 
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 from lib.helpers import *
+from lib.doublepulsar import DoublePulsar
 
 # Platform
 platform = ""
@@ -123,7 +124,7 @@ class Loki():
         # Check if signature database is present
         sig_dir = os.path.join(self.app_path, "./signature-base/")
         if not os.path.exists(sig_dir) or os.listdir(sig_dir) == []:
-            logger.log("WARNING", "The 'signature-base' subdirectory doesn't exist or is empty. "
+            logger.log("NOTICE", "The 'signature-base' subdirectory doesn't exist or is empty. "
                                   "Trying to retrieve the signature database automatically.")
             success_init = update_signatures()
             if success_init:
@@ -823,6 +824,37 @@ class Loki():
             logger.log("INFO",
                 "Process %s does not exist anymore or cannot be accessed" % str(pid))
 
+    def check_rootkit(self):
+
+        logger.log("INFO", "Checking for Backdoors ...")
+
+        dp = DoublePulsar(ip="127.0.0.1", timeout=None, verbose=args.debug)
+
+        logger.log("INFO", "Checking for Double Pulsar RDP Backdoor")
+        try:
+            dp_rdp_result, message = dp.check_ip_rdp()
+            if dp_rdp_result:
+                logger.log("ALERT", message)
+            else:
+                logger.log("INFO", "Double Pulsar RDP check RESULT: %s" % message)
+        except Exception, e:
+            logger.log("INFO", "Double Pulsar RDP check failed RESULT: Connection failure")
+            if args.debug:
+                traceback.print_exc()
+
+        logger.log("INFO", "Checking for Double Pulsar SMB Backdoor")
+        try:
+            dp_smb_result, message = dp.check_ip_smb()
+            if dp_smb_result:
+                logger.log("ALERT", message)
+            else:
+                logger.log("INFO", "Double Pulsar SMB check RESULT: %s" % message)
+        except Exception, e:
+            logger.log("INFO", "Double Pulsar SMB check failed RESULT: Connection failure")
+            if args.debug:
+                traceback.print_exc()
+
+
     def check_c2(self, remote_system):
         # IP - exact match
         if is_ip(remote_system):
@@ -1282,24 +1314,20 @@ class LokiLogger():
             print "Cannot print to log file {0}".format(self.log_file)
 
     def print_welcome(self):
-        print Back.GREEN + " ".ljust(79) + Back.BLACK
+        print Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN
 
-        print Fore.GREEN
-        print "      __    ____  __ __ ____                                    "
-        print "     / /   / __ \/ //_//  _/                                    "
-        print "    / /   / / / / ,<   / /                                      "
-        print "   / /___/ /_/ / /| |_/ /                                       "
-        print "  /_____/\____/_/ |_/___/                                       "
-        print "      ________  ______   _____                                  "
-        print "     /  _/ __ \/ ____/  / ___/_________ _____  ____  ___  _____ "
-        print "     / // / / / /       \__ \/ ___/ __ `/ __ \/ __ \/ _ \/ ___/ "
-        print "   _/ // /_/ / /___    ___/ / /__/ /_/ / / / / / / /  __/ /     "
-        print "  /___/\____/\____/   /____/\___/\__,_/_/ /_/_/ /_/\___/_/      "
-        print "                                                                "
+        print "      __   ____  __ ______                            "
+        print "     / /  / __ \/ //_/  _/                            "
+        print "    / /__/ /_/ / ,< _/ /                              "
+        print "   /____/\____/_/|_/___/                              "
+        print "      ________  _____  ____                           "
+        print "     /  _/ __ \/ ___/ / __/______ ____  ___  ___ ____ "
+        print "    _/ // /_/ / /__  _\ \/ __/ _ `/ _ \/ _ \/ -_) __/ "
+        print "   /___/\____/\___/ /___/\__/\_,_/_//_/_//_/\__/_/    "
 
         print Fore.WHITE
         print "   (C) Florian Roth"
-        print "   February 2017"
+        print "   April 2017"
         print "   Version %s" % __version__
         print "  "
         print "   DISCLAIMER - USE AT YOUR OWN RISK"
@@ -1425,6 +1453,7 @@ if __name__ == '__main__':
     parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
+    parser.add_argument('--norootkit', action='store_true', help='Skip the rootkit check', default=False)
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
     parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
     parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
@@ -1495,6 +1524,10 @@ if __name__ == '__main__':
             loki.scan_processes()
         else:
             logger.log("NOTICE", "Skipping process memory check. User has no admin rights.")
+
+    # Scan for Rootkits -----------------------------------------------
+    if not args.norootkit and platform == "windows":
+        loki.check_rootkit()
 
     # Scan Path -------------------------------------------------------
     # Set default
