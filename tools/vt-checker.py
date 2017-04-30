@@ -2,16 +2,16 @@
 """Checks Hashes read from an input file on Virustotal"""
 
 __AUTHOR__ = 'Florian Roth'
-__VERSION__ = "0.4 October 2016"
+__VERSION__ = "0.7 March 2017"
 
 """
+Modified by Hannah Ward: clean up, removal of simplejson, urllib2 with requests
+
 Install dependencies with:
-pip install simplejson bs4 colorama pickle
+pip install requests bs4 colorama
 """
 
-import simplejson
-import urllib
-import urllib2
+import requests
 import time
 import re
 import os
@@ -24,7 +24,7 @@ import argparse
 from colorama import init, Fore, Back, Style
 
 URL = r'https://www.virustotal.com/vtapi/v2/file/report'
-VENDORS = ['Microsoft', 'Kaspersky', 'McAfee']
+VENDORS = ['Microsoft', 'Kaspersky', 'McAfee', 'CrowdStrike Falcon (ML)']
 API_KEY = ''
 WAIT_TIME = 15  # Public API allows 4 request per minute, so we wait 15 secs by default
 
@@ -44,6 +44,14 @@ def print_highlighted(line, hl_color=Back.WHITE):
     """
     Print a highlighted line
     """
+    # Tags
+    colorer = re.compile('(HARMLESS|SIGNED|MS_SOFTWARE_CATALOGUE)', re.VERBOSE)
+    line = colorer.sub(Fore.BLACK + Back.GREEN + r'\1' + Style.RESET_ALL + ' ', line)
+    colorer = re.compile('(SIG_REVOKED)', re.VERBOSE)
+    line = colorer.sub(Fore.BLACK + Back.RED + r'\1' + Style.RESET_ALL + ' ', line)
+    colorer = re.compile('(SIG_EXPIRED)', re.VERBOSE)
+    line = colorer.sub(Fore.BLACK + Back.YELLOW + r'\1' + Style.RESET_ALL + ' ', line)
+    # Standard
     colorer = re.compile('([A-Z_]{2,}:)\s', re.VERBOSE)
     line = colorer.sub(Fore.BLACK + hl_color + r'\1' + Style.RESET_ALL + ' ', line)
     print line
@@ -56,13 +64,12 @@ def process_permalink(url, debug=False):
     """
     headers = {'User-Agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
                'Referrer': 'https://www.virustotal.com/en/'}
-    request = urllib2.Request(url, None, headers)
-    info = {'filenames': ['-'], 'firstsubmission': '-'}
+    info = {'filenames': ['-'], 'firstsubmission': '-', 'harmless': False, 'signed': False, 'revoked': False,
+            'expired': False, 'mssoft': False}
     try:
-        response = urllib2.urlopen(request)
-        source_code = response.read()
+        source_code = requests.get(url, headers=headers)
         # Extract info from source code
-        soup = BeautifulSoup(source_code, 'html.parser')
+        soup = BeautifulSoup(source_code.text, 'html.parser')
         # Get file names
         elements = soup.find_all('td')
         for i, row in enumerate(elements):
@@ -77,6 +84,21 @@ def process_permalink(url, debug=False):
             if 'First submission' in text:
                 first_submission_raw = elements[i].text.strip().split("\n")
                 info['firstsubmission'] = first_submission_raw[1].strip()
+        # Harmless
+        if "Probably harmless!" in source_code:
+            info['harmless'] = True
+        # Signed
+        if "Signed file, verified signature" in source_code:
+            info['signed'] = True
+        # Revoked
+        if "revoked by its issuer" in source_code:
+            info['revoked'] = True
+        # Expired
+        if "Expired certificate" in source_code:
+            info['expired'] = True
+        # Microsoft Software
+        if "This file belongs to the Microsoft Corporation software catalogue." in source_code:
+            info['mssoft'] = True
     except Exception, e:
         if debug:
             traceback.print_exc()
@@ -166,11 +188,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         success = False
         while not success:
             try:
-                data = urllib.urlencode(parameters)
-                req = urllib2.Request(URL, data)
-                response = urllib2.urlopen(req)
-                json = response.read()
-                response_dict = simplejson.loads(json)
+                response_dict = requests.get(URL, params=parameters).json()
                 success = True
             except Exception, e:
                 if debug:
@@ -190,7 +208,12 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         md5 = "-"
         sha1 = "-"
         sha256 = "-"
-        # print simplejson.dumps(response_dict, sort_keys=True, indent=4)
+        harmless = ""
+        signed = ""
+        revoked = ""
+        expired = ""
+        mssoft = ""
+
         if response_dict.get("response_code") > 0:
             # Hashes
             md5 = response_dict.get("md5")
@@ -231,15 +254,32 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             print_highlighted("FILENAMES: {0}".format(filenames))
             print_highlighted("FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(first_submitted, last_submitted))
 
+            # Perlaink analysis results
+            if info['harmless']:
+                harmless = " HARMLESS"
+            if info['signed']:
+                signed = " SIGNED"
+            if info['revoked']:
+                revoked = " SIG_REVOKED"
+            if info['expired']:
+                expired = " SIG_EXPIRED"
+            if info["mssoft"]:
+                mssoft = "MS_SOFTWARE_CATALOGUE"
+                
         # Print the highlighted result line
-        print_highlighted("RESULT: %s" % result, hl_color=res_color)
+        print_highlighted("RESULT: %s %s%s%s%s%s" % (result, harmless, signed, revoked, expired, mssoft),
+                          hl_color=res_color)
 
         # Add to log file
         if not nocsv:
-            result_line = "{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10}\n".format(hash, rating, comment, positives,
-                                                                                  virus, filenames, first_submitted,
-                                                                                  last_submitted,
-                                                                                  md5, sha1, sha256)
+            result_line = "{0};{1};{2};{3};{4};{5};{6};{7};" \
+                          "{8};{9};{10};{11};{12};{13};{14}\n".format(hash, rating, comment, positives,
+                                                                      virus, filenames,
+                                                                      first_submitted,
+                                                                      last_submitted,
+                                                                      md5, sha1, sha256,
+                                                                      harmless.lstrip(' '), signed.lstrip(' '),
+                                                                      revoked.lstrip(' '), expired.lstrip(' '))
             with open(result_file, "a") as fh_results:
                 fh_results.write(result_line)
 
@@ -256,10 +296,14 @@ if __name__ == '__main__':
     init(autoreset=False)
 
     print Style.RESET_ALL
-    print Fore.BLACK + Back.WHITE
+    print Fore.WHITE + Back.BLUE
     print " ".ljust(80)
-    print " Virustotal Online Checker".ljust(80)
-    print (" " + __AUTHOR__ + " - " + __VERSION__ + "").ljust(80)
+    print "   _   ________  _______           __           ".ljust(80)
+    print "  | | / /_  __/ / ___/ /  ___ ____/ /_____ ____ ".ljust(80)
+    print "  | |/ / / /   / /__/ _ \/ -_) __/  '_/ -_) __/ ".ljust(80)
+    print "  |___/ /_/    \___/_//_/\__/\__/_/\_\\__/_/    ".ljust(80)
+    print "                                               ".ljust(80)
+    print ("  " + __AUTHOR__ + " - " + __VERSION__ + "").ljust(80)
     print " ".ljust(80) + Style.RESET_ALL
     print Style.RESET_ALL + " "
 
@@ -302,7 +346,7 @@ if __name__ == '__main__':
         else:
             print "[-] No cache database found"
             print "[+] Analyzed hashes will be written to cache database: {0}".format(args.c)
-        print "[+] You can always interrupt the scan by pressing CTRL+C without loosing the scan state"
+        print "[+] You can always interrupt the scan by pressing CTRL+C without losing the scan state"
 
     # Open input file
     try:
@@ -324,7 +368,7 @@ if __name__ == '__main__':
             try:
                 with open(result_file, 'w') as fh_results:
                     fh_results.write("Lookup Hash;Rating;Comment;Positives;Virus;File Names;First Submitted;"
-                                     "Last Submitted;MD5;SHA1;SHA256\n")
+                                     "Last Submitted;MD5;SHA1;SHA256;Harmless;Signed;Revoked;Expired\n")
             except Exception, e:
                 print "[E] Cannot write export file {0}".format(result_file)
 
