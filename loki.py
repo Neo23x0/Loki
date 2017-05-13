@@ -42,7 +42,7 @@ from colorama import Fore, Back, Style
 from colorama import init
 from sys import platform as _platform
 
-__version__ = '0.20.1'
+__version__ = '0.20.2'
 
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
@@ -78,7 +78,7 @@ EVIL_EXTENSIONS = [".asp", ".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat"
                    ".reg", ".scr", ".sct", ".sys", ".url", ".vb", ".vbe", ".vbs", ".wsc", ".wsf", ".wsh", ".ct", ".t",
                    ".input", ".war", ".jsp", ".php", ".asp", ".aspx", ".doc", ".docx", ".pdf", ".xls", ".xlsx", ".ppt",
                    ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
-                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm" ]
+                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm"]
 
 UPDATE_URL = "https://github.com/Neo23x0/signature-base/archive/master.zip"
 
@@ -1444,7 +1444,7 @@ if __name__ == '__main__':
     # Parse Arguments
     parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
     parser.add_argument('-p', help='Path to scan', metavar='path', default='C:\\')
-    parser.add_argument('-s', help='Maximum file size to check in KB (default 2048 KB)', metavar='kilobyte', default=2048)
+    parser.add_argument('-s', help='Maximum file size to check in KB (default 4096 KB)', metavar='kilobyte', default=4096)
     parser.add_argument('-l', help='Log file', metavar='log-file', default='loki.log')
     parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
     parser.add_argument('-w', help='Warning score', metavar='warning-level', default=70)
