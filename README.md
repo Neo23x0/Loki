@@ -72,13 +72,16 @@ Loki is the new generic scanner that combines most of the features from my recen
 ## Requirements
 
 No requirements if you use the compiled EXE.
-
 If you want to build it yourself:
 
-- [yara](http://goo.gl/PQjmsf) : It's recommended to use the most recent version of the compiled packages for Windows (x86) - Download it from here: http://goo.gl/PQjmsf
-- [colorama](https://pypi.python.org/pypi/colorama) : to color it up
-- [psutil](https://pypi.python.org/pypi/psutil) : process checks
-- [pylzma] (https://pypi.python.org/pypi/pylzma/)
+### Linux or OS X
+
+- [yara](https://github.com/VirusTotal/yara/) : just use the latest release source code, compile and install it
+- Some Python packages: pip install psutil netaddr pylzma colorama
+
+### Windows
+
+- [yara](https://github.com/VirusTotal/yara/) : It's recommended to use the most recent version of the compiled packages for Windows (e.g. yara-python-3.5.0.0.win32-py2.7.exe - Download it from here: https://github.com/VirusTotal/yara/releases
 - [pywin32](http://sourceforge.net/projects/pywin32/) : path conversions (PyInstaller [issue](https://github.com/pyinstaller/pyinstaller/issues/1282); Windows only)
 - Microsoft Visual C++ 2010 Redistributable Package (https://www.microsoft.com/en-US/download/details.aspx?id=5555)
 - Microsoft Visual C++ Compiler for Python 2.7 (https://www.microsoft.com/en-us/download/details.aspx?id=44266): for pylzma
@@ -92,7 +95,7 @@ c:\Python27\Scripts\pip.exe install path\to\colorama-0.3.6-py2.py3-none-any.whl
 c:\Python27\Scripts\pip.exe install pylzma
 ```
 
-Requirements for the Threat Intel receivers:
+### Requirements for the Threat Intel Receivers
 
 - [OTX Python SDK](https://github.com/AlienVault-Labs/OTX-Python-SDK)
 - [pyMISP](https://github.com/CIRCL/PyMISP)
