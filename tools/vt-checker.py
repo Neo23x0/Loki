@@ -26,7 +26,7 @@ from colorama import init, Fore, Back, Style
 URL = r'https://www.virustotal.com/vtapi/v2/file/report'
 VENDORS = ['Microsoft', 'Kaspersky', 'McAfee', 'CrowdStrike', 'TrendMicro', 
            'ESET-NOD32', 'Symantec', 'F-Secure', 'BitDefender', 'Sophos', 'GData']
-API_KEY = '-'
+API_KEY = ''
 WAIT_TIME = 15  # Public API allows 4 request per minute, so we wait 15 secs by default
 
 
