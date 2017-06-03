@@ -24,8 +24,9 @@ import argparse
 from colorama import init, Fore, Back, Style
 
 URL = r'https://www.virustotal.com/vtapi/v2/file/report'
-VENDORS = ['Microsoft', 'Kaspersky', 'McAfee', 'CrowdStrike Falcon (ML)']
-API_KEY = ''
+VENDORS = ['Microsoft', 'Kaspersky', 'McAfee', 'CrowdStrike', 'TrendMicro', 
+           'ESET-NOD32', 'Symantec', 'F-Secure', 'BitDefender', 'Sophos', 'GData']
+API_KEY = '-'
 WAIT_TIME = 15  # Public API allows 4 request per minute, so we wait 15 secs by default
 
 
@@ -162,29 +163,29 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             continue
 
         # Remove line break
-        line.rstrip("\n\r\l")
+        line.rstrip("\n\r")
 
         # Get all hashes in line
         # ... and the rest of the line as comment
-        hash, comment = fetch_hash(line)
+        hashVal, comment = fetch_hash(line)
 
         # If no hash found
-        if hash == '':
+        if hashVal == '':
             continue
 
         # Cache
-        if hash in cache:
+        if hashVal in cache:
             if dups:
                 # Colorized head of each hash check
-                print_highlighted("\nHASH: {0} COMMENT: {1}".format(hash, comment))
-                print_highlighted("RESULT: %s (from cache)" % cache[hash])
+                print_highlighted("\nHASH: {0} COMMENT: {1}".format(hashVal, comment))
+                print_highlighted("RESULT: %s (from cache)" % cache[hashVal])
             continue
         else:
             # Colorized head of each hash check
-            print_highlighted("\nHASH: {0} COMMENT: {1}".format(hash, comment))
+            print_highlighted("\nHASH: {0} COMMENT: {1}".format(hashVal, comment))
 
         # Prepare VT API request
-        parameters = {"resource": hash, "apikey": API_KEY}
+        parameters = {"resource": hashVal, "apikey": API_KEY}
         success = False
         while not success:
             try:
@@ -213,6 +214,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         revoked = ""
         expired = ""
         mssoft = ""
+        vendor_result_string = "-"
 
         if response_dict.get("response_code") > 0:
             # Hashes
@@ -226,10 +228,17 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             # Virus Name
             scans = response_dict.get("scans")
             virus_names = []
+            vendor_results = []
             for vendor in VENDORS:
                 if vendor in scans:
                     if scans[vendor]["result"]:
                         virus_names.append("{0}: {1}".format(vendor, scans[vendor]["result"]))
+                        vendor_results.append(scans[vendor]["result"])
+                    else:
+                        vendor_results.append("-")
+                else:
+                    vendor_results.append("-")
+            vendor_result_string = ";".join(vendor_results)
             if len(virus_names) > 0:
                 virus = " / ".join(virus_names)
             # Type
@@ -252,9 +261,10 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             result = "%s / %s" % (response_dict.get("positives"), response_dict.get("total"))
             print_highlighted("VIRUS: {0}".format(virus))
             print_highlighted("FILENAMES: {0}".format(filenames))
-            print_highlighted("FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(first_submitted, last_submitted))
+            print_highlighted("FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(
+                first_submitted, last_submitted))
 
-            # Perlaink analysis results
+            # Permalink analysis results
             if info['harmless']:
                 harmless = " HARMLESS"
             if info['signed']:
@@ -265,7 +275,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
                 expired = " SIG_EXPIRED"
             if info["mssoft"]:
                 mssoft = "MS_SOFTWARE_CATALOGUE"
-                
+
         # Print the highlighted result line
         print_highlighted("RESULT: %s %s%s%s%s%s" % (result, harmless, signed, revoked, expired, mssoft),
                           hl_color=res_color)
@@ -273,18 +283,19 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         # Add to log file
         if not nocsv:
             result_line = "{0};{1};{2};{3};{4};{5};{6};{7};" \
-                          "{8};{9};{10};{11};{12};{13};{14}\n".format(hash, rating, comment, positives,
-                                                                      virus, filenames,
-                                                                      first_submitted,
-                                                                      last_submitted,
-                                                                      md5, sha1, sha256,
-                                                                      harmless.lstrip(' '), signed.lstrip(' '),
-                                                                      revoked.lstrip(' '), expired.lstrip(' '))
+                          "{8};{9};{10};{11};{12};{13};{14};{15}\n".format(hashVal, rating, comment, positives,
+                                                                           virus, filenames,
+                                                                           first_submitted,
+                                                                           last_submitted,
+                                                                           md5, sha1, sha256,
+                                                                           harmless.lstrip(' '), signed.lstrip(' '),
+                                                                           revoked.lstrip(' '), expired.lstrip(' '),
+                                                                           vendor_result_string)
             with open(result_file, "a") as fh_results:
                 fh_results.write(result_line)
 
         # Add to hash cache
-        cache[hash] = result
+        cache[hashVal] = result
 
         # Wait some time for the next request
         time.sleep(WAIT_TIME)
@@ -301,7 +312,7 @@ if __name__ == '__main__':
     print "   _   ________  _______           __           ".ljust(80)
     print "  | | / /_  __/ / ___/ /  ___ ____/ /_____ ____ ".ljust(80)
     print "  | |/ / / /   / /__/ _ \/ -_) __/  '_/ -_) __/ ".ljust(80)
-    print "  |___/ /_/    \___/_//_/\__/\__/_/\_\\__/_/    ".ljust(80)
+    print "  |___/ /_/    \___/_//_/\\__/\__/_/\_\\__/_/    ".ljust(80)
     print "                                               ".ljust(80)
     print ("  " + __AUTHOR__ + " - " + __VERSION__ + "").ljust(80)
     print " ".ljust(80) + Style.RESET_ALL
@@ -368,7 +379,8 @@ if __name__ == '__main__':
             try:
                 with open(result_file, 'w') as fh_results:
                     fh_results.write("Lookup Hash;Rating;Comment;Positives;Virus;File Names;First Submitted;"
-                                     "Last Submitted;MD5;SHA1;SHA256;Harmless;Signed;Revoked;Expired\n")
+                                     "Last Submitted;MD5;SHA1;SHA256;Harmless;Signed;Revoked;Expired;"
+                                     "{0}\n".format(";".join(VENDORS)))
             except Exception, e:
                 print "[E] Cannot write export file {0}".format(result_file)
 
