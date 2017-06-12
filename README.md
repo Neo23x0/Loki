@@ -69,6 +69,29 @@ Loki currently includes the following IOCs:
 
 Loki is the new generic scanner that combines most of the features from my recently published scanners: [ReginScanner](https://github.com/Neo23x0/ReginScanner) and [SkeletonKeyScanner](https://github.com/Neo23x0/SkeletonKeyScanner).
 
+## Update
+
+Since version 0.21.0 LOKI includes a separate updater tool named `loki-upgrader.exe` or `loki-upgrader.py`.
+
+```
+﻿usage: loki-upgrader.py [-h] [-l log-file] [--sigsonly] [--progonly] [--nolog]
+                        [--debug]
+
+Loki - Upgrader
+
+optional arguments:
+  -h, --help   show this help message and exit
+  -l log-file  Log file
+  --sigsonly   Update the signatures only
+  --progonly   Update the program files only
+  --nolog      Don't write a local log file
+  --debug      Debug output
+  ```
+
+It allows to update the compiled loki.exe for Windows and the signature-base sources.
+
+When running `loki.exe --update` it will create an new upgrader process and exits LOKI in order to replace the `loki.exe` with the newer one, which would be locked otherwise.
+
 ## Requirements
 
 No requirements if you use the compiled EXE.
@@ -106,9 +129,9 @@ c:\Python27\Scripts\pip.exe install pylzma
                     [-w warning-level] [-n notice-level] [--printAll]
                     [--allreasons] [--noprocscan] [--nofilescan] [--noindicator]
                     [--reginfs] [--dontwait] [--intense] [--csv] [--onlyrelevant]
-                    [--nolog] [--update] [--debug]    
+                    [--nolog] [--update] [--debug]
 
-    Loki - Simple IOC Scanner    
+    Loki - Simple IOC Scanner
 
     optional arguments:
       -h, --help        show this help message and exit
@@ -136,11 +159,11 @@ c:\Python27\Scripts\pip.exe install pylzma
 
 ## Signature and IOCs
 
-Since version 0.15 the Yara signatures reside in the sub-repository [signature-base](https://github.com/Neo23x0/signature-base). You can just download the LOKI release ZIP archive and run LOKI once to download the 'signature-base' sub repository with all the signatures. 
+Since version 0.15 the Yara signatures reside in the sub-repository [signature-base](https://github.com/Neo23x0/signature-base). You can just download the LOKI release ZIP archive and run LOKI once to download the 'signature-base' sub repository with all the signatures.
 
-The IOC files for hashes and filenames are stored in the './signature-base/iocs' folder. All '.yar' files placed in the './signature-base/yara' folder will be initialized together with the rule set that is already included. Use the 'score' value to define the level of the message upon a signature match. 
+The IOC files for hashes and filenames are stored in the './signature-base/iocs' folder. All '.yar' files placed in the './signature-base/yara' folder will be initialized together with the rule set that is already included. Use the 'score' value to define the level of the message upon a signature match.
 
-You can add hash, c2 and filename IOCs by adding files to the './signature-base/iocs' subfolder. All hash IOCs and filename IOC files must be in the format used by LOKI (see the default files). The files must have the strings "hash", "filename" or "c2" in their name to get pulled during initialization.  
+You can add hash, c2 and filename IOCs by adding files to the './signature-base/iocs' subfolder. All hash IOCs and filename IOC files must be in the format used by LOKI (see the default files). The files must have the strings "hash", "filename" or "c2" in their name to get pulled during initialization.
 
 For Hash IOCs (divided by newline; hash type is detected automatically)
 ```
@@ -154,7 +177,7 @@ Filename as Regex;Description [Reference]
 
 # User-Defined Scan Excludes
 
-Since version v0.16.2 LOKI supports the definition of user-defined excludes via "excludes.cfg" in the new "./config" folder. Each line represents a regular expression thats gets applied to the full file path during the directory walk. This way you can exclude certain directories regardless of their drive name, file extensions in certain folders and all files and directories that belong to a product that is sensitive to antivirus scanning. 
+Since version v0.16.2 LOKI supports the definition of user-defined excludes via "excludes.cfg" in the new "./config" folder. Each line represents a regular expression thats gets applied to the full file path during the directory walk. This way you can exclude certain directories regardless of their drive name, file extensions in certain folders and all files and directories that belong to a product that is sensitive to antivirus scanning.
 
 The '''exclude.cfg''' looks like this:
 
@@ -173,7 +196,7 @@ The '''exclude.cfg''' looks like this:
     #   Matches: /var/log/test.log
     #   Not Matches: /var/log/test.gz
     #
-    
+
     # Useful examples
     \\Ntfrs\\
     \\Ntds\\
@@ -185,9 +208,9 @@ The '''exclude.cfg''' looks like this:
 
 Since version v0.10 LOKI includes various threat intel receivers using the public APIs of these services to retrieve and store the IOCs in a format that LOKI understands. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no preformance impact)
 
-The threat intel receivers have also been moved to the [signature-base](https://github.com/Neo23x0/signature-base) sub repository with version 0.15 and can be found in "./signature-base/threatintel".   
+The threat intel receivers have also been moved to the [signature-base](https://github.com/Neo23x0/signature-base) sub repository with version 0.15 and can be found in "./signature-base/threatintel".
 
-Provide your API key via ```-k APIKEY``` or set it in the script header.  
+Provide your API key via ```-k APIKEY``` or set it in the script header.
 
 ## Open Threat Exchange (OTX) Receiver
 
@@ -273,10 +296,10 @@ This will create a `loki.exe` in the subfolder `./loki/dist`.
 To include the msvcr100.dll to improve the target os compatibility change the line in the file `./loki/loki.spec` that contains `a.bianries,` to the following:
 
     a.binaries + [('msvcr100.dll', 'C:\Windows\System32\msvcr100.dll', 'BINARY')],
-    
+
 # Use LOKI on Mac OS X
 
-- Download Yara sources from [here](https://github.com/plusvic/yara/releases/tag/v3.4.0)
+- Download Yara sources from [here](https://github.com/VirusTotal/yara/releases)
 - Install openssl (brew install openssl, then sudo cp -r /usr/local/Cellar/openssl/1.0.2h_1/include /usr/local)
 - ./build.sh
 - sudo make install

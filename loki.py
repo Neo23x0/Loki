@@ -32,12 +32,9 @@ import yara         # install 'yara-python' module not the outdated 'yara' modul
 import re
 import stat
 import psutil
-from StringIO import StringIO
 import signal as signal_module
-import urllib2
-import zipfile
-import shutil
 from sys import platform as _platform
+from subprocess import Popen, PIPE
 
 # LOKI Modules
 from lib.lokilogger import *
@@ -78,11 +75,6 @@ EVIL_EXTENSIONS = [".asp", ".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat"
                    ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
                    ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm"]
 
-UPDATE_URL = "https://github.com/Neo23x0/signature-base/archive/master.zip"
-
-# HASH_TYPES = ['PDF', 'Office', 'JAR', 'DOC', 'SWF', 'EXE']
-
-
 class Loki():
 
     # Signatures
@@ -120,17 +112,11 @@ class Loki():
 
         # Check if signature database is present
         sig_dir = os.path.join(self.app_path, "./signature-base/")
+        print sig_dir
         if not os.path.exists(sig_dir) or os.listdir(sig_dir) == []:
             logger.log("NOTICE", "The 'signature-base' subdirectory doesn't exist or is empty. "
                                   "Trying to retrieve the signature database automatically.")
-            success_init = update_signatures()
-            if success_init:
-                logger.log("INFO", "Signature-Base repository initialised successful")
-            else:
-                logger.log("ERROR", "Signature-Base initialisation failed. "
-                                    "Try running 'loki --update --debug' manually to initialise the signature "
-                                    "repository and see the errors.")
-                sys.exit(1)
+            updateLoki(sigsOnly=True)
 
         # Excludes
         self.initialize_excludes(os.path.join(self.app_path, "./config/excludes.cfg"))
@@ -1194,13 +1180,6 @@ class Loki():
             return fileData
 
 
-def walk_error(err):
-    if "Error 3" in str(err):
-        logger.log("ERROR", str(err))
-    if args.debug:
-        traceback.print_exc()
-
-
 def get_application_path():
     try:
         if getattr(sys, 'frozen', False):
@@ -1215,73 +1194,38 @@ def get_application_path():
         #    logger.log("DEBUG", "Application Path: %s" % application_path)
         return application_path
     except Exception, e:
-        logger.log("ERROR","Error while evaluation of application path")
+        print "Error while evaluation of application path"
+        traceback.print_exc()
 
 
-def update_signatures():
-    try:
+def updateLoki(sigsOnly):
+    logger.log("INFO", "Starting separate updater process ...")
+    pArgs = []
 
-        # Downloading current repository
-        try:
-            logger.log("INFO", "Downloading %s ..." % UPDATE_URL)
-            response = urllib2.urlopen(UPDATE_URL)
-        except Exception, e:
-            if args.debug:
-                traceback.print_exc()
-            logger.log("ERROR", "Error downloading the signature database - check your Internet connection")
-            sys.exit(1)
+    # Updater
+    if os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.exe')) and platform == "windows":
+        pArgs.append('loki-upgrader.exe')
+    elif os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.py')):
+        pArgs.append('python')
+        pArgs.append('loki-upgrader.py')
+    else:
+        logger.log("ERROR", "Cannot find neither thor-upgrader.exe nor thor-upgrader.py in the current workign directory.")
 
-        # Preparations
-        try:
-            sigDir = os.path.join(get_application_path(), './signature-base/')
-            for outDir in ['', 'iocs', 'yara', 'misc']:
-                fullOutDir = os.path.join(sigDir, outDir)
-                if not os.path.exists(fullOutDir):
-                    os.makedirs(fullOutDir)
-        except Exception, e:
-            if args.debug:
-                traceback.print_exc()
-            logger.log("ERROR", "Error while creating the signature-base directories")
-            sys.exit(1)
+    if sigsOnly:
+        pArgs.append('--sigsonly')
+        p = Popen(pArgs, shell=False)
+        p.communicate()
+    else:
+        pArgs.append('--detached')
+        Popen(pArgs, shell=False)
 
-        # Read ZIP file
-        try:
-            zipUpdate = zipfile.ZipFile(StringIO(response.read()))
-            for zipFilePath in zipUpdate.namelist():
-                sigName = os.path.basename(zipFilePath)
-                if zipFilePath.endswith("/"):
-                    continue
-                logger.log("DEBUG", "Extracting %s ..." % zipFilePath)
-                if "/iocs/" in zipFilePath and zipFilePath.endswith(".txt"):
-                    targetFile = os.path.join(sigDir, "iocs", sigName)
-                elif "/yara/" in zipFilePath and zipFilePath.endswith(".yar"):
-                    targetFile = os.path.join(sigDir, "yara", sigName)
-                elif "/misc/" in zipFilePath and zipFilePath.endswith(".txt"):
-                    targetFile = os.path.join(sigDir, "misc", sigName)
-                else:
-                    continue
 
-                # New file
-                if not os.path.exists(targetFile):
-                    logger.log("INFO", "New signature file: %s" % sigName)
+def walk_error(err):
+    if "Error 3" in str(err):
+        logger.log("ERROR", str(err))
+    if args.debug:
+        traceback.print_exc()
 
-                # Extract file
-                source = zipUpdate.open(zipFilePath)
-                target = file(targetFile, "wb")
-                with source, target:
-                    shutil.copyfileobj(source, target)
-
-        except Exception, e:
-            if args.debug:
-                traceback.print_exc()
-            logger.log("ERROR", "Error while extracting the signature files from the download package")
-            sys.exit(1)
-
-    except Exception, e:
-        if args.debug:
-            traceback.print_exc()
-        return False
-    return True
 
 # CTRL+C Handler --------------------------------------------------------------
 def signal_handler(signal_name, frame):
@@ -1335,16 +1279,11 @@ if __name__ == '__main__':
         t_hostname = os.environ['COMPUTERNAME']
 
     # Logger
-    logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant, args.debug)
+    logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant, args.debug, caller='main')
 
     # Update
     if args.update:
-        logger.log("INFO", "Retrieving signature database from git repo https://github.com/Neo23x0/signature-base")
-        success = update_signatures()
-        if success:
-            logger.log("INFO", "Update successful")
-        else:
-            logger.log("ERROR", "Update failed - run with (--debug) to see details")
+        updateLoki(sigsOnly=False)
         sys.exit(0)
 
     logger.log("NOTICE", "Starting Loki Scan SYSTEM: {0} TIME: {1} PLATFORM: {2}".format(

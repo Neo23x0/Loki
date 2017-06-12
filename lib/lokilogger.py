@@ -23,13 +23,14 @@ class LokiLogger():
     only_relevant = False
     debug = False
 
-    def __init__(self, no_log_file, log_file, hostname, csv, only_relevant, debug):
+    def __init__(self, no_log_file, log_file, hostname, csv, only_relevant, debug, caller):
         self.no_log_file = no_log_file
         self.log_file = log_file
         self.hostname = hostname
         self.csv = csv
         self.only_relevant = only_relevant
         self.debug = debug
+        self.caller = caller
 
         # Colorization ----------------------------------------------------
         init()
@@ -148,26 +149,39 @@ class LokiLogger():
             print "Cannot print to log file {0}".format(self.log_file)
 
     def print_welcome(self):
-        print Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN
 
-        print "      __   ____  __ ______                            "
-        print "     / /  / __ \/ //_/  _/                            "
-        print "    / /__/ /_/ / ,< _/ /                              "
-        print "   /____/\____/_/|_/___/                              "
-        print "      ________  _____  ____                           "
-        print "     /  _/ __ \/ ___/ / __/______ ____  ___  ___ ____ "
-        print "    _/ // /_/ / /__  _\ \/ __/ _ `/ _ \/ _ \/ -_) __/ "
-        print "   /___/\____/\___/ /___/\__/\_,_/_//_/_//_/\__/_/    "
+        if self.caller == 'main':
+            print Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN
 
-        print Fore.WHITE
-        print "   (C) Florian Roth"
-        print "   June 2017"
-        print "   Version %s" % __version__
-        print "  "
-        print "   DISCLAIMER - USE AT YOUR OWN RISK"
-        print "  "
-        print Back.GREEN + " ".ljust(79) + Back.BLACK
-        print Fore.WHITE+''+Back.BLACK
+            print "      __   ____  __ ______                            "
+            print "     / /  / __ \/ //_/  _/                            "
+            print "    / /__/ /_/ / ,< _/ /                              "
+            print "   /____/\____/_/|_/___/                              "
+            print "      ________  _____  ____                           "
+            print "     /  _/ __ \/ ___/ / __/______ ____  ___  ___ ____ "
+            print "    _/ // /_/ / /__  _\ \/ __/ _ `/ _ \/ _ \/ -_) __/ "
+            print "   /___/\____/\___/ /___/\__/\_,_/_//_/_//_/\__/_/    "
+
+            print Fore.WHITE
+            print "   (C) Florian Roth"
+            print "   June 2017"
+            print "   Version %s" % __version__
+            print "  "
+            print "   DISCLAIMER - USE AT YOUR OWN RISK"
+            print "  "
+            print Back.GREEN + " ".ljust(79) + Back.BLACK
+            print Fore.WHITE+''+Back.BLACK
+
+        else:
+            print "  "
+            print Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN
+
+            print "  "
+            print "  LOKI UPGRADER "
+
+            print "  "
+            print Back.GREEN + " ".ljust(79) + Back.BLACK
+            print Fore.WHITE + '' + Back.BLACK
 
 def getSyslogTimestamp():
     date_obj = datetime.datetime.utcnow()
