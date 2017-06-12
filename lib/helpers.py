@@ -243,13 +243,6 @@ def removeNonAscii(string, stripit=False):
 
     return nonascii
 
-
-def getSyslogTimestamp():
-    date_obj = datetime.datetime.utcnow()
-    date_str = date_obj.strftime("%Y%m%dT%H:%M:%SZ")
-    return date_str
-
-
 def getAge(filePath):
     try:
         stats=os.stat(filePath)
