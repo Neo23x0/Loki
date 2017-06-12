@@ -87,8 +87,7 @@ class Loki():
 
     # Signatures
     yara_rules = []
-    filename_iocs = {}
-    filename_ioc_desc = {}
+    filename_iocs = []
     hashes_md5 = {}
     hashes_sha1 = {}
     hashes_sha256 = {}
@@ -153,7 +152,7 @@ class Loki():
         # Read IOCs -------------------------------------------------------
         # File Name IOCs (all files in iocs that contain 'filename')
         self.initialize_filename_iocs(self.ioc_path)
-        logger.log("INFO","File Name Characteristics initialized with %s regex patterns" % len(self.filename_iocs.keys()))
+        logger.log("INFO","File Name Characteristics initialized with %s regex patterns" % len(self.filename_iocs))
 
         # C2 based IOCs (all files in iocs that contain 'c2')
         self.initialize_c2_iocs(self.ioc_path)
@@ -263,13 +262,17 @@ class Loki():
                     # print file_size
 
                     # File Name Checks -------------------------------------------------
-                    for regex in self.filename_iocs:
-                        match = regex.search(filePath)
+                    for fioc in self.filename_iocs:
+                        match = fioc['regex'].search(filePath)
                         if match:
-                            description = self.filename_ioc_desc[regex.pattern]
-                            score = self.filename_iocs[regex]
-                            reasons.append("File Name IOC matched PATTERN: %s SUBSCORE: %s DESC: %s" % (regex.pattern, score, description))
-                            total_score += int(score)
+                            # Check for False Positive
+                            if fioc['regex_fp']:
+                                match_fp = fioc['regex_fp'].search(filePath)
+                                if match_fp:
+                                    continue
+                            # Create Reason
+                            reasons.append("File Name IOC matched PATTERN: %s SUBSCORE: %s DESC: %s" % (fioc['regex'].pattern, fioc['score'], fioc['description']))
+                            total_score += int(fioc['score'])
 
                     # Access check (also used for magic header detection)
                     firstBytes = ""
@@ -578,15 +581,18 @@ class Loki():
                 logger.log("WARNING", "Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd))
 
             # File Name Checks -------------------------------------------------
-            for regex in self.filename_iocs.keys():
-                match = re.search(r'%s' % regex, cmd)
+            for fioc in self.filename_iocs:
+                match = fioc['regex'].search(cmd)
                 if match:
-                    description = self.filename_ioc_desc[regex]
-                    score = self.filename_iocs[regex]
-                    if score > 70:
-                        logger.log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
-                    elif score > 40:
-                        logger.log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (regex, description, cmd))
+                    if fioc['score'] > 70:
+                        logger.log("ALERT", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (fioc['regex'].pattern, fioc['description'], cmd))
+                    elif fioc['score'] > 40:
+                        logger.log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (fioc['regex'].pattern, fioc['description'], cmd))
+
+            # Special Checks ---------------------------------------------------
+            # Suspicious waitfor - possible backdoor https://twitter.com/subTee/status/872274262769500160
+            if name == "waitfor.exe":
+                logger.log("WARNING", "Suspicious waitfor.exe process https://twitter.com/subTee/status/872274262769500160 PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
 
             # Yara rule match
             # only on processes with a small working set size
@@ -932,15 +938,18 @@ class Loki():
 
                                 # Elements with description
                                 if ";" in line:
+                                    line = line.rstrip(" ").rstrip("\n\r")
                                     row = line.split(';')
-                                    regex   = row[0]
-                                    score   = row[1].rstrip(" ").rstrip("\n\r")
-                                    desc    = last_comment
+                                    regex = row[0]
+                                    score = row[1]
+                                    if len(row) > 2:
+                                        regex_fp = row[2]
+                                    desc = last_comment
 
                                     # Catch legacy lines
                                     if not score.isdigit():
-                                        desc = score # score is description (old format)
-                                        score = 60 # default value
+                                        desc = score        # score is description (old format)
+                                        score = 60          # default value
 
                                 # Elements without description
                                 else:
@@ -948,13 +957,21 @@ class Loki():
 
                                 # Replace environment variables
                                 regex = replaceEnvVars(regex)
-
                                 # OS specific transforms
                                 regex = transformOS(regex, platform)
 
-                                # Create list elements
-                                self.filename_iocs[re.compile(regex)] = score
-                                self.filename_ioc_desc[regex] = desc
+                                # If false positive definition exists
+                                regex_fp_comp = None
+                                if 'regex_fp' in locals():
+                                    # Replacements
+                                    regex_fp = replaceEnvVars(regex_fp)
+                                    regex_fp = transformOS(regex_fp, platform)
+                                    # String regex as key - value is compiled regex of false positive values
+                                    regex_fp_comp = re.compile(regex_fp)
+
+                                # Create dictionary with IOC data
+                                fioc = {'regex': re.compile(regex), 'score': score, 'description': desc, 'regex_fp': regex_fp_comp}
+                                self.filename_iocs.append(fioc)
 
                             except Exception, e:
                                 if logger.debug:
