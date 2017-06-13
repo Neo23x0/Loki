@@ -124,7 +124,7 @@ class LOKIUpdater(object):
             try:
                 zipUpdate = zipfile.ZipFile(StringIO(response_zip.read()))
                 for zipFilePath in zipUpdate.namelist():
-                    if zipFilePath.endswith("/") or "/config/" in zipFilePath:
+                    if zipFilePath.endswith("/") or "/config/" in zipFilePath or "/loki-upgrader.exe" in zipFilePath:
                         continue
 
                     source = zipUpdate.open(zipFilePath)
