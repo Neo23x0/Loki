@@ -16,13 +16,14 @@ Detection is based on four detection methods:
        
     4. C2 Back Connect Check
        Compares process connection endpoints with C2 IOCs (new since version v.10)
-       
+
 Additional Checks:
 
     1. Regin filesystem check (via --reginfs)
     2. Process anomaly check (based on [Sysforensics](http://goo.gl/P99QZQ)
     3. SWF decompressed scan (new since version v0.8)
     4. SAM dump check
+    5. DoublePulsar check - tries to detect DoublePulsar backdoor on port 445/tcp and 3389/tcp
 
 The Windows binary is compiled with PyInstaller 2.1 and should run as x86 application on both x86 and x64 based systems.
 
@@ -43,11 +44,12 @@ Download the latest version of LOKI from the [releases](https://github.com/Neo23
 
   - The resulting report will show a GREEN, YELLOW or RED result line.
   - Please analyse the findings yourself by:
-    1. uploading non-confidential samples to Virustotal.com
+    1. uploading non-confidential samples to [Virustotal.com](https://www.virustotal.com)
     2. Search the web for the filename
     3. Search the web for keywords from the rule name (e.g. EQUATIONGroupMalware_1 > search for "Equation Group")
     4. Search the web for the MD5 hash of the sample
-  - Please report back false positives via the "Issues" section, which is accessible via the right sidebar (mention the false positive indicator like a hash and/or filename and the rule name that triggered)
+    5. Search in my [customer APT search engine](https://cse.google.com/cse/publicurl?cx=003248445720253387346:turlh5vi4xc) for file names or identifiers
+  - Please report back false positives via the [Issues](https://github.com/Neo23x0/Loki/issues) section (mention the false positive indicator like a hash and/or filename and the rule name that triggered)
 
 ## Included IOCs
 
@@ -74,7 +76,7 @@ Loki is the new generic scanner that combines most of the features from my recen
 Since version 0.21.0 LOKI includes a separate updater tool named `loki-upgrader.exe` or `loki-upgrader.py`.
 
 ```
-﻿usage: loki-upgrader.py [-h] [-l log-file] [--sigsonly] [--progonly] [--nolog]
+usage: loki-upgrader.py [-h] [-l log-file] [--sigsonly] [--progonly] [--nolog]
                         [--debug]
 
 Loki - Upgrader
@@ -86,7 +88,7 @@ optional arguments:
   --progonly   Update the program files only
   --nolog      Don't write a local log file
   --debug      Debug output
-  ```
+```
 
 It allows to update the compiled loki.exe for Windows and the signature-base sources.
 
@@ -125,41 +127,44 @@ c:\Python27\Scripts\pip.exe install pylzma
 
 # Usage
 
-    usage: loki.exe [-h] [-p path] [-s kilobyte] [-l log-file] [-a alert-level]
-                    [-w warning-level] [-n notice-level] [--printAll]
-                    [--allreasons] [--noprocscan] [--nofilescan] [--noindicator]
-                    [--reginfs] [--dontwait] [--intense] [--csv] [--onlyrelevant]
-                    [--nolog] [--update] [--debug]
+```
+usage: loki.exe [-h] [-p path] [-s kilobyte] [-l log-file] [-a alert-level]
+                [-w warning-level] [-n notice-level] [--printAll]
+                [--allreasons] [--noprocscan] [--nofilescan] [--norootkit]
+                [--noindicator] [--reginfs] [--dontwait] [--intense] [--csv]
+                [--onlyrelevant] [--nolog] [--update] [--debug]
 
-    Loki - Simple IOC Scanner
+Loki - Simple IOC Scanner
 
-    optional arguments:
-      -h, --help        show this help message and exit
-      -p path           Path to scan
-      -s kilobyte       Maximum file size to check in KB (default 2048 KB)
-      -l log-file       Log file
-      -a alert-level    Alert score
-      -w warning-level  Warning score
-      -n notice-level   Notice score
-      --printAll        Print all files that are scanned
-      --allreasons      Print all reasons that caused the score
-      --noprocscan      Skip the process scan
-      --nofilescan      Skip the file scan
-      --noindicator     Do not show a progress indicator
-      --reginfs         Do check for Regin virtual file system
-      --dontwait        Do not wait on exit
-      --intense         Intense scan mode (also scan unknown file types and all
-                        extensions)
-      --csv             Write CSV log format to STDOUT (machine prcoessing)
-      --onlyrelevant    Only print warnings or alerts
-      --nolog           Don't write a local log file
-      --update          Update the signatures from the "signature-base" sub
-                        repository
-      --debug           Debug output
+optional arguments:
+  -h, --help        show this help message and exit
+  -p path           Path to scan
+  -s kilobyte       Maximum file size to check in KB (default 4096 KB)
+  -l log-file       Log file
+  -a alert-level    Alert score
+  -w warning-level  Warning score
+  -n notice-level   Notice score
+  --printAll        Print all files that are scanned
+  --allreasons      Print all reasons that caused the score
+  --noprocscan      Skip the process scan
+  --nofilescan      Skip the file scan
+  --norootkit       Skip the rootkit check
+  --noindicator     Do not show a progress indicator
+  --reginfs         Do check for Regin virtual file system
+  --dontwait        Do not wait on exit
+  --intense         Intense scan mode (also scan unknown file types and all
+                    extensions)
+  --csv             Write CSV log format to STDOUT (machine prcoessing)
+  --onlyrelevant    Only print warnings or alerts
+  --nolog           Don't write a local log file
+  --update          Update the signatures from the "signature-base" sub
+                    repository
+  --debug           Debug output
+```
 
 ## Signature and IOCs
 
-Since version 0.15 the Yara signatures reside in the sub-repository [signature-base](https://github.com/Neo23x0/signature-base). You can just download the LOKI release ZIP archive and run LOKI once to download the 'signature-base' sub repository with all the signatures.
+Since version 0.15 the Yara signatures reside in the sub-repository [signature-base](https://github.com/Neo23x0/signature-base). You can just download the LOKI release ZIP archive and run LOKI once to download the 'signature-base' sub repository with all the signatures. Since version 0.21.0 a separate updater is provided as `loki-upgrader.exe` or `loki-upgrader.py`. LOKI expects the IOCs and signatures of the `signature-base` repo in a subfolder named `signature-base`. 
 
 The IOC files for hashes and filenames are stored in the './signature-base/iocs' folder. All '.yar' files placed in the './signature-base/yara' folder will be initialized together with the rule set that is already included. Use the 'score' value to define the level of the message upon a signature match.
 
@@ -172,7 +177,18 @@ Hash;Description [Reference]
 
 For Filename IOCs (divided by newline)
 ```
-Filename as Regex;Description [Reference]
+# Description [Reference]
+Regex;Score;False Positive Regex
+```
+
+You can user the following external variables in the YARA rules that your provide LOKI
+```
+filename - e.g. condition: $s1 and not filename == 'nmap.exe'
+filepatch - e.g. condition: filepath == 'C:\Windows\cmd.exe'
+extension - e.g. condition: uint32(0) == 0x5a4d and extension == ".txt"
+filetype - eg. condition: extension == ".txt" and filetype == "EXE"
+(see file-type-signatures.cfg in signature-base repo for all detected file types)
+md5 - legacy value
 ```
 
 # User-Defined Scan Excludes
