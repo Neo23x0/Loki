@@ -29,3 +29,4 @@ tools/*_flo.py
 loki\.log
 
 *.pyc
+signature-base
