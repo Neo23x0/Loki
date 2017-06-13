@@ -361,7 +361,7 @@ if __name__ == '__main__':
 
     # Open input file
     try:
-        with open(args.f, 'r') as fh:
+        with open(args.f, 'rU') as fh:
             lines = fh.readlines()
     except Exception, e:
         print "[E] Cannot read input file "
