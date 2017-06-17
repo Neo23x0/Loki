@@ -205,9 +205,9 @@ class Loki():
                     # Skip marker
                     skipIt = False
 
-                    # if 1 > 0:
-                    #     # test
-                    #     walk_error(OSError(2, u"[Error 3] System nie może odnaleźć określonej ścieżki", 'foo'))
+                    # Unicode error test
+                    #if 1 > 0:
+                    #    walk_error(OSError("[Error 3] No such file or directory"))
 
                     # User defined excludes
                     for skip in self.fullExcludes:
@@ -1223,10 +1223,13 @@ def updateLoki(sigsOnly):
 
 
 def walk_error(err):
-    if "Error 3" in unicode(err):
-        logger.log('ERROR', unicode(err))
-    if args.debug:
-        traceback.print_exc()
+    try:
+        if "Error 3" in str(err):
+            logger.log('ERROR', removeNonAsciiDrop(str(err)))
+        elif args.debug:
+            print "Directory walk error"
+    except UnicodeError, e:
+        print "Unicode decode error in walk error message"
 
 
 # CTRL+C Handler --------------------------------------------------------------

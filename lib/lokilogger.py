@@ -10,7 +10,7 @@ import datetime
 import traceback
 from helpers import removeNonAsciiDrop
 
-__version__ = '0.21.1'
+__version__ = '0.22.0'
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
