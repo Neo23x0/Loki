@@ -7,6 +7,7 @@ from colorama import Fore, Back, Style
 from colorama import init
 import codecs
 import datetime
+from helpers import removeNonAsciiDrop
 
 __version__ = '0.21.0'
 
@@ -61,7 +62,11 @@ class LokiLogger():
                 return
 
         # to stdout
-        self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type)
+        try:
+            self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type)
+        except Exception, e:
+            print "Cannot print certain characters to command line - see log file for full unicode encoded log line"
+            self.log_to_stdout(removeNonAsciiDrop(message), mes_type)
 
         # to file
         if not self.no_log_file:
@@ -70,7 +75,6 @@ class LokiLogger():
     def log_to_stdout(self, message, mes_type):
 
         # Prepare Message
-        #message = removeNonAsciiDrop(message)
         codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
         message = message.encode(sys.stdout.encoding, errors='replace')
 
