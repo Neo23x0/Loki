@@ -7,9 +7,10 @@ from colorama import Fore, Back, Style
 from colorama import init
 import codecs
 import datetime
+import traceback
 from helpers import removeNonAsciiDrop
 
-__version__ = '0.21.0'
+__version__ = '0.21.1'
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
@@ -153,7 +154,7 @@ class LokiLogger():
                     logfile.write(u"%s %s LOKI: %s: %s%s" % (getSyslogTimestamp(), self.hostname, mes_type.title(), message, self.linesep))
         except Exception, e:
             traceback.print_exc()
-            print "Cannot print to log file {0}".format(self.log_file)
+            print "Cannot print line to log file {0}".format(self.log_file)
 
     def print_welcome(self):
 
