@@ -23,8 +23,9 @@ class LokiLogger():
     notices = 0
     only_relevant = False
     debug = False
+    linesep = "\n"
 
-    def __init__(self, no_log_file, log_file, hostname, csv, only_relevant, debug, caller):
+    def __init__(self, no_log_file, log_file, hostname, csv, only_relevant, debug, platform, caller):
         self.no_log_file = no_log_file
         self.log_file = log_file
         self.hostname = hostname
@@ -32,6 +33,8 @@ class LokiLogger():
         self.only_relevant = only_relevant
         self.debug = debug
         self.caller = caller
+        if platform == "windows":
+            self.linesep = "\r\n"
 
         # Colorization ----------------------------------------------------
         init()
@@ -145,9 +148,9 @@ class LokiLogger():
             # Write to file
             with codecs.open(self.log_file, "a", encoding='utf-8') as logfile:
                 if self.csv:
-                    logfile.write(u"{0},{1},{2},{3}\n".format(getSyslogTimestamp(),self.hostname,mes_type,message))
+                    logfile.write(u"{0},{1},{2},{3}{4}".format(getSyslogTimestamp(), self.hostname, mes_type,message, self.linesep))
                 else:
-                    logfile.write(u"%s %s LOKI: %s: %s\n" % (getSyslogTimestamp(), self.hostname, mes_type.title(), message))
+                    logfile.write(u"%s %s LOKI: %s: %s%s" % (getSyslogTimestamp(), self.hostname, mes_type.title(), message, self.linesep))
         except Exception, e:
             traceback.print_exc()
             print "Cannot print to log file {0}".format(self.log_file)

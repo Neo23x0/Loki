@@ -112,7 +112,6 @@ class Loki():
 
         # Check if signature database is present
         sig_dir = os.path.join(self.app_path, "./signature-base/")
-        print sig_dir
         if not os.path.exists(sig_dir) or os.listdir(sig_dir) == []:
             logger.log("NOTICE", "The 'signature-base' subdirectory doesn't exist or is empty. "
                                   "Trying to retrieve the signature database automatically.")
@@ -205,6 +204,10 @@ class Loki():
 
                     # Skip marker
                     skipIt = False
+
+                    # if 1 > 0:
+                    #     # test
+                    #     walk_error(OSError(2, u"[Error 3] System nie może odnaleźć określonej ścieżki", 'foo'))
 
                     # User defined excludes
                     for skip in self.fullExcludes:
@@ -710,7 +713,6 @@ class Loki():
                     str(pid), name, owner, cmd, path))
 
             if name == "svchost.exe" and not " -k " in cmd and cmd != "N/A":
-                print cmd
                 logger.log("WARNING", "svchost.exe process does not contain a -k in its command line PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
                     str(pid), name, owner, cmd, path))
 
@@ -1221,8 +1223,8 @@ def updateLoki(sigsOnly):
 
 
 def walk_error(err):
-    if "Error 3" in str(err):
-        logger.log("ERROR", str(err))
+    if "Error 3" in unicode(err):
+        logger.log('ERROR', unicode(err))
     if args.debug:
         traceback.print_exc()
 
@@ -1279,7 +1281,8 @@ if __name__ == '__main__':
         t_hostname = os.environ['COMPUTERNAME']
 
     # Logger
-    logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant, args.debug, caller='main')
+    logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant, args.debug, platform=platform,
+                        caller='main')
 
     # Update
     if args.update:

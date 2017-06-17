@@ -26,6 +26,15 @@ if _platform == "win32":
 
 from lib.lokilogger import *
 
+# Platform
+platform = ""
+if _platform == "linux" or _platform == "linux2":
+    platform = "linux"
+elif _platform == "darwin":
+    platform = "osx"
+elif _platform == "win32":
+    platform = "windows"
+
 class LOKIUpdater(object):
     
     UPDATE_URL_SIGS = "https://github.com/Neo23x0/signature-base/archive/master.zip"
@@ -186,13 +195,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Computername
-    if _platform == "win32":
+    if platform == "windows":
         t_hostname = os.environ['COMPUTERNAME']
     else:
         t_hostname = os.uname()[1]
 
     # Logger
-    logger = LokiLogger(args.nolog, args.l, t_hostname, False, False, args.debug, caller='upgrader')
+    logger = LokiLogger(args.nolog, args.l, t_hostname, False, False, args.debug, platform=platform, caller='upgrader')
 
     # Update Loki
     updater = LOKIUpdater(args.debug, logger, get_application_path())
