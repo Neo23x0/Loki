@@ -1245,11 +1245,17 @@ if __name__ == '__main__':
     # Signal handler for CTRL+C
     signal_module.signal(signal_module.SIGINT, signal_handler)
 
+    # Computername
+    if platform == "linux" or platform == "osx":
+        t_hostname = os.uname()[1]
+    else:
+        t_hostname = os.environ['COMPUTERNAME']
+
     # Parse Arguments
     parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
     parser.add_argument('-p', help='Path to scan', metavar='path', default='C:\\')
     parser.add_argument('-s', help='Maximum file size to check in KB (default 4096 KB)', metavar='kilobyte', default=4096)
-    parser.add_argument('-l', help='Log file', metavar='log-file', default='loki.log')
+    parser.add_argument('-l', help='Log file', metavar='log-file', default='loki-%s.log' % t_hostname)
     parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
     parser.add_argument('-w', help='Warning score', metavar='warning-level', default=70)
     parser.add_argument('-n', help='Notice score', metavar='notice-level', default=40)
@@ -1273,12 +1279,6 @@ if __name__ == '__main__':
     # Remove old log file
     if os.path.exists(args.l):
         os.remove(args.l)
-
-    # Computername
-    if platform == "linux" or platform == "osx":
-        t_hostname = os.uname()[1]
-    else:
-        t_hostname = os.environ['COMPUTERNAME']
 
     # Logger
     logger = LokiLogger(args.nolog, args.l, t_hostname, args.csv, args.onlyrelevant, args.debug, platform=platform,
