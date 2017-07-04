@@ -10,7 +10,7 @@ import datetime
 import traceback
 from helpers import removeNonAsciiDrop
 
-__version__ = '0.22.0'
+__version__ = '0.22.1'
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
@@ -172,7 +172,7 @@ class LokiLogger():
 
             print Fore.WHITE
             print "   (C) Florian Roth"
-            print "   June 2017"
+            print "   July 2017"
             print "   Version %s" % __version__
             print "  "
             print "   DISCLAIMER - USE AT YOUR OWN RISK"

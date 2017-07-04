@@ -1266,7 +1266,7 @@ if __name__ == '__main__':
     parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
-    parser.add_argument('--norootkit', action='store_true', help='Skip the rootkit check', default=False)
+    parser.add_argument('--rootkit', action='store_true', help='Skip the rootkit check', default=False)
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
     parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
     parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
@@ -1326,7 +1326,7 @@ if __name__ == '__main__':
             logger.log("NOTICE", "Skipping process memory check. User has no admin rights.")
 
     # Scan for Rootkits -----------------------------------------------
-    if not args.norootkit and platform == "windows":
+    if args.rootkit and platform == "windows":
         loki.check_rootkit()
 
     # Scan Path -------------------------------------------------------
