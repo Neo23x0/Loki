@@ -101,7 +101,7 @@ If you want to build it yourself:
 
 ### Linux or OS X
 
-- [yara](https://github.com/VirusTotal/yara/) : just use the latest release source code, compile and install it
+- [yara](https://github.com/VirusTotal/yara/) : just use the latest release source code, compile and install it (or install it via pip install yara-python)
 - Some Python packages: pip install psutil netaddr pylzma colorama
 
 ### Windows
