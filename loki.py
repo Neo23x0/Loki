@@ -1257,7 +1257,7 @@ if __name__ == '__main__':
     # Parse Arguments
     parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
     parser.add_argument('-p', help='Path to scan', metavar='path', default='C:\\')
-    parser.add_argument('-s', help='Maximum file size to check in KB (default 4096 KB)', metavar='kilobyte', default=4096)
+    parser.add_argument('-s', help='Maximum file size to check in KB (default 5000 KB)', metavar='kilobyte', default=5000)
     parser.add_argument('-l', help='Log file', metavar='log-file', default='loki-%s.log' % t_hostname)
     parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
     parser.add_argument('-w', help='Warning score', metavar='warning-level', default=70)
