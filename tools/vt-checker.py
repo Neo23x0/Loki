@@ -2,7 +2,7 @@
 """Checks Hashes read from an input file on Virustotal"""
 
 __AUTHOR__ = 'Florian Roth'
-__VERSION__ = "0.7 March 2017"
+__VERSION__ = "0.8 July 2017"
 
 """
 Modified by Hannah Ward: clean up, removal of simplejson, urllib2 with requests
@@ -24,9 +24,9 @@ import argparse
 from colorama import init, Fore, Back, Style
 
 URL = r'https://www.virustotal.com/vtapi/v2/file/report'
-VENDORS = ['Microsoft', 'Kaspersky', 'McAfee', 'CrowdStrike', 'TrendMicro', 
-           'ESET-NOD32', 'Symantec', 'F-Secure', 'BitDefender', 'Sophos', 'GData']
-API_KEY = ''
+VENDORS = ['Microsoft', 'Kaspersky', 'McAfee', 'CrowdStrike', 'TrendMicro',
+           'ESET-NOD32', 'Symantec', 'F-Secure', 'Sophos', 'GData']
+API_KEY = '-'
 WAIT_TIME = 15  # Public API allows 4 request per minute, so we wait 15 secs by default
 
 
@@ -52,6 +52,9 @@ def print_highlighted(line, hl_color=Back.WHITE):
     line = colorer.sub(Fore.BLACK + Back.RED + r'\1' + Style.RESET_ALL + ' ', line)
     colorer = re.compile('(SIG_EXPIRED)', re.VERBOSE)
     line = colorer.sub(Fore.BLACK + Back.YELLOW + r'\1' + Style.RESET_ALL + ' ', line)
+    # Extras
+    colorer = re.compile('(\[!\])', re.VERBOSE)
+    line = colorer.sub(Fore.BLACK + Back.CYAN + r'\1' + Style.RESET_ALL + ' ', line)
     # Standard
     colorer = re.compile('([A-Z_]{2,}:)\s', re.VERBOSE)
     line = colorer.sub(Fore.BLACK + hl_color + r'\1' + Style.RESET_ALL + ' ', line)
@@ -66,7 +69,7 @@ def process_permalink(url, debug=False):
     headers = {'User-Agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
                'Referrer': 'https://www.virustotal.com/en/'}
     info = {'filenames': ['-'], 'firstsubmission': '-', 'harmless': False, 'signed': False, 'revoked': False,
-            'expired': False, 'mssoft': False}
+            'expired': False, 'mssoft': False, 'imphash': '-'}
     try:
         source_code = requests.get(url, headers=headers)
         # Extract info from source code
@@ -78,13 +81,15 @@ def process_permalink(url, debug=False):
             if text == "File names":
                 file_names = elements[i + 1].text.strip().split("\n")
                 info['filenames'] = filter(None, map(lambda file: file.strip(), file_names))
-        # Get first submission
+        # Get additional information
         elements = soup.findAll("div", {"class": "enum"})
         for i, row in enumerate(elements):
             text = row.text.strip()
             if 'First submission' in text:
                 first_submission_raw = elements[i].text.strip().split("\n")
                 info['firstsubmission'] = first_submission_raw[1].strip()
+            if 'imphash' in text:
+                info['imphash'] = elements[i].text.strip().split("\n")[-1].strip()
         # Harmless
         if "Probably harmless!" in source_code:
             info['harmless'] = True
@@ -156,6 +161,9 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
     Process the input file line by line
     """
 
+    # Some statistics that could help find similarities
+    imphashes = {}
+
     for line in lines:
 
         # Skip comments
@@ -209,6 +217,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         md5 = "-"
         sha1 = "-"
         sha256 = "-"
+        imphash = "-"
         harmless = ""
         signed = ""
         revoked = ""
@@ -257,6 +266,15 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             # File Names
             filenames = removeNonAsciiDrop(", ".join(info['filenames'][:5]).replace(';', '_'))
             first_submitted = info['firstsubmission']
+            # Other info
+            imphash = info['imphash']
+            if imphash != "-":
+                if imphash in imphashes:
+                    print_highlighted("[!] Imphash %s seen in %d other samples of this batch" %
+                                      (imphash, imphashes[imphash]), hl_color=res_color)
+                    imphashes[imphash] += 1
+                else:
+                    imphashes[imphash] = 1
             # Result
             result = "%s / %s" % (response_dict.get("positives"), response_dict.get("total"))
             print_highlighted("VIRUS: {0}".format(virus))
@@ -283,14 +301,16 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         # Add to log file
         if not nocsv:
             result_line = "{0};{1};{2};{3};{4};{5};{6};{7};" \
-                          "{8};{9};{10};{11};{12};{13};{14};{15}\n".format(hashVal, rating, comment, positives,
-                                                                           virus, filenames,
-                                                                           first_submitted,
-                                                                           last_submitted,
-                                                                           md5, sha1, sha256,
-                                                                           harmless.lstrip(' '), signed.lstrip(' '),
-                                                                           revoked.lstrip(' '), expired.lstrip(' '),
-                                                                           vendor_result_string)
+                          "{8};{9};{10};{11};{12};{13};{14};{15};{16}\n".format(hashVal, rating, comment, positives,
+                                                                                virus, filenames,
+                                                                                first_submitted,
+                                                                                last_submitted,
+                                                                                md5, sha1, sha256, imphash,
+                                                                                harmless.lstrip(' '),
+                                                                                signed.lstrip(' '),
+                                                                                revoked.lstrip(' '),
+                                                                                expired.lstrip(' '),
+                                                                                vendor_result_string)
             with open(result_file, "a") as fh_results:
                 fh_results.write(result_line)
 
@@ -379,7 +399,7 @@ if __name__ == '__main__':
             try:
                 with open(result_file, 'w') as fh_results:
                     fh_results.write("Lookup Hash;Rating;Comment;Positives;Virus;File Names;First Submitted;"
-                                     "Last Submitted;MD5;SHA1;SHA256;Harmless;Signed;Revoked;Expired;"
+                                     "Last Submitted;MD5;SHA1;SHA256;ImpHash;Harmless;Signed;Revoked;Expired;"
                                      "{0}\n".format(";".join(VENDORS)))
             except Exception, e:
                 print "[E] Cannot write export file {0}".format(result_file)
