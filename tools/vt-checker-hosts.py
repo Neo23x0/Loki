@@ -56,6 +56,13 @@ def fetch_ip_and_domains(line):
     return ips, domains
 
 
+def is_ip(value):
+    ip_pattern = r'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b$'
+    if re.match(ip_pattern, value):
+        return True
+    return False
+
+
 def is_private(ip):
     ip = IP(ip)
     if ip.iptype() == "PRIVATE":
@@ -291,7 +298,11 @@ def process_elements(elements, result_file, max_items, nocsv=False, dups=False, 
                         sys.stdout.write(".")
                     # Add the IP to the elements
                     if args.recursive:
-                        elements.append({'value': res[RES_TARGETS[cat]], 'type': 'ip'})
+                        new_value = res[RES_TARGETS[cat]]
+                        if is_ip(new_value):
+                            elements.append({'value': new_value, 'type': 'ip'})
+                        else:
+                            elements.append({'value': new_value, 'type': 'domain'})
                 if "hosts" in shown_messages:
                     sys.stdout.write("\n")
 
