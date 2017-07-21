@@ -270,7 +270,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             imphash = info['imphash']
             if imphash != "-":
                 if imphash in imphashes:
-                    print_highlighted("[!] Imphash %s seen in %d other samples of this batch" %
+                    print_highlighted("[!] Imphash %s seen in %d other sample(s) of this batch" %
                                       (imphash, imphashes[imphash]), hl_color=res_color)
                     imphashes[imphash] += 1
                 else:
