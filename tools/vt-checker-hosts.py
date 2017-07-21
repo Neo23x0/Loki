@@ -33,9 +33,10 @@ URLS = {'ip': r'https://www.virustotal.com/vtapi/v2/ip-address/report',
         'domain': r'https://www.virustotal.com/vtapi/v2/domain/report'}
 API_KEY = '-'
 WAIT_TIME = 15  # Public API allows 4 request per minute, so we wait 15 secs by default
-WHITE_LIST = ['1.0.0.127']
+IP_WHITE_LIST = ['1.0.0.127', '127.0.0.1']
 OWNER_WHITE_LIST = ['Google Inc.', 'Facebook, Inc.', 'CloudFlare, Inc.', 'Microsoft Corporation',
                     'Akamai Technologies, Inc.']  # not yet used
+DOMAIN_WHITE_LIST = ['sourceforge.net']
 RES_TARGETS = {'ip': 'hostname', 'domain': 'ip_address'}
 
 
@@ -221,6 +222,21 @@ def process_elements(elements, result_file, max_items, nocsv=False, dups=False, 
                         print "[D] IP {0} ping failed - skipping".format(value)
                     continue
 
+        # White lists
+        for dom in DOMAIN_WHITE_LIST:
+            if dom in value:
+                print_highlighted("Domain white-listed - skipping this host SYSTEM: %s" % value)
+                cache[value] = 'skipped'
+
+        for iwl in IP_WHITE_LIST:
+            if iwl == value:
+                print_highlighted("IP white-listed - skipping this host SYSTEM: %s" % value)
+                cache[value] = 'skipped'
+
+        if value in cache:
+            if cache[value] == 'skipped':
+                continue
+
         # Is resolvable
         if not noresolve:
             if cat == 'domain':
@@ -228,12 +244,6 @@ def process_elements(elements, result_file, max_items, nocsv=False, dups=False, 
                     # Add to cache
                     cache[value] = 'skipped'
                     continue
-
-        # Is in white list
-        if value in WHITE_LIST:
-            # Add to cache
-            cache[value] = 'skipped'
-            continue
 
         # Head -------------------------------------------------------------------------------------------------
         # Colorized head of each hash check
@@ -282,6 +292,16 @@ def process_elements(elements, result_file, max_items, nocsv=False, dups=False, 
 
             # Predefine Rating
             rating = "clean"
+
+            # Other Info
+            owner = response_dict.get("as_owner")
+            country = response_dict.get("country")
+
+            # WHITE LIST CHECKS
+            if owner:
+                for owl in OWNER_WHITE_LIST:
+                    if owl in owner:
+                        print_highlighted("Owner white-listed - skipping this host OWNER: %s" % owner)
 
             # Resolutions
             if 'resolutions' in response_dict:
@@ -352,10 +372,6 @@ def process_elements(elements, result_file, max_items, nocsv=False, dups=False, 
                     sample_total += total_sample
                 if "samples" in shown_messages:
                     sys.stdout.write("\n")
-
-            # Other Info
-            owner = response_dict.get("as_owner")
-            country = response_dict.get("country")
 
             # Calculations -------------------------------------------------------------------------------------
             # Rating
