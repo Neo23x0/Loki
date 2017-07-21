@@ -448,26 +448,17 @@ def download_url(host_id, url):
         c.setopt(c.URL, url)
         c.setopt(pycurl.CONNECTTIMEOUT, 10)
         c.setopt(pycurl.TIMEOUT, 180)
+        c.setopt(pycurl.FOLLOWLOCATION, 1)
         c.setopt(pycurl.USERAGENT, 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)')
         c.setopt(c.WRITEFUNCTION, output.write)
         c.setopt(c.HEADERFUNCTION, header.write)
         c.perform()
         # Header parsing
         header_info = header_function(header.getvalue())
-        try:
-            print_highlighted("[i] Response MIME_TYPE: %s SIZE: %s" %
-                              (header_info['content-type'],
-                               header_info['content-length']))
-        except Exception, e:
-            pass
-    except urllib2.HTTPError, e:
-        print "[-] Download failed with HTTP status code: %s" % e.code
-    except urllib2.URLError, e:
-        print "[-] Download failed with error: %s" % e.args
     except Exception, e:
         if args.debug:
             traceback.print_exc()
-        print "[-] Download failed with error: %s" % str(e)
+        print_highlighted("[-] Error MESSAGE: %s" % str(e))
 
     # Write File
     if c.getinfo(c.RESPONSE_CODE) == 200:
@@ -492,6 +483,15 @@ def download_url(host_id, url):
             if args.debug:
                 traceback.print_exc()
             print "[-] Failed to write file %s (use --debug for more info)" % out_filename
+    else:
+        try:
+            print_highlighted("[i] Response CODE: %s MIME_TYPE: %s SIZE: %s" % (
+                                  str(c.getinfo(c.RESPONSE_CODE)),
+                                  header_info['content-type'],
+                                  header_info['content-length'])
+                              )
+        except Exception, e:
+            print_highlighted("[-] Response CODE: %s" % str(c.getinfo(c.RESPONSE_CODE)))
 
     output.close()
 
