@@ -44,10 +44,13 @@ def fetch_ip_and_domains(line):
     Extracts IPs and Domains from a log line
     """
     domains = []
+    # Modify line to easily extract IPs and Domains from reports
+    # get 183.200.23[.]213
+    mod_line = line.replace("[", "").replace("]", "")
     ip_pattern = r'\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b'
-    ips = re.findall(ip_pattern, line)
+    ips = re.findall(ip_pattern, mod_line)
     domain_pattern = r'\b(?=.{4,253}$)(((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z0-9-]{3,40}\.[a-zA-Z]{2,4})\b'
-    domains_raw = re.findall(domain_pattern, line)
+    domains_raw = re.findall(domain_pattern, mod_line)
     for domain in domains_raw:
         domains.append(domain[0])
     return ips, domains
