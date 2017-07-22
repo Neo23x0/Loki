@@ -333,7 +333,7 @@ def process_elements(elements, result_file, max_items, nocsv=False, dups=False, 
                     positives_url = url['positives']
                     total_url = url['total']
                     urls.append({'url': url['url'], 'positives': positives_url, 'total': total_url})
-                    if i < max_items:
+                    if i < max_items and args.download:
                         print_highlighted("URL: {0} POSITIVES: {1} TOTAL: {2}".format(url['url'],
                                                                                       positives_url,
                                                                                       total_url))
