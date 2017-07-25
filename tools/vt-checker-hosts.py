@@ -50,7 +50,7 @@ def fetch_ip_and_domains(line):
     mod_line = line.replace("[", "").replace("]", "")
     ip_pattern = r'\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b'
     ips = re.findall(ip_pattern, mod_line)
-    domain_pattern = r'\b(?=.{4,253}$)(((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z0-9-]{3,40}\.[a-zA-Z]{2,4})\b'
+    domain_pattern = r'\b(?=.{4,253}$)(((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z0-9-]{3,40}\.[a-zA-Z]{2,63})\b'
     domains_raw = re.findall(domain_pattern, mod_line)
     for domain in domains_raw:
         domains.append(domain[0])
