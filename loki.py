@@ -1261,7 +1261,7 @@ if __name__ == '__main__':
     parser.add_argument('-l', help='Log file', metavar='log-file', default='loki-%s.log' % t_hostname)
     parser.add_argument('-r', help='Remote syslog system', metavar='remote-loghost', default='')
     parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
-    parser.add_argument('-w', help='Warning score', metavar='warning-level', default=70)
+    parser.add_argument('-w', help='Warning score', metavar='warning-level', default=60)
     parser.add_argument('-n', help='Notice score', metavar='notice-level', default=40)
     parser.add_argument('--printAll', action='store_true', help='Print all files that are scanned', default=False)
     parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
