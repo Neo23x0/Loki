@@ -35,6 +35,7 @@ import psutil
 import signal as signal_module
 from sys import platform as _platform
 from subprocess import Popen, PIPE
+from collections import Counter
 
 # LOKI Modules
 from lib.lokilogger import *
@@ -68,12 +69,18 @@ if platform == "":
     sys.exit(1)
 
 # Predefined Evil Extensions
-EVIL_EXTENSIONS = [".asp", ".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm", ".cmd", ".com", ".cpl",
+EVIL_EXTENSIONS = [".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm", ".cmd", ".com", ".cpl",
                    ".crt", ".dll", ".exe", ".hta", ".js", ".lnk", ".msc", ".ocx", ".pcd", ".pif", ".pot", ".pdf",
-                   ".reg", ".scr", ".sct", ".sys", ".url", ".vb", ".vbe", ".vbs", ".wsc", ".wsf", ".wsh", ".ct", ".t",
+                   ".reg", ".scr", ".sct", ".sys", ".url", ".vb", ".vbe", ".wsc", ".wsf", ".wsh", ".ct", ".t",
                    ".input", ".war", ".jsp", ".php", ".asp", ".aspx", ".doc", ".docx", ".pdf", ".xls", ".xlsx", ".ppt",
                    ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
                    ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm"]
+
+SCRIPT_EXTENSIONS = [".asp", ".vbs", ".ps1", ".bas", ".bat", ".js", ".vb", ".vbe", ".vbs", ".wsc", ".wsf",
+                     ".wsh",  ".jsp", ".php", ".asp", ".aspx", ".psd1", ".psm1", ".ps1xml", ".clixml", ".psc1",
+                     ".pssc"]
+
+SCRIPT_TYPES = ["VBS", "PHP", "JSP", "ASP", "BATCH"]
 
 class Loki():
 
@@ -353,6 +360,15 @@ class Loki():
                             # Check if file is Regin virtual .evt file system
                             self.scan_regin_fs(fileData, filePath)
 
+                        # Script Anomalies Check
+                        if args.scriptanalysis:
+                            if extension in SCRIPT_EXTENSIONS or type in SCRIPT_TYPES:
+                                logger.log("DEBUG", "Performing character analysis on file %s ... " % filePath)
+                                message, score = self.script_stats_analysis(fileData)
+                                if message:
+                                    reasons.append("%s SCORE: %s" % (message, score))
+                                    total_score += score
+
                         # Yara Check -------------------------------------------------------
 
                         # Memory Dump Scan
@@ -384,7 +400,7 @@ class Loki():
                             logger.log("ERROR", "Cannot YARA scan file: %s" % filePathCleaned)
 
                     # Info Line -----------------------------------------------------------------------
-                    fileInfo = "FILE: %s SCORE: %s TYPE: %s SIZE: %s FIRST_BYTES: %s %s %s" % (
+                    fileInfo = "FILE: %s SCORE: %s TYPE: %s SIZE: %s FIRST_BYTES: %s %s %s " % (
                         filePath, total_score, fileType, fileSize, firstBytesString, hashString, getAgeString(filePath))
 
                     # Now print the total result
@@ -1118,7 +1134,7 @@ class Loki():
 
     def initialize_excludes(self, excludes_file):
         try:
-            excludes = []
+            excludes = [r'otx-c2-iocs.txt', r'hash-iocs.txt']
             with open(excludes_file, 'r') as config:
                 lines = config.read().splitlines()
 
@@ -1181,6 +1197,56 @@ class Loki():
         finally:
             return fileData
 
+    def script_stats_analysis(self, data):
+        """
+        Doing a statistical analysis for scripts like PHP, JavaScript or PowerShell to
+        detect obfuscated code
+        :param data:
+        :return: message, score
+        """
+        anomal_chars = [r'^', r'{', r'}', r'"', r',', r'<', r'>', ';']
+        anomal_char_stats = {}
+        char_stats = {"upper": 0, "lower": 0, "numbers": 0, "symbols": 0, "spaces": 0}
+        anomalies = []
+        c = Counter(data)
+        anomaly_score = 0
+
+        # Check the characters
+        for char in c.most_common():
+            if char[0] in anomal_chars:
+                anomal_char_stats[char[0]] = char[1]
+            if char[0].isupper():
+                char_stats["upper"] += char[1]
+            elif char[0].islower():
+                char_stats["lower"] += char[1]
+            elif char[0].isdigit():
+                char_stats["numbers"] += char[1]
+            elif char[0].isspace():
+                char_stats["spaces"] += char[1]
+            else:
+                char_stats["symbols"] += char[1]
+        # Totals
+        char_stats["total"] = len(data)
+        char_stats["alpha"] = char_stats["upper"] + char_stats["lower"]
+
+        # Detect Anomalies
+        if char_stats["alpha"] > 40 and char_stats["upper"] > (char_stats["lower"] * 0.9):
+            anomalies.append("upper to lower ratio")
+            anomaly_score += 20
+        if char_stats["symbols"] > char_stats["alpha"]:
+            anomalies.append("more symbols than alphanum chars")
+            anomaly_score += 40
+        for ac, count in anomal_char_stats.iteritems():
+            if (count/char_stats["alpha"]) > 0.05:
+                anomalies.append("symbol count of '%s' very high" % ac)
+                anomaly_score += 40
+
+        # Generate message
+        message = "Anomaly detected ANOMALIES: '{0}'".format("', '".join(anomalies))
+        if anomaly_score > 40:
+            return message, anomaly_score
+
+        return "", 0
 
 def get_application_path():
     try:
@@ -1238,7 +1304,7 @@ def signal_handler(signal_name, frame):
         print "------------------------------------------------------------------------------\n"
         logger.log('INFO', 'LOKI\'s work has been interrupted by a human. Returning to Asgard.')
     except Exception, e:
-        print 'THOR\'s work has been interrupted by a human. Returning to Asgard.'
+        print 'LOKI\'s work has been interrupted by a human. Returning to Asgard.'
     sys.exit(0)
 
 
@@ -1267,6 +1333,7 @@ if __name__ == '__main__':
     parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
+    parser.add_argument('--scriptanalysis', action='store_true', help='Activate script analysis (beta)', default=False)
     parser.add_argument('--rootkit', action='store_true', help='Skip the rootkit check', default=False)
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
     parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
