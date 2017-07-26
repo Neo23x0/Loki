@@ -8,9 +8,12 @@ from colorama import init
 import codecs
 import datetime
 import traceback
+import logging
+import logging.handlers
+import socket
 from helpers import removeNonAsciiDrop
 
-__version__ = '0.22.1'
+__version__ = '0.23.0'
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
@@ -23,10 +26,11 @@ class LokiLogger():
     warnings = 0
     notices = 0
     only_relevant = False
+    remote_logging = False
     debug = False
     linesep = "\n"
 
-    def __init__(self, no_log_file, log_file, hostname, csv, only_relevant, debug, platform, caller):
+    def __init__(self, no_log_file, log_file, hostname, remote_host, csv, only_relevant, debug, platform, caller):
         self.no_log_file = no_log_file
         self.log_file = log_file
         self.hostname = hostname
@@ -43,6 +47,15 @@ class LokiLogger():
         # Welcome
         if not self.csv:
             self.print_welcome()
+
+        # Syslog server target
+        if remote_host:
+            # Create remote logger
+            self.remote_logger = logging.getLogger('LOKI')
+            self.remote_logger.setLevel(logging.DEBUG)
+            remote_syslog_handler = logging.handlers.SysLogHandler(address=(remote_host, 514), facility=19)
+            self.remote_logger.addHandler(remote_syslog_handler)
+            self.remote_logging = True
 
     def log(self, mes_type, message):
 
@@ -75,6 +88,10 @@ class LokiLogger():
         # to file
         if not self.no_log_file:
             self.log_to_file(message, mes_type)
+
+        # to syslog server
+        if self.remote_logging:
+            self.log_to_remotesys(message, mes_type)
 
     def log_to_stdout(self, message, mes_type):
 
@@ -156,6 +173,28 @@ class LokiLogger():
             traceback.print_exc()
             print "Cannot print line to log file {0}".format(self.log_file)
 
+    def log_to_remotesys(self, message, mes_type):
+        # Preparing the message
+        syslog_message = "LOKI: {0}: {1}".format(mes_type.title(), message)
+        try:
+            # Mapping LOKI's levels to the syslog levels
+            if mes_type == "NOTICE":
+                self.remote_logger.info(syslog_message)
+            elif mes_type == "INFO":
+                self.remote_logger.info(syslog_message)
+            elif mes_type == "WARNING":
+                self.remote_logger.warning(syslog_message)
+            elif mes_type == "ALERT":
+                self.remote_logger.critical(syslog_message)
+            elif mes_type == "DEBUG":
+                self.remote_logger.debug(syslog_message)
+            elif mes_type == "ERROR":
+                self.remote_logger.error(syslog_message)
+        except Exception, e:
+            if self.debug:
+                traceback.print_exc()
+            print "Error while logging to remote syslog server ERROR: %s" % str(e)
+
     def print_welcome(self):
 
         if self.caller == 'main':
@@ -171,11 +210,11 @@ class LokiLogger():
             print "   /___/\____/\___/ /___/\__/\_,_/_//_/_//_/\__/_/    "
 
             print Fore.WHITE
-            print "   (C) Florian Roth"
-            print "   July 2017"
-            print "   Version %s" % __version__
+            print "   Copyright by Florian Roth, Released under the GNU General Public License"
+            print "   July 2017, Version %s" % __version__
             print "  "
             print "   DISCLAIMER - USE AT YOUR OWN RISK"
+            print "   Please report false positives via https://github.com/Neo23x0/Loki/issues"
             print "  "
             print Back.GREEN + " ".ljust(79) + Back.BLACK
             print Fore.WHITE+''+Back.BLACK

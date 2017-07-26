@@ -201,7 +201,7 @@ if __name__ == '__main__':
         t_hostname = os.uname()[1]
 
     # Logger
-    logger = LokiLogger(args.nolog, args.l, t_hostname, False, False, args.debug, platform=platform, caller='upgrader')
+    logger = LokiLogger(args.nolog, args.l, t_hostname, '', False, False, args.debug, platform=platform, caller='upgrader')
 
     # Update Loki
     updater = LOKIUpdater(args.debug, logger, get_application_path())
