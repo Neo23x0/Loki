@@ -1134,7 +1134,7 @@ class Loki():
 
     def initialize_excludes(self, excludes_file):
         try:
-            excludes = [r'otx-c2-iocs.txt', r'hash-iocs.txt']
+            excludes = []
             with open(excludes_file, 'r') as config:
                 lines = config.read().splitlines()
 
