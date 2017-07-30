@@ -385,7 +385,7 @@ class Loki():
                         # Scan the read data
                         try:
                             for (score, rule, description, matched_strings) in \
-                                    self.scan_data(fileData, fileType, filePathCleaned,
+                                    self.scan_data(fileData, fileType, filename,
                                                    filePathCleaned, extension, md5):
                                 # Message
                                 message = "Yara Rule MATCH: %s SUBSCORE: %s DESCRIPTION: %s" % (rule, score, description)
@@ -428,6 +428,8 @@ class Loki():
 
     def scan_data(self, fileData, fileType="-", fileName="-", filePath="-", extension="-", md5="-"):
 
+        # Scan parameters
+        #print fileType, fileName, filePath, extension, md5
         # Scan with yara
         try:
             for rules in self.yara_rules:
