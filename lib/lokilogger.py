@@ -13,7 +13,7 @@ import logging.handlers
 import socket
 from helpers import removeNonAsciiDrop
 
-__version__ = '0.23.2'
+__version__ = '0.23.3'
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
@@ -78,16 +78,16 @@ class LokiLogger():
             if mes_type not in ('ALERT', 'WARNING'):
                 return
 
+        # to file
+        if not self.no_log_file:
+            self.log_to_file(message, mes_type)
+
         # to stdout
         try:
             self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type)
         except Exception, e:
             print "Cannot print certain characters to command line - see log file for full unicode encoded log line"
             self.log_to_stdout(removeNonAsciiDrop(message), mes_type)
-
-        # to file
-        if not self.no_log_file:
-            self.log_to_file(message, mes_type)
 
         # to syslog server
         if self.remote_logging:
