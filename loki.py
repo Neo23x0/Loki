@@ -204,7 +204,11 @@ class Loki():
 
                     # Get the file and path
                     filePath = os.path.join(root,filename)
+                    # Clean the values for YARA matching
+                    # > due to errors when Unicode characters are passed to the match function as
+                    #   external variables
                     filePathCleaned = filePath.encode('ascii', errors='replace')
+                    fileNameCleaned = filename.encode('ascii', errors='replace')
 
                     # Get Extension
                     extension = os.path.splitext(filePath)[1].lower()
@@ -385,8 +389,13 @@ class Loki():
                         # Scan the read data
                         try:
                             for (score, rule, description, matched_strings) in \
-                                    self.scan_data(fileData, fileType, filename,
-                                                   filePathCleaned, extension, md5):
+                                    self.scan_data(fileData=fileData,
+                                                   fileType=fileType,
+                                                   fileName=fileNameCleaned,
+                                                   filePath=filePathCleaned,
+                                                   extension=extension,
+                                                   md5=md5  # legacy rule support
+                                                   ):
                                 # Message
                                 message = "Yara Rule MATCH: %s SUBSCORE: %s DESCRIPTION: %s" % (rule, score, description)
                                 # Matches
