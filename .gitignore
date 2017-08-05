@@ -30,3 +30,4 @@ loki\.log
 
 *.pyc
 signature-base
+tools/old-results
