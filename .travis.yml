@@ -10,4 +10,6 @@ install:
   - pip install netaddr
 
 script:
-  - python ./loki.py --noprocs -p ./test
+  - python ./loki.py --noprocs --noindicator --dontwait -p ./test
+  - python ./loki.py --noprocs --noindicator --dontwait --intense -p ./test
+  - python ./loki.py --noprocs --noindicator --dontwait --csv -p ./test
