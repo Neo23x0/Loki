@@ -7,6 +7,7 @@ install:
   - pip install psutil
   - pip install colorama
   - pip install pylzma
+  - pip install netaddr
 
 script:
   - python ./loki.py --noprocs -p ./test
