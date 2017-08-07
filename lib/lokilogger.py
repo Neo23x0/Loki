@@ -158,7 +158,9 @@ class LokiLogger():
                     sys.stdout.write("%s\b\b%s %s%s%s%s\n" % (base_color, mes_type, message, Back.BLACK,Fore.WHITE,Style.NORMAL))
 
             except Exception, e:
-                traceback.print_exc()
+                if self.debug:
+                    traceback.print_exc()
+                    sys.exit(1)
                 print "Cannot print to cmd line - formatting error"
 
     def log_to_file(self, message, mes_type):
@@ -170,7 +172,9 @@ class LokiLogger():
                 else:
                     logfile.write(u"%s %s LOKI: %s: %s%s" % (getSyslogTimestamp(), self.hostname, mes_type.title(), message, self.linesep))
         except Exception, e:
-            traceback.print_exc()
+            if self.debug:
+                traceback.print_exc()
+                sys.exit(1)
             print "Cannot print line to log file {0}".format(self.log_file)
 
     def log_to_remotesys(self, message, mes_type):
@@ -193,6 +197,7 @@ class LokiLogger():
         except Exception, e:
             if self.debug:
                 traceback.print_exc()
+                sys.exit(1)
             print "Error while logging to remote syslog server ERROR: %s" % str(e)
 
     def print_welcome(self):

@@ -840,6 +840,7 @@ class Loki():
         except Exception, e:
             if args.debug:
                 traceback.print_exc()
+                sys.exit(1)
             logger.log("INFO",
                 "Process %s does not exist anymore or cannot be accessed" % str(pid))
 
@@ -1047,6 +1048,7 @@ class Loki():
                             logger.log("ERROR", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
                             if args.debug:
                                 traceback.print_exc()
+                                sys.exit(1)
 
             # Compile
             try:
@@ -1065,6 +1067,7 @@ class Loki():
                 sys.exit(1)
             if args.debug:
                 traceback.print_exc()
+                sys.exit(1)
 
             # Add as Lokis YARA rules
             self.yara_rules.append(compiledRules)
@@ -1073,6 +1076,7 @@ class Loki():
             logger.log("ERROR", "Error reading signature folder /signatures/")
             if args.debug:
                 traceback.print_exc()
+                sys.exit(1)
 
     def initialize_hash_iocs(self, ioc_directory, false_positive=False):
         try:
@@ -1305,6 +1309,7 @@ def walk_error(err):
             logger.log('ERROR', removeNonAsciiDrop(str(err)))
         elif args.debug:
             print "Directory walk error"
+            sys.exit(1)
     except UnicodeError, e:
         print "Unicode decode error in walk error message"
 
