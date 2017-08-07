@@ -995,10 +995,10 @@ class Loki():
                                 self.filename_iocs.append(fioc)
 
                             except Exception, e:
+                                logger.log("ERROR", "Error reading line: %s" % line)
                                 if logger.debug:
                                     traceback.print_exc()
                                     sys.exit(1)
-                                logger.log("ERROR", "Error reading line: %s" % line)
 
         except Exception, e:
             traceback.print_exc()
