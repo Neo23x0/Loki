@@ -276,6 +276,8 @@ class Loki():
 
                     # Access check (also used for magic header detection)
                     firstBytes = ""
+                    firstBytesString = "-"
+                    hashString = ""
                     try:
                         with open(filePath, 'rb') as f:
                             firstBytes = f.read(4)
@@ -434,6 +436,7 @@ class Loki():
                 except Exception, e:
                     if logger.debug:
                         traceback.print_exc()
+                        sys.exit(1)
 
     def scan_data(self, fileData, fileType="-", fileName="-", filePath="-", extension="-", md5="-"):
 
@@ -924,6 +927,8 @@ class Loki():
 
                                 except Exception,e:
                                     logger.log("ERROR", "Cannot read line: %s" % line)
+                                    if logger.debug:
+                                        sys.exit(1)
                 except OSError, e:
                     logger.log("ERROR", "No such file or directory")
         except Exception, e:
@@ -992,6 +997,7 @@ class Loki():
                             except Exception, e:
                                 if logger.debug:
                                     traceback.print_exc()
+                                    sys.exit(1)
                                 logger.log("ERROR", "Error reading line: %s" % line)
 
         except Exception, e:
@@ -999,6 +1005,7 @@ class Loki():
             logger.log("ERROR", "Error reading File IOC file: %s" % ioc_filename)
             logger.log("ERROR", "Please make sure that you cloned the repo or downloaded the sub repository: See "
                                 "https://github.com/Neo23x0/Loki/issues/51")
+            sys.exit(1)
 
     def initialize_yara_rules(self):
 
@@ -1046,7 +1053,7 @@ class Loki():
 
                         except Exception, e:
                             logger.log("ERROR", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
-                            if args.debug:
+                            if logger.debug:
                                 traceback.print_exc()
                                 sys.exit(1)
 
@@ -1065,16 +1072,13 @@ class Loki():
                 traceback.print_exc()
                 logger.log("ERROR", "Error during YARA rule compilation - please fix the issue in the rule set")
                 sys.exit(1)
-            if args.debug:
-                traceback.print_exc()
-                sys.exit(1)
 
             # Add as Lokis YARA rules
             self.yara_rules.append(compiledRules)
 
         except Exception, e:
             logger.log("ERROR", "Error reading signature folder /signatures/")
-            if args.debug:
+            if logger.debug:
                 traceback.print_exc()
                 sys.exit(1)
 
@@ -1117,7 +1121,9 @@ class Loki():
                                    % (str(len(self.hashes_md5)+len(self.hashes_sha1)+len(self.hashes_sha256)), ioc_filename))
 
         except Exception, e:
-            traceback.print_exc()
+            if logger.debug:
+                traceback.print_exc()
+                sys.exit(1)
             logger.log("ERROR", "Error reading Hash file: %s" % ioc_filename)
 
     def initialize_filetype_magics(self, filetype_magics_file):
@@ -1144,7 +1150,9 @@ class Loki():
                     logger.log("ERROR", "Cannot read line: %s" % line)
 
         except Exception, e:
-            traceback.print_exc()
+            if logger.debug:
+                traceback.print_exc()
+                sys.exit(1)
             logger.log("ERROR", "Error reading Hash file: %s" % filetype_magics_file)
 
     def initialize_excludes(self, excludes_file):
@@ -1167,7 +1175,9 @@ class Loki():
             self.fullExcludes = excludes
 
         except Exception, e:
-            traceback.print_exc()
+            if logger.debug:
+                traceback.print_exc()
+                sys.exit(1)
             logger.log("ERROR", "Error reading excludes file: %s" % excludes_file)
 
     def scan_regin_fs(self, fileData, filePath):
@@ -1263,6 +1273,7 @@ class Loki():
 
         return "", 0
 
+
 def get_application_path():
     try:
         if getattr(sys, 'frozen', False):
@@ -1279,6 +1290,8 @@ def get_application_path():
     except Exception, e:
         print "Error while evaluation of application path"
         traceback.print_exc()
+        if args.debug:
+            sys.exit(1)
 
 
 def updateLoki(sigsOnly):
