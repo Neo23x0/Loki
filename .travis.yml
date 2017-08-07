@@ -7,4 +7,4 @@ install:
   - pip install psutil
 
 script:
-  - ./loki.py --noprocs -p ./test
+  - python ./loki.py --noprocs -p ./test
