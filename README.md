@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Neo23x0/loki.svg?branch=master)](https://travis-ci.org/Neo23x0/loki)
+[![Build Status](https://travis-ci.org/Neo23x0/Loki.svg?branch=master)](https://travis-ci.org/Neo23x0/Loki)
 
 ![Logo](/lokiicon.jpg)
 # Loki - Simple IOC Scanner
