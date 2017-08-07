@@ -16,7 +16,6 @@ loki.zip
 dist
 run_loki.bat
 *.exe
-test
 loki
 dummy
 tools/*.txt

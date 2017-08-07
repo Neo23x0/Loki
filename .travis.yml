@@ -1,0 +1,10 @@
+language: python
+python:
+  - 2.7
+cache: pip
+install:
+  - pip install yara-python
+  - pip install psutil
+
+script:
+  - loki.py --noprocs -p ./test
