@@ -5,6 +5,7 @@ cache: pip
 install:
   - pip install yara-python
   - pip install psutil
+  - pip install colorama
 
 script:
   - python ./loki.py --noprocs -p ./test
