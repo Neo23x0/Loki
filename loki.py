@@ -1043,10 +1043,12 @@ class Loki():
                                 logger.log("INFO", "Initializing Yara rule %s" % file)
                             except Exception, e:
                                 traceback.print_exc()
+                                if logger.debug:
+                                    sys.exit(1)
                                 continue
 
                             # Encrypted
-                            if extension == ".yar":
+                            if extension == ".yar" or extension == ".yara":
                                 with open(yaraRuleFile, 'r') as rulefile:
                                     data = rulefile.read()
                                     yaraRules += data

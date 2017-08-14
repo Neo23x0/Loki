@@ -37,7 +37,8 @@ elif _platform == "win32":
 
 class LOKIUpdater(object):
     
-    UPDATE_URL_SIGS = "https://github.com/Neo23x0/signature-base/archive/master.zip"
+    UPDATE_URL_SIGS = ["https://github.com/Neo23x0/signature-base/archive/master.zip",
+                       "https://github.com/SupportIntelligence/Icewater/archive/master.zip"]
     UPDATE_URL_LOKI = "https://api.github.com/repos/Neo23x0/Loki/releases/latest"
     
     def __init__(self, debug, logger, application_path):
@@ -47,62 +48,64 @@ class LOKIUpdater(object):
 
     def update_signatures(self):
         try:
+            for sig_url in self.UPDATE_URL_SIGS:
+                # Downloading current repository
+                try:
+                    self.logger.log("INFO", "Downloading %s ..." % sig_url)
+                    response = urllib2.urlopen(sig_url)
+                except Exception, e:
+                    if self.debug:
+                        traceback.print_exc()
+                    self.logger.log("ERROR", "Error downloading the signature database - check your Internet connection")
+                    sys.exit(1)
 
-            # Downloading current repository
-            try:
-                self.logger.log("INFO", "Downloading %s ..." % self.UPDATE_URL_SIGS)
-                response = urllib2.urlopen(self.UPDATE_URL_SIGS)
-            except Exception, e:
-                if self.debug:
-                    traceback.print_exc()
-                self.logger.log("ERROR", "Error downloading the signature database - check your Internet connection")
-                sys.exit(1)
+                # Preparations
+                try:
+                    sigDir = os.path.join(self.application_path, './signature-base/')
+                    for outDir in ['', 'iocs', 'yara', 'misc']:
+                        fullOutDir = os.path.join(sigDir, outDir)
+                        if not os.path.exists(fullOutDir):
+                            os.makedirs(fullOutDir)
+                except Exception, e:
+                    if self.debug:
+                        traceback.print_exc()
+                    self.logger.log("ERROR", "Error while creating the signature-base directories")
+                    sys.exit(1)
 
-            # Preparations
-            try:
-                sigDir = os.path.join(self.application_path, './signature-base/')
-                for outDir in ['', 'iocs', 'yara', 'misc']:
-                    fullOutDir = os.path.join(sigDir, outDir)
-                    if not os.path.exists(fullOutDir):
-                        os.makedirs(fullOutDir)
-            except Exception, e:
-                if self.debug:
-                    traceback.print_exc()
-                self.logger.log("ERROR", "Error while creating the signature-base directories")
-                sys.exit(1)
+                # Read ZIP file
+                try:
+                    zipUpdate = zipfile.ZipFile(StringIO(response.read()))
+                    for zipFilePath in zipUpdate.namelist():
+                        sigName = os.path.basename(zipFilePath)
+                        if zipFilePath.endswith("/"):
+                            continue
+                        self.logger.log("DEBUG", "Extracting %s ..." % zipFilePath)
+                        if "/iocs/" in zipFilePath and zipFilePath.endswith(".txt"):
+                            targetFile = os.path.join(sigDir, "iocs", sigName)
+                        elif "/yara/" in zipFilePath and zipFilePath.endswith(".yar"):
+                            targetFile = os.path.join(sigDir, "yara", sigName)
+                        elif "/misc/" in zipFilePath and zipFilePath.endswith(".txt"):
+                            targetFile = os.path.join(sigDir, "misc", sigName)
+                        elif zipFilePath.endswith(".yara"):
+                            targetFile = os.path.join(sigDir, "yara", sigName)
+                        else:
+                            continue
 
-            # Read ZIP file
-            try:
-                zipUpdate = zipfile.ZipFile(StringIO(response.read()))
-                for zipFilePath in zipUpdate.namelist():
-                    sigName = os.path.basename(zipFilePath)
-                    if zipFilePath.endswith("/"):
-                        continue
-                    self.logger.log("DEBUG", "Extracting %s ..." % zipFilePath)
-                    if "/iocs/" in zipFilePath and zipFilePath.endswith(".txt"):
-                        targetFile = os.path.join(sigDir, "iocs", sigName)
-                    elif "/yara/" in zipFilePath and zipFilePath.endswith(".yar"):
-                        targetFile = os.path.join(sigDir, "yara", sigName)
-                    elif "/misc/" in zipFilePath and zipFilePath.endswith(".txt"):
-                        targetFile = os.path.join(sigDir, "misc", sigName)
-                    else:
-                        continue
+                        # New file
+                        if not os.path.exists(targetFile):
+                            self.logger.log("INFO", "New signature file: %s" % sigName)
 
-                    # New file
-                    if not os.path.exists(targetFile):
-                        self.logger.log("INFO", "New signature file: %s" % sigName)
+                        # Extract file
+                        source = zipUpdate.open(zipFilePath)
+                        target = file(targetFile, "wb")
+                        with source, target:
+                            shutil.copyfileobj(source, target)
 
-                    # Extract file
-                    source = zipUpdate.open(zipFilePath)
-                    target = file(targetFile, "wb")
-                    with source, target:
-                        shutil.copyfileobj(source, target)
-
-            except Exception, e:
-                if self.debug:
-                    traceback.print_exc()
-                self.logger.log("ERROR", "Error while extracting the signature files from the download package")
-                sys.exit(1)
+                except Exception, e:
+                    if self.debug:
+                        traceback.print_exc()
+                    self.logger.log("ERROR", "Error while extracting the signature files from the download package")
+                    sys.exit(1)
 
         except Exception, e:
             if self.debug:
