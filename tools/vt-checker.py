@@ -31,7 +31,7 @@ WAIT_TIME = 15  # Public API allows 4 request per minute, so we wait 15 secs by 
 
 
 def fetch_hash(line):
-    pattern = r'\b([0-9a-fA-F]{32}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64})\b'
+    pattern = r'(?<!FIRSTBYTES:\s)\b([0-9a-fA-F]{32}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64})\b'
     hash_search = re.findall(pattern, line)
     if len(hash_search) > 0:
         hash = hash_search[-1]
