@@ -2,7 +2,7 @@
 """Checks Hashes read from an input file on Virustotal"""
 
 __AUTHOR__ = 'Florian Roth'
-__VERSION__ = "0.8 July 2017"
+__VERSION__ = "0.9 August 2017"
 
 """
 Modified by Hannah Ward: clean up, removal of simplejson, urllib2 with requests
@@ -270,8 +270,9 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             imphash = info['imphash']
             if imphash != "-":
                 if imphash in imphashes:
-                    print_highlighted("[!] Imphash %s seen in %d other sample(s) of this batch" %
-                                      (imphash, imphashes[imphash]), hl_color=res_color)
+                    print_highlighted("[!] Imphash seen in %d samples "
+                                      "https://totalhash.cymru.com/search/?hash:%s" %
+                                      (imphashes[imphash], imphash), hl_color=res_color)
                     imphashes[imphash] += 1
                 else:
                     imphashes[imphash] = 1
