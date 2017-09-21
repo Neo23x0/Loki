@@ -2,7 +2,7 @@
 """Checks Hashes read from an input file on Virustotal"""
 
 __AUTHOR__ = 'Florian Roth'
-__VERSION__ = "0.9 August 2017"
+__VERSION__ = "0.10 September 2017"
 
 """
 Modified by Hannah Ward: clean up, removal of simplejson, urllib2 with requests
@@ -69,7 +69,7 @@ def process_permalink(url, debug=False):
     headers = {'User-Agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
                'Referrer': 'https://www.virustotal.com/en/'}
     info = {'filenames': ['-'], 'firstsubmission': '-', 'harmless': False, 'signed': False, 'revoked': False,
-            'expired': False, 'mssoft': False, 'imphash': '-'}
+            'expired': False, 'mssoft': False, 'imphash': '-', 'filetype': '-'}
     try:
         source_code = requests.get(url, headers=headers)
         # Extract info from source code
@@ -81,6 +81,12 @@ def process_permalink(url, debug=False):
             if text == "File names":
                 file_names = elements[i + 1].text.strip().split("\n")
                 info['filenames'] = filter(None, map(lambda file: file.strip(), file_names))
+        # Get file names
+        elements = soup.find_all('div')
+        for i, row in enumerate(elements):
+            text = row.text.strip()
+            if text.startswith('File type'):
+                info['filetype'] = elements[i].text[10:].strip()
         # Get additional information
         elements = soup.findAll("div", {"class": "enum"})
         for i, row in enumerate(elements):
@@ -211,6 +217,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         last_submitted = "-"
         first_submitted = "-"
         filenames = "-"
+        filetype = "-"
         rating = "unknown"
         positives = 0
         res_color = Back.CYAN
@@ -267,6 +274,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             filenames = removeNonAsciiDrop(", ".join(info['filenames'][:5]).replace(';', '_'))
             first_submitted = info['firstsubmission']
             # Other info
+            filetype = info['filetype']
             imphash = info['imphash']
             if imphash != "-":
                 if imphash in imphashes:
@@ -280,8 +288,8 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             result = "%s / %s" % (response_dict.get("positives"), response_dict.get("total"))
             print_highlighted("VIRUS: {0}".format(virus))
             print_highlighted("FILENAMES: {0}".format(filenames))
-            print_highlighted("FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(
-                first_submitted, last_submitted))
+            print_highlighted("FILE_TYPE: {2} FIRST_SUBMITTED: {0} LAST_SUBMITTED: {1}".format(
+                first_submitted, last_submitted, filetype))
 
             # Permalink analysis results
             if info['harmless']:
@@ -302,16 +310,18 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
         # Add to log file
         if not nocsv:
             result_line = "{0};{1};{2};{3};{4};{5};{6};{7};" \
-                          "{8};{9};{10};{11};{12};{13};{14};{15};{16}\n".format(hashVal, rating, comment, positives,
-                                                                                virus, filenames,
-                                                                                first_submitted,
-                                                                                last_submitted,
-                                                                                md5, sha1, sha256, imphash,
-                                                                                harmless.lstrip(' '),
-                                                                                signed.lstrip(' '),
-                                                                                revoked.lstrip(' '),
-                                                                                expired.lstrip(' '),
-                                                                                vendor_result_string)
+                          "{8};{9};{10};{11};{12};{13};{14};{15};{16};{17}\n".format(hashVal, rating, comment,
+                                                                                     positives,
+                                                                                     virus, filenames,
+                                                                                     first_submitted,
+                                                                                     last_submitted,
+                                                                                     filetype,
+                                                                                     md5, sha1, sha256, imphash,
+                                                                                     harmless.lstrip(' '),
+                                                                                     signed.lstrip(' '),
+                                                                                     revoked.lstrip(' '),
+                                                                                     expired.lstrip(' '),
+                                                                                     vendor_result_string)
             with open(result_file, "a") as fh_results:
                 fh_results.write(result_line)
 
