@@ -2,6 +2,7 @@
 #
 # LOKI Logger
 
+
 import sys, re
 from colorama import Fore, Back, Style
 from colorama import init
@@ -85,8 +86,8 @@ class LokiLogger():
         # to stdout
         try:
             self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type)
-        except Exception, e:
-            print "Cannot print certain characters to command line - see log file for full unicode encoded log line"
+        except Exception as e:
+            print ("Cannot print certain characters to command line - see log file for full unicode encoded log line")
             self.log_to_stdout(removeNonAsciiDrop(message), mes_type)
 
         # to syslog server
@@ -100,7 +101,7 @@ class LokiLogger():
         message = message.encode(sys.stdout.encoding, errors='replace')
 
         if self.csv:
-            print "{0},{1},{2},{3}".format(getSyslogTimestamp(),self.hostname,mes_type,message)
+            print ("{0},{1},{2},{3}".format(getSyslogTimestamp(),self.hostname,mes_type,message))
 
         else:
 
@@ -152,16 +153,16 @@ class LokiLogger():
                 # Print to console
                 if mes_type == "RESULT":
                     res_message = "\b\b%s %s" % (mes_type, message)
-                    print base_color,res_message,Back.BLACK
-                    print Fore.WHITE,Style.NORMAL
+                    print (base_color,res_message,Back.BLACK)
+                    print (Fore.WHITE,Style.NORMAL)
                 else:
                     sys.stdout.write("%s\b\b%s %s%s%s%s\n" % (base_color, mes_type, message, Back.BLACK,Fore.WHITE,Style.NORMAL))
 
-            except Exception, e:
+            except Exception as e:
                 if self.debug:
                     traceback.print_exc()
                     sys.exit(1)
-                print "Cannot print to cmd line - formatting error"
+                print ("Cannot print to cmd line - formatting error")
 
     def log_to_file(self, message, mes_type):
         try:
@@ -171,11 +172,11 @@ class LokiLogger():
                     logfile.write(u"{0},{1},{2},{3}{4}".format(getSyslogTimestamp(), self.hostname, mes_type,message, self.linesep))
                 else:
                     logfile.write(u"%s %s LOKI: %s: %s%s" % (getSyslogTimestamp(), self.hostname, mes_type.title(), message, self.linesep))
-        except Exception, e:
+        except Exception as e:
             if self.debug:
                 traceback.print_exc()
                 sys.exit(1)
-            print "Cannot print line to log file {0}".format(self.log_file)
+            print("Cannot print line to log file {0}".format(self.log_file))
 
     def log_to_remotesys(self, message, mes_type):
         # Preparing the message
@@ -194,48 +195,48 @@ class LokiLogger():
                 self.remote_logger.debug(syslog_message)
             elif mes_type == "ERROR":
                 self.remote_logger.error(syslog_message)
-        except Exception, e:
+        except Exception as e:
             if self.debug:
                 traceback.print_exc()
                 sys.exit(1)
-            print "Error while logging to remote syslog server ERROR: %s" % str(e)
+            print("Error while logging to remote syslog server ERROR: %s" % str(e))
 
     def print_welcome(self):
 
         if self.caller == 'main':
-            print Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN
+            print(Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN)
 
-            print "      __   ____  __ ______                            "
-            print "     / /  / __ \/ //_/  _/                            "
-            print "    / /__/ /_/ / ,< _/ /                              "
-            print "   /____/\____/_/|_/___/                              "
-            print "      ________  _____  ____                           "
-            print "     /  _/ __ \/ ___/ / __/______ ____  ___  ___ ____ "
-            print "    _/ // /_/ / /__  _\ \/ __/ _ `/ _ \/ _ \/ -_) __/ "
-            print "   /___/\____/\___/ /___/\__/\_,_/_//_/_//_/\__/_/    "
+            print("      __   ____  __ ______                            ")
+            print ("     / /  / __ \/ //_/  _/                            ")
+            print ("    / /__/ /_/ / ,< _/ /                              ")
+            print ("   /____/\____/_/|_/___/                              ")
+            print ("      ________  _____  ____                           ")
+            print ("     /  _/ __ \/ ___/ / __/______ ____  ___  ___ ____ ")
+            print ("    _/ // /_/ / /__  _\ \/ __/ _ `/ _ \/ _ \/ -_) __/ ")
+            print ("   /___/\____/\___/ /___/\__/\_,_/_//_/_//_/\__/_/    ")
 
-            print Fore.WHITE
-            print "   Copyright by Florian Roth, Released under the GNU General Public License"
-            print "   July 2017, Version %s" % __version__
-            print "  "
-            print "   DISCLAIMER - USE AT YOUR OWN RISK"
-            print "   Please report false positives via https://github.com/Neo23x0/Loki/issues"
-            print "  "
-            print Back.GREEN + " ".ljust(79) + Back.BLACK
-            print Fore.WHITE+''+Back.BLACK
+            print (Fore.WHITE)
+            print ("   Copyright by Florian Roth, Released under the GNU General Public License")
+            print ("   July , Version %s" % __version__)
+            print ("  ")
+            print ("   DISCLAIMER - USE AT YOUR OWN RISK")
+            print ("   Please report false positives via https://github.com/Neo23x0/Loki/issues")
+            print ("  ")
+            print (Back.GREEN + " ".ljust(79) + Back.BLACK)
+            print (Fore.WHITE+''+Back.BLACK)
 
         else:
-            print "  "
-            print Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN
+            print ("  ")
+            print (Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN)
 
-            print "  "
-            print "  LOKI UPGRADER "
+            print ("  ")
+            print ("  LOKI UPGRADER ")
 
-            print "  "
-            print Back.GREEN + " ".ljust(79) + Back.BLACK
-            print Fore.WHITE + '' + Back.BLACK
+            print ("  ")
+            print (Back.GREEN + " ".ljust(79) + Back.BLACK)
+            print (Fore.WHITE + '' + Back.BLACK)
 
 def getSyslogTimestamp():
     date_obj = datetime.datetime.utcnow()
     date_str = date_obj.strftime("%Y%m%dT%H:%M:%SZ")
-    return date_str
+return date_str
