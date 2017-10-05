@@ -4,11 +4,14 @@
 #
 # LOKI Upgrader
 
-import urllib2
+from urllib.request import urlopen 
 import json
 import zipfile
 import shutil
-from StringIO import StringIO
+try:
+ from StringIO import StringIO
+except ImportError:
+ from io import StringIO
 import os
 import argparse
 import traceback
@@ -52,8 +55,8 @@ class LOKIUpdater(object):
                 # Downloading current repository
                 try:
                     self.logger.log("INFO", "Downloading %s ..." % sig_url)
-                    response = urllib2.urlopen(sig_url)
-                except Exception, e:
+                    response = urlopen(sig_url)
+                except Exception as e:
                     if self.debug:
                         traceback.print_exc()
                     self.logger.log("ERROR", "Error downloading the signature database - check your Internet connection")
@@ -66,7 +69,7 @@ class LOKIUpdater(object):
                         fullOutDir = os.path.join(sigDir, outDir)
                         if not os.path.exists(fullOutDir):
                             os.makedirs(fullOutDir)
-                except Exception, e:
+                except Exception as e:
                     if self.debug:
                         traceback.print_exc()
                     self.logger.log("ERROR", "Error while creating the signature-base directories")
@@ -101,13 +104,13 @@ class LOKIUpdater(object):
                         with source, target:
                             shutil.copyfileobj(source, target)
 
-                except Exception, e:
+                except Exception as e:
                     if self.debug:
                         traceback.print_exc()
                     self.logger.log("ERROR", "Error while extracting the signature files from the download package")
                     sys.exit(1)
 
-        except Exception, e:
+        except Exception as e:
             if self.debug:
                 traceback.print_exc()
             return False
@@ -120,13 +123,13 @@ class LOKIUpdater(object):
             # Downloading the info for latest release
             try:
                 self.logger.log("INFO", "Checking location of latest release %s ..." % self.UPDATE_URL_LOKI)
-                response_info = urllib2.urlopen(self.UPDATE_URL_LOKI)
+                response_info = urlopen(self.UPDATE_URL_LOKI)
                 data = json.load(response_info)
                 # Get download URL
                 zip_url = data['assets'][0]['browser_download_url']
                 self.logger.log("INFO", "Downloading latest release %s ..." % zip_url)
                 response_zip = urllib2.urlopen(zip_url)
-            except Exception, e:
+            except Exception as e:
                 if self.debug:
                     traceback.print_exc()
                 self.logger.log("ERROR", "Error downloading the loki update - check your Internet connection")
@@ -148,18 +151,18 @@ class LOKIUpdater(object):
                         target = file(targetFile, "wb")
                         with source, target:
                                 shutil.copyfileobj(source, target)
-                    except Exception,e:
+                    except Exception as e:
                         self.logger.log("ERROR", "Cannot extract %s" % targetFile)
                         if self.debug:
                             traceback.print_exc()
 
-            except Exception, e:
+            except Exception as e:
                 if self.debug:
                     traceback.print_exc()
                 self.logger.log("ERROR", "Error while extracting the signature files from the download package")
                 sys.exit(1)
 
-        except Exception, e:
+        except Exception as e:
             if self.debug:
                 traceback.print_exc()
             return False
@@ -179,8 +182,8 @@ def get_application_path():
         #if args.debug:
         #    logger.log("DEBUG", "Application Path: %s" % application_path)
         return application_path
-    except Exception, e:
-        print "Error while evaluation of application path"
+    except Exception as e:
+        print("Error while evaluation of application path")
         traceback.print_exc()
 
 
