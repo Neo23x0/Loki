@@ -239,4 +239,4 @@ class LokiLogger():
 def getSyslogTimestamp():
     date_obj = datetime.datetime.utcnow()
     date_str = date_obj.strftime("%Y%m%dT%H:%M:%SZ")
-return date_str
+ return date_str
