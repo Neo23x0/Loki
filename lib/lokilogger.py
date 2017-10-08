@@ -153,8 +153,8 @@ class LokiLogger():
                 # Print to console
                 if mes_type == "RESULT":
                     res_message = "\b\b%s %s" % (mes_type, message)
-                    print (base_color,res_message,Back.BLACK)
-                    print (Fore.WHITE,Style.NORMAL)
+                    print (base_color+' '+res_message+' '+Back.BLACK)
+                    print (Fore.WHITE+" '+Style.NORMAL)
                 else:
                     sys.stdout.write("%s\b\b%s %s%s%s%s\n" % (base_color, mes_type, message, Back.BLACK,Fore.WHITE,Style.NORMAL))
 
