@@ -3,8 +3,10 @@
 # -*- coding: utf-8 -*-
 #
 # LOKI Upgrader
-
-from urllib.request import urlopen 
+try:
+ import urllib2 import urlopen
+except ImportError:
+ from urllib.request import urlopen #For python 3.5
 import json
 import zipfile
 import shutil
