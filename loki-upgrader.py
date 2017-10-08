@@ -4,7 +4,7 @@
 #
 # LOKI Upgrader
 try:
- import urllib2 import urlopen
+ from urllib2 import urlopen
 except ImportError:
  from urllib.request import urlopen #For python 3.5
 import json
