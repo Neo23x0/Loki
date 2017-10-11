@@ -2,8 +2,8 @@
 # -*- coding: iso-8859-1 -*-
 # -*- coding: utf-8 -*-
 #
-# Loki
-# Simple IOC Scanner
+#  Loki
+#  Simple IOC Scanner
 
 import sys
 import hashlib
