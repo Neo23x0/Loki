@@ -2,7 +2,7 @@
 # -*- coding: iso-8859-1 -*-
 # -*- coding: utf-8 -*-
 #
-# LOKI Upgrader
+#  LOKI Upgrader
 try:
  from urllib2 import urlopen
 except ImportError:
