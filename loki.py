@@ -1047,10 +1047,11 @@ class Loki():
                                     'filepath': dummy,
                                     'extension': dummy,
                                     'filetype': dummy,
-                                    'md5': dummy
+                                    'md5': dummy,
                                 })
                                 logger.log("INFO", "Initializing Yara rule %s" % file)
                             except Exception, e:
+                                logger.log("ERROR", "Error while initializing Yara rule %s" % file)
                                 traceback.print_exc()
                                 if logger.debug:
                                     sys.exit(1)
