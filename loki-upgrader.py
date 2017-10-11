@@ -38,7 +38,9 @@ elif _platform == "win32":
 class LOKIUpdater(object):
     
     UPDATE_URL_SIGS = ["https://github.com/Neo23x0/signature-base/archive/master.zip",
-                       "https://github.com/SupportIntelligence/Icewater/archive/master.zip"]
+                       # Disabled until yara-python supports the hash.md5() function again
+                       # "https://github.com/SupportIntelligence/Icewater/archive/master.zip"
+                       ]
     UPDATE_URL_LOKI = "https://api.github.com/repos/Neo23x0/Loki/releases/latest"
     
     def __init__(self, debug, logger, application_path):
