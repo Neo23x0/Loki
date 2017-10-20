@@ -15,8 +15,8 @@ script:
   - python ./loki.py --noprocs --noindicator --dontwait --debug --csv -p ./test
 
 notifications:
-email:
-  recipients:
-    - venom14@gmail.com
-  on_success: never
-  on_failure: always
+  email:
+    recipients:
+      - venom14@gmail.com
+    on_success: always
+    on_failure: always
