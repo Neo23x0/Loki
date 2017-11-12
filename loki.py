@@ -1367,6 +1367,7 @@ if __name__ == '__main__':
     parser.add_argument('-s', help='Maximum file size to check in KB (default 5000 KB)', metavar='kilobyte', default=5000)
     parser.add_argument('-l', help='Log file', metavar='log-file', default='loki-%s.log' % t_hostname)
     parser.add_argument('-r', help='Remote syslog system', metavar='remote-loghost', default='')
+    parser.add_argument('-t', help='Remote syslog port', metavar='remote-syslog-port', default=514)
     parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
     parser.add_argument('-w', help='Warning score', metavar='warning-level', default=60)
     parser.add_argument('-n', help='Notice score', metavar='notice-level', default=40)
@@ -1393,7 +1394,7 @@ if __name__ == '__main__':
         os.remove(args.l)
 
     # Logger
-    logger = LokiLogger(args.nolog, args.l, t_hostname, args.r, args.csv, args.onlyrelevant, args.debug,
+    logger = LokiLogger(args.nolog, args.l, t_hostname, args.r, int(args.t), args.csv, args.onlyrelevant, args.debug,
                         platform=platform, caller='main')
 
     # Update

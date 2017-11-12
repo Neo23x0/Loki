@@ -31,7 +31,7 @@ class LokiLogger():
     debug = False
     linesep = "\n"
 
-    def __init__(self, no_log_file, log_file, hostname, remote_host, csv, only_relevant, debug, platform, caller):
+    def __init__(self, no_log_file, log_file, hostname, remote_host, remote_port, csv, only_relevant, debug, platform, caller):
         self.no_log_file = no_log_file
         self.log_file = log_file
         self.hostname = hostname
@@ -54,7 +54,7 @@ class LokiLogger():
             # Create remote logger
             self.remote_logger = logging.getLogger('LOKI')
             self.remote_logger.setLevel(logging.DEBUG)
-            remote_syslog_handler = logging.handlers.SysLogHandler(address=(remote_host, 514), facility=19)
+            remote_syslog_handler = logging.handlers.SysLogHandler(address=(remote_host, remote_port), facility=19)
             self.remote_logger.addHandler(remote_syslog_handler)
             self.remote_logging = True
 
