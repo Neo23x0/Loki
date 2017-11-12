@@ -2,8 +2,8 @@
 # -*- coding: iso-8859-1 -*-
 # -*- coding: utf-8 -*-
 #
-# Loki
-# Simple IOC Scanner
+#  Loki
+#  Simple IOC Scanner
 
 import sys
 import hashlib
@@ -16,7 +16,10 @@ import traceback
 import os
 import re
 import psutil
-from StringIO import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import netaddr
 import datetime
 import platform
@@ -64,7 +67,7 @@ def generateHashes(filedata):
         sha1.update(filedata)
         sha256.update(filedata)
         return md5.hexdigest(), sha1.hexdigest(), sha256.hexdigest()
-    except Exception, e:
+    except Exception as e:
         traceback.print_exc()
         return 0, 0, 0
 
@@ -115,8 +118,8 @@ def getExcludedMountpoints():
             if not options[0].startswith("/dev/"):
                 if not options[1] == "/":
                     excludes.append(options[1])
-    except Exception, e:
-        print "Error while reading /etc/mtab"
+    except Exception as e:
+        print ("Error while reading /etc/mtab")
     finally:
         mtab.close()
     return excludes
@@ -140,7 +143,7 @@ def decompressSWFData(in_data):
         header[0] = ord('F')
         return True, struct.pack("<8B", *header) + decompressData
 
-    except Exception, e:
+    except Exception as e:
         traceback.print_exc()
         return False, "Decompression error"
 
@@ -209,7 +212,7 @@ def get_file_type(filePath, filetype_sigs, max_filetype_magics, logger):
             if res == sig.decode('hex'):
                 return filetype_sigs[sig]
         return "UNKNOWN"
-    except Exception, e:
+    except Exception as e:
         if logger.debug:
             traceback.print_exc()
         return "UNKNOWN"
@@ -231,13 +234,13 @@ def removeNonAscii(string, stripit=False):
                 except Exception, e:
                     nonascii = str("%s" % string)
 
-        except Exception, e:
+        except Exception as e:
             # traceback.print_exc()
             # print "All methods failed - removing characters"
             # Generate a new string without disturbing characters
             nonascii = "".join(i for i in string if ord(i)<127 and ord(i)>31)
 
-    except Exception, e:
+    except Exception as e:
         traceback.print_exc()
         pass
 
@@ -254,7 +257,7 @@ def getAge(filePath):
         # Accessed
         atime=stats.st_atime
 
-    except Exception, e:
+    except Exception as e:
         # traceback.print_exc()
         return (0, 0, 0)
 
@@ -266,6 +269,6 @@ def getAgeString(filePath):
     timestring = ""
     try:
         timestring = "CREATED: %s MODIFIED: %s ACCESSED: %s" % ( time.ctime(ctime), time.ctime(mtime), time.ctime(atime) )
-    except Exception,e:
+    except Exception as e:
         timestring = "CREATED: not_available MODIFIED: not_available ACCESSED: not_available"
     return timestring
