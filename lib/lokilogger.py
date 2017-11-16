@@ -95,10 +95,17 @@ class LokiLogger():
             self.log_to_remotesys(message, mes_type)
 
     def log_to_stdout(self, message, mes_type):
+        # check tty encoding
+        encoding = ""
+        if sys.stdout.encoding is not None:
+            encoding = sys.stdout.encoding
+        else:
+            # fallback on utf-8
+            encoding = "utf-8"
 
         # Prepare Message
         codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
-        message = message.encode(sys.stdout.encoding, errors='replace')
+        message = message.encode(encoding, errors='replace')
 
         if self.csv:
             print ("{0},{1},{2},{3}".format(getSyslogTimestamp(),self.hostname,mes_type,message))
