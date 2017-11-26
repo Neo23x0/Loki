@@ -40,6 +40,9 @@ from collections import Counter
 # LOKI Modules
 from lib.lokilogger import *
 
+# Private Rules Support
+from lib.privrules import *
+
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 from lib.helpers import *
@@ -1088,8 +1091,17 @@ class Loki():
             # Add as Lokis YARA rules
             self.yara_rules.append(compiledRules)
 
+            # Add private rules
+            privrules_path = os.path.join(sys._MEIPASS, "rules")
+            if os.path.exists(privrules_path):
+                private_rules = decrypt_rules(privrules_path)
+                self.yara_rules.append(privrules_path)
+                logger.log("INFO", "Loaded private rules")
+
         except Exception, e:
             logger.log("ERROR", "Error reading signature folder /signatures/")
+            traceback.print_exc()
+            sys.exit(-1)
             if logger.debug:
                 traceback.print_exc()
                 sys.exit(1)
