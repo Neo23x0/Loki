@@ -2,6 +2,7 @@ import sys
 import yara
 import os
 import io
+import pylzma as lzma
 
 from Crypto.Cipher import AES
 from Crypto.PublicKey import RSA
@@ -75,6 +76,12 @@ def encrypt(data, cipher):
 def decrypt(data, cipher):
     return cipher.decrypt(data)
 
+def decompress(data):
+    return lzma.decompress(data)
+
+def compress(data):
+    return lzma.compress(data)
+
 def export_RSA_key(key, file):
     derkey = key.exportKey("DER")
     with open(file, "wb") as f:
@@ -95,7 +102,8 @@ def decrypt_rules(file_package):
     aes_iv = encrypted_data[RSA_MOD_SIZE:RSA_MOD_SIZE + AES.block_size]
 
     aes_cipher = get_cipher_AES(aeskey, aes_iv)
-    decrypted_rules = decrypt(encrypted_data[RSA_MOD_SIZE + AES.block_size:], aes_cipher)
+    decrypted_rules_compressed = decrypt(encrypted_data[RSA_MOD_SIZE + AES.block_size:], aes_cipher)
+    decrypted_rules = decompress(decrypted_rules_compressed)
 
     buffer = io.BytesIO(decrypted_rules)
     rules = yara.load(file=buffer)

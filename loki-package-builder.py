@@ -17,12 +17,13 @@ def main():
     buffer = io.BytesIO()
     rules.save(file=buffer)
     serialized_rules = buffer.getvalue()
+    serialized_rules_compressed = compress(serialized_rules)
     rsakey = generate_RSA_key(RSA_KEY_SIZE)
     rsa_cipher = get_cipher_RSA_PKCS1_OAEP(rsakey.publickey())
     aes_iv = Random.new().read(AES.block_size)
     aeskey = generate_AES_key(32)
     aes_cipher = get_cipher_AES(aeskey, aes_iv)
-    encrypted_rules = encrypt(serialized_rules, aes_cipher)
+    encrypted_rules = encrypt(serialized_rules_compressed, aes_cipher)
     encrypted_rules = aes_iv + encrypted_rules
     encrypted_aes_key = encrypt(aeskey, rsa_cipher)
     encrypted_rules = encrypted_aes_key + encrypted_rules
