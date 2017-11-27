@@ -119,7 +119,7 @@ c:\Python27\Scripts\pip.exe install path\to\colorama-0.3.6-py2.py3-none-any.whl
 c:\Python27\Scripts\pip.exe install pylzma
 ```
 
-### Package LOKI with Custom Ruleset
+### Package LOKI with a Custom Ruleset
 
 Loki can be packaged with a custom ruleset embedded in the pyinstaller package.
 In order to include your own rules place them in a directory named `signatures` in the Loki directory and execute `build.bat`.
