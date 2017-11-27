@@ -39,7 +39,7 @@ def read_rules_from_dir(directory):
     ruleset = ""
     for rulefile in rulefiles:
         with open(rulefile, "r") as f:
-            ruleset += f.read()
+            ruleset += "\n" + f.read()
 
     try:
         compiled_rules = yara.compile(source=ruleset, externals={
