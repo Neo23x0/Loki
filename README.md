@@ -93,10 +93,11 @@ It allows to update the compiled loki.exe for Windows and the signature-base sou
 
 When running `loki.exe --update` it will create an new upgrader process and exits LOKI in order to replace the `loki.exe` with the newer one, which would be locked otherwise.
 
-## Requirements
+## Build LOKI
 
-No requirements if you use the compiled EXE.
-If you want to build it yourself:
+No requirements if you use the pre-compiled executables in the `release` section of this repo.
+
+If you want to build LOKI yourself:
 
 ### Linux or OS X
 
@@ -112,23 +113,51 @@ If you want to build it yourself:
 
 ```
 c:\Python27\python.exe -m pip install --upgrade pip
-c:\Python27\Scripts\pip.exe install psutil
-c:\Python27\Scripts\pip.exe install netaddr
-c:\Python27\Scripts\pip.exe install wmi
-c:\Python27\Scripts\pip.exe install path\to\colorama-0.3.6-py2.py3-none-any.whl
-c:\Python27\Scripts\pip.exe install pylzma
+pip.exe install psutil netaddr wmi colorama pylzma pycrypto
 ```
 
-### Package LOKI with a Custom Ruleset
+### Package LOKI with a Private Rule Set
 
-Loki can be packaged with a custom ruleset embedded in the pyinstaller package.
-In order to include your own rules place them in a directory named `signatures` in the Loki directory and execute `build.bat`.
+LOKI can be packaged with a custom encrypted rule set, which is embedded in the pyinstaller package.
+In order to include your own rules place them in a directory named `private-signatures` in the LOKI directory and execute `build.bat`.
+
+```
+loki/
+├── private-signatures/  <-- YARA rules places in here will by added to loki.exe
+├── signature-base/      <-- clear text and still required (retrieved by loki-upgrader.exe)
+│   ├── iocs/
+│   ├── yara/
+```
+
+In order to successfully run the build script, you need to install PyInstaller. The easiest way to do this is:
+```
+pip install pyinstaller
+```
+
+After that, you can just run the build script.
+```
+build.bat
+```
 
 You can verify whether the signature set is valid by calling `loki-package-builder.py` manually.
 
-```bat
+```
 C:\Python27\python.exe loki-package-builder.py --ruledir signatures --target rules
 ```
+
+The usage of this tool is: 
+
+```
+﻿usage: loki-package-builder.py [-h] --ruledir RULEDIR --target TARGET
+
+Package builder for Loki
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --ruledir RULEDIR  directory containing the rules to build into Loki
+  --target TARGET    target where to store the compiled ruleset
+```
+
 
 ### Requirements for the Threat Intel Receivers
 
