@@ -128,10 +128,13 @@ loki/
 │   ├── iocs/
 │   ├── yara/
 ```
+In order to successfully run the build script, you need to install PyInstaller. We use PyInstaller 2.1 due the problem
+that Packages build with PyInstaller 3 don't run on Windows 2003 and XP based systems.
+(yes, we need that in incident response - there are even productive systems out there running Windows 2000 or Windows NT)
 
-In order to successfully run the build script, you need to install PyInstaller. The easiest way to do this is:
+The easiest way to do install PyInstaller is:
 ```
-pip install pyinstaller
+pip install pyinstaller==2.1
 ```
 
 After that, you can just run the build script.

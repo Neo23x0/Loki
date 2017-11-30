@@ -154,6 +154,9 @@ class LOKIUpdater(object):
                     self.logger.log("INFO", "Extracting %s ..." %targetFile)
 
                     try:
+                        # Create file if not present
+                        os.makedirs(os.path.basename(targetFile))
+                        # Create target file
                         target = file(targetFile, "wb")
                         with source, target:
                                 shutil.copyfileobj(source, target)

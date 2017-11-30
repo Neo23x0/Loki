@@ -1200,7 +1200,6 @@ class Loki():
         except Exception, e:
             if logger.debug:
                 traceback.print_exc()
-                sys.exit(1)
             logger.log("NOTICE", "Error reading excludes file: %s" % excludes_file)
 
     def scan_regin_fs(self, fileData, filePath):

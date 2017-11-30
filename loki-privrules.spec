@@ -1,29 +1,23 @@
 # -*- mode: python -*-
 
-block_cipher = None
-
-
 a = Analysis(['loki.py'],
              pathex=['.'],
-             binaries=[],
-             datas=[('rules', '.'), ('rules.key','.'),],
              hiddenimports=[],
-             hookspath=[],
-             runtime_hooks=[],
-             excludes=[],
-             win_no_prefer_redirects=False,
-             win_private_assemblies=False,
-             cipher=block_cipher)
-pyz = PYZ(a.pure, a.zipped_data,
-             cipher=block_cipher)
+             hookspath=None,
+             runtime_hooks=None)
+
+a.datas+=[('rules', 'rules', 'DATA')]
+a.datas+=[('rules.key', 'rules.key', 'DATA')]
+
+pyz = PYZ(a.pure)
+
 exe = EXE(pyz,
           a.scripts,
           a.binaries,
           a.zipfiles,
           a.datas,
-          name='loki',
+          name='loki.exe',
           debug=False,
-          strip=False,
-          upx=True,
-          runtime_tmpdir=None,
+          strip=None,
+          upx=False,
           console=True , icon='loki.ico')
