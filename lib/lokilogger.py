@@ -14,7 +14,7 @@ import logging.handlers
 import socket
 from helpers import removeNonAsciiDrop
 
-__version__ = '0.24.3'
+__version__ = '0.25.0'
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
@@ -224,7 +224,7 @@ class LokiLogger():
 
             print (Fore.WHITE)
             print ("   Copyright by Florian Roth, Released under the GNU General Public License")
-            print ("   July , Version %s" % __version__)
+            print ("   Version %s" % __version__)
             print ("  ")
             print ("   DISCLAIMER - USE AT YOUR OWN RISK")
             print ("   Please report false positives via https://github.com/Neo23x0/Loki/issues")

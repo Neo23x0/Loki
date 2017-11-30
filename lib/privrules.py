@@ -32,8 +32,9 @@ def read_rules_from_dir(directory):
                 'filetype': dummy,
                 'md5': dummy,
             })
+            print("Adding rule file %s ..." % rulefile)
         except Exception, e:
-            print "Error compiling rule %s (%s)" % (rulefile, e)
+            print("Error compiling rule %s (%s)" % (rulefile, e))
             sys.exit(-1)
 
     ruleset = ""
