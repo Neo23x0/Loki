@@ -1093,11 +1093,12 @@ class Loki():
 
             # Add private rules
             logger.log("INFO", "Reading private rules from binary ...")
-            privrules_path = os.path.join(sys._MEIPASS, "rules")
-            if os.path.exists(privrules_path):
-                private_rules = decrypt_rules(privrules_path)
-                self.yara_rules.append(private_rules)
-                logger.log("INFO", "Initialized private rules")
+            if hasattr(sys, '_MEIPASS'):
+                privrules_path = os.path.join(sys._MEIPASS, "rules")
+                if os.path.exists(privrules_path):
+                    private_rules = decrypt_rules(privrules_path)
+                    self.yara_rules.append(private_rules)
+                    logger.log("INFO", "Initialized private rules")
 
         except Exception, e:
             logger.log("ERROR", "Error reading signature folder /signatures/")
