@@ -8,6 +8,7 @@ install:
   - pip install colorama
   - pip install pylzma
   - pip install netaddr
+  - pip install pycrypto
 
 script:
   - python ./loki.py --noprocs --noindicator --dontwait --debug -p ./test
