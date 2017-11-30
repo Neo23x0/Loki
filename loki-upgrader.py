@@ -134,7 +134,7 @@ class LOKIUpdater(object):
                 # Get download URL
                 zip_url = data['assets'][0]['browser_download_url']
                 self.logger.log("INFO", "Downloading latest release %s ..." % zip_url)
-                response_zip = urllib2.urlopen(zip_url)
+                response_zip = urlopen(zip_url)
             except Exception as e:
                 if self.debug:
                     traceback.print_exc()
