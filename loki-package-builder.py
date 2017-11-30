@@ -28,10 +28,10 @@ def main():
     encrypted_aes_key = encrypt(aeskey, rsa_cipher)
     encrypted_rules = encrypted_aes_key + encrypted_rules
 
-    n = export_RSA_key(rsakey, "%s.key" % args.target)
-
     with open(args.target, "wb") as f:
         f.write(str(encrypted_rules))
+
+    n = export_RSA_key(rsakey, "%s.key" % args.target)
 
     if decrypt_rules(args.target) == None:
         print "unable to decrypt package"
