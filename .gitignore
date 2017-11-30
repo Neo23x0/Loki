@@ -30,3 +30,5 @@ loki\.log
 *.pyc
 signature-base
 tools/old-results
+build
+private-signatures
