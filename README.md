@@ -336,7 +336,7 @@ Generated log file
 # Contact
 
 LOKI scanner on our company homepage
-[http://www.bsk-consulting.de/loki-free-ioc-scanner/](http://www.bsk-consulting.de/loki-free-ioc-scanner/)
+[https://www.nextron-systems.com/loki/](https://www.nextron-systems.com/loki/)
 
 Twitter
 [@cyb3rOps](https://twitter.com/Cyb3rOps)
