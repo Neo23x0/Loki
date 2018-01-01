@@ -589,27 +589,30 @@ class Loki():
             if name == "wininit.exe":
                 wininit_pid = pid
 
-            # Skip some PIDs ------------------------------------------------------
-            if pid == 0 or pid == 4:
-                logger.log("INFO", "Skipping Process PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
-                continue
-
-            # Skip own process ----------------------------------------------------
-            if os.getpid() == pid:
-                logger.log("INFO", "Skipping LOKI Process PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
-                continue
-
-            # Print info ----------------------------------------------------------
-            logger.log("INFO", "Scanning Process PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
-
             # Special Checks ------------------------------------------------------
             # better executable path
             if not "\\" in cmd and path != "none":
                 cmd = path
 
+            # Process Info
+            process_info = "PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (str(pid), name, owner, cmd, path)
+
+            # Skip some PIDs ------------------------------------------------------
+            if pid == 0 or pid == 4:
+                logger.log("INFO", "Skipping Process %s" % process_info)
+                continue
+
+            # Skip own process ----------------------------------------------------
+            if os.getpid() == pid:
+                logger.log("INFO", "Skipping LOKI Process %s" % process_info)
+                continue
+
+            # Print info ----------------------------------------------------------
+            logger.log("INFO", "Scanning Process %s" % process_info)
+
             # Skeleton Key Malware Process
             if re.search(r'psexec .* [a-fA-F0-9]{32}', cmd, re.IGNORECASE):
-                logger.log("WARNING", "Process that looks liks SKELETON KEY psexec execution detected PID: %s NAME: %s CMD: %s" % ( pid, name, cmd))
+                logger.log("WARNING", "Process that looks liks SKELETON KEY psexec execution detected %s" % process_info)
 
             # File Name Checks -------------------------------------------------
             for fioc in self.filename_iocs:
@@ -620,49 +623,64 @@ class Loki():
                     elif fioc['score'] > 40:
                         logger.log("WARNING", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (fioc['regex'].pattern, fioc['description'], cmd))
 
-            # Special Checks ---------------------------------------------------
             # Suspicious waitfor - possible backdoor https://twitter.com/subTee/status/872274262769500160
             if name == "waitfor.exe":
-                logger.log("WARNING", "Suspicious waitfor.exe process https://twitter.com/subTee/status/872274262769500160 PID: %s NAME: %s CMD: %s" % ( pid, name, cmd ))
+                logger.log("WARNING", "Suspicious waitfor.exe process https://twitter.com/subTee/status/872274262769500160 %s" % process_info)
 
             # Yara rule match
             # only on processes with a small working set size
-            if int(ws_size) < ( 100 * 1048576 ): # 100 MB
-                try:
-                    alerts = []
-                    for rules in self.yara_rules:
-                        # continue - fast switch
-                        matches = rules.match(pid=pid)
-                        if matches:
-                            for match in matches:
+            if processExists(pid):
+                if int(ws_size) < ( 100 * 1048576 ): # 100 MB
+                    try:
+                        alerts = []
+                        for rules in self.yara_rules:
+                            # continue - fast switch
+                            matches = rules.match(pid=pid)
+                            if matches:
+                                for match in matches:
 
-                                # Preset memory_rule
-                                memory_rule = 1
+                                    # Preset memory_rule
+                                    memory_rule = 1
 
-                                # Built-in rules have meta fields (cannot be expected from custom rules)
-                                if hasattr(match, 'meta'):
+                                    # Built-in rules have meta fields (cannot be expected from custom rules)
+                                    if hasattr(match, 'meta'):
 
-                                    # If a score is given
-                                    if 'memory' in match.meta:
-                                        memory_rule = int(match.meta['memory'])
+                                        # If a score is given
+                                        if 'memory' in match.meta:
+                                            memory_rule = int(match.meta['memory'])
 
-                                # If rule is meant to be applied to process memory as well
-                                if memory_rule == 1:
+                                    # If rule is meant to be applied to process memory as well
+                                    if memory_rule == 1:
 
-                                    # print match.rule
-                                    alerts.append("Yara Rule MATCH: %s PID: %s NAME: %s CMD: %s" % ( match.rule, pid, name, cmd))
+                                        # print match.rule
+                                        alerts.append("Yara Rule MATCH: %s %s" % (match.rule, process_info))
 
-                    if len(alerts) > 3:
-                        logger.log("INFO", "Too many matches on process memory - most likely a false positive PID: %s NAME: %s CMD: %s" % (pid, name, cmd))
-                    elif len(alerts) > 0:
-                        for alert in alerts:
-                            logger.log("ALERT", alert)
-                except Exception, e:
-                    if logger.debug:
-                        traceback.print_exc()
-                    logger.log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied). PID: %s NAME: %s" % ( pid, name))
-            else:
-                logger.log("DEBUG", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
+                        if len(alerts) > 3:
+                            logger.log("INFO", "Too many matches on process memory - most likely a false positive %s" % process_info)
+                        elif len(alerts) > 0:
+                            for alert in alerts:
+                                logger.log("ALERT", alert)
+                    except Exception, e:
+                        if logger.debug:
+                            traceback.print_exc()
+                        logger.log("ERROR", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied) %s" % process_info)
+                else:
+                    logger.log("DEBUG", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
+
+            ###############################################################
+            # PE-Sieve Checks
+            if processExists(pid) and self.peSieve.active:
+                    # If PE-Sieve reports replaced processes
+                    logger.log("DEBUG", "PE-Sieve scan of process PID: %s" % pid)
+                    (hooked, replaced, suspicious) = self.peSieve.scan(pid=pid)
+                    if replaced:
+                        logger.log("WARNING", "PE-Sieve reported replaced process %s REPLACED: %s" %
+                                   (process_info, str(replaced)))
+                    elif hooked or suspicious:
+                        logger.log("NOTICE", "PE-Sieve reported hooked or suspicious process %s "
+                                             "HOOKED: %s SUSPICIOUS: %s" % (process_info, str(hooked), str(suspicious)))
+                    else:
+                        logger.log("INFO", "PE-Sieve reported no anomalies %s" % process_info)
 
             ###############################################################
             # THOR Process Connection Checks
@@ -674,38 +692,30 @@ class Loki():
 
             # Process: System
             if name == "System" and not pid == 4:
-                logger.log("WARNING", "System process without PID=4 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("WARNING", "System process without PID=4 %s" % process_info)
 
             # Process: smss.exe
             if name == "smss.exe" and not parent_pid == 4:
-                logger.log("WARNING", "smss.exe parent PID is != 4 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("WARNING", "smss.exe parent PID is != 4 %s" % process_info)
             if path != "none":
                 if name == "smss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "smss.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "smss.exe path is not System32 %s" % process_info)
             if name == "smss.exe" and priority is not 11:
-                logger.log("WARNING", "smss.exe priority is not 11 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("WARNING", "smss.exe priority is not 11 %s" % process_info)
 
             # Process: csrss.exe
             if path != "none":
                 if name == "csrss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "csrss.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "csrss.exe path is not System32 %s" % process_info)
             if name == "csrss.exe" and priority is not 13:
-                logger.log("WARNING", "csrss.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("WARNING", "csrss.exe priority is not 13 %s" % process_info)
 
             # Process: wininit.exe
             if path != "none":
                 if name == "wininit.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "wininit.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "wininit.exe path is not System32 %s" % process_info)
             if name == "wininit.exe" and priority is not 13:
-                logger.log("NOTICE", "wininit.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("NOTICE", "wininit.exe priority is not 13 %s" % process_info)
             # Is parent to other processes - save PID
             if name == "wininit.exe":
                 wininit_pid = pid
@@ -713,88 +723,70 @@ class Loki():
             # Process: services.exe
             if path != "none":
                 if name == "services.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "services.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "services.exe path is not System32 %s" % process_info)
             if name == "services.exe" and priority is not 9:
-                logger.log("WARNING", "services.exe priority is not 9 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("WARNING", "services.exe priority is not 9 %s" % process_info)
             if wininit_pid > 0:
                 if name == "services.exe" and not parent_pid == wininit_pid:
-                    logger.log("WARNING", "services.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "services.exe parent PID is not the one of wininit.exe %s" % process_info)
 
             # Process: lsass.exe
             if path != "none":
                 if name == "lsass.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "lsass.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "lsass.exe path is not System32 %s" % process_info)
             if name == "lsass.exe" and priority is not 9:
-                logger.log("WARNING", "lsass.exe priority is not 9 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("WARNING", "lsass.exe priority is not 9 %s" % process_info)
             if wininit_pid > 0:
                 if name == "lsass.exe" and not parent_pid == wininit_pid:
-                    logger.log("WARNING", "lsass.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "lsass.exe parent PID is not the one of wininit.exe %s" % process_info)
             # Only a single lsass process is valid - count occurrences
             if name == "lsass.exe":
                 lsass_count += 1
                 if lsass_count > 1:
-                    logger.log("WARNING", "lsass.exe count is higher than 1 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "lsass.exe count is higher than 1 %s" % process_info)
 
             # Process: svchost.exe
             if path is not "none":
                 if name == "svchost.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "svchost.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "svchost.exe path is not System32 %s" % process_info)
             if name == "svchost.exe" and priority is not 8:
-                logger.log("NOTICE", "svchost.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("NOTICE", "svchost.exe priority is not 8 %s" % process_info)
             if name == "svchost.exe" and not ( self.check_svchost_owner(owner) or "UnistackSvcGroup" in cmd):
-                logger.log("WARNING", "svchost.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("WARNING", "svchost.exe process owner is suspicious %s" % process_info)
 
             if name == "svchost.exe" and not " -k " in cmd and cmd != "N/A":
-                logger.log("WARNING", "svchost.exe process does not contain a -k in its command line PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("WARNING", "svchost.exe process does not contain a -k in its command line %s" % process_info)
 
             # Process: lsm.exe
             if path != "none":
                 if name == "lsm.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "lsm.exe path is not System32 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "lsm.exe path is not System32 %s" % process_info)
             if name == "lsm.exe" and priority is not 8:
-                logger.log("NOTICE", "lsm.exe priority is not 8 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("NOTICE", "lsm.exe priority is not 8 %s" % process_info)
             if name == "lsm.exe" and not ( owner.startswith("NT ") or owner.startswith("LO") or owner.startswith("SYSTEM")  or owner.startswith(u"система")):
-                logger.log(u"WARNING", "lsm.exe process owner is suspicious PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log(u"WARNING", "lsm.exe process owner is suspicious %s" % process_info)
             if wininit_pid > 0:
                 if name == "lsm.exe" and not parent_pid == wininit_pid:
-                    logger.log("WARNING", "lsm.exe parent PID is not the one of wininit.exe PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "lsm.exe parent PID is not the one of wininit.exe %s" % process_info)
 
             # Process: winlogon.exe
             if name == "winlogon.exe" and priority is not 13:
-                logger.log("WARNING", "winlogon.exe priority is not 13 PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                    str(pid), name, owner, cmd, path))
+                logger.log("WARNING", "winlogon.exe priority is not 13 %s" % process_info)
             if re.search("(Windows 7|Windows Vista)", getPlatformFull()):
                 if name == "winlogon.exe" and parent_pid > 0:
                     for proc in processes:
                         if parent_pid == proc.ProcessId:
-                            logger.log("WARNING", "winlogon.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s PARENTPID: %s" % (
-                                str(pid), name, owner, cmd, path, str(parent_pid)))
+                            logger.log("WARNING", "winlogon.exe has a parent ID but should have none %s PARENTID: %s"
+                                       % (process_info, str(parent_pid)))
 
             # Process: explorer.exe
             if path != "none":
                 if name == "explorer.exe" and not t_systemroot.lower() in path.lower():
-                    logger.log("WARNING", "explorer.exe path is not %%SYSTEMROOT%% PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                        str(pid), name, owner, cmd, path))
+                    logger.log("WARNING", "explorer.exe path is not %%SYSTEMROOT%% %s" % process_info)
             if name == "explorer.exe" and parent_pid > 0:
                 for proc in processes:
                     if parent_pid == proc.ProcessId:
-                        logger.log("NOTICE", "explorer.exe has a parent ID but should have none PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
-                            str(pid), name, owner, cmd, path))
+                        logger.log("NOTICE", "explorer.exe has a parent ID but should have none %s" % process_info)
 
     def check_process_connections(self, process):
         try:
@@ -810,7 +802,12 @@ class Loki():
             name = process.Name
 
             # Get psutil info about the process
-            p = psutil.Process(pid)
+            try:
+                p = psutil.Process(pid)
+            except Exception as e:
+                if logger.debug:
+                    traceback.print_exc()
+                return
 
             # print "Checking connections of %s" % process.Name
             for x in p.connections():
@@ -1317,12 +1314,22 @@ def get_application_path():
             sys.exit(1)
 
 
+
+def processExists(pid):
+    """
+    Checks if a given process is running
+    :param pid:
+    :return:
+    """
+    return psutil.pid_exists(pid)
+
+
 def updateLoki(sigsOnly):
     logger.log("INFO", "Starting separate updater process ...")
     pArgs = []
 
     # Updater
-    if os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.exe')) and platform == "windows":
+    if os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.exe')) and os_platform == "windows":
         pArgs.append('loki-upgrader.exe')
     elif os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.py')):
         pArgs.append('python')
