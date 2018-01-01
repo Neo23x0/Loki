@@ -47,6 +47,7 @@ from lib.privrules import *
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 from lib.helpers import *
+from lib.pesieve import PESieve
 from lib.doublepulsar import DoublePulsar
 
 # Platform
@@ -120,6 +121,9 @@ class Loki(object):
 
         # Get application path
         self.app_path = get_application_path()
+
+        # PESieve
+        self.peSieve = PESieve(self.app_path, is64bit(), logger)
 
         # Check if signature database is present
         sig_dir = os.path.join(self.app_path, "./signature-base/")
@@ -1314,6 +1318,13 @@ def get_application_path():
         if args.debug:
             sys.exit(1)
 
+
+def is64bit():
+    """
+    Checks if the system has a 64bit processor architecture
+    :return arch:
+    """
+    return platform.machine().endswith('64')
 
 
 def processExists(pid):
