@@ -32,6 +32,7 @@ import yara         # install 'yara-python' module not the outdated 'yara' modul
 import re
 import stat
 import psutil
+import platform
 import signal as signal_module
 from sys import platform as _platform
 from subprocess import Popen, PIPE
@@ -49,25 +50,25 @@ from lib.helpers import *
 from lib.doublepulsar import DoublePulsar
 
 # Platform
-platform = ""
+os_platform = ""
 if _platform == "linux" or _platform == "linux2":
-    platform = "linux"
+    os_platform = "linux"
 elif _platform == "darwin":
-    platform = "osx"
+    os_platform = "osx"
 elif _platform == "win32":
-    platform = "windows"
+    os_platform = "windows"
 
 # Win32 Imports
-if platform == "windows":
+if os_platform == "windows":
     try:
         import wmi
         import win32api
         from win32com.shell import shell
     except Exception, e:
         print "Linux System - deactivating process memory check ..."
-        platform = "linux" # crazy guess
+        os_platform = "linux" # crazy guess
 
-if platform == "":
+if os_platform == "":
     print "Unable to determine platform - LOKI is lost."
     sys.exit(1)
 
@@ -85,7 +86,7 @@ SCRIPT_EXTENSIONS = [".asp", ".vbs", ".ps1", ".bas", ".bat", ".js", ".vb", ".vbe
 
 SCRIPT_TYPES = ["VBS", "PHP", "JSP", "ASP", "BATCH"]
 
-class Loki():
+class Loki(object):
 
     # Signatures
     yara_rules = []
@@ -131,10 +132,10 @@ class Loki():
         self.initialize_excludes(os.path.join(self.app_path, "./config/excludes.cfg"))
 
         # Linux excludes from mtab
-        if platform == "linux":
+        if os_platform == "linux":
             self.startExcludes = self.LINUX_PATH_SKIPS_START | set(getExcludedMountpoints())
         # OSX excludes like Linux until we get some field data
-        if platform == "osx":
+        if os_platform == "osx":
             self.startExcludes = self.LINUX_PATH_SKIPS_START
 
         # Set IOC path
@@ -230,7 +231,7 @@ class Loki():
                             skipIt = True
 
                     # Linux directory skip
-                    if platform == "linux" or platform == "osx":
+                    if os_platform == "linux" or os_platform == "osx":
 
                         # Skip paths that end with ..
                         for skip in self.LINUX_PATH_SKIPS_END:
@@ -988,14 +989,14 @@ class Loki():
                                 # Replace environment variables
                                 regex = replaceEnvVars(regex)
                                 # OS specific transforms
-                                regex = transformOS(regex, platform)
+                                regex = transformOS(regex, os_platform)
 
                                 # If false positive definition exists
                                 regex_fp_comp = None
                                 if 'regex_fp' in locals():
                                     # Replacements
                                     regex_fp = replaceEnvVars(regex_fp)
-                                    regex_fp = transformOS(regex_fp, platform)
+                                    regex_fp = transformOS(regex_fp, os_platform)
                                     # String regex as key - value is compiled regex of false positive values
                                     regex_fp_comp = re.compile(regex_fp)
 
@@ -1300,7 +1301,7 @@ def get_application_path():
             application_path = os.path.dirname(os.path.realpath(sys.executable))
         else:
             application_path = os.path.dirname(os.path.realpath(__file__))
-        if "~" in application_path and platform == "windows":
+        if "~" in application_path and os_platform == "windows":
             # print "Trying to translate"
             # print application_path
             application_path = win32api.GetLongPathName(application_path)
@@ -1374,7 +1375,7 @@ if __name__ == '__main__':
     signal_module.signal(signal_module.SIGINT, signal_handler)
 
     # Computername
-    if platform == "linux" or platform == "osx":
+    if os_platform == "linux" or os_platform == "osx":
         t_hostname = os.uname()[1]
     else:
         t_hostname = os.environ['COMPUTERNAME']
@@ -1413,7 +1414,7 @@ if __name__ == '__main__':
 
     # Logger
     logger = LokiLogger(args.nolog, args.l, t_hostname, args.r, int(args.t), args.csv, args.onlyrelevant, args.debug,
-                        platform=platform, caller='main')
+                        platform=os_platform, caller='main')
 
     # Update
     if args.update:
@@ -1421,14 +1422,14 @@ if __name__ == '__main__':
         sys.exit(0)
 
     logger.log("NOTICE", "Starting Loki Scan SYSTEM: {0} TIME: {1} PLATFORM: {2}".format(
-        t_hostname, getSyslogTimestamp(), platform))
+        t_hostname, getSyslogTimestamp(), os_platform))
 
     # Loki
     loki = Loki(args.intense)
 
     # Check if admin
     isAdmin = False
-    if platform == "windows":
+    if os_platform == "windows":
         if shell.IsUserAnAdmin():
             isAdmin = True
             logger.log("INFO", "Current user has admin rights - very good")
@@ -1442,25 +1443,25 @@ if __name__ == '__main__':
             logger.log("NOTICE", "Program should be run as 'root' to ensure all access rights to process memory and file objects.")
 
     # Set process to nice priority ------------------------------------
-    if platform == "windows":
+    if os_platform == "windows":
         setNice(logger)
 
     # Scan Processes --------------------------------------------------
     resultProc = False
-    if not args.noprocscan and platform == "windows":
+    if not args.noprocscan and os_platform == "windows":
         if isAdmin:
             loki.scan_processes()
         else:
             logger.log("NOTICE", "Skipping process memory check. User has no admin rights.")
 
     # Scan for Rootkits -----------------------------------------------
-    if args.rootkit and platform == "windows":
+    if args.rootkit and os_platform == "windows":
         loki.check_rootkit()
 
     # Scan Path -------------------------------------------------------
     # Set default
     defaultPath = args.p
-    if ( platform == "linux" or platform == "osx" ) and defaultPath == "C:\\":
+    if (os_platform == "linux" or os_platform == "osx") and defaultPath == "C:\\":
         defaultPath = "/"
 
     resultFS = False
