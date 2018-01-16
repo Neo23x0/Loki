@@ -756,7 +756,7 @@ class Loki(object):
                     logger.log("WARNING", "svchost.exe path is not System32 %s" % process_info)
             if name == "svchost.exe" and priority is not 8:
                 logger.log("NOTICE", "svchost.exe priority is not 8 %s" % process_info)
-            if name == "svchost.exe" and not ( self.check_svchost_owner(owner) or "UnistackSvcGroup" in cmd):
+            if name == "svchost.exe" and not ( self.check_svchost_owner(owner) or "unistacksvcgroup" in cmd.lower()):
                 logger.log("WARNING", "svchost.exe process owner is suspicious %s" % process_info)
 
             if name == "svchost.exe" and not " -k " in cmd and cmd != "N/A":
