@@ -1395,7 +1395,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
     parser.add_argument('-p', help='Path to scan', metavar='path', default='C:\\')
     parser.add_argument('-s', help='Maximum file size to check in KB (default 5000 KB)', metavar='kilobyte', default=5000)
-    parser.add_argument('-l', help='Log file', metavar='log-file', default='loki-%s.log' % t_hostname)
+    parser.add_argument('-l', help='Log file', metavar='log-file', default='loki-%s.log' % getHostname(os_platform))
     parser.add_argument('-r', help='Remote syslog system', metavar='remote-loghost', default='')
     parser.add_argument('-t', help='Remote syslog port', metavar='remote-syslog-port', default=514)
     parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
@@ -1424,7 +1424,7 @@ if __name__ == '__main__':
         os.remove(args.l)
 
     # Logger
-    logger = LokiLogger(args.nolog, args.l, t_hostname, args.r, int(args.t), args.csv, args.onlyrelevant, args.debug,
+    logger = LokiLogger(args.nolog, args.l, getHostname(os_platform), args.r, int(args.t), args.csv, args.onlyrelevant, args.debug,
                         platform=os_platform, caller='main')
 
     # Update
@@ -1433,7 +1433,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     logger.log("NOTICE", "Starting Loki Scan SYSTEM: {0} TIME: {1} PLATFORM: {2}".format(
-        t_hostname, getSyslogTimestamp(), os_platform))
+        getHostname(os_platform), getSyslogTimestamp(), os_platform))
 
     # Loki
     loki = Loki(args.intense)

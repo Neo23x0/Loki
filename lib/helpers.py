@@ -310,3 +310,14 @@ def runProcess(command, timeout=10):
     kill_check.clear()
 
     return output, returnCode
+
+def getHostname(os_platform):
+    """
+    Generate and return a hostname
+    :return:
+    """
+    # Computername
+    if os_platform == "linux" or os_platform == "osx":
+        return os.uname()[1]
+    else:
+        return os.environ['COMPUTERNAME']
