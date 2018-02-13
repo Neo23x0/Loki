@@ -1494,15 +1494,16 @@ if __name__ == '__main__':
     logger.log("NOTICE", "Results: {0} alerts, {1} warnings, {2} notices".format(logger.alerts, logger.warnings, logger.notices))
     if logger.alerts:
         logger.log("RESULT", "Indicators detected!")
-        logger.log("RESULT", "Loki recommends checking the elements on Virustotal.com or Google and triage with a "
-                             "professional triage tool like THOR APT Scanner in corporate networks.")
+        logger.log("RESULT", "Loki recommends checking the elements on virustotal.com or Google and triage with a "
+                             "professional tool like THOR https://nextron-systems.com/thor in corporate networks.")
     elif logger.warnings:
         logger.log("RESULT", "Suspicious objects detected!")
         logger.log("RESULT", "Loki recommends a deeper analysis of the suspicious objects.")
     else:
         logger.log("RESULT", "SYSTEM SEEMS TO BE CLEAN.")
 
-    logger.log("NOTICE", "Finished LOKI Scan SYSTEM: %s TIME: %s" % (t_hostname, getSyslogTimestamp()))
+    logger.log("INFO", "Please report false positives via https://github.com/Neo23x0/signature-base")
+    logger.log("NOTICE", "Finished LOKI Scan SYSTEM: %s TIME: %s" % (getHostname(os_platform), getSyslogTimestamp()))
 
     if not args.dontwait:
         print " "
