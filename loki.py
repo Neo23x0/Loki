@@ -1389,18 +1389,11 @@ def signal_handler(signal_name, frame):
         print 'LOKI\'s work has been interrupted by a human. Returning to Asgard.'
     sys.exit(0)
 
-
-# MAIN ################################################################
-if __name__ == '__main__':
-
-    # Signal handler for CTRL+C
-    signal_module.signal(signal_module.SIGINT, signal_handler)
-
-    # Computername
-    if os_platform == "linux" or os_platform == "osx":
-        t_hostname = os.uname()[1]
-    else:
-        t_hostname = os.environ['COMPUTERNAME']
+def main():
+    """
+    Argument parsing function
+    :return:
+    """
 
     # Parse Arguments
     parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
@@ -1429,6 +1422,17 @@ if __name__ == '__main__':
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
 
     args = parser.parse_args()
+
+    return args
+
+# MAIN ################################################################
+if __name__ == '__main__':
+
+    # Signal handler for CTRL+C
+    signal_module.signal(signal_module.SIGINT, signal_handler)
+
+    # Argument parsing
+    args = main()
 
     # Remove old log file
     if os.path.exists(args.l):
