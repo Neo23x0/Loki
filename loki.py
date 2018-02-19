@@ -981,11 +981,6 @@ class Loki(object):
                                         regex_fp = row[2]
                                     desc = last_comment
 
-                                    # Catch legacy lines
-                                    if not score.isdigit():
-                                        desc = score        # score is description (old format)
-                                        score = 60          # default value
-
                                 # Elements without description
                                 else:
                                     regex = line
