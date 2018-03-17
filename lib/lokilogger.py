@@ -39,7 +39,7 @@ class LokiLogger():
         self.only_relevant = only_relevant
         self.debug = debug
         self.caller = caller
-        if platform == "windows":
+        if "windows" in platform.lower():
             self.linesep = "\r\n"
 
         # Colorization ----------------------------------------------------
