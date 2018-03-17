@@ -27,10 +27,10 @@ class PESieve(object):
 
         if self.isAvailable():
             self.active = True
-            self.logger.log("NOTICE", "PE-Sieve successfully initialized BINARY: {0} "
+            self.logger.log("NOTICE", "PESieve", "PE-Sieve successfully initialized BINARY: {0} "
                                       "SOURCE: https://github.com/hasherezade/pe-sieve".format(self.peSieve))
         else:
-            self.logger.log("NOTICE", "Cannot find PE-Sieve in expected location {0} "
+            self.logger.log("NOTICE", "PESieve", "Cannot find PE-Sieve in expected location {0} "
                                       "SOURCE: https://github.com/hasherezade/pe-sieve".format(self.peSieve))
 
     def isAvailable(self):
@@ -39,7 +39,7 @@ class PESieve(object):
         :return:
         """
         if not os.path.exists(self.peSieve):
-            self.logger.log("DEBUG", "PE-Sieve not found in location '{0}' - "
+            self.logger.log("DEBUG", "PESieve", "PE-Sieve not found in location '{0}' - "
                                      "feature will not be active".format(self.peSieve))
             return False
         return True
@@ -80,5 +80,6 @@ class PESieve(object):
                 suspicious = int(result_suspicious.group(1))
         # Check output for process replacements
         if "SUMMARY:" not in output:
-            self.logger.log("ERROR", "Something went wrong during PE-Sieve scan. Couldn't find the SUMMARY section in output.")
+            self.logger.log("ERROR", "PESieve", "Something went wrong during PE-Sieve scan. "
+                                                "Couldn't find the SUMMARY section in output.")
         return hooked, replaced, suspicious

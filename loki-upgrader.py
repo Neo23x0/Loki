@@ -60,12 +60,13 @@ class LOKIUpdater(object):
             for sig_url in self.UPDATE_URL_SIGS:
                 # Downloading current repository
                 try:
-                    self.logger.log("INFO", "Downloading %s ..." % sig_url)
+                    self.logger.log("INFO", "Upgrader", "Downloading %s ..." % sig_url)
                     response = urlopen(sig_url)
                 except Exception as e:
                     if self.debug:
                         traceback.print_exc()
-                    self.logger.log("ERROR", "Error downloading the signature database - check your Internet connection")
+                    self.logger.log("ERROR", "Upgrader", "Error downloading the signature database - "
+                                                         "check your Internet connection")
                     sys.exit(1)
 
                 # Preparations
@@ -78,7 +79,7 @@ class LOKIUpdater(object):
                 except Exception as e:
                     if self.debug:
                         traceback.print_exc()
-                    self.logger.log("ERROR", "Error while creating the signature-base directories")
+                    self.logger.log("ERROR", "Upgrader", "Error while creating the signature-base directories")
                     sys.exit(1)
 
                 # Read ZIP file
@@ -88,7 +89,7 @@ class LOKIUpdater(object):
                         sigName = os.path.basename(zipFilePath)
                         if zipFilePath.endswith("/"):
                             continue
-                        self.logger.log("DEBUG", "Extracting %s ..." % zipFilePath)
+                        self.logger.log("DEBUG", "Upgrader", "Extracting %s ..." % zipFilePath)
                         if "/iocs/" in zipFilePath and zipFilePath.endswith(".txt"):
                             targetFile = os.path.join(sigDir, "iocs", sigName)
                         elif "/yara/" in zipFilePath and zipFilePath.endswith(".yar"):
@@ -102,7 +103,7 @@ class LOKIUpdater(object):
 
                         # New file
                         if not os.path.exists(targetFile):
-                            self.logger.log("INFO", "New signature file: %s" % sigName)
+                            self.logger.log("INFO", "Upgrader", "New signature file: %s" % sigName)
 
                         # Extract file
                         source = zipUpdate.open(zipFilePath)
@@ -113,7 +114,8 @@ class LOKIUpdater(object):
                 except Exception as e:
                     if self.debug:
                         traceback.print_exc()
-                    self.logger.log("ERROR", "Error while extracting the signature files from the download package")
+                    self.logger.log("ERROR", "Upgrader", "Error while extracting the signature files from the download "
+                                                         "package")
                     sys.exit(1)
 
         except Exception as e:
@@ -128,17 +130,17 @@ class LOKIUpdater(object):
 
             # Downloading the info for latest release
             try:
-                self.logger.log("INFO", "Checking location of latest release %s ..." % self.UPDATE_URL_LOKI)
+                self.logger.log("INFO", "Upgrader", "Checking location of latest release %s ..." % self.UPDATE_URL_LOKI)
                 response_info = urlopen(self.UPDATE_URL_LOKI)
                 data = json.load(response_info)
                 # Get download URL
                 zip_url = data['assets'][0]['browser_download_url']
-                self.logger.log("INFO", "Downloading latest release %s ..." % zip_url)
+                self.logger.log("INFO", "Upgrader", "Downloading latest release %s ..." % zip_url)
                 response_zip = urlopen(zip_url)
             except Exception as e:
                 if self.debug:
                     traceback.print_exc()
-                self.logger.log("ERROR", "Error downloading the loki update - check your Internet connection")
+                self.logger.log("ERROR", "Upgrader", "Error downloading the loki update - check your Internet connection")
                 sys.exit(1)
 
             # Read ZIP file
@@ -151,7 +153,7 @@ class LOKIUpdater(object):
                     source = zipUpdate.open(zipFilePath)
                     targetFile = "/".join(zipFilePath.split("/")[1:])
 
-                    self.logger.log("INFO", "Extracting %s ..." %targetFile)
+                    self.logger.log("INFO", "Upgrader", "Extracting %s ..." %targetFile)
 
                     try:
                         # Create file if not present
@@ -161,14 +163,15 @@ class LOKIUpdater(object):
                         with source, target:
                                 shutil.copyfileobj(source, target)
                     except Exception as e:
-                        self.logger.log("ERROR", "Cannot extract %s" % targetFile)
+                        self.logger.log("ERROR", "Upgrader", "Cannot extract %s" % targetFile)
                         if self.debug:
                             traceback.print_exc()
 
             except Exception as e:
                 if self.debug:
                     traceback.print_exc()
-                self.logger.log("ERROR", "Error while extracting the signature files from the download package")
+                self.logger.log("ERROR", "Upgrader",
+                                "Error while extracting the signature files from the download package")
                 sys.exit(1)
 
         except Exception as e:
@@ -189,7 +192,7 @@ def get_application_path():
             # print application_path
             application_path = win32api.GetLongPathName(application_path)
         #if args.debug:
-        #    logger.log("DEBUG", "Application Path: %s" % application_path)
+        #    logger.log("DEBUG", "Init", "Application Path: %s" % application_path)
         return application_path
     except Exception as e:
         print("Error while evaluation of application path")
@@ -223,15 +226,15 @@ if __name__ == '__main__':
 
     # Updating LOKI
     if not args.sigsonly:
-        logger.log("INFO", "Updating LOKI ...")
+        logger.log("INFO", "Upgrader", "Updating LOKI ...")
         updater.update_loki()
     if not args.progonly:
-        logger.log("INFO", "Updating Signatures ...")
+        logger.log("INFO", "Upgrader", "Updating Signatures ...")
         updater.update_signatures()
 
-    logger.log("INFO", "Update complete")
+    logger.log("INFO", "Upgrader", "Update complete")
 
     if args.detached:
-        logger.log("INFO", "Press any key to return ...")
+        logger.log("INFO", "Upgrader", "Press any key to return ...")
 
     sys.exit(0)

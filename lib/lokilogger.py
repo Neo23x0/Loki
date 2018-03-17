@@ -58,7 +58,7 @@ class LokiLogger():
             self.remote_logger.addHandler(remote_syslog_handler)
             self.remote_logging = True
 
-    def log(self, mes_type, message):
+    def log(self, mes_type, module, message):
 
         # Remove all non-ASCII characters
         # message = removeNonAsciiDrop(message)
@@ -81,7 +81,7 @@ class LokiLogger():
 
         # to file
         if not self.no_log_file:
-            self.log_to_file(message, mes_type)
+            self.log_to_file(message, mes_type, module)
 
         # to stdout
         try:
@@ -92,7 +92,7 @@ class LokiLogger():
 
         # to syslog server
         if self.remote_logging:
-            self.log_to_remotesys(message, mes_type)
+            self.log_to_remotesys(message, mes_type, module)
 
     def log_to_stdout(self, message, mes_type):
         # check tty encoding
@@ -171,23 +171,25 @@ class LokiLogger():
                     sys.exit(1)
                 print ("Cannot print to cmd line - formatting error")
 
-    def log_to_file(self, message, mes_type):
+    def log_to_file(self, message, mes_type, module):
         try:
             # Write to file
             with codecs.open(self.log_file, "a", encoding='utf-8') as logfile:
                 if self.csv:
-                    logfile.write(u"{0},{1},{2},{3}{4}".format(getSyslogTimestamp(), self.hostname, mes_type,message, self.linesep))
+                    logfile.write(u"{0},{1},{2},{3},{4}{5}".format(
+                        getSyslogTimestamp(), self.hostname, mes_type, module, message, self.linesep))
                 else:
-                    logfile.write(u"%s %s LOKI: %s: %s%s" % (getSyslogTimestamp(), self.hostname, mes_type.title(), message, self.linesep))
+                    logfile.write(u"%s %s LOKI: %s: MODULE: %s MESSAGE: %s%s" %
+                                  (getSyslogTimestamp(), self.hostname, mes_type.title(), module, message, self.linesep))
         except Exception as e:
             if self.debug:
                 traceback.print_exc()
                 sys.exit(1)
             print("Cannot print line to log file {0}".format(self.log_file))
 
-    def log_to_remotesys(self, message, mes_type):
+    def log_to_remotesys(self, message, mes_type, module):
         # Preparing the message
-        syslog_message = "LOKI: {0}: {1}".format(mes_type.title(), message)
+        syslog_message = "LOKI: {0}: MODULE: {1} MESSAGE: {2}".format(mes_type.title(), module, message)
         try:
             # Mapping LOKI's levels to the syslog levels
             if mes_type == "NOTICE":

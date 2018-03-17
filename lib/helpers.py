@@ -102,13 +102,13 @@ def setNice(logger):
     try:
         pid = os.getpid()
         p = psutil.Process(pid)
-        logger.log("INFO", "Setting LOKI process with PID: %s to priority IDLE" % pid)
+        logger.log("INFO", "Init", "Setting LOKI process with PID: %s to priority IDLE" % pid)
         p.nice(psutil.IDLE_PRIORITY_CLASS)
         return 1
     except Exception, e:
         if logger.debug:
             traceback.print_exc()
-        logger.log("ERROR", "Error setting nice value of THOR process")
+        logger.log("ERROR", "Init", "Error setting nice value of THOR process")
         return 0
 
 
