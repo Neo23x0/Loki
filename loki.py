@@ -665,7 +665,7 @@ class Loki(object):
                             logger.log("INFO", "ProcessScan", "Too many matches on process memory - most likely a false positive %s" % process_info)
                         elif len(alerts) > 0:
                             for alert in alerts:
-                                logger.log("ALERT", alert)
+                                logger.log("ALERT", "ProcessScan", alert)
                     except Exception, e:
                         if logger.debug:
                             traceback.print_exc()
