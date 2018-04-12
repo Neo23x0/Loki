@@ -123,8 +123,7 @@ class Loki(object):
         self.app_path = get_application_path()
 
         # PESieve
-        if "xp" not in getPlatformFull().lower():
-            self.peSieve = PESieve(self.app_path, is64bit(), logger)
+        self.peSieve = PESieve(self.app_path, is64bit(), logger)
 
         # Check if signature database is present
         sig_dir = os.path.join(self.app_path, "./signature-base/")

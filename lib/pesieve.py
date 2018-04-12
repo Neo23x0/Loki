@@ -55,7 +55,7 @@ class PESieve(object):
         replaced = 0
         suspicious = 0
         # Compose command
-        command = [self.peSieve, '/pid', str(pid), '/nodump', '/quiet']
+        command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet']
         # Run PE-Sieve on given process
         output, returnCode = runProcess(command)
 
