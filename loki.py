@@ -677,13 +677,17 @@ class Loki(object):
             if processExists(pid) and self.peSieve.active:
                     # If PE-Sieve reports replaced processes
                     logger.log("DEBUG", "ProcessScan", "PE-Sieve scan of process PID: %s" % pid)
-                    (hooked, replaced, suspicious) = self.peSieve.scan(pid=pid)
-                    if replaced:
+                    results = self.peSieve.scan(pid=pid)
+                    if results["replaced"]:
                         logger.log("WARNING", "ProcessScan", "PE-Sieve reported replaced process %s REPLACED: %s" %
-                                   (process_info, str(replaced)))
-                    elif hooked or suspicious:
+                                   (process_info, str(results["replaced"])))
+                    elif results["implanted"]:
+                        logger.log("WARNING", "ProcessScan", "PE-Sieve reported implanted process %s IMPLANTED: %s" %
+                                   (process_info, str(results["implanted"])))
+                    elif results["hooked"] or results["suspicious"]:
                         logger.log("NOTICE", "ProcessScan", "PE-Sieve reported hooked or suspicious process %s "
-                                             "HOOKED: %s SUSPICIOUS: %s" % (process_info, str(hooked), str(suspicious)))
+                                             "HOOKED: %s SUSPICIOUS: %s" % (process_info, str(results["hooked"]),
+                                                                            str(results["suspicious"])))
                     else:
                         logger.log("INFO", "ProcessScan", "PE-Sieve reported no anomalies %s" % process_info)
 
