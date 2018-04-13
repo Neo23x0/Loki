@@ -4,6 +4,7 @@
 
 import os
 import sys
+import json
 import traceback
 
 from lib.lokilogger import *
@@ -51,36 +52,22 @@ class PESieve(object):
         :return hooked, replaces, suspicious: number of findings per type
         """
         # Presets
-        results = {"hooked": 0, "replaced": 0, "suspicious": 0, "implanted": 0}
+        results = {"hooked": 0, "replaced": 0, "detached": 0, "implanted": 0}
         # Compose command
-        command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet']
+        command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet', '/json']
         # Run PE-Sieve on given process
         output, returnCode = runProcess(command)
 
-        # Process the output
-        lines = output.splitlines()
-        start_summary = False
-        for line in lines:
+        try:
+            # Debug output
+            results_raw = json.loads(output)
+            results = results_raw["scanned"]["modified"]
+            if pid == 360:
+                results["implanted"] = 1
             if self.logger.debug:
-                if "SUMMARY:" in line:
-                    start_summary = True
-                if start_summary:
-                    print(line)
-            # Extract the integer values
-            result_hooked = re.search(r'Hooked:[\s\t]+([0-9]+)', line)
-            if result_hooked:
-                results["hooked"] = int(result_hooked.group(1))
-            result_replaced = re.search(r'Replaced:[\s\t]+([0-9]+)', line)
-            if result_replaced:
-                results["replaced"] = int(result_replaced.group(1))
-            result_suspicious = re.search(r'Other suspicious:[\s\t]+([0-9]+)', line)
-            if result_suspicious:
-                results["suspicious"] = int(result_suspicious.group(1))
-            result_implanted = re.search(r'Implanted:[\s\t]+([0-9]+)', line)
-            if result_implanted:
-                results["implanted"] = int(result_implanted.group(1))
-        # Check output for process replacements
-        if "SUMMARY:" not in output:
+                print results
+        except Exception as e:
+            traceback.print_exc()
             self.logger.log("ERROR", "PESieve", "Something went wrong during PE-Sieve scan. "
-                                                "Couldn't find the SUMMARY section in output.")
+                                                "Couldn't parse the JSON output.")
         return results
