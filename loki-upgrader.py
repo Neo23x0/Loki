@@ -160,13 +160,22 @@ class LOKIUpdater(object):
 
                     try:
                         # Create file if not present
-                        os.makedirs(os.path.basename(targetFile))
+                        if not os.path.exists(os.path.dirname(targetFile)):
+                            os.makedirs(os.path.dirname(targetFile))
+                    except Exception as e:
+                        if self.debug:
+                            self.logger.log("DEBUG", "Upgrader", "Cannot create dir name '%s'" % os.path.dirname(targetFile))
+                            traceback.print_exc()
+
+                    try:
                         # Create target file
                         target = file(targetFile, "wb")
                         with source, target:
-                                shutil.copyfileobj(source, target)
+                            shutil.copyfileobj(source, target)
+                            if self.debug:
+                                self.logger.log("DEBUG", "Upgrader", "Successfully extracted '%s'" % targetFile)
                     except Exception as e:
-                        self.logger.log("ERROR", "Upgrader", "Cannot extract %s" % targetFile)
+                        self.logger.log("ERROR", "Upgrader", "Cannot extract '%s'" % targetFile)
                         if self.debug:
                             traceback.print_exc()
 
