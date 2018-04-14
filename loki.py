@@ -559,6 +559,10 @@ class Loki(object):
         # LSASS Counter
         lsass_count = 0
 
+        # LOKI's processes
+        loki_pid = os.getpid()
+        loki_ppid = psutil.Process(os.getpid()).ppid()  # safer way to do this - os.ppid() fails in some envs
+
         for process in processes:
 
             try:
@@ -608,7 +612,7 @@ class Loki(object):
                 continue
 
             # Skip own process ----------------------------------------------------
-            if os.getpid() == pid:
+            if loki_pid == pid or loki_ppid == pid:
                 logger.log("INFO", "ProcessScan", "Skipping LOKI Process %s" % process_info)
                 continue
 
