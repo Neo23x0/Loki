@@ -62,8 +62,6 @@ class PESieve(object):
             # Debug output
             results_raw = json.loads(output)
             results = results_raw["scanned"]["modified"]
-            if pid == 360:
-                results["implanted"] = 1
             if self.logger.debug:
                 print results
         except Exception as e:
