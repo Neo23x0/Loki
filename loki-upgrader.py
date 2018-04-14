@@ -55,7 +55,7 @@ class LOKIUpdater(object):
         self.logger = logger
         self.application_path = application_path
 
-    def update_signatures(self):
+    def update_signatures(self, clean=False):
         try:
             for sig_url in self.UPDATE_URL_SIGS:
                 # Downloading current repository
@@ -72,6 +72,9 @@ class LOKIUpdater(object):
                 # Preparations
                 try:
                     sigDir = os.path.join(self.application_path, './signature-base/')
+                    if clean:
+                        self.logger.log("INFO", "Upgrader", "Cleaning directory '%s'" % sigDir)
+                        shutil.rmtree(sigDir)
                     for outDir in ['', 'iocs', 'yara', 'misc']:
                         fullOutDir = os.path.join(sigDir, outDir)
                         if not os.path.exists(fullOutDir):
@@ -208,6 +211,8 @@ if __name__ == '__main__':
     parser.add_argument('--progonly', action='store_true', help='Update the program files only', default=False)
     parser.add_argument('--nolog', action='store_true', help='Don\'t write a local log file', default=False)
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
+    parser.add_argument('--clean', action='store_true', default=False, help='Clean up the signature directory and get '
+                                                                            'a fresh set')
     parser.add_argument('--detached', action='store_true', default=False, help=argparse.SUPPRESS)
 
     args = parser.parse_args()
@@ -221,16 +226,15 @@ if __name__ == '__main__':
     # Logger
     logger = LokiLogger(args.nolog, args.l, t_hostname, '', '', False, False, args.debug, platform=platform, caller='upgrader')
 
-    # Update Loki
+    # Update LOKI
     updater = LOKIUpdater(args.debug, logger, get_application_path())
 
-    # Updating LOKI
     if not args.sigsonly:
         logger.log("INFO", "Upgrader", "Updating LOKI ...")
         updater.update_loki()
     if not args.progonly:
         logger.log("INFO", "Upgrader", "Updating Signatures ...")
-        updater.update_signatures()
+        updater.update_signatures(args.clean)
 
     logger.log("INFO", "Upgrader", "Update complete")
 
