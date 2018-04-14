@@ -1036,6 +1036,7 @@ class Loki(object):
                 if not os.path.exists(yara_rule_directory):
                     continue
                 logger.log("INFO", "Init", "Processing YARA rules folder {0}".format(yara_rule_directory))
+                rule_count = 0
                 for root, directories, files in os.walk(yara_rule_directory, onerror=walk_error, followlinks=False):
                     for file in files:
                         try:
@@ -1059,7 +1060,8 @@ class Loki(object):
                                     'filetype': dummy,
                                     'md5': dummy,
                                 })
-                                logger.log("INFO", "Init", "Initializing Yara rule %s" % file)
+                                logger.log("DEBUG", "Init", "Initializing Yara rule %s" % file)
+                                rule_count += 1
                             except Exception, e:
                                 logger.log("ERROR", "Init", "Error while initializing Yara rule %s" % file)
                                 traceback.print_exc()
@@ -1089,7 +1091,7 @@ class Loki(object):
                     'filetype': dummy,
                     'md5': dummy
                 })
-                logger.log("INFO", "Init", "Initialized all Yara rules at once")
+                logger.log("INFO", "Init", "Initialized %d Yara rules" % rule_count)
             except Exception, e:
                 traceback.print_exc()
                 logger.log("ERROR", "Init", "Error during YARA rule compilation - please fix the issue in the rule set")
