@@ -40,6 +40,7 @@ from collections import Counter
 
 # LOKI Modules
 from lib.lokilogger import *
+from lib.levenshtein import LevCheck
 
 # Private Rules Support
 from lib.privrules import *
@@ -174,6 +175,9 @@ class Loki(object):
         # Initialize File Type Magic signatures
         self.initialize_filetype_magics(os.path.join(self.app_path, './signature-base/misc/file-type-signatures.txt'))
 
+        # Levenshtein Checker
+        self.LevCheck = LevCheck()
+
     def scan_path(self, path):
 
         # Startup
@@ -281,6 +285,14 @@ class Loki(object):
                             # Create Reason
                             reasons.append("File Name IOC matched PATTERN: %s SUBSCORE: %s DESC: %s" % (fioc['regex'].pattern, fioc['score'], fioc['description']))
                             total_score += int(fioc['score'])
+
+                    # Levenshtein Check
+                    if not args.nolevcheck:
+                        result = self.LevCheck.check(filename)
+                        if result:
+                            reasons.append("Levenshtein check - filename looks much like a well-known system file "
+                                           "SUBSCORE: 40 ORIGINAL: %s" % result)
+                            total_score += 60
 
                     # Access check (also used for magic header detection)
                     firstBytes = ""
@@ -1416,6 +1428,7 @@ def main():
     parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
+    parser.add_argument('--nolevcheck', action='store_true', help='Skip the Levenshtein distance check', default=False)
     parser.add_argument('--scriptanalysis', action='store_true', help='Activate script analysis (beta)', default=False)
     parser.add_argument('--rootkit', action='store_true', help='Skip the rootkit check', default=False)
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
