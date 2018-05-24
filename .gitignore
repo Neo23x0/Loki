@@ -32,3 +32,5 @@ signature-base
 tools/old-results
 build
 private-signatures
+rules
+rules.key

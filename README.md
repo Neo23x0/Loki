@@ -23,7 +23,7 @@ Additional Checks:
 3. SWF decompressed scan (new since version v0.8)
 4. SAM dump check
 5. DoublePulsar check - tries to detect DoublePulsar backdoor on port 445/tcp and 3389/tcp
-6. [PE-Sieve](https://github.com/hasherezade/pe-sieve) process check
+6. [PE-Sieve](https://hshrzd.wordpress.com/pe-sieve/) process check
 
 The Windows binary is compiled with PyInstaller 2.1 and should run as x86 application on both x86 and x64 based systems.
 
