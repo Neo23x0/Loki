@@ -64,8 +64,9 @@ class PESieve(object):
             results = results_raw["scanned"]["modified"]
             if self.logger.debug:
                 print results
+        except ValueError as v:
+            self.logger.log("DEBUG", "PESieve", "Couldn't parse the JSON output.")
         except Exception as e:
             traceback.print_exc()
-            self.logger.log("ERROR", "PESieve", "Something went wrong during PE-Sieve scan. "
-                                                "Couldn't parse the JSON output.")
+            self.logger.log("ERROR", "PESieve", "Something went wrong during PE-Sieve scan.")
         return results
