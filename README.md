@@ -356,6 +356,10 @@ To include the msvcr100.dll to improve the target os compatibility change the li
 - Download and unpack https://github.com/Neo23x0/signature-base into Loki folder
 - cd loki folder, sudo python loki.py -p /
 
+# Alternatives
+
+Please see our new free scanner named [SPARK Core](https://www.nextron-systems.com/spark-core/), which isn't open source but pre-compiled for Windows, Linux and macOS. 
+
 # Antivirus - False Positives
 
 The compiled scanner may be detected by antivirus engines. This is caused by the fact that the scanner is a compiled python script that implement some file system and process scanning features that are also used in compiled malware code.
