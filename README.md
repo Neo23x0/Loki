@@ -358,7 +358,9 @@ To include the msvcr100.dll to improve the target os compatibility change the li
 
 # Alternatives
 
-Please see our new free scanner named [SPARK Core](https://www.nextron-systems.com/spark-core/), which isn't open source but pre-compiled for Windows, Linux and macOS. 
+While LOKI is the only open source scanner in our scanner line up and a purely private project, you may also be interested in our new free scanner [SPARK Core](https://www.nextron-systems.com/spark-core/), which isn't open source but pre-compiled for Windows, Linux and macOS. 
+
+![Screen](/screens/scanner-comparison.png)
 
 # Antivirus - False Positives
 
