@@ -34,3 +34,4 @@ build
 private-signatures
 rules
 rules.key
+*.htm
