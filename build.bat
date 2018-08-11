@@ -31,7 +31,7 @@ if not exist "%SystemRoot%\System32\msvcr100.dll" (
 :: Private Rules
 :: See https://github.com/Neo23x0/Loki/#package-loki-with-a-custom-ruleset for details
 SET PRIVRULES=no
-%PI% loki-package-builder.py --ruledir "%cd%\private-signatures" --target rules
+%PY% loki-package-builder.py --ruledir "%cd%\private-signatures" --target rules
 if !errorlevel! neq 0 GOTO ERROR
 if exist "%cd%\rules" (
     echo Private signatures directory found. The contents will be encrypted and added to the package.
