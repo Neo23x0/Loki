@@ -74,7 +74,7 @@ It allows to update the compiled loki.exe for Windows and the signature-base sou
 
 When running `loki.exe --update` it will create an new upgrader process and exits LOKI in order to replace the `loki.exe` with the newer one, which would be locked otherwise.
 
-# Usage
+## Usage
 
 ```
 usage: loki.exe [-h] [-p path] [-s kilobyte] [-l log-file] [-r remote-loghost]
@@ -187,7 +187,7 @@ optional arguments:
 - [OTX Python SDK](https://github.com/AlienVault-Labs/OTX-Python-SDK)
 - [pyMISP](https://github.com/CIRCL/PyMISP)
 
-## Signature and IOCs
+### Signature and IOCs
 
 Since version 0.15 the Yara signatures reside in the sub-repository [signature-base](https://github.com/Neo23x0/signature-base). You can just download the LOKI release ZIP archive and run LOKI once to download the 'signature-base' sub repository with all the signatures. Since version 0.21.0 a separate updater is provided as `loki-upgrader.exe` or `loki-upgrader.py`. LOKI expects the IOCs and signatures of the `signature-base` repo in a subfolder named `signature-base`. 
 
@@ -216,7 +216,7 @@ filetype - eg. condition: extension == ".txt" and filetype == "EXE"
 md5 - legacy value
 ```
 
-# User-Defined Scan Excludes
+## User-Defined Scan Excludes
 
 Since version v0.16.2 LOKI supports the definition of user-defined excludes via "excludes.cfg" in the new "./config" folder. Each line represents a regular expression thats gets applied to the full file path during the directory walk. This way you can exclude certain directories regardless of their drive name, file extensions in certain folders and all files and directories that belong to a product that is sensitive to antivirus scanning.
 
@@ -245,13 +245,13 @@ The '''exclude.cfg''' looks like this:
     Sysvol\\Staging\\Nntfrs_cmp
     \\System Volume Information\\DFSR
 
-## PE-Sieve
+### PE-Sieve
 
 Since version 0.26 LOKI integrates @hasherezade's great tool [PE-Sieve](https://github.com/hasherezade/pe-sieve) to detect [process anomalies](https://hshrzd.wordpress.com/2017/12/18/process-doppelganging-a-new-way-to-impersonate-a-process/).
 
 The tool is initialized if LOKI finds it in the `./tools` sub folder during startup. 
 
-# Threat Intel Receivers
+## Threat Intel Receivers
 
 Since version v0.10 LOKI includes various threat intel receivers using the public APIs of these services to retrieve and store the IOCs in a format that LOKI understands. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no preformance impact)
 
@@ -259,7 +259,7 @@ The threat intel receivers have also been moved to the [signature-base](https://
 
 Provide your API key via ```-k APIKEY``` or set it in the script header.
 
-## Open Threat Exchange (OTX) Receiver
+### Open Threat Exchange (OTX) Receiver
 
 It's a simple script that downloads your subscribed events/iocs from [Alienvault OTX](https://otx.alienvault.com) and stores them in the correct format in the './iocs' subfolder. The script is located in the "./threatintel" folder and is named "get-otx-iocs.py". (see requirements above)
 
@@ -276,7 +276,7 @@ optional arguments:
   --debug       Debug output
 ```
 
-## MISP Receiver
+### MISP Receiver
 
 A simple script that downloads your subscribed events/iocs from a custom [MISP](https://github.com/MISP/MISP) instance and stores them in the correct format in the './iocs' subfolder. YARA rules stored in MISP will be written to the './iocs/yara' subfolder and automatically initialized during startup. The script is located in the "./threatintel" folder and is named "get-misp-iocs.py". (see requirements above)
 
@@ -297,7 +297,7 @@ optional arguments:
   --debug       Debug output
 ```
 
-# Screenshots
+## Screenshots
 
 Loki Scan
 
@@ -319,7 +319,7 @@ Generated log file
 
 ![Screen](/screens/lokilog1.png)
 
-# Contact
+## Contact
 
 LOKI scanner on our company homepage
 [https://www.nextron-systems.com/loki/](https://www.nextron-systems.com/loki/)
@@ -330,7 +330,7 @@ Twitter
 
 If you are interested in a corporate solution for APT scanning, check out Loki's big brother [THOR](http://www.bsk-consulting.de/apt-scanner-thor/).
 
-# Compile the Scanner
+## Compile the Scanner
 
 Download PyInstaller [v2.1](https://github.com/pyinstaller/pyinstaller/releases/tag/v2.1), switch to the pyinstaller program directory and execute:
 
@@ -338,13 +338,13 @@ Download PyInstaller [v2.1](https://github.com/pyinstaller/pyinstaller/releases/
 
 This will create a `loki.exe` in the subfolder `./loki/dist`.
 
-## Pro Tip (optional)
+### Pro Tip (optional)
 
 To include the msvcr100.dll to improve the target os compatibility change the line in the file `./loki/loki.spec` that contains `a.bianries,` to the following:
 
     a.binaries + [('msvcr100.dll', 'C:\Windows\System32\msvcr100.dll', 'BINARY')],
 
-# Use LOKI on Mac OS X
+## Use LOKI on Mac OS X
 
 - Download Yara sources from [here](https://github.com/VirusTotal/yara/releases)
 - Install openssl (brew install openssl, then sudo cp -r /usr/local/Cellar/openssl/1.0.2h_1/include /usr/local)
@@ -356,19 +356,19 @@ To include the msvcr100.dll to improve the target os compatibility change the li
 - Download and unpack https://github.com/Neo23x0/signature-base into Loki folder
 - cd loki folder, sudo python loki.py -p /
 
-# Alternatives
+## Alternatives
 
 While LOKI is the only open source scanner in our scanner line up and a purely private project, you may also be interested in our new free scanner [SPARK Core](https://www.nextron-systems.com/spark-core/), which isn't open source but pre-compiled for Windows, Linux and macOS. 
 
 ![Screen](/screens/scanner-comparison.png)
 
-# Antivirus - False Positives
+## Antivirus - False Positives
 
 The compiled scanner may be detected by antivirus engines. This is caused by the fact that the scanner is a compiled python script that implement some file system and process scanning features that are also used in compiled malware code.
 
 If you don't trust the compiled executable, please compile it yourself.
 
-# License
+## License
 
 Loki - Simple IOC Scanner
 Copyright (c) 2015 Florian Roth
@@ -385,3 +385,9 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/)
+
+### Signature-Base License
+
+![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)
+
+Please note that all signatures and IOC files in the `signature-base` repository, except the YARA rules created by 3rd parties, are licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/).
