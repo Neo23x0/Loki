@@ -27,7 +27,7 @@ Additional Checks:
 
 The Windows binary is compiled with PyInstaller 2.1 and should run as x86 application on both x86 and x64 based systems.
 
-### Download
+## Download
 
 Download the latest version of LOKI from the [releases](https://github.com/Neo23x0/Loki/releases) section.
 
@@ -137,7 +137,7 @@ c:\Python27\python.exe -m pip install --upgrade pip
 pip.exe install psutil netaddr wmi colorama pylzma pycrypto
 ```
 
-### Package LOKI with a Private Rule Set
+## Package LOKI with a Private Rule Set
 
 LOKI can be packaged with a custom encrypted rule set, which is embedded in the pyinstaller package.
 In order to include your own rules place them in a directory named `private-signatures` in the LOKI directory and execute `build.bat`.
@@ -187,7 +187,7 @@ optional arguments:
 - [OTX Python SDK](https://github.com/AlienVault-Labs/OTX-Python-SDK)
 - [pyMISP](https://github.com/CIRCL/PyMISP)
 
-### Signature and IOCs
+## Signature and IOCs
 
 Since version 0.15 the Yara signatures reside in the sub-repository [signature-base](https://github.com/Neo23x0/signature-base). You can just download the LOKI release ZIP archive and run LOKI once to download the 'signature-base' sub repository with all the signatures. Since version 0.21.0 a separate updater is provided as `loki-upgrader.exe` or `loki-upgrader.py`. LOKI expects the IOCs and signatures of the `signature-base` repo in a subfolder named `signature-base`. 
 
@@ -245,7 +245,7 @@ The '''exclude.cfg''' looks like this:
     Sysvol\\Staging\\Nntfrs_cmp
     \\System Volume Information\\DFSR
 
-### PE-Sieve
+## PE-Sieve
 
 Since version 0.26 LOKI integrates @hasherezade's great tool [PE-Sieve](https://github.com/hasherezade/pe-sieve) to detect [process anomalies](https://hshrzd.wordpress.com/2017/12/18/process-doppelganging-a-new-way-to-impersonate-a-process/).
 
