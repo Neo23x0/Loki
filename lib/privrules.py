@@ -18,9 +18,13 @@ def read_rules_from_dir(directory):
     for (dirpath, dirnames, filenames) in os.walk(directory):
         for filename in filenames:
             # print filename
-            if filename[-4:] == ".yar":
-                # file is a .yar file, add to rulefiles
+            if filename.lower().endswith('.yar') or filename.lower().endswith('.yara'):
+                # file is a .yar/.yara file, add to rulefiles
                 rulefiles.append(os.path.join(dirpath, filename))
+
+    # return None if no private rule files were found
+    if rulefiles == []:
+        return None
     
     # testcompile rulefiles in order to find broken rules
     for rulefile in rulefiles:

@@ -50,6 +50,7 @@ sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 from lib.helpers import *
 from lib.pesieve import PESieve
 from lib.doublepulsar import DoublePulsar
+from lib.pluginframework import *
 
 # Platform
 os_platform = ""
@@ -651,7 +652,7 @@ class Loki(object):
             # Yara rule match
             # only on processes with a small working set size
             if processExists(pid):
-                if int(ws_size) < ( 100 * 1048576 ): # 100 MB
+                if int(ws_size) < ( args.maxworkingset * 1048576 ):
                     try:
                         alerts = []
                         for rules in self.yara_rules:
@@ -1042,13 +1043,13 @@ class Loki(object):
 
         yaraRules = ""
         dummy = ""
+        rule_count = 0
 
         try:
             for yara_rule_directory in self.yara_rule_directories:
                 if not os.path.exists(yara_rule_directory):
                     continue
                 logger.log("INFO", "Init", "Processing YARA rules folder {0}".format(yara_rule_directory))
-                rule_count = 0
                 for root, directories, files in os.walk(yara_rule_directory, onerror=walk_error, followlinks=False):
                     for file in files:
                         try:
@@ -1075,7 +1076,7 @@ class Loki(object):
                                 logger.log("DEBUG", "Init", "Initializing Yara rule %s" % file)
                                 rule_count += 1
                             except Exception, e:
-                                logger.log("ERROR", "Init", "Error while initializing Yara rule %s" % file)
+                                logger.log("ERROR", "Init", "Error while initializing Yara rule %s ERROR: %s" % (file, sys.exc_info()[1]))
                                 traceback.print_exc()
                                 if logger.debug:
                                     sys.exit(1)
@@ -1088,7 +1089,7 @@ class Loki(object):
                                     yaraRules += data
 
                         except Exception, e:
-                            logger.log("ERROR", "Init", "Error reading signature file %s ERROR: %s" % yaraRuleFile)
+                            logger.log("ERROR", "Init", "Error reading signature file %s ERROR: %s" % (yaraRuleFile, sys.exc_info()[1]))
                             if logger.debug:
                                 traceback.print_exc()
                                 sys.exit(1)
@@ -1106,7 +1107,7 @@ class Loki(object):
                 logger.log("INFO", "Init", "Initialized %d Yara rules" % rule_count)
             except Exception, e:
                 traceback.print_exc()
-                logger.log("ERROR", "Init", "Error during YARA rule compilation - please fix the issue in the rule set")
+                logger.log("ERROR", "Init", "Error during YARA rule compilation ERROR: %s - please fix the issue in the rule set" % sys.exc_info()[1])
                 sys.exit(1)
 
             # Add as Lokis YARA rules
@@ -1440,6 +1441,7 @@ def main():
     parser.add_argument('--nolog', action='store_true', help='Don\'t write a local log file', default=False)
     parser.add_argument('--update', action='store_true', default=False, help='Update the signatures from the "signature-base" sub repository')
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
+    parser.add_argument('--maxworkingset', type=int, default=100, help='Maximum working set size of processes to scan (in MB, default 100 MB)')
 
     args = parser.parse_args()
 
@@ -1459,8 +1461,15 @@ if __name__ == '__main__':
         os.remove(args.l)
 
     # Logger
+    LokiCustomFormatter = None
+    pathLokiInit, statusLokiInit = CheckLokiInit(get_application_path())
+    if statusLokiInit == 'present':
+        try:
+            execfile(pathLokiInit, globals(), locals())
+        except:
+            statusLokiInit = str(sys.exc_info()[1])
     logger = LokiLogger(args.nolog, args.l, getHostname(os_platform), args.r, int(args.t), args.csv, args.onlyrelevant, args.debug,
-                        platform=os_platform, caller='main')
+                        platform=os_platform, caller='main', customformatter=LokiCustomFormatter)
 
     # Update
     if args.update:
@@ -1469,6 +1478,16 @@ if __name__ == '__main__':
 
     logger.log("NOTICE", "Init", "Starting Loki Scan VERSION: {3} SYSTEM: {0} TIME: {1} PLATFORM: {2}".format(
         getHostname(os_platform), getSyslogTimestamp(), getPlatformFull(), logger.version))
+
+    if statusLokiInit == 'notpresent':
+        pass
+    elif statusLokiInit == 'present':
+        logger.log('INFO', 'Init', '%s loaded' % FILENAME_LOKI_INIT)
+    else:
+        logger.log('ERROR', 'Init', '%s load error %s' % (FILENAME_LOKI_INIT, statusLokiInit))
+
+    # Load plugins
+    LoadPlugins(globals(), locals())
 
     # Loki
     loki = Loki(args.intense)
@@ -1492,6 +1511,9 @@ if __name__ == '__main__':
     if os_platform == "windows":
         setNice(logger)
 
+    # run plugins
+    RunPluginsForPhase(LOKI_PHASE_BEFORE_SCANS)
+
     # Scan Processes --------------------------------------------------
     resultProc = False
     if not args.noprocscan and os_platform == "windows":
@@ -1514,6 +1536,9 @@ if __name__ == '__main__':
     if not args.nofilescan:
         loki.scan_path(defaultPath)
 
+    # run plugins
+    RunPluginsForPhase(LOKI_PHASE_AFTER_SCANS)
+
     # Result ----------------------------------------------------------
     logger.log("NOTICE", "Results", "Results: {0} alerts, {1} warnings, {2} notices".format(logger.alerts, logger.warnings, logger.notices))
     if logger.alerts:
@@ -1528,6 +1553,9 @@ if __name__ == '__main__':
 
     logger.log("INFO", "Results", "Please report false positives via https://github.com/Neo23x0/signature-base")
     logger.log("NOTICE", "Results", "Finished LOKI Scan SYSTEM: %s TIME: %s" % (getHostname(os_platform), getSyslogTimestamp()))
+
+    # run plugins
+    RunPluginsForPhase(LOKI_PHASE_END)
 
     if not args.dontwait:
         print " "
