@@ -253,7 +253,7 @@ The tool is initialized if LOKI finds it in the `./tools` sub folder during star
 
 ## Threat Intel Receivers
 
-Since version v0.10 LOKI includes various threat intel receivers using the public APIs of these services to retrieve and store the IOCs in a format that LOKI understands. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no preformance impact)
+Since version v0.10 LOKI includes various threat intel receivers using the public APIs of these services to retrieve and store the IOCs in a format that LOKI understands. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no performance impact)
 
 The threat intel receivers have also been moved to the [signature-base](https://github.com/Neo23x0/signature-base) sub repository with version 0.15 and can be found in "./signature-base/threatintel".
 
@@ -340,7 +340,7 @@ This will create a `loki.exe` in the subfolder `./loki/dist`.
 
 ### Pro Tip (optional)
 
-To include the msvcr100.dll to improve the target os compatibility change the line in the file `./loki/loki.spec` that contains `a.bianries,` to the following:
+To include the msvcr100.dll to improve the target os compatibility change the line in the file `./loki/loki.spec` that contains `a.binaries,` to the following:
 
     a.binaries + [('msvcr100.dll', 'C:\Windows\System32\msvcr100.dll', 'BINARY')],
 
