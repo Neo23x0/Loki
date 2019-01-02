@@ -14,6 +14,11 @@ def main():
     args = parse_arguments()
 
     rules = read_rules_from_dir(args.ruledir)
+    
+    # stop if no private rules were found
+    if rules == None:
+        return
+
     buffer = io.BytesIO()
     rules.save(file=buffer)
     serialized_rules = buffer.getvalue()
