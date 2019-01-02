@@ -4,13 +4,14 @@
 Loki WMI Scanner plugin
 2018/04/20
 2018/04/21
+Author: @DidierStevens
 """
 
 import hashlib
 
 def ScanWMI():
     if os_platform == "windows":
-        oWMI = wmi.WMI(namespace='root\subscription')
+        oWMI = wmi.WMI(namespace=r'root\subscription')
 
         knownHashes = ['159e2bcde798cf5fbb290f90a7ccc1a6', '20d385446e60cf9134792d5b145c54bb', '65c80cb7a9094b32c3f9982887b9862a', '6ddb270d17551138747ad7c1bc3db9b3', 'de5b1c4f59c4463f8e9b70cbe1156976']
         
