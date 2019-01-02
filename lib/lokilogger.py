@@ -14,7 +14,7 @@ import logging.handlers
 import socket
 from helpers import removeNonAsciiDrop
 
-__version__ = '0.28.1'
+__version__ = '0.29.0'
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
@@ -49,6 +49,9 @@ class LokiLogger():
         self.CustomFormatter = customformatter
         if "windows" in platform.lower():
             self.linesep = "\r\n"
+
+        reload(sys)
+        sys.setdefaultencoding('utf8')
 
         # Colorization ----------------------------------------------------
         init()
