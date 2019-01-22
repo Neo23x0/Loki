@@ -2,3 +2,4 @@ netaddr
 psutil
 pylzma
 yara-python
+colorama
