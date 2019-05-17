@@ -527,7 +527,7 @@ class Loki(object):
 
             string_num = 1
             for string in string_matches:
-                matching_strings += " Str" + str(string_num) + ": " + removeNonAscii(removeBinaryZero(string))
+                matching_strings += " Str" + str(string_num) + ": " + str(removeNonAscii(removeBinaryZero(string)))
                 string_num += 1
 
             # Limit string
