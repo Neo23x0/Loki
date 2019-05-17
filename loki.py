@@ -412,12 +412,12 @@ class Loki(object):
                         # Scan the read data
                         try:
                             for (score, rule, description, reference, matched_strings) in \
-                                    self.scan_data(fileData=fileData,
-                                                   fileType=fileType,
-                                                   fileName=fileNameCleaned,
-                                                   filePath=filePathCleaned,
-                                                   extension=extension,
-                                                   md5=md5  # legacy rule support
+                                    self.scan_data(fileData=str(fileData),
+                                                   fileType=str(fileType),
+                                                   fileName=str(fileNameCleaned),
+                                                   filePath=str(filePathCleaned),
+                                                   extension=str(extension),
+                                                   md5=str(md5)  # legacy rule support
                                                    ):
                                 # Message
                                 message = "Yara Rule MATCH: %s SUBSCORE: %s DESCRIPTION: %s REF: %s" % \
