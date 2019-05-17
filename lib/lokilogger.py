@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#
+# Python3 Support
 # LOKI Logger
 
 
@@ -12,9 +12,9 @@ import traceback
 import logging
 import logging.handlers
 import socket
-from helpers import removeNonAsciiDrop
+from .helpers import removeNonAsciiDrop
 
-__version__ = '0.29.0'
+__version__ = '0.30.0'
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
@@ -48,10 +48,7 @@ class LokiLogger():
         self.caller = caller
         self.CustomFormatter = customformatter
         if "windows" in platform.lower():
-            self.linesep = "\r\n"
-
-        reload(sys)
-        sys.setdefaultencoding('utf8')
+            self.linesep = "\r"
 
         # Colorization ----------------------------------------------------
         init()
@@ -68,11 +65,10 @@ class LokiLogger():
             remote_syslog_handler = logging.handlers.SysLogHandler(address=(remote_host, remote_port), facility=19)
             self.remote_logger.addHandler(remote_syslog_handler)
             self.remote_logging = True
-
     def log(self, mes_type, module, message):
 
         # Remove all non-ASCII characters
-        # message = removeNonAsciiDrop(message)
+        message = removeNonAsciiDrop(message)
         codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
 
         if not self.debug and mes_type == "DEBUG":
@@ -87,7 +83,7 @@ class LokiLogger():
             self.notices += 1
 
         if self.only_relevant:
-            if mes_type not in ('ALERT', 'WARNING'):
+            if mes_type not in ('ALERT','WARNING'):
                 return
 
         # to file
@@ -96,15 +92,15 @@ class LokiLogger():
 
         # to stdout
         try:
-            self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type)
+            self.log_to_stdout(message, mes_type)
         except Exception as e:
             print ("Cannot print certain characters to command line - see log file for full unicode encoded log line")
             self.log_to_stdout(removeNonAsciiDrop(message), mes_type)
+            
 
         # to syslog server
         if self.remote_logging:
             self.log_to_remotesys(message, mes_type, module)
-
     def Format(self, type, format, *args):
         if self.CustomFormatter == None:
             return format.format(*args)
@@ -113,7 +109,7 @@ class LokiLogger():
 
     def log_to_stdout(self, message, mes_type):
         # check tty encoding
-        encoding = ""
+        encoding = "ascii"
         if sys.stdout.encoding is not None:
             encoding = sys.stdout.encoding
         else:
@@ -121,14 +117,14 @@ class LokiLogger():
             encoding = "utf-8"
 
         # Prepare Message
-        codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
-        message = message.encode(encoding, errors='replace')
+        codecs.register(lambda message: codecs.lookup('ascii') if message == 'cp65001' else None)
+#        message = str(message).encode(encoding, errors='replace')
 
-        if self.csv:
-            print (self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, mes_type, message))
-
+        if self.csv and (mes_type == "WARNING" or mes_type == "ALERT" or mes_type == "NOTICE" or mes_type == "RESULT"):
+            print((self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, mes_type, message)))
+        elif self.csv and (mes_type == "DEBUG" or mes_type == "INFO" or mes_type == "ERROR"):
+            print((self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, mes_type, message)))
         else:
-
             try:
 
                 key_color = Fore.WHITE
@@ -172,35 +168,38 @@ class LokiLogger():
                 message = linebreaker.sub(r'\n\1', message)
                 # Colorize Key Words
                 colorer = re.compile('([A-Z_0-9]{2,}:)\s', re.VERBOSE)
-                message = colorer.sub(key_color+Style.BRIGHT+r'\1 '+base_color+Style.NORMAL, message)
+                message = colorer.sub(key_color+Style.BRIGHT+r'\1 '+base_color+Style.NORMAL, str(message))
 
                 # Print to console
-                if mes_type == "RESULT":
-                    res_message = "\b\b%s %s" % (mes_type, message)
-                    print (base_color+' '+res_message+' '+Back.BLACK)
-                    print (Fore.WHITE+' '+Style.NORMAL)
-                else:
-                    sys.stdout.write("%s\b\b%s %s%s%s%s\n" % (base_color, mes_type, message, Back.BLACK,Fore.WHITE,Style.NORMAL))
+                if True:
+                    if mes_type == "RESULT":
+                        res_message = "\b\b%s %s" % (mes_type, message.decode('ascii'))
+                        print((base_color+' '+res_message+' '+Back.BLACK))
+                        print((Fore.WHITE+' '+Style.NORMAL))
+                    else:
+                        sys.stdout.write(("%s\b\b%s %s%s%s%s\n" % (base_color, mes_type, message, Back.BLACK,Fore.WHITE,Style.NORMAL)))
 
             except Exception as e:
                 if self.debug:
                     traceback.print_exc()
                     sys.exit(1)
-                print ("Cannot print to cmd line - formatting error")
+                print(("Cannot print to cmd line - formatting error"))
 
-    def log_to_file(self, message, mes_type, module):
-        try:
+    def log_to_file(self, message, mes_type,module):
+        if True:    
+            try:
             # Write to file
-            with codecs.open(self.log_file, "a", encoding='utf-8') as logfile:
-                if self.csv:
-                    logfile.write(self.Format(self.FILE_CSV, u"{0},{1},{2},{3},{4}{5}", getSyslogTimestamp(), self.hostname, mes_type, module, message, self.linesep))
-                else:
-                    logfile.write(self.Format(self.FILE_LINE, u"{0} {1} LOKI: {2}: MODULE: {3} MESSAGE: {4}{5}", getSyslogTimestamp(), self.hostname, mes_type.title(), module, message, self.linesep))
-        except Exception as e:
-            if self.debug:
-                traceback.print_exc()
-                sys.exit(1)
-            print("Cannot print line to log file {0}".format(self.log_file))
+                with codecs.open(self.log_file, "a") as logfile:
+                    if self.csv:
+                        logfile.write(self.Format(self.FILE_CSV, "{0},{1},{2},{3},{4}{5}", getSyslogTimestamp(), self.hostname, mes_type, module, message, self.linesep))
+                    else:
+                        logfile.write(self.Format(self.FILE_LINE, "{0} {1} Loki: {2}: MODULE: {3} MESSAGE: {4}{5}", getSyslogTimestamp(), self.hostname, mes_type.title(), module, message, self.linesep))
+            except Exception as e:
+                if self.debug:
+                    traceback.print_exc()
+                    sys.exit(1)
+                print(("Cannot print line to log file {0}".format(self.log_file)))
+
 
     def log_to_remotesys(self, message, mes_type, module):
         # Preparing the message
@@ -223,12 +222,12 @@ class LokiLogger():
             if self.debug:
                 traceback.print_exc()
                 sys.exit(1)
-            print("Error while logging to remote syslog server ERROR: %s" % str(e))
+            print(("Error while logging to remote syslog server ERROR: %s" % str(e)))
 
     def print_welcome(self):
 
         if self.caller == 'main':
-            print(Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN)
+            print((Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN))
 
             print("      __   ____  __ ______                            ")
             print ("     / /  / __ \/ //_/  _/                            ")
@@ -239,26 +238,26 @@ class LokiLogger():
             print ("    _/ // /_/ / /__  _\ \/ __/ _ `/ _ \/ _ \/ -_) __/ ")
             print ("   /___/\____/\___/ /___/\__/\_,_/_//_/_//_/\__/_/    ")
 
-            print (Fore.WHITE)
+            print((Fore.WHITE))
             print ("   Copyright by Florian Roth, Released under the GNU General Public License")
-            print ("   Version %s" % __version__)
+            print(("   Version %s" % __version__))
             print ("  ")
             print ("   DISCLAIMER - USE AT YOUR OWN RISK")
             print ("   Please report false positives via https://github.com/Neo23x0/Loki/issues")
             print ("  ")
-            print (Back.GREEN + " ".ljust(79) + Back.BLACK)
-            print (Fore.WHITE+''+Back.BLACK)
+            print((Back.GREEN + " ".ljust(79) + Back.BLACK))
+            print((Fore.WHITE+''+Back.BLACK))
 
         else:
             print ("  ")
-            print (Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN)
+            print((Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN))
 
             print ("  ")
             print ("  LOKI UPGRADER ")
 
             print ("  ")
-            print (Back.GREEN + " ".ljust(79) + Back.BLACK)
-            print (Fore.WHITE + '' + Back.BLACK)
+            print((Back.GREEN + " ".ljust(79) + Back.BLACK))
+            print((Fore.WHITE + '' + Back.BLACK))
 
 def getSyslogTimestamp():
     date_obj = datetime.datetime.utcnow()
