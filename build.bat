@@ -4,8 +4,8 @@
 
 setlocal enabledelayedexpansion
 
-SET PY=C:\Python27\python.exe
-SET PYI=C:\Python27\Scripts\pyinstaller.exe
+SET PY=C:\Python37\python.exe
+SET PYI=C:\Python37\Scripts\pyinstaller.exe
 
 :: Cleaning all old versions
 RMDIR /S /Q build
