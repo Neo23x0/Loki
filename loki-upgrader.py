@@ -14,6 +14,7 @@ try:
  from StringIO import StringIO
 except ImportError:
  from io import StringIO
+from io import BytesIO
 import os
 import argparse
 import traceback
@@ -25,7 +26,7 @@ if _platform == "win32":
         import wmi
         import win32api
         from win32com.shell import shell
-    except Exception, e:
+    except Exception as e:
         platform = "linux"  # crazy guess
 
 
@@ -87,7 +88,7 @@ class LOKIUpdater(object):
 
                 # Read ZIP file
                 try:
-                    zipUpdate = zipfile.ZipFile(StringIO(response.read()))
+                    zipUpdate = zipfile.ZipFile(BytesIO(response.read()))
                     for zipFilePath in zipUpdate.namelist():
                         sigName = os.path.basename(zipFilePath)
                         if zipFilePath.endswith("/"):
@@ -110,7 +111,7 @@ class LOKIUpdater(object):
 
                         # Extract file
                         source = zipUpdate.open(zipFilePath)
-                        target = file(targetFile, "wb")
+                        target = open(targetFile, "wb")
                         with source, target:
                             shutil.copyfileobj(source, target)
 
@@ -148,7 +149,7 @@ class LOKIUpdater(object):
 
             # Read ZIP file
             try:
-                zipUpdate = zipfile.ZipFile(StringIO(response_zip.read()))
+                zipUpdate = zipfile.ZipFile(BytesIO(response_zip.read()))
                 for zipFilePath in zipUpdate.namelist():
                     if zipFilePath.endswith("/") or "/config/" in zipFilePath or "/loki-upgrader.exe" in zipFilePath:
                         continue
@@ -169,7 +170,7 @@ class LOKIUpdater(object):
 
                     try:
                         # Create target file
-                        target = file(targetFile, "wb")
+                        target = open(targetFile, "wb")
                         with source, target:
                             shutil.copyfileobj(source, target)
                             if self.debug:
