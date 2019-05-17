@@ -93,7 +93,7 @@ class DoublePulsar(object):
         # Extract user ID from session setup response
         user_id = session_setup_response[32:34]
         if self.verbose:
-            print("User ID = %s" % struct.unpack("<H", user_id)[0])
+            print(("User ID = %s" % struct.unpack("<H", user_id)[0]))
 
         # Replace user ID in tree connect request packet
         modified_tree_connect_request = list(self.tree_connect_request)
@@ -110,7 +110,7 @@ class DoublePulsar(object):
         # Extract tree ID from response
         tree_id = tree_connect_response[28:30]
         if self.verbose:
-            print("Tree ID = %s" % struct.unpack("<H", tree_id)[0])
+            print(("Tree ID = %s" % struct.unpack("<H", tree_id)[0]))
 
         # Replace tree ID and user ID in trans2 session setup packet
         modified_trans2_session_setup = list(self.trans2_session_setup)

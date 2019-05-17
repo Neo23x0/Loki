@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#
+# Python3 Support
 # PE-Sieve Integration by @hasherezade
 
 import os
@@ -54,16 +54,15 @@ class PESieve(object):
         # Presets
         results = {"hooked": 0, "replaced": 0, "detached": 0, "implanted": 0}
         # Compose command
-        command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet', '/json']
+        command = [self.peSieve, '/pid',str(pid),'/ofilter','2','/shellc','/imp','/quiet', '/json']
         # Run PE-Sieve on given process
         output, returnCode = runProcess(command)
 
         try:
-            # Debug output
-            results_raw = json.loads(output)
+            results_raw = json.loads(str(output))
             results = results_raw["scanned"]["modified"]
             if self.logger.debug:
-                print results
+                print(results)
         except ValueError as v:
             self.logger.log("DEBUG", "PESieve", "Couldn't parse the JSON output.")
         except Exception as e:

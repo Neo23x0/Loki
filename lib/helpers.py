@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 # -*- coding: utf-8 -*-
-#
+#  Python3 Support
 #  Loki
 #  Simple IOC Scanner
 
@@ -17,7 +17,7 @@ import os
 import re
 import psutil
 try:
-    from StringIO import StringIO
+    from io import StringIO
 except ImportError:
     from io import StringIO
 import netaddr
@@ -82,7 +82,7 @@ def removeNonAsciiDrop(string):
         # Generate a new string without disturbing characters
         nonascii = "".join(i for i in string if ord(i)<127 and ord(i)>31)
 
-    except Exception, e:
+    except Exception as e:
         traceback.print_exc()
         pass
     #print "NON: ", nonascii
@@ -93,7 +93,7 @@ def getPlatformFull():
     type_info = ""
     try:
         type_info = "%s PROC: %s ARCH: %s" % ( " ".join(platform.win32_ver()), platform.processor(), " ".join(platform.architecture()))
-    except Exception, e:
+    except Exception as e:
         type_info = " ".join(platform.win32_ver())
     return type_info
 
@@ -105,7 +105,7 @@ def setNice(logger):
         logger.log("INFO", "Init", "Setting LOKI process with PID: %s to priority IDLE" % pid)
         p.nice(psutil.IDLE_PRIORITY_CLASS)
         return 1
-    except Exception, e:
+    except Exception as e:
         if logger.debug:
             traceback.print_exc()
         logger.log("ERROR", "Init", "Error setting nice value of THOR process")
@@ -227,14 +227,14 @@ def removeNonAscii(string, stripit=False):
     try:
         try:
             # Handle according to the type
-            if isinstance(string, unicode) and not stripit:
+            if isinstance(string, str) and not stripit:
                 nonascii = string.encode('unicode-escape')
             elif isinstance(string, str) and not stripit:
                 nonascii = string.decode('utf-8', 'replace').encode('unicode-escape')
             else:
                 try:
                     nonascii = string.encode('raw_unicode_escape')
-                except Exception, e:
+                except Exception as e:
                     nonascii = str("%s" % string)
 
         except Exception as e:
@@ -291,7 +291,7 @@ def runProcess(command, timeout=10):
     def _kill_process_after_a_timeout(pid):
         os.kill(pid, signal.SIGTERM)
         kill_check.set() # tell the main routine that we had to kill
-        print("timeout hit - killing pid {0}".format(pid))
+        print(("timeout hit - killing pid {0}".format(pid)))
         # use SIGKILL if hard to kill...
         return "", 1
     try:
@@ -303,7 +303,8 @@ def runProcess(command, timeout=10):
     pid = p.pid
     watchdog = threading.Timer(timeout, _kill_process_after_a_timeout, args=(pid, ))
     watchdog.start()
-    (stdout, stderr) = p.communicate()
+    (stdout) = p.communicate()[0].decode("utf-8").strip()
+    (stderr) = p.communicate()[1].decode("utf-8").strip()
     output = "{0} {1}".format(stdout, stderr)
     watchdog.cancel() # if it's still waiting to run
     success = not kill_check.isSet()
