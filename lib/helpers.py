@@ -303,7 +303,8 @@ def runProcess(command, timeout=10):
     pid = p.pid
     watchdog = threading.Timer(timeout, _kill_process_after_a_timeout, args=(pid, ))
     watchdog.start()
-    (stdout, stderr) = p.communicate()
+    (stdout) = p.communicate()[0].decode("utf-8").strip()
+    (stderr) = p.communicate()[1].decode("utf-8").strip()
     output = "{0} {1}".format(stdout, stderr)
     watchdog.cancel() # if it's still waiting to run
     success = not kill_check.isSet()

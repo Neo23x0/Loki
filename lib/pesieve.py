@@ -54,13 +54,12 @@ class PESieve(object):
         # Presets
         results = {"hooked": 0, "replaced": 0, "detached": 0, "implanted": 0}
         # Compose command
-        command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet', '/json']
+        command = [self.peSieve, '/pid',str(pid),'/ofilter','2','/shellc','/imp','/quiet', '/json']
         # Run PE-Sieve on given process
         output, returnCode = runProcess(command)
 
         try:
-            # Debug output
-            results_raw = json.loads(output)
+            results_raw = json.loads(str(output))
             results = results_raw["scanned"]["modified"]
             if self.logger.debug:
                 print(results)
@@ -69,4 +68,4 @@ class PESieve(object):
         except Exception as e:
             traceback.print_exc()
             self.logger.log("ERROR", "PESieve", "Something went wrong during PE-Sieve scan.")
-        return(results)
+        return results
