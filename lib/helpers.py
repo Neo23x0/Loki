@@ -80,7 +80,7 @@ def removeNonAsciiDrop(string):
     #print "CON: ", string
     try:
         # Generate a new string without disturbing characters
-        nonascii = "".join(i for i in string if ord(int(i))<127 and ord(int(i))>31)
+        nonascii = "".join(i for i in str(string) if ord(i)<127 and ord(i)>31)
 
     except Exception as e:
         traceback.print_exc()
