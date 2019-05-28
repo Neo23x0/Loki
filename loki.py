@@ -216,11 +216,12 @@ class Loki(object):
                     total_score = 0
 
                     # Get the file and path
-                    filePath = os.path.join(root,filename)
+                    filePath = os.path.join(root, filename)
+                    fpath = os.path.split(filePath)[0]
                     # Clean the values for YARA matching
                     # > due to errors when Unicode characters are passed to the match function as
                     #   external variables
-                    filePathCleaned = filePath.encode('ascii', errors='replace')
+                    filePathCleaned = fpath.encode('ascii', errors='replace')
                     fileNameCleaned = filename.encode('ascii', errors='replace')
 
                     # Get Extension
