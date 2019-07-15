@@ -69,7 +69,7 @@ class LokiLogger():
             self.remote_logger.addHandler(remote_syslog_handler)
             self.remote_logging = True
 
-    def log(self, mes_type, module, message):
+    def log(self, mes_type, module, message,infoList={}):
 
         # Remove all non-ASCII characters
         # message = removeNonAsciiDrop(message)
@@ -96,10 +96,10 @@ class LokiLogger():
 
         # to stdout
         try:
-            self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type)
+            self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type,infoList=infoList)
         except Exception as e:
             print ("Cannot print certain characters to command line - see log file for full unicode encoded log line")
-            self.log_to_stdout(removeNonAsciiDrop(message), mes_type)
+            self.log_to_stdout(removeNonAsciiDrop(message), mes_type,infoList=infoList)
 
         # to syslog server
         if self.remote_logging:
@@ -111,7 +111,7 @@ class LokiLogger():
         else:
             return self.CustomFormatter(type, format, args)
 
-    def log_to_stdout(self, message, mes_type):
+    def log_to_stdout(self, message, mes_type,infoList={}):
         # check tty encoding
         encoding = ""
         if sys.stdout.encoding is not None:
@@ -125,7 +125,9 @@ class LokiLogger():
         message = message.encode(encoding, errors='replace')
 
         if self.csv:
-            print (self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, mes_type, message))
+            print (self.Format(self.STDOUT_CSV, '"{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}"', getSyslogTimestamp(), mes_type,infoList.get("FILE"),infoList.get("SCORE"),\
+               infoList.get("TYPE"),infoList.get("SIZE"),infoList.get("MD5"),infoList.get("SHA1"),infoList.get("SHA256"),infoList.get("CREATED"),\
+                   infoList.get("MODIFIED"),infoList.get("ACCESSED"),infoList.get("MATCH"),infoList.get("MATCHES"),infoList.get("DESCRIPTION"),infoList.get("REF")))
 
         else:
 

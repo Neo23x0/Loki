@@ -23,7 +23,7 @@ BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
-
+import zipfile
 import sys
 import os
 import argparse
@@ -75,13 +75,26 @@ if os_platform == "":
     print("Unable to determine platform - LOKI is lost.")
     sys.exit(1)
 
+#unzipFiles in current directory 
+path = os.getcwd()
+files = []
+# r=root, d=directories, f = files
+for r, d, f in os.walk(path):
+    for file in f:
+        if '.zip' in file:
+            files.append(os.path.join(r, file))
+
+for f in files:
+	zip_ref = zipfile.ZipFile(f, 'r')
+	zip_ref.extractall(path)
+	zip_ref.close()	
 # Predefined Evil Extensions
 EVIL_EXTENSIONS = [".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm", ".cmd", ".com", ".cpl",
                    ".crt", ".dll", ".exe", ".hta", ".js", ".lnk", ".msc", ".ocx", ".pcd", ".pif", ".pot", ".pdf",
                    ".reg", ".scr", ".sct", ".sys", ".url", ".vb", ".vbe", ".wsc", ".wsf", ".wsh", ".ct", ".t",
                    ".input", ".war", ".jsp", ".php", ".asp", ".aspx", ".doc", ".docx", ".pdf", ".xls", ".xlsx", ".ppt",
                    ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
-                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm"]
+                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm",""]
 
 SCRIPT_EXTENSIONS = [".asp", ".vbs", ".ps1", ".bas", ".bat", ".js", ".vb", ".vbe", ".wsc", ".wsf",
                      ".wsh",  ".jsp", ".php", ".asp", ".aspx", ".psd1", ".psm1", ".ps1xml", ".clixml", ".psc1",
@@ -180,7 +193,7 @@ class Loki(object):
         self.LevCheck = LevCheck()
 
     def scan_path(self, path):
-
+        info = {}
         # Startup
         logger.log("INFO", "FileScan", "Scanning %s ...  " % path)
 
@@ -374,6 +387,7 @@ class Loki(object):
                             matchDesc = self.hashes_sha256[sha256]
                             matchHash = sha256
 
+                        info.update({"MD5":md5,"SHA1":sha1,"SHA256":sha256})
                         # Hash string
                         hashString = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
 
@@ -423,9 +437,11 @@ class Loki(object):
                                 # Message
                                 message = "Yara Rule MATCH: %s SUBSCORE: %s DESCRIPTION: %s REF: %s" % \
                                           (rule, score, description, reference)
+                                info.update({"MATCH":rule,"DESCRIPTION":description,"REF":reference})
                                 # Matches
                                 if matched_strings:
                                     message += " MATCHES: %s" % matched_strings
+                                    info.update({"MATCHES":matched_strings})
 
                                 total_score += score
                                 reasons.append(message)
@@ -436,6 +452,9 @@ class Loki(object):
                     # Info Line -----------------------------------------------------------------------
                     fileInfo = "FILE: %s SCORE: %s TYPE: %s SIZE: %s FIRST_BYTES: %s %s %s " % (
                         filePath, total_score, fileType, fileSize, firstBytesString, hashString, getAgeString(filePath))
+                    
+                    times = getAgeList(filePath)
+                    info.update({"FILE":filePath,"SCORE":total_score,"TYPE":fileType,"SIZE":fileSize,"FIRST_BYTES":firstBytesString,"CREATED":times[0],"MODIFIED":times[1],"ACCESSED":times[2]})
 
                     # Now print the total result
                     if total_score >= args.a:
@@ -454,8 +473,7 @@ class Loki(object):
                         if i < 2 or args.allreasons:
                             message_body += "REASON_{0}: {1}".format(i+1, r.encode('ascii', errors='replace'))
 
-                    logger.log(message_type, "FileScan", message_body)
-
+                    logger.log(message_type, "FileScan", message_body,infoList=info)
                 except Exception as e:
                     if logger.debug:
                         traceback.print_exc()
@@ -1535,7 +1553,10 @@ if __name__ == '__main__':
 
     resultFS = False
     if not args.nofilescan:
-        loki.scan_path(defaultPath)
+		drives = win32api.GetLogicalDriveStrings()
+		drives = drives.split('\000')[:-1]
+		for drive in drives:
+			loki.scan_path(defaultPath)
 
     # run plugins
     RunPluginsForPhase(LOKI_PHASE_AFTER_SCANS)
