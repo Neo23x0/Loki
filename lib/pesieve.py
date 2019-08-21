@@ -22,9 +22,9 @@ class PESieve(object):
         # Logger
         self.logger = logger
         # PE-Sieve tools
-        self.peSieve = os.path.join(workingDir, os.path.abspath('tools/pe-sieve32.exe'))
+        self.peSieve = os.path.join(workingDir, 'tools/pe-sieve32.exe'.replace("/", os.sep))
         if is64bit:
-            self.peSieve = os.path.join(workingDir, os.path.abspath('tools/pe-sieve64.exe'))
+            self.peSieve = os.path.join(workingDir, 'tools/pe-sieve64.exe'.replace("/", os.sep))
 
         if self.isAvailable():
             self.active = True

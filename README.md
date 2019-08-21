@@ -133,7 +133,7 @@ If you want to build LOKI yourself:
 - Microsoft Visual C++ Compiler for Python 2.7 (https://www.microsoft.com/en-us/download/details.aspx?id=44266): for pylzma
 
 ```
-c:\Python27\python.exe -m pip install --upgrade pip
+c:\Python27[-x64]\python.exe -m pip install --upgrade pip
 pip.exe install psutil netaddr wmi colorama pylzma pycrypto yara-python pywin32 rfc5424-logging-handler setuptools==19.2 pyinstaller==2.1
 ```
 
@@ -166,7 +166,7 @@ build.bat
 You can verify whether the signature set is valid by calling `loki-package-builder.py` manually.
 
 ```
-C:\Python27\python.exe loki-package-builder.py --ruledir signatures --target rules
+C:\Python27[-x64]\python.exe loki-package-builder.py --ruledir signatures --target rules
 ```
 
 The usage of this tool is: 

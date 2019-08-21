@@ -136,7 +136,7 @@ class Loki(object):
             updateLoki(sigsOnly=True)
 
         # Excludes
-        self.initialize_excludes(os.path.join(self.app_path, os.path.abspath("config/excludes.cfg")))
+        self.initialize_excludes(os.path.join(self.app_path, "config/excludes.cfg".replace("/", os.sep)))
 
         # Linux excludes from mtab
         if os_platform == "linux":
@@ -146,11 +146,11 @@ class Loki(object):
             self.startExcludes = self.LINUX_PATH_SKIPS_START
 
         # Set IOC path
-        self.ioc_path = os.path.join(self.app_path, os.path.abspath("signature-base/iocs/"))
+        self.ioc_path = os.path.join(self.app_path, "signature-base/iocs/".replace("/", os.sep))
 
         # Yara rule directories
-        self.yara_rule_directories.append(os.path.join(self.app_path, os.path.abspath("signature-base/yara")))
-        self.yara_rule_directories.append(os.path.join(self.app_path, os.path.abspath("signature-base/iocs/yara")))
+        self.yara_rule_directories.append(os.path.join(self.app_path, "signature-base/yara".replace("/", os.sep)))
+        self.yara_rule_directories.append(os.path.join(self.app_path, "signature-base/iocs/yara".replace("/", os.sep)))
 
         # Read IOCs -------------------------------------------------------
         # File Name IOCs (all files in iocs that contain 'filename')
@@ -175,7 +175,7 @@ class Loki(object):
         self.initialize_yara_rules()
 
         # Initialize File Type Magic signatures
-        self.initialize_filetype_magics(os.path.join(self.app_path, os.path.abspath('signature-base/misc/file-type-signatures.txt')))
+        self.initialize_filetype_magics(os.path.join(self.app_path, 'signature-base/misc/file-type-signatures.txt'.replace("/", os.sep)))
 
         # Levenshtein Checker
         self.LevCheck = LevCheck()
