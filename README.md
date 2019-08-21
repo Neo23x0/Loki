@@ -134,7 +134,7 @@ If you want to build LOKI yourself:
 
 ```
 c:\Python27\python.exe -m pip install --upgrade pip
-pip.exe install psutil netaddr wmi colorama pylzma pycrypto
+pip.exe install psutil netaddr wmi colorama pylzma pycrypto yara-python pywin32 rfc5424-logging-handler setuptools==19.2 pyinstaller==2.1
 ```
 
 ## Package LOKI with a Private Rule Set

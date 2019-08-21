@@ -2,19 +2,19 @@
 #
 # LOKI Logger
 
-
 import sys, re
 from colorama import Fore, Back, Style
 from colorama import init
 import codecs
 import datetime
 import traceback
+import rfc5424logging
 import logging
-import logging.handlers
+from logging import handlers
 import socket
 from helpers import removeNonAsciiDrop
 
-__version__ = '0.29.3'
+__version__ = '0.29.4'
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():
@@ -32,12 +32,13 @@ class LokiLogger():
     alerts = 0
     warnings = 0
     notices = 0
+    messagecount = 0
     only_relevant = False
     remote_logging = False
     debug = False
     linesep = "\n"
 
-    def __init__(self, no_log_file, log_file, hostname, remote_host, remote_port, csv, only_relevant, debug, platform, caller, customformatter=None):
+    def __init__(self, no_log_file, log_file, hostname, remote_host, remote_port, syslog_tcp, csv, only_relevant, debug, platform, caller, customformatter=None):
         self.version = __version__
         self.no_log_file = no_log_file
         self.log_file = log_file
@@ -62,12 +63,17 @@ class LokiLogger():
 
         # Syslog server target
         if remote_host:
-            # Create remote logger
-            self.remote_logger = logging.getLogger('LOKI')
-            self.remote_logger.setLevel(logging.DEBUG)
-            remote_syslog_handler = logging.handlers.SysLogHandler(address=(remote_host, remote_port), facility=19)
-            self.remote_logger.addHandler(remote_syslog_handler)
-            self.remote_logging = True
+            try:
+                # Create remote logger
+                self.remote_logger = logging.getLogger('LOKI')
+                self.remote_logger.setLevel(logging.DEBUG)
+                socket_type = socket.SOCK_STREAM if syslog_tcp else socket.SOCK_DGRAM
+                remote_syslog_handler = rfc5424logging.Rfc5424SysLogHandler(address=(remote_host, remote_port), facility=handlers.SysLogHandler.LOG_LOCAL3, socktype=socket_type)
+                self.remote_logger.addHandler(remote_syslog_handler)
+                self.remote_logging = True
+            except Exception as e:
+                print('Failed to create remote logger: ' + str(e))
+                sys.exit(1)
 
     def log(self, mes_type, module, message):
 
@@ -85,6 +91,7 @@ class LokiLogger():
             self.warnings += 1
         if mes_type == "NOTICE":
             self.notices += 1
+        self.messagecount += 1
 
         if self.only_relevant:
             if mes_type not in ('ALERT', 'WARNING'):
@@ -105,11 +112,11 @@ class LokiLogger():
         if self.remote_logging:
             self.log_to_remotesys(message, mes_type, module)
 
-    def Format(self, type, format, *args):
+    def Format(self, type, message, *args):
         if self.CustomFormatter == None:
-            return format.format(*args)
+            return message.format(*args)
         else:
-            return self.CustomFormatter(type, format, args)
+            return self.CustomFormatter(type, message, args)
 
     def log_to_stdout(self, message, mes_type):
         # check tty encoding
@@ -195,7 +202,7 @@ class LokiLogger():
                 if self.csv:
                     logfile.write(self.Format(self.FILE_CSV, u"{0},{1},{2},{3},{4}{5}", getSyslogTimestamp(), self.hostname, mes_type, module, message, self.linesep))
                 else:
-                    logfile.write(self.Format(self.FILE_LINE, u"{0} {1} LOKI: {2}: MODULE: {3} MESSAGE: {4}{5}", getSyslogTimestamp(), self.hostname, mes_type.title(), module, message, self.linesep))
+                    logfile.write(self.Format(self.FILE_LINE, u"{0} {1} LOKI: {2} MODULE: {3} MESSAGE: {4}{5}", getSyslogTimestamp(), self.hostname, mes_type.title(), module, message, self.linesep))
         except Exception as e:
             if self.debug:
                 traceback.print_exc()
@@ -204,21 +211,21 @@ class LokiLogger():
 
     def log_to_remotesys(self, message, mes_type, module):
         # Preparing the message
-        syslog_message = self.Format(self.SYSLOG_LINE, "LOKI: {0}: MODULE: {1} MESSAGE: {2}", mes_type.title(), module, message)
+        syslog_message = self.Format(self.SYSLOG_LINE, "LOKI: {0} MODULE: {1} MESSAGE: {2}", mes_type.title(), module, message)
         try:
             # Mapping LOKI's levels to the syslog levels
             if mes_type == "NOTICE":
-                self.remote_logger.info(syslog_message)
+                self.remote_logger.info(syslog_message, extra={'msgid': str(self.messagecount)})
             elif mes_type == "INFO":
-                self.remote_logger.info(syslog_message)
+                self.remote_logger.info(syslog_message, extra={'msgid': str(self.messagecount)})
             elif mes_type == "WARNING":
-                self.remote_logger.warning(syslog_message)
+                self.remote_logger.warning(syslog_message, extra={'msgid': str(self.messagecount)})
             elif mes_type == "ALERT":
-                self.remote_logger.critical(syslog_message)
+                self.remote_logger.critical(syslog_message, extra={'msgid': str(self.messagecount)})
             elif mes_type == "DEBUG":
-                self.remote_logger.debug(syslog_message)
+                self.remote_logger.debug(syslog_message, extra={'msgid': str(self.messagecount)})
             elif mes_type == "ERROR":
-                self.remote_logger.error(syslog_message)
+                self.remote_logger.error(syslog_message, extra={'msgid': str(self.messagecount)})
         except Exception as e:
             if self.debug:
                 traceback.print_exc()

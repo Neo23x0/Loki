@@ -22,9 +22,9 @@ class PESieve(object):
         # Logger
         self.logger = logger
         # PE-Sieve tools
-        self.peSieve = os.path.join(workingDir, 'tools/pe-sieve32.exe')
+        self.peSieve = os.path.join(workingDir, os.path.abspath('tools/pe-sieve32.exe'))
         if is64bit:
-            self.peSieve = os.path.join(workingDir, 'tools/pe-sieve64.exe')
+            self.peSieve = os.path.join(workingDir, os.path.abspath('tools/pe-sieve64.exe'))
 
         if self.isAvailable():
             self.active = True
@@ -54,7 +54,7 @@ class PESieve(object):
         # Presets
         results = {"hooked": 0, "replaced": 0, "detached": 0, "implanted": 0}
         # Compose command
-        command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet', '/json']
+        command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet', '/json', '/shellc']
         # Run PE-Sieve on given process
         output, returnCode = runProcess(command)
 

@@ -4,8 +4,15 @@
 
 setlocal enabledelayedexpansion
 
-SET PY=C:\Python27\python.exe
-SET PYI=C:\Python27\Scripts\pyinstaller.exe
+if exist "C:\Python27-x64\" (
+    SET PY=C:\Python27-x64\python.exe
+    SET PYI=C:\Python27-x64\Scripts\pyinstaller.exe 
+) else (
+    SET PY=C:\Python27\python.exe
+    SET PYI=C:\Python27\Scripts\pyinstaller.exe
+    if not exist "%PY%" goto ERROR
+    if not exist "%PYI%" goto ERROR
+)
 
 :: Cleaning all old versions
 RMDIR /S /Q build

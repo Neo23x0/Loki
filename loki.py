@@ -37,6 +37,7 @@ import signal as signal_module
 from sys import platform as _platform
 from subprocess import Popen, PIPE
 from collections import Counter
+import datetime
 
 # LOKI Modules
 from lib.lokilogger import *
@@ -128,14 +129,14 @@ class Loki(object):
         self.peSieve = PESieve(self.app_path, is64bit(), logger)
 
         # Check if signature database is present
-        sig_dir = os.path.join(self.app_path, "./signature-base/")
+        sig_dir = os.path.join(self.app_path, "signature-base")
         if not os.path.exists(sig_dir) or os.listdir(sig_dir) == []:
             logger.log("NOTICE", "Init", "The 'signature-base' subdirectory doesn't exist or is empty. "
-                                  "Trying to retrieve the signature database automatically.")
+                                         "Trying to retrieve the signature database automatically.")
             updateLoki(sigsOnly=True)
 
         # Excludes
-        self.initialize_excludes(os.path.join(self.app_path, "./config/excludes.cfg"))
+        self.initialize_excludes(os.path.join(self.app_path, os.path.abspath("config/excludes.cfg")))
 
         # Linux excludes from mtab
         if os_platform == "linux":
@@ -145,11 +146,11 @@ class Loki(object):
             self.startExcludes = self.LINUX_PATH_SKIPS_START
 
         # Set IOC path
-        self.ioc_path = os.path.join(self.app_path, "./signature-base/iocs/")
+        self.ioc_path = os.path.join(self.app_path, os.path.abspath("signature-base/iocs/"))
 
         # Yara rule directories
-        self.yara_rule_directories.append(os.path.join(self.app_path, "./signature-base/yara"))
-        self.yara_rule_directories.append(os.path.join(self.app_path, "./signature-base/iocs/yara"))
+        self.yara_rule_directories.append(os.path.join(self.app_path, os.path.abspath("signature-base/yara")))
+        self.yara_rule_directories.append(os.path.join(self.app_path, os.path.abspath("signature-base/iocs/yara")))
 
         # Read IOCs -------------------------------------------------------
         # File Name IOCs (all files in iocs that contain 'filename')
@@ -174,7 +175,7 @@ class Loki(object):
         self.initialize_yara_rules()
 
         # Initialize File Type Magic signatures
-        self.initialize_filetype_magics(os.path.join(self.app_path, './signature-base/misc/file-type-signatures.txt'))
+        self.initialize_filetype_magics(os.path.join(self.app_path, os.path.abspath('signature-base/misc/file-type-signatures.txt')))
 
         # Levenshtein Checker
         self.LevCheck = LevCheck()
@@ -1034,10 +1035,12 @@ class Loki(object):
                                     sys.exit(1)
 
         except Exception as e:
-            traceback.print_exc()
-            logger.log("ERROR",  "Init", "Error reading File IOC file: %s" % ioc_filename)
-            logger.log("ERROR",  "Init", "Please make sure that you cloned the repo or downloaded the sub repository: "
-                                         "See https://github.com/Neo23x0/Loki/issues/51")
+            if 'ioc_filename' in locals():
+                logger.log("ERROR",  "Init", "Error reading IOC file: %s" % ioc_filename)
+            else:
+                logger.log("ERROR",  "Init", "Error reading files from IOC folder: %s" % ioc_directory)  
+                logger.log("ERROR",  "Init", "Please make sure that you cloned the repo or downloaded the sub repository: "
+                                             "See https://github.com/Neo23x0/Loki/issues/51")
             sys.exit(1)
 
     def initialize_yara_rules(self):
@@ -1420,7 +1423,7 @@ def main():
     parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
     parser.add_argument('-p', help='Path to scan', metavar='path', default='C:\\')
     parser.add_argument('-s', help='Maximum file size to check in KB (default 5000 KB)', metavar='kilobyte', default=5000)
-    parser.add_argument('-l', help='Log file', metavar='log-file', default='loki-%s.log' % getHostname(os_platform))
+    parser.add_argument('-l', help='Log file', metavar='log-file', default='')
     parser.add_argument('-r', help='Remote syslog system', metavar='remote-loghost', default='')
     parser.add_argument('-t', help='Remote syslog port', metavar='remote-syslog-port', default=514)
     parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
@@ -1443,9 +1446,29 @@ def main():
     parser.add_argument('--update', action='store_true', default=False, help='Update the signatures from the "signature-base" sub repository')
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
     parser.add_argument('--maxworkingset', type=int, default=100, help='Maximum working set size of processes to scan (in MB, default 100 MB)')
-
+    parser.add_argument('--syslogtcp', action='store_true', default=False, help='Use TCP instead of UDP for syslog logging')
+    parser.add_argument('--logfolder', help='Folder to use for logging when log file is not specified', metavar='log-folder', default='')
+	
     args = parser.parse_args()
 
+    if args.syslogtcp and not args.r:
+        print('Syslog logging set to TCP with --syslogtcp, but syslog logging not enabled with -r')
+        sys.exit(1)
+		
+    if args.nolog and (args.l or args.logfolder):
+        print('The --logfolder and -l directives are not compatible with --nolog')
+        sys.exit(1)
+		
+    filename = 'loki_%s_%s.log' % (getHostname(os_platform), datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+    if args.logfolder and args.l:
+        print('Must specify either log folder with --logfolder, which uses the default filename, or log file with -l. Log file can be an absolute path')
+        sys.exit(1)
+    elif args.logfolder:
+        args.logfolder = os.path.abspath(args.logfolder)
+        args.l = os.path.join(args.logfolder, filename)
+    elif not args.l:
+        args.l = filename
+	
     return args
 
 # MAIN ################################################################
@@ -1469,7 +1492,7 @@ if __name__ == '__main__':
             execfile(pathLokiInit, globals(), locals())
         except:
             statusLokiInit = str(sys.exc_info()[1])
-    logger = LokiLogger(args.nolog, args.l, getHostname(os_platform), args.r, int(args.t), args.csv, args.onlyrelevant, args.debug,
+    logger = LokiLogger(args.nolog, args.l, getHostname(os_platform), args.r, int(args.t), args.syslogtcp, args.csv, args.onlyrelevant, args.debug,
                         platform=os_platform, caller='main', customformatter=LokiCustomFormatter)
 
     # Update
