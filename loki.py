@@ -563,7 +563,7 @@ class Loki(object):
                 owner.upper().startswith("SYSTEM"))
 
 
-    def scan_processes(self):
+    def scan_processes(self, nopesieve, nolisten, excludeprocess):
         # WMI Handler
         c = wmi.WMI()
         processes = c.Win32_Process()
@@ -583,6 +583,9 @@ class Loki(object):
             try:
 
                 # Gather Process Information --------------------------------------
+                if process.name.lower() in excludeprocess:
+                    continue
+                    
                 pid = process.ProcessId
                 name = process.Name
                 cmd = process.CommandLine
@@ -693,7 +696,7 @@ class Loki(object):
 
             ###############################################################
             # PE-Sieve Checks
-            if processExists(pid) and self.peSieve.active:
+            if processExists(pid) and self.peSieve.active and not nopesieve:
                     # If PE-Sieve reports replaced processes
                     logger.log("DEBUG", "ProcessScan", "PE-Sieve scan of process PID: %s" % pid)
                     results = self.peSieve.scan(pid=pid)
@@ -712,7 +715,8 @@ class Loki(object):
 
             ###############################################################
             # THOR Process Connection Checks
-            self.check_process_connections(process)
+            if not nolisten:
+                self.check_process_connections(process)
 
             ###############################################################
             # THOR Process Anomaly Checks
@@ -1429,7 +1433,7 @@ def main():
     parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
     parser.add_argument('-w', help='Warning score', metavar='warning-level', default=60)
     parser.add_argument('-n', help='Notice score', metavar='notice-level', default=40)
-    parser.add_argument('--printAll', action='store_true', help='Print all files that are scanned', default=False)
+    parser.add_argument('--printall', action='store_true', help='Print all files that are scanned', default=False)
     parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
@@ -1448,7 +1452,10 @@ def main():
     parser.add_argument('--maxworkingset', type=int, default=100, help='Maximum working set size of processes to scan (in MB, default 100 MB)')
     parser.add_argument('--syslogtcp', action='store_true', default=False, help='Use TCP instead of UDP for syslog logging')
     parser.add_argument('--logfolder', help='Folder to use for logging when log file is not specified', metavar='log-folder', default='')
-	
+    parser.add_argument('--nopesieve', action='store_true', help='Do not perform pe-sieve scans', default=False)
+    parser.add_argument('--nolisten', action='store_true', help='Dot not show listening connections', default=False)
+    parser.add_argument('--excludeprocess', action='append', help='Specify an executable name to exclude from scans, can be used multiple times', default=[])
+
     args = parser.parse_args()
 
     if args.syslogtcp and not args.r:
@@ -1469,6 +1476,8 @@ def main():
     elif not args.l:
         args.l = filename
 	
+    args.excludeprocess = [ x.lower() for x in args.excludeprocess ]
+    
     return args
 
 # MAIN ################################################################
@@ -1542,7 +1551,7 @@ if __name__ == '__main__':
     resultProc = False
     if not args.noprocscan and os_platform == "windows":
         if isAdmin:
-            loki.scan_processes()
+            loki.scan_processes(args.nopesieve, args.nolisten, args.excludeprocess)
         else:
             logger.log("NOTICE", "Init", "Skipping process memory check. User has no admin rights.")
 
