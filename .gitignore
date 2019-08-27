@@ -15,7 +15,6 @@ build_sfx.bat
 loki.zip
 dist
 run_loki.bat
-*.exe
 loki
 dummy
 tools/*.txt
@@ -35,3 +34,4 @@ private-signatures
 rules
 rules.key
 *.htm
+loki.exe
