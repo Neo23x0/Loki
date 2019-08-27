@@ -7,6 +7,8 @@ a = Analysis(['loki.py'],
              runtime_hooks=None)
 pyz = PYZ(a.pure)
 
+a.datas = list({tuple(map(str.upper, t)) for t in a.datas})
+
 exe = EXE(pyz,
           a.scripts,
           a.binaries + [('msvcr100.dll', 'C:\Windows\System32\msvcr100.dll', 'BINARY')],

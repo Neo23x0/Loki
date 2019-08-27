@@ -14,7 +14,7 @@ from logging import handlers
 import socket
 from helpers import removeNonAsciiDrop
 
-__version__ = '0.30.0'
+__version__ = '0.30.1'
 
 # Logger Class -----------------------------------------------------------------
 class LokiLogger():

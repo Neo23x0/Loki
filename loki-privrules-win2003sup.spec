@@ -7,6 +7,7 @@ a = Analysis(['loki.py'],
              hookspath=None,
              runtime_hooks=None)
 
+a.datas = list({tuple(map(str.upper, t)) for t in a.datas})
 a.datas+=[('rules', 'rules', 'DATA')]
 a.datas+=[('rules.key', 'rules.key', 'DATA')]
 
