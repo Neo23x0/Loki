@@ -19,6 +19,6 @@ script:
 notifications:
   email:
     recipients:
-      - travis-build@s3c.za.net
+      - venom14@gmail.com
     on_success: never
     on_failure: always
