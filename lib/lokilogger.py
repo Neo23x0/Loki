@@ -202,7 +202,7 @@ class LokiLogger():
                 if self.csv:
                     logfile.write(self.Format(self.FILE_CSV, u"{0},{1},{2},{3},{4}{5}", getSyslogTimestamp(), self.hostname, mes_type, module, message, self.linesep))
                 else:
-                    logfile.write(self.Format(self.FILE_LINE, u"{0} {1} LOKI: {2} MODULE: {3} MESSAGE: {4}{5}", getSyslogTimestamp(), self.hostname, mes_type.title(), module, message, self.linesep))
+                    logfile.write(self.Format(self.FILE_LINE, u"{0} {1} LOKI: {2}: MODULE: {3} MESSAGE: {4}{5}", getSyslogTimestamp(), self.hostname, mes_type.title(), module, message, self.linesep))
         except Exception as e:
             if self.debug:
                 traceback.print_exc()
@@ -211,7 +211,7 @@ class LokiLogger():
 
     def log_to_remotesys(self, message, mes_type, module):
         # Preparing the message
-        syslog_message = self.Format(self.SYSLOG_LINE, "LOKI: {0} MODULE: {1} MESSAGE: {2}", mes_type.title(), module, message)
+        syslog_message = self.Format(self.SYSLOG_LINE, "LOKI: {0}: MODULE: {1} MESSAGE: {2}", mes_type.title(), module, message)
         try:
             # Mapping LOKI's levels to the syslog levels
             if mes_type == "NOTICE":
