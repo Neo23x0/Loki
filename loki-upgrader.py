@@ -71,7 +71,7 @@ class LOKIUpdater(object):
 
                 # Preparations
                 try:
-                    sigDir = os.path.join(self.application_path, './signature-base/')
+                    sigDir = os.path.join(self.application_path, os.path.abspath('signature-base/'))
                     if clean:
                         self.logger.log("INFO", "Upgrader", "Cleaning directory '%s'" % sigDir)
                         shutil.rmtree(sigDir)
@@ -233,7 +233,7 @@ if __name__ == '__main__':
         t_hostname = os.uname()[1]
 
     # Logger
-    logger = LokiLogger(args.nolog, args.l, t_hostname, '', '', False, False, args.debug, platform=platform, caller='upgrader')
+    logger = LokiLogger(args.nolog, args.l, t_hostname, '', '', False, False, False, args.debug, platform=platform, caller='upgrader')
 
     # Update LOKI
     updater = LOKIUpdater(args.debug, logger, get_application_path())

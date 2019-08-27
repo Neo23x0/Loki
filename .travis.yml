@@ -9,6 +9,7 @@ install:
   - pip install pylzma
   - pip install netaddr
   - pip install pycrypto
+  - pip install rfc5424-logging-handler
 
 script:
   - python ./loki.py --noprocs --noindicator --dontwait --debug -p ./test
