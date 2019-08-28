@@ -563,7 +563,7 @@ class Loki(object):
                 owner.upper().startswith("SYSTEM"))
 
 
-    def scan_processes(self, nopesieve, nolisten, excludeprocess):
+    def scan_processes(self, nopesieve, nolisten, excludeprocess, pesieveshellc):
         # WMI Handler
         c = wmi.WMI()
         processes = c.Win32_Process()
@@ -699,7 +699,7 @@ class Loki(object):
             if processExists(pid) and self.peSieve.active and not nopesieve:
                     # If PE-Sieve reports replaced processes
                     logger.log("DEBUG", "ProcessScan", "PE-Sieve scan of process PID: %s" % pid)
-                    results = self.peSieve.scan(pid=pid)
+                    results = self.peSieve.scan(pid, pesieveshellc)
                     if results["replaced"]:
                         logger.log("WARNING", "ProcessScan", "PE-Sieve reported replaced process %s REPLACED: %s" %
                                    (process_info, str(results["replaced"])))
@@ -1453,6 +1453,7 @@ def main():
     parser.add_argument('--syslogtcp', action='store_true', default=False, help='Use TCP instead of UDP for syslog logging')
     parser.add_argument('--logfolder', help='Folder to use for logging when log file is not specified', metavar='log-folder', default='')
     parser.add_argument('--nopesieve', action='store_true', help='Do not perform pe-sieve scans', default=False)
+    parser.add_argument('--pesieveshellc', action='store_true', help='Perform pe-sieve shellcode scan', default=False)
     parser.add_argument('--nolisten', action='store_true', help='Dot not show listening connections', default=False)
     parser.add_argument('--excludeprocess', action='append', help='Specify an executable name to exclude from scans, can be used multiple times', default=[])
 
@@ -1475,7 +1476,11 @@ def main():
         args.l = os.path.join(args.logfolder, filename)
     elif not args.l:
         args.l = filename
-	
+
+    if args.nopesieve and args.pesieveshellc:
+        print('The --pesieveshellc directive was specified, but pe-sieve scanning was disabled with --nopesieve')
+        sys.exit(1)
+        
     args.excludeprocess = [ x.lower() for x in args.excludeprocess ]
     
     return args
@@ -1551,7 +1556,7 @@ if __name__ == '__main__':
     resultProc = False
     if not args.noprocscan and os_platform == "windows":
         if isAdmin:
-            loki.scan_processes(args.nopesieve, args.nolisten, args.excludeprocess)
+            loki.scan_processes(args.nopesieve, args.nolisten, args.excludeprocess, args.pesieveshellc)
         else:
             logger.log("NOTICE", "Init", "Skipping process memory check. User has no admin rights.")
 
