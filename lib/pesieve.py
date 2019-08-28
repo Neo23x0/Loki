@@ -45,7 +45,7 @@ class PESieve(object):
             return False
         return True
 
-    def scan(self, pid):
+    def scan(self, pid, pesieveshellc = False):
         """
         Performs a scan on a given process ID
         :param pid: process id of the process to check
@@ -54,7 +54,7 @@ class PESieve(object):
         # Presets
         results = {"hooked": 0, "replaced": 0, "detached": 0, "implanted": 0}
         # Compose command
-        command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet', '/json', '/shellc']
+        command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet', '/json'] + (['/shellc'] if pesieveshellc else [])
         # Run PE-Sieve on given process
         output, returnCode = runProcess(command)
 
