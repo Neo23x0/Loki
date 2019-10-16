@@ -696,22 +696,28 @@ class Loki(object):
 
             ###############################################################
             # PE-Sieve Checks
-            if processExists(pid) and self.peSieve.active and not nopesieve:
-                    # If PE-Sieve reports replaced processes
-                    logger.log("DEBUG", "ProcessScan", "PE-Sieve scan of process PID: %s" % pid)
-                    results = self.peSieve.scan(pid, pesieveshellc)
-                    if results["replaced"]:
-                        logger.log("WARNING", "ProcessScan", "PE-Sieve reported replaced process %s REPLACED: %s" %
-                                   (process_info, str(results["replaced"])))
-                    elif results["implanted"]:
-                        logger.log("WARNING", "ProcessScan", "PE-Sieve reported implanted process %s IMPLANTED: %s" %
-                                   (process_info, str(results["implanted"])))
-                    elif results["hooked"] or results["detached"]:
-                        logger.log("NOTICE", "ProcessScan", "PE-Sieve reported hooked or detached process %s "
-                                             "HOOKED: %s SUSPICIOUS: %s" % (process_info, str(results["hooked"]),
-                                                                            str(results["detached"])))
-                    else:
-                        logger.log("INFO", "ProcessScan", "PE-Sieve reported no anomalies %s" % process_info)
+            try:
+                if processExists(pid) and self.peSieve.active and not nopesieve:
+                        # If PE-Sieve reports replaced processes
+                        logger.log("DEBUG", "ProcessScan", "PE-Sieve scan of process PID: %s" % pid)
+                        results = self.peSieve.scan(pid, pesieveshellc)
+                        if results["replaced"]:
+                            logger.log("WARNING", "ProcessScan", "PE-Sieve reported replaced process %s REPLACED: %s" %
+                                       (process_info, str(results["replaced"])))
+                        elif results["implanted"]:
+                            logger.log("WARNING", "ProcessScan", "PE-Sieve reported implanted process %s IMPLANTED: %s" %
+                                       (process_info, str(results["implanted"])))
+                        elif results["hooked"] or results["detached"]:
+                            logger.log("NOTICE", "ProcessScan", "PE-Sieve reported hooked or detached process %s "
+                                                 "HOOKED: %s SUSPICIOUS: %s" % (process_info, str(results["hooked"]),
+                                                                                str(results["detached"])))
+                        else:
+                            logger.log("INFO", "ProcessScan", "PE-Sieve reported no anomalies %s" % process_info)
+            except WindowsError as e:
+                if logger.debug:
+                    traceback.print_exc()
+                logger.log("ERROR", "ProcessScan",
+                           "Error while accessing process handle using PE-Sieve (use --debug for full traceback)")
 
             ###############################################################
             # THOR Process Connection Checks
