@@ -690,7 +690,8 @@ class Loki(object):
                     except Exception as e:
                         if logger.debug:
                             traceback.print_exc()
-                        logger.log("ERROR", "ProcessScan", "Error while process memory Yara check (maybe the process doesn't exist anymore or access denied) %s" % process_info)
+                        if path != "none":
+                            logger.log("ERROR", "ProcessScan", "Error during process memory Yara check (maybe the process doesn't exist anymore or access denied) %s" % process_info)
                 else:
                     logger.log("DEBUG", "ProcessScan", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
 
