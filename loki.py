@@ -707,9 +707,9 @@ class Loki(object):
                         elif results["implanted"]:
                             logger.log("WARNING", "ProcessScan", "PE-Sieve reported implanted process %s IMPLANTED: %s" %
                                        (process_info, str(results["implanted"])))
-                        elif results["hooked"] or results["detached"]:
-                            logger.log("NOTICE", "ProcessScan", "PE-Sieve reported hooked or detached process %s "
-                                                 "HOOKED: %s SUSPICIOUS: %s" % (process_info, str(results["hooked"]),
+                        elif results["patched"] or results["detached"]:
+                            logger.log("NOTICE", "ProcessScan", "PE-Sieve reported patched or detached process %s "
+                                                 "HOOKED: %s SUSPICIOUS: %s" % (process_info, str(results["patched"]),
                                                                                 str(results["detached"])))
                         else:
                             logger.log("INFO", "ProcessScan", "PE-Sieve reported no anomalies %s" % process_info)

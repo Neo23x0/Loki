@@ -52,7 +52,7 @@ class PESieve(object):
         :return hooked, replaces, suspicious: number of findings per type
         """
         # Presets
-        results = {"hooked": 0, "replaced": 0, "detached": 0, "implanted": 0}
+        results = {"patched": 0, "replaced": 0, "detached": 0, "implanted": 0}
         # Compose command
         command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet', '/json'] + (['/shellc'] if pesieveshellc else [])
         # Run PE-Sieve on given process
