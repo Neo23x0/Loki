@@ -151,6 +151,7 @@ class Loki(object):
         # Yara rule directories
         self.yara_rule_directories.append(os.path.join(self.app_path, "signature-base/yara".replace("/", os.sep)))
         self.yara_rule_directories.append(os.path.join(self.app_path, "signature-base/iocs/yara".replace("/", os.sep)))
+        self.yara_rule_directories.append(os.path.join(self.app_path, "signature-base/3rdparty".replace("/", os.sep)))
 
         # Read IOCs -------------------------------------------------------
         # File Name IOCs (all files in iocs that contain 'filename')
@@ -1069,7 +1070,6 @@ class Loki(object):
                 for root, directories, files in os.walk(yara_rule_directory, onerror=walk_error, followlinks=False):
                     for file in files:
                         try:
-
                             # Full Path
                             yaraRuleFile = os.path.join(root, file)
 
@@ -1079,6 +1079,10 @@ class Loki(object):
 
                             # Extension
                             extension = os.path.splitext(file)[1].lower()
+
+                            # Skip all files that don't have *.yar or *.yara extensions
+                            if extension != ".yar" and extension != ".yara":
+                                continue
 
                             # Test Compile
                             try:
@@ -1098,11 +1102,10 @@ class Loki(object):
                                     sys.exit(1)
                                 continue
 
-                            # Encrypted
-                            if extension == ".yar" or extension == ".yara":
-                                with open(yaraRuleFile, 'r') as rulefile:
-                                    data = rulefile.read()
-                                    yaraRules += data
+                            # Add the rule
+                            with open(yaraRuleFile, 'r') as rulefile:
+                                data = rulefile.read()
+                                yaraRules += data
 
                         except Exception as e:
                             logger.log("ERROR", "Init", "Error reading signature file %s ERROR: %s" % (yaraRuleFile, sys.exc_info()[1]))
