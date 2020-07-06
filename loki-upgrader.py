@@ -65,8 +65,7 @@ class LOKIUpdater(object):
                 except Exception as e:
                     if self.debug:
                         traceback.print_exc()
-                    self.logger.log("ERROR", "Upgrader", "Error downloading the signature database - "
-                                                         "check your Internet connection")
+                    self.logger.log("ERROR", "Upgrader", "Error downloading the signature database - %s" % e)
                     sys.exit(1)
 
                 # Preparations
