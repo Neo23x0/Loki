@@ -45,7 +45,7 @@ class LOKIUpdater(object):
   
     UPDATE_URL_SIGS = [
         "https://github.com/Neo23x0/signature-base/archive/master.zip",
-        "https://github.com/reversinglabs/reversinglabs-yara-rules/archive/master.zip"
+        "https://github.com/reversinglabs/reversinglabs-yara-rules/archive/develop.zip"
     ]
     
     UPDATE_URL_LOKI = "https://api.github.com/repos/Neo23x0/Loki/releases/latest"
