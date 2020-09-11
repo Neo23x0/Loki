@@ -957,16 +957,27 @@ class Loki(object):
                         with codecs.open(os.path.join(ioc_directory, ioc_filename), 'r', encoding='utf-8') as file:
                             lines = file.readlines()
 
+                            # Last Comment Line
+                            last_comment = ""
+
                             for line in lines:
                                 try:
                                     # Comments and empty lines
                                     if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
+                                        last_comment = line.lstrip("#").lstrip(" ").rstrip("\n")
                                         continue
 
                                     # Split the IOC line
-                                    row = line.split(';')
-                                    c2 = row[0]
-                                    comment = row[1].rstrip(" ").rstrip("\n")
+                                    if ";" in line:
+                                        line = line.rstrip(" ").rstrip("\n\r")
+                                        row = line.split(';')
+                                        c2 = row[0]
+                                        # LOKI doesn't use the C2 score (only THOR Lite)
+                                        # score = row[1]
+
+                                        # Elements without description
+                                    else:
+                                        c2 = line
 
                                     # Check length
                                     if len(c2) < 4:
@@ -975,7 +986,7 @@ class Loki(object):
                                         continue
 
                                     # Add to the LOKI iocs
-                                    self.c2_server[c2.lower()] = comment
+                                    self.c2_server[c2.lower()] = last_comment
 
                                 except Exception as e:
                                     logger.log("ERROR", "Init",  "Cannot read line: %s" % line)
