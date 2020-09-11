@@ -40,9 +40,12 @@ elif _platform == "darwin":
 elif _platform == "win32":
     platform = "windows"
 
+
 class LOKIUpdater(object):
-  
-  
+
+    # Incompatible signatures
+    INCOMPATIBLE_RULES = ['blocklist.yara']
+
     UPDATE_URL_SIGS = [
         "https://github.com/Neo23x0/signature-base/archive/master.zip",
         "https://github.com/reversinglabs/reversinglabs-yara-rules/archive/develop.zip"
@@ -92,6 +95,10 @@ class LOKIUpdater(object):
                         sigName = os.path.basename(zipFilePath)
                         if zipFilePath.endswith("/"):
                             continue
+                        # Skip incompatible rules
+                        for incompatible_rule in self.INCOMPATIBLE_RULES:
+                            if sigName == incompatible_rule:
+                                continue
                         self.logger.log("DEBUG", "Upgrader", "Extracting %s ..." % zipFilePath)
                         if "/iocs/" in zipFilePath and zipFilePath.endswith(".txt"):
                             targetFile = os.path.join(sigDir, "iocs", sigName)
