@@ -96,9 +96,14 @@ class LOKIUpdater(object):
                         if zipFilePath.endswith("/"):
                             continue
                         # Skip incompatible rules
+                        skip = False
                         for incompatible_rule in self.INCOMPATIBLE_RULES:
-                            if sigName == incompatible_rule:
-                                continue
+                            if sigName.endswith(incompatible_rule):
+                                self.logger.log("NOTICE", "Upgrader", "Skipping incompatible rule %s" % sigName)
+                                skip = True
+                        if skip:
+                            continue
+                        # Extract the rules
                         self.logger.log("DEBUG", "Upgrader", "Extracting %s ..." % zipFilePath)
                         if "/iocs/" in zipFilePath and zipFilePath.endswith(".txt"):
                             targetFile = os.path.join(sigDir, "iocs", sigName)
