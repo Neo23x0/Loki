@@ -276,6 +276,15 @@ def getAgeString(filePath):
         timestring = "CREATED: not_available MODIFIED: not_available ACCESSED: not_available"
     return timestring
 
+def getAgeList(filePath):
+    ( ctime, mtime, atime ) = getAge(filePath)
+    timestring = []
+    try:
+        timestring = [time.ctime(ctime), time.ctime(mtime), time.ctime(atime)]
+    except Exception as e:
+        timestring = ["not_available", "not_available", "not_available"]
+    return timestring
+
 
 def runProcess(command, timeout=10):
     """
