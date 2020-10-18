@@ -13,7 +13,7 @@ Detection is based on three detection methods:
    Applied to files and processes
 
 3. Hash Check
-   Compares known malicious hashes with th ones of the scanned files
+   Compares known malicious hashes with the ones of the scanned files
 
 Loki combines all IOCs from ReginScanner and SkeletonKeyScanner and is the
 little brother of THOR our full-featured corporate APT Scanner
@@ -1466,7 +1466,7 @@ def main():
     parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
     parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
     parser.add_argument('--intense', action='store_true', help='Intense scan mode (also scan unknown file types and all extensions)', default=False)
-    parser.add_argument('--csv', action='store_true', help='Write CSV log format to STDOUT (machine prcoessing)', default=False)
+    parser.add_argument('--csv', action='store_true', help='Write CSV log format to STDOUT (machine processing)', default=False)
     parser.add_argument('--onlyrelevant', action='store_true', help='Only print warnings or alerts', default=False)
     parser.add_argument('--nolog', action='store_true', help='Don\'t write a local log file', default=False)
     parser.add_argument('--update', action='store_true', default=False, help='Update the signatures from the "signature-base" sub repository')
