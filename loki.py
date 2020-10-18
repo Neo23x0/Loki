@@ -706,13 +706,13 @@ class Loki(object):
                         if results["replaced"]:
                             logger.log("WARNING", "ProcessScan", "PE-Sieve reported replaced process %s REPLACED: %s" %
                                        (process_info, str(results["replaced"])))
-                        elif results["implanted"]:
-                            logger.log("WARNING", "ProcessScan", "PE-Sieve reported implanted process %s IMPLANTED: %s" %
-                                       (process_info, str(results["implanted"])))
-                        elif results["patched"] or results["detached"]:
-                            logger.log("NOTICE", "ProcessScan", "PE-Sieve reported patched or detached process %s "
-                                                 "HOOKED: %s SUSPICIOUS: %s" % (process_info, str(results["patched"]),
-                                                                                str(results["detached"])))
+                        elif results["implanted_pe"]:
+                            logger.log("WARNING", "ProcessScan", "PE-Sieve reported implanted process %s IMPLANTED PE: %s IMPLANTED SHC: %s" %
+                                       (process_info, str(results["implanted_pe"])), (process_info, str(results["implanted_shc"])) )
+                        elif results["patched"] or results["unreachable_file"]:
+                            logger.log("NOTICE", "ProcessScan", "PE-Sieve reported patched process or a process with unreachable exe %s "
+                                                 "HOOKED: %s UNREACHABLE: %s" % (process_info, str(results["patched"]),
+                                                                                str(results["unreachable_file"])) )
                         else:
                             logger.log("INFO", "ProcessScan", "PE-Sieve reported no anomalies %s" % process_info)
             except WindowsError as e:
