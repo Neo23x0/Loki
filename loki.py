@@ -705,14 +705,17 @@ class Loki(object):
                         results = self.peSieve.scan(pid, pesieveshellc)
                         if results["replaced"]:
                             logger.log("WARNING", "ProcessScan", "PE-Sieve reported replaced process %s REPLACED: %s" %
-                                       (process_info, str(results["replaced"])))
-                        elif results["implanted"]:
-                            logger.log("WARNING", "ProcessScan", "PE-Sieve reported implanted process %s IMPLANTED: %s" %
-                                       (process_info, str(results["implanted"])))
-                        elif results["patched"] or results["detached"]:
-                            logger.log("NOTICE", "ProcessScan", "PE-Sieve reported patched or detached process %s "
-                                                 "HOOKED: %s SUSPICIOUS: %s" % (process_info, str(results["patched"]),
-                                                                                str(results["detached"])))
+                                       (process_info, str(results["replaced"])) )
+                        elif results["implanted_pe"] or results["implanted_shc"]:
+                            logger.log("WARNING", "ProcessScan", "PE-Sieve reported implanted process %s "
+                                       "IMPLANTED PE: %s IMPLANTED SHC: %s" % (process_info, str(results["implanted_pe"]),
+                                                                                str(results["implanted_shc"])) )
+                        elif results["patched"]:
+                            logger.log("NOTICE", "ProcessScan", "PE-Sieve reported patched process %s PATCHED: %s"  %
+                                       (process_info, str(results["patched"])) )
+                        elif results["unreachable_file"]:
+                            logger.log("NOTICE", "ProcessScan", "PE-Sieve reported a process with unreachable exe %s UNREACHABLE: %s" %
+                                       (process_info, str(results["unreachable_file"])) )
                         else:
                             logger.log("INFO", "ProcessScan", "PE-Sieve reported no anomalies %s" % process_info)
             except WindowsError as e:
