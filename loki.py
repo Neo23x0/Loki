@@ -713,7 +713,7 @@ class Loki(object):
                         elif results["patched"]:
                             logger.log("NOTICE", "ProcessScan", "PE-Sieve reported patched process %s PATCHED: %s"  %
                                        (process_info, str(results["patched"])) )
-                         elif results["unreachable_file"]:
+                        elif results["unreachable_file"]:
                             logger.log("NOTICE", "ProcessScan", "PE-Sieve reported a process with unreachable exe %s UNREACHABLE: %s" %
                                        (process_info, str(results["unreachable_file"])) )
                         else:
