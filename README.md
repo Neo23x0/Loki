@@ -206,10 +206,10 @@ For Filename IOCs (divided by newline)
 Regex;Score;False Positive Regex
 ```
 
-You can user the following external variables in the YARA rules that your provide LOKI
+You can use the following external variables in the YARA rules that your provide to LOKI:
 ```
 filename - e.g. condition: $s1 and not filename == 'nmap.exe'
-filepatch - e.g. condition: filepath == 'C:\Windows\cmd.exe'
+filepath - e.g. condition: filepath == 'C:\Windows\cmd.exe'
 extension - e.g. condition: uint32(0) == 0x5a4d and extension == ".txt"
 filetype - eg. condition: extension == ".txt" and filetype == "EXE"
 (see file-type-signatures.cfg in signature-base repo for all detected file types)
@@ -218,7 +218,7 @@ md5 - legacy value
 
 ## User-Defined Scan Excludes
 
-Since version v0.16.2 LOKI supports the definition of user-defined excludes via "excludes.cfg" in the new "./config" folder. Each line represents a regular expression thats gets applied to the full file path during the directory walk. This way you can exclude certain directories regardless of their drive name, file extensions in certain folders and all files and directories that belong to a product that is sensitive to antivirus scanning.
+Since version v0.16.2 LOKI supports the definition of user-defined excludes via "excludes.cfg" in the new "./config" folder. Each line represents a regular expression thats gets applied to the full file path during the directory walk. This way you can exclude certain directories regardless of their drive name or file extensions in certain folders and all files and directories that belong to a product that is sensitive to antivirus scanning.
 
 The '''exclude.cfg''' looks like this:
 
