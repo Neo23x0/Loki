@@ -184,7 +184,7 @@ class Loki(object):
     def scan_path(self, path):
 
         # Startup
-        logger.log("INFO", "FileScan", "Scanning %s ...  " % path)
+        logger.log("INFO", "FileScan", "Scanning Path %s ...  " % path)
 
         # Counter
         c = 0
@@ -315,7 +315,7 @@ class Loki(object):
                     do_intense_check = True
                     if not self.intense_mode and fileType == "UNKNOWN" and extension not in EVIL_EXTENSIONS:
                         if args.printall:
-                            logger.log("INFO", "FileScan", "Skipping file due to fast scan mode: %s" % filePathCleaned)
+                            logger.log("INFO", "FileScan", "Skipping file due to fast scan mode: %s" % fileNameCleaned)
                         do_intense_check = False
 
                     # Set fileData to an empty value
@@ -334,10 +334,10 @@ class Loki(object):
                     # Intense Check switch
                     if do_intense_check:
                         if args.printall:
-                            logger.log("INFO", "FileScan", "Scanning %s TYPE: %s SIZE: %s" % (filePathCleaned, fileType, fileSize))
+                            logger.log("INFO", "FileScan", "Scanning %s TYPE: %s SIZE: %s" % (fileNameCleaned, fileType, fileSize))
                     else:
                         if args.printall:
-                            logger.log("INFO", "FileScan", "Checking %s TYPE: %s SIZE: %s" % (filePathCleaned, fileType, fileSize))
+                            logger.log("INFO", "FileScan", "Checking %s TYPE: %s SIZE: %s" % (fileNameCleaned, fileType, fileSize))
 
                     # Hash Check -------------------------------------------------------
                     # Do the check
