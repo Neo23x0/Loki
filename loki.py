@@ -38,6 +38,7 @@ from sys import platform as _platform
 from subprocess import Popen, PIPE
 from collections import Counter
 import datetime
+from bisect import bisect_left
 
 # LOKI Modules
 from lib.lokilogger import *
@@ -80,15 +81,20 @@ if os_platform == "":
 EVIL_EXTENSIONS = [".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm", ".cmd", ".com", ".cpl",
                    ".crt", ".dll", ".exe", ".hta", ".js", ".lnk", ".msc", ".ocx", ".pcd", ".pif", ".pot", ".pdf",
                    ".reg", ".scr", ".sct", ".sys", ".url", ".vb", ".vbe", ".wsc", ".wsf", ".wsh", ".ct", ".t",
-                   ".input", ".war", ".jsp", ".php", ".asp", ".aspx", ".doc", ".docx", ".pdf", ".xls", ".xlsx", ".ppt",
+                   ".input", ".war", ".jsp", ".jspx", ".php", ".asp", ".aspx", ".doc", ".docx", ".pdf", ".xls", ".xlsx", ".ppt",
                    ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
                    ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm"]
 
 SCRIPT_EXTENSIONS = [".asp", ".vbs", ".ps1", ".bas", ".bat", ".js", ".vb", ".vbe", ".wsc", ".wsf",
-                     ".wsh",  ".jsp", ".php", ".asp", ".aspx", ".psd1", ".psm1", ".ps1xml", ".clixml", ".psc1",
-                     ".pssc"]
+                     ".wsh", ".jsp", ".jspx", ".php", ".asp", ".aspx", ".psd1", ".psm1", ".ps1xml", ".clixml", ".psc1",
+                     ".pssc", ".pl"]
 
 SCRIPT_TYPES = ["VBS", "PHP", "JSP", "ASP", "BATCH"]
+
+def ioc_contains(sorted_list, value):
+    # returns true if sorted_list contains value
+    index = bisect_left(sorted_list, value)
+    return index != len(sorted_list) and sorted_list[index] == value
 
 class Loki(object):
 
@@ -181,10 +187,16 @@ class Loki(object):
         # Levenshtein Checker
         self.LevCheck = LevCheck()
 
+
     def scan_path(self, path):
 
+        # Check if path exists
+        if not os.path.exists(path):
+            logger.log("ERROR", "FileScan", "None Existing Scanning Path %s ...  " % path)
+            return
+
         # Startup
-        logger.log("INFO", "FileScan", "Scanning %s ...  " % path)
+        logger.log("INFO", "FileScan", "Scanning Path %s ...  " % path)
 
         # Counter
         c = 0
@@ -315,7 +327,7 @@ class Loki(object):
                     do_intense_check = True
                     if not self.intense_mode and fileType == "UNKNOWN" and extension not in EVIL_EXTENSIONS:
                         if args.printall:
-                            logger.log("INFO", "FileScan", "Skipping file due to fast scan mode: %s" % filePathCleaned)
+                            logger.log("INFO", "FileScan", "Skipping file due to fast scan mode: %s" % fileNameCleaned)
                         do_intense_check = False
 
                     # Set fileData to an empty value
@@ -334,10 +346,10 @@ class Loki(object):
                     # Intense Check switch
                     if do_intense_check:
                         if args.printall:
-                            logger.log("INFO", "FileScan", "Scanning %s TYPE: %s SIZE: %s" % (filePathCleaned, fileType, fileSize))
+                            logger.log("INFO", "FileScan", "Scanning %s TYPE: %s SIZE: %s" % (fileNameCleaned, fileType, fileSize))
                     else:
                         if args.printall:
-                            logger.log("INFO", "FileScan", "Checking %s TYPE: %s SIZE: %s" % (filePathCleaned, fileType, fileSize))
+                            logger.log("INFO", "FileScan", "Checking %s TYPE: %s SIZE: %s" % (fileNameCleaned, fileType, fileSize))
 
                     # Hash Check -------------------------------------------------------
                     # Do the check
@@ -352,28 +364,31 @@ class Loki(object):
                         matchType = None
                         matchDesc = None
                         matchHash = None
-                        md5 = "-"
-                        sha1 = "-"
-                        sha256 = "-"
+                        md5 = 0
+                        sha1 = 0
+                        sha256 = 0
 
                         md5, sha1, sha256 = generateHashes(fileData)
+                        md5_num=int(md5, 16)
+                        sha1_num=int(sha1, 16)
+                        sha256_num=int(sha256, 16)
 
                         # False Positive Hash
-                        if md5 in self.false_hashes.keys() or sha1 in self.false_hashes.keys() or sha256 in self.false_hashes.keys():
+                        if md5_num in self.false_hashes.keys() or sha1_num in self.false_hashes.keys() or sha256_num in self.false_hashes.keys():
                             continue
 
                         # Malware Hash
-                        if md5 in self.hashes_md5.keys():
+                        if ioc_contains(self.hashes_md5_list, md5_num):
                             matchType = "MD5"
-                            matchDesc = self.hashes_md5[md5]
+                            matchDesc = self.hashes_md5[md5_num]
                             matchHash = md5
-                        elif sha1 in self.hashes_sha1.keys():
+                        if ioc_contains(self.hashes_sha1_list, sha1_num):
                             matchType = "SHA1"
-                            matchDesc = self.hashes_sha1[sha1]
+                            matchDesc = self.hashes_sha1[sha1_num]
                             matchHash = sha1
-                        elif sha256 in self.hashes_sha256.keys():
+                        if ioc_contains(self.hashes_sha256_list, sha256_num):
                             matchType = "SHA256"
-                            matchDesc = self.hashes_sha256[sha256]
+                            matchDesc = self.hashes_sha256[sha256_num]
                             matchHash = sha256
 
                         # Hash string
@@ -403,11 +418,11 @@ class Loki(object):
 
                         # Memory Dump Scan
                         if fileType == "MDMP":
-                            logger.log("INFO", "FileScan", "Scanning memory dump file %s" % filePathCleaned)
+                            logger.log("INFO", "FileScan", "Scanning memory dump file %s" % fileNameCleaned)
 
                         # Umcompressed SWF scan
                         if fileType == "ZWS" or fileType == "CWS":
-                            logger.log("INFO", "FileScan", "Scanning decompressed SWF file %s" % filePathCleaned)
+                            logger.log("INFO", "FileScan", "Scanning decompressed SWF file %s" % fileNameCleaned)
                             success, decompressedData = decompressSWFData(fileData)
                             if success:
                                fileData = decompressedData
@@ -1163,17 +1178,17 @@ class Loki(object):
 
     def initialize_hash_iocs(self, ioc_directory, false_positive=False):
         HASH_WHITELIST = [# Empty file
-                          'd41d8cd98f00b204e9800998ecf8427e',
-                          'da39a3ee5e6b4b0d3255bfef95601890afd80709',
-                          'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+                          int('d41d8cd98f00b204e9800998ecf8427e', 16),
+                          int('da39a3ee5e6b4b0d3255bfef95601890afd80709', 16),
+                          int('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 16),
                           # One byte line break file (Unix) 0x0a
-                          '68b329da9893e34099c7d8ad5cb9c940',
-                          'adc83b19e793491b1c6ea0fd8b46cd9f32e592fc',
-                          '01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b',
+                          int('68b329da9893e34099c7d8ad5cb9c940', 16),
+                          int('adc83b19e793491b1c6ea0fd8b46cd9f32e592fc', 16),
+                          int('01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b', 16),
                           # One byte line break file (Windows) 0x0d0a
-                          '81051bcc2cf1bedf378224b0a93e2877',
-                          'ba8ab5a0280b953aa97435ff8946cbcbb2755a27',
-                          '7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6',
+                          int('81051bcc2cf1bedf378224b0a93e2877', 16),
+                          int('ba8ab5a0280b953aa97435ff8946cbcbb2755a27', 16),
+                          int('7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6', 16),
                           ]
         try:
             for ioc_filename in os.listdir(ioc_directory):
@@ -1195,13 +1210,13 @@ class Loki(object):
                                     continue
                                 # Else - check which type it is
                                 if len(hash) == 32:
-                                    self.hashes_md5[hash.lower()] = comment
+                                    self.hashes_md5[int(hash, 16)] = comment
                                 if len(hash) == 40:
-                                    self.hashes_sha1[hash.lower()] = comment
+                                    self.hashes_sha1[int(hash, 16)] = comment
                                 if len(hash) == 64:
-                                    self.hashes_sha256[hash.lower()] = comment
+                                    self.hashes_sha256[int(hash, 16)] = comment
                                 if false_positive:
-                                    self.false_hashes[hash.lower()] = comment
+                                    self.false_hashes[int(hash, 16)] = comment
                             except Exception as e:
                                 logger.log("ERROR", "Init", "Cannot read line: %s" % line)
 
@@ -1209,6 +1224,14 @@ class Loki(object):
                     if logger.debug:
                         logger.log("DEBUG", "Init", "Initialized %s hash IOCs from file %s"
                                    % (str(len(self.hashes_md5)+len(self.hashes_sha1)+len(self.hashes_sha256)), ioc_filename))
+
+            # create sorted lists with just the integer values of the hashes for quick binary search 
+            self.hashes_md5_list = list(self.hashes_md5.keys())
+            self.hashes_md5_list.sort()
+            self.hashes_sha1_list = list(self.hashes_sha1.keys())
+            self.hashes_sha1_list.sort()
+            self.hashes_sha256_list = list(self.hashes_sha256.keys())
+            self.hashes_sha256_list.sort()
 
         except Exception as e:
             if logger.debug:
@@ -1463,7 +1486,7 @@ def main():
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
     parser.add_argument('--nolevcheck', action='store_true', help='Skip the Levenshtein distance check', default=False)
-    parser.add_argument('--scriptanalysis', action='store_true', help='Activate script analysis (beta)', default=False)
+    parser.add_argument('--scriptanalysis', action='store_true', help='Statistical analysis for scripts to detect obfuscated code (beta)', default=False)
     parser.add_argument('--rootkit', action='store_true', help='Skip the rootkit check', default=False)
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
     parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
