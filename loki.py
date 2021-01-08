@@ -110,7 +110,7 @@ class Loki(object):
     # Yara rule directories
     yara_rule_directories = []
 
-    # Excludes (list of regex that match within the whole path) (user-defined via excluces.cfg)
+    # Excludes (list of regex that match within the whole path) (user-defined via excludes.cfg)
     fullExcludes = []
     # Platform specific excludes (match the beginning of the full path) (not user-defined)
     startExcludes = []
