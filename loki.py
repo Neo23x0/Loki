@@ -40,14 +40,22 @@ from collections import Counter
 import datetime
 from bisect import bisect_left
 
+# for python2/3 compatibility
+from builtins import str
+import codecs
+
+
 # LOKI Modules
+from lib.helpers import *
 from lib.lokilogger import *
 from lib.levenshtein import LevCheck
 
 # Private Rules Support
 from lib.privrules import *
 
-sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+
+if sys.version_info[0] < 3:
+    sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 from lib.helpers import *
 from lib.pesieve import PESieve
@@ -91,13 +99,10 @@ SCRIPT_EXTENSIONS = [".asp", ".vbs", ".ps1", ".bas", ".bat", ".js", ".vb", ".vbe
 
 SCRIPT_TYPES = ["VBS", "PHP", "JSP", "ASP", "BATCH"]
 
-def ioc_contains(sorted_list, value):
-    # returns true if sorted_list contains value
-    index = bisect_left(sorted_list, value)
-    return index != len(sorted_list) and sorted_list[index] == value
-
 class Loki(object):
 
+
+    # move all class variables into the instances or they won't be passed on to do_scan() in python3 anymore
     # Signatures
     yara_rules = []
     filename_iocs = []
@@ -201,7 +206,8 @@ class Loki(object):
         # Counter
         c = 0
 
-        for root, directories, files in os.walk(unicode(path), onerror=walk_error, followlinks=False):
+        #for root, directories, files in os.walk(unicode(path), onerror=walk_error, followlinks=False):
+        for root, directories, files in os.walk(str(path), onerror=walk_error, followlinks=False):
 
             # Skip paths that start with ..
             newDirectories = []
@@ -221,8 +227,12 @@ class Loki(object):
                     newDirectories.append(dir)
             directories[:] = newDirectories
 
+            # This not the perfect position in the code for distributing the workload since loki will have to wait for the last file in the directory to go to the 
+            # next one, but that also doesn't totally clog the machine
             # Loop through files
+
             for filename in files:
+
                 try:
                     # Findings
                     reasons = []
@@ -235,8 +245,8 @@ class Loki(object):
                     # Clean the values for YARA matching
                     # > due to errors when Unicode characters are passed to the match function as
                     #   external variables
-                    filePathCleaned = fpath.encode('ascii', errors='replace')
-                    fileNameCleaned = filename.encode('ascii', errors='replace')
+                    filePathCleaned = fpath.encode('ascii', errors='replace').decode('ascii')
+                    fileNameCleaned = filename.encode('ascii', errors='replace').decode('ascii')
 
                     # Get Extension
                     extension = os.path.splitext(filePath)[1].lower()
@@ -358,7 +368,9 @@ class Loki(object):
                         fileData = self.get_file_data(filePath)
 
                         # First bytes
-                        firstBytesString = "%s / %s" % (fileData[:20].encode('hex'), removeNonAsciiDrop(fileData[:20]) )
+                        # py2 => 3
+                        #firstBytesString = "%s / %s" % (fileData[:20].encode('hex'), removeNonAsciiDrop(fileData[:20]) )
+                        firstBytesString = "%s / %s" % (str((codecs.getencoder('hex')(fileData[:20])[0]), 'utf-8'), removeNonAsciiDrop(fileData[:20]) )
 
                         # Hash Eval
                         matchType = None
@@ -372,6 +384,7 @@ class Loki(object):
                         md5_num=int(md5, 16)
                         sha1_num=int(sha1, 16)
                         sha256_num=int(sha256, 16)
+
 
                         # False Positive Hash
                         if md5_num in self.false_hashes.keys() or sha1_num in self.false_hashes.keys() or sha256_num in self.false_hashes.keys():
@@ -469,9 +482,12 @@ class Loki(object):
                     message_body = fileInfo
                     for i, r in enumerate(reasons):
                         if i < 2 or args.allreasons:
-                            message_body += "REASON_{0}: {1}".format(i+1, r.encode('ascii', errors='replace'))
+                            # py2 -> 3
+                            #message_body += "REASON_{0}: {1}".format(i+1, r.encode('ascii', errors='replace'))
+                            message_body += "REASON_{0}: {1}".format(i+1, str(removeNonAscii(r)))
 
                     logger.log(message_type, "FileScan", message_body)
+
 
                 except Exception as e:
                     if logger.debug:
@@ -545,7 +561,7 @@ class Loki(object):
 
             string_num = 1
             for string in string_matches:
-                matching_strings += " Str" + str(string_num) + ": " + removeNonAscii(removeBinaryZero(string))
+                matching_strings += " Str" + str(string_num) + ": " + str(removeNonAscii(removeBinaryZero(string)), 'utf-8')
                 string_num += 1
 
             # Limit string
@@ -758,21 +774,21 @@ class Loki(object):
             if path != "none":
                 if name == "smss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "smss.exe path is not System32 %s" % process_info)
-            if name == "smss.exe" and priority is not 11:
+            if name == "smss.exe" and priority != 11:
                 logger.log("WARNING", "ProcessScan", "smss.exe priority is not 11 %s" % process_info)
 
             # Process: csrss.exe
             if path != "none":
                 if name == "csrss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "csrss.exe path is not System32 %s" % process_info)
-            if name == "csrss.exe" and priority is not 13:
+            if name == "csrss.exe" and priority != 13:
                 logger.log("WARNING", "ProcessScan", "csrss.exe priority is not 13 %s" % process_info)
 
             # Process: wininit.exe
             if path != "none":
                 if name == "wininit.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "wininit.exe path is not System32 %s" % process_info)
-            if name == "wininit.exe" and priority is not 13:
+            if name == "wininit.exe" and priority != 13:
                 logger.log("NOTICE", "ProcessScan", "wininit.exe priority is not 13 %s" % process_info)
             # Is parent to other processes - save PID
             if name == "wininit.exe":
@@ -782,7 +798,7 @@ class Loki(object):
             if path != "none":
                 if name == "services.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "services.exe path is not System32 %s" % process_info)
-            if name == "services.exe" and priority is not 9:
+            if name == "services.exe" and priority != 9:
                 logger.log("WARNING", "ProcessScan", "services.exe priority is not 9 %s" % process_info)
             if wininit_pid > 0:
                 if name == "services.exe" and not parent_pid == wininit_pid:
@@ -792,7 +808,7 @@ class Loki(object):
             if path != "none":
                 if name == "lsass.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "lsass.exe path is not System32 %s" % process_info)
-            if name == "lsass.exe" and priority is not 9:
+            if name == "lsass.exe" and priority != 9:
                 logger.log("WARNING", "ProcessScan", "lsass.exe priority is not 9 %s" % process_info)
             if wininit_pid > 0:
                 if name == "lsass.exe" and not parent_pid == wininit_pid:
@@ -804,10 +820,10 @@ class Loki(object):
                     logger.log("WARNING", "ProcessScan", "lsass.exe count is higher than 1 %s" % process_info)
 
             # Process: svchost.exe
-            if path is not "none":
+            if path != "none":
                 if name == "svchost.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "svchost.exe path is not System32 %s" % process_info)
-            if name == "svchost.exe" and priority is not 8:
+            if name == "svchost.exe" and priority != 8:
                 logger.log("NOTICE", "ProcessScan", "svchost.exe priority is not 8 %s" % process_info)
             # Windows 10 FP
             #if name == "svchost.exe" and not ( self.check_svchost_owner(owner) or "unistacksvcgroup" in cmd.lower()):
@@ -820,7 +836,7 @@ class Loki(object):
             if path != "none":
                 if name == "lsm.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "lsm.exe path is not System32 %s" % process_info)
-            if name == "lsm.exe" and priority is not 8:
+            if name == "lsm.exe" and priority != 8:
                 logger.log("NOTICE", "ProcessScan", "lsm.exe priority is not 8 %s" % process_info)
             if name == "lsm.exe" and not ( owner.startswith("NT ") or owner.startswith("LO") or owner.startswith("SYSTEM")  or owner.startswith(u"система")):
                 logger.log(u"WARNING", "ProcessScan", "lsm.exe process owner is suspicious %s" % process_info)
@@ -829,7 +845,7 @@ class Loki(object):
                     logger.log("WARNING", "ProcessScan", "lsm.exe parent PID is not the one of wininit.exe %s" % process_info)
 
             # Process: winlogon.exe
-            if name == "winlogon.exe" and priority is not 13:
+            if name == "winlogon.exe" and priority != 13:
                 logger.log("WARNING", "ProcessScan", "winlogon.exe priority is not 13 %s" % process_info)
             if re.search("(Windows 7|Windows Vista)", getPlatformFull()):
                 if name == "winlogon.exe" and parent_pid > 0:
@@ -1386,6 +1402,8 @@ class Loki(object):
         return "", 0
 
 
+
+
 def get_application_path():
     try:
         if getattr(sys, 'frozen', False):
@@ -1465,6 +1483,11 @@ def signal_handler(signal_name, frame):
         print('LOKI\'s work has been interrupted by a human. Returning to Asgard.')
     sys.exit(0)
 
+def ioc_contains(sorted_list, value):
+    # returns true if sorted_list contains value
+    index = bisect_left(sorted_list, value)
+    return index != len(sorted_list) and sorted_list[index] == value
+
 def main():
     """
     Argument parsing function
@@ -1505,6 +1528,7 @@ def main():
     parser.add_argument('--nolisten', action='store_true', help='Dot not show listening connections', default=False)
     parser.add_argument('--excludeprocess', action='append', help='Specify an executable name to exclude from scans, can be used multiple times', default=[])
 
+    global args
     args = parser.parse_args()
 
     if args.syslogtcp and not args.r:
@@ -1551,9 +1575,14 @@ if __name__ == '__main__':
     pathLokiInit, statusLokiInit = CheckLokiInit(get_application_path())
     if statusLokiInit == 'present':
         try:
-            execfile(pathLokiInit, globals(), locals())
+            #execfile(pathLokiInit, globals(), locals())
+            # python3 way:
+            with open(pathLokiInit) as f:
+                code = compile(f.read(), pathLokiInit, 'exec')
+                exec(code, globals(), locals())
         except:
             statusLokiInit = str(sys.exc_info()[1])
+
     logger = LokiLogger(args.nolog, args.l, getHostname(os_platform), args.r, int(args.t), args.syslogtcp, args.csv, args.onlyrelevant, args.debug,
                         platform=os_platform, caller='main', customformatter=LokiCustomFormatter)
 
@@ -1645,4 +1674,4 @@ if __name__ == '__main__':
 
     if not args.dontwait:
         print(" ")
-        raw_input("Press Enter to exit ...")
+        input("Press Enter to exit ...")

@@ -64,7 +64,11 @@ def LoadPlugins(dGlobals, dLocals):
                 if file.endswith('.py') and file != FILENAME_LOKI_INIT:
                     pluginFile = os.path.join(root, file)
                     try:
-                        execfile(pluginFile, dGlobals, dLocals)
+                        #execfile(pluginFile, dGlobals, dLocals)
+                        # python3 way:
+                        with open(pluginFile) as f:
+                            code = compile(f.read(), pluginFile, 'exec')
+                            exec(code, dGlobals, dLocals)
                         logger.log('NOTICE', 'Init', 'Loaded plugin %s' % pluginFile)
                     except:
                         logger.log('ERROR', 'Init', 'Failed to load PLUGIN: %s ERROR: %s' % (pluginFile, sys.exc_info()[1]))

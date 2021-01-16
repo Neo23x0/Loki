@@ -12,9 +12,9 @@ import rfc5424logging
 import logging
 from logging import handlers
 import socket
-from helpers import removeNonAsciiDrop
+#from helpers import removeNonAsciiDrop
 
-__version__ = '0.32.1'
+__version__ = '0.33.0'
 
 
 # Logger Class -----------------------------------------------------------------
@@ -52,8 +52,9 @@ class LokiLogger():
         if "windows" in platform.lower():
             self.linesep = "\r\n"
 
-        reload(sys)
-        sys.setdefaultencoding('utf8')
+        if sys.version_info[0] < 3:
+            reload(sys)
+            sys.setdefaultencoding('utf8')
 
         # Colorization ----------------------------------------------------
         init()
@@ -79,7 +80,7 @@ class LokiLogger():
     def log(self, mes_type, module, message):
 
         # Remove all non-ASCII characters
-        # message = removeNonAsciiDrop(message)
+        #message = removeNonAsciiDrop(message)
         codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
 
         if not self.debug and mes_type == "DEBUG":
@@ -104,7 +105,9 @@ class LokiLogger():
 
         # to stdout
         try:
-            self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type)
+            #self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type)
+            # should be utf8 safe in py3
+            self.log_to_stdout(message, mes_type)
         except Exception as e:
             print ("Cannot print certain characters to command line - see log file for full unicode encoded log line")
             self.log_to_stdout(removeNonAsciiDrop(message), mes_type)
@@ -130,7 +133,8 @@ class LokiLogger():
 
         # Prepare Message
         codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
-        message = message.encode(encoding, errors='replace')
+        if type(message) == 'bytes':
+            message = str(message.decode(encoding, errors='replace'))
 
         if self.csv:
             print (self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, mes_type, message))
@@ -177,7 +181,7 @@ class LokiLogger():
                 mes_type = type_colorer.sub(high_color+r'[\1]'+base_color, mes_type)
                 # Break Line before REASONS
                 linebreaker = re.compile('(MD5:|SHA1:|SHA256:|MATCHES:|FILE:|FIRST_BYTES:|DESCRIPTION:|REASON_[0-9]+)', re.VERBOSE)
-                message = linebreaker.sub(r'\n\1', message)
+                message = linebreaker.sub(r'\n\1', str(message))
                 # Colorize Key Words
                 colorer = re.compile('([A-Z_0-9]{2,}:)\s', re.VERBOSE)
                 message = colorer.sub(key_color+Style.BRIGHT+r'\1 '+base_color+Style.NORMAL, message)

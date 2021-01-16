@@ -48,7 +48,7 @@ Download the latest version of LOKI from the [releases](https://github.com/Neo23
     2. Search the web for the filename
     3. Search the web for keywords from the rule name (e.g. EQUATIONGroupMalware_1 > search for "Equation Group")
     4. Search the web for the MD5 hash of the sample
-    5. Search in my [customer APT search engine](https://cse.google.com/cse/publicurl?cx=003248445720253387346:turlh5vi4xc) for file names or identifiers
+    5. Search in my [custom APT search engine](https://cse.google.com/cse/publicurl?cx=003248445720253387346:turlh5vi4xc) for file names or identifiers
   - Please report back false positives via the [Issues](https://github.com/Neo23x0/Loki/issues) section (mention the false positive indicator like a hash and/or filename and the rule name that triggered)
 
 ## Update
