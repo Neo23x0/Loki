@@ -136,15 +136,19 @@ def decompressSWFData(in_data):
     try:
         ver = in_data[3]
 
-        if in_data[0] == 'C':
+        # this breaks py2
+        if in_data[0] == 67:
             # zlib SWF
+            # strangely the following line works in py2 and 3 despite in_data[0] giving different results. maybe zlib.decompress can handle both kind of input?
             decompressData = zlib.decompress(in_data[8:])
-        elif in_data[0] == 'Z':
+        elif in_data[0] == 90:
             # lzma SWF
             decompressData = pylzma.decompress(in_data[12:])
-        elif in_data[0] == 'F':
+        elif in_data[0] == 70:
             # uncompressed SWF
             decompressData = in_data[8:]
+
+        #print("decompressData:", decompressData)
 
         header = list(struct.unpack("<8B", in_data[0:8]))
         header[0] = ord('F')
