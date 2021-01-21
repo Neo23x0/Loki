@@ -50,9 +50,6 @@ from lib.helpers import *
 from lib.lokilogger import *
 from lib.levenshtein import LevCheck
 
-# Private Rules Support
-from lib.privrules import *
-
 
 if sys.version_info[0] < 3:
     sys.stdout = codecs.getwriter('utf8')(sys.stdout)
@@ -432,13 +429,6 @@ class Loki(object):
                         # Memory Dump Scan
                         if fileType == "MDMP":
                             logger.log("INFO", "FileScan", "Scanning memory dump file %s" % fileNameCleaned)
-
-                        # Umcompressed SWF scan
-                        if fileType == "ZWS" or fileType == "CWS":
-                            logger.log("INFO", "FileScan", "Scanning decompressed SWF file %s" % fileNameCleaned)
-                            success, decompressedData = decompressSWFData(fileData)
-                            if success:
-                               fileData = decompressedData
 
                         # Scan the read data
                         try:

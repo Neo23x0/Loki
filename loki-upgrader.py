@@ -25,7 +25,7 @@ if _platform == "win32":
         import wmi
         import win32api
         from win32com.shell import shell
-    except Exception, e:
+    except Exception as e:
         platform = "linux"  # crazy guess
 
 
@@ -122,7 +122,7 @@ class LOKIUpdater(object):
 
                         # Extract file
                         source = zipUpdate.open(zipFilePath)
-                        target = file(targetFile, "wb")
+                        target = open(targetFile, "wb")
                         with source, target:
                             shutil.copyfileobj(source, target)
 
@@ -181,7 +181,7 @@ class LOKIUpdater(object):
 
                     try:
                         # Create target file
-                        target = file(targetFile, "wb")
+                        target = open(targetFile, "wb")
                         with source, target:
                             shutil.copyfileobj(source, target)
                             if self.debug:

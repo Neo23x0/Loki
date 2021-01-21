@@ -8,7 +8,6 @@
 import sys
 import hashlib
 import binascii
-import pylzma
 import zlib
 import struct
 import socket
@@ -130,33 +129,6 @@ def getExcludedMountpoints():
     finally:
         mtab.close()
     return excludes
-
-
-def decompressSWFData(in_data):
-    try:
-        ver = in_data[3]
-
-        # this breaks py2
-        if in_data[0] == 67:
-            # zlib SWF
-            # strangely the following line works in py2 and 3 despite in_data[0] giving different results. maybe zlib.decompress can handle both kind of input?
-            decompressData = zlib.decompress(in_data[8:])
-        elif in_data[0] == 90:
-            # lzma SWF
-            decompressData = pylzma.decompress(in_data[12:])
-        elif in_data[0] == 70:
-            # uncompressed SWF
-            decompressData = in_data[8:]
-
-        #print("decompressData:", decompressData)
-
-        header = list(struct.unpack("<8B", in_data[0:8]))
-        header[0] = ord('F')
-        return True, struct.pack("<8B", *header) + decompressData
-
-    except Exception as e:
-        traceback.print_exc()
-        return False, "Decompression error"
 
 
 def removeBinaryZero(string):
