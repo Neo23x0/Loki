@@ -75,8 +75,9 @@ if os_platform == "windows":
         import win32api
         from win32com.shell import shell
     except Exception as e:
-        print("Linux System - deactivating process memory check ...")
-        os_platform = "linux" # crazy guess
+        print("Please use pip to install wmi, win32api and win32com")
+        sys.exit(1)
+        
 
 if os_platform == "":
     print("Unable to determine platform - LOKI is lost.")
@@ -1500,7 +1501,7 @@ def main():
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
     parser.add_argument('--nolevcheck', action='store_true', help='Skip the Levenshtein distance check', default=False)
     parser.add_argument('--scriptanalysis', action='store_true', help='Statistical analysis for scripts to detect obfuscated code (beta)', default=False)
-    parser.add_argument('--rootkit', action='store_true', help='Skip the rootkit check', default=False)
+    parser.add_argument('--rootkit', action='store_true', help='Run the rootkit check', default=False)
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
     parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
     parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
@@ -1524,11 +1525,11 @@ def main():
     if args.syslogtcp and not args.r:
         print('Syslog logging set to TCP with --syslogtcp, but syslog logging not enabled with -r')
         sys.exit(1)
-		
+
     if args.nolog and (args.l or args.logfolder):
         print('The --logfolder and -l directives are not compatible with --nolog')
         sys.exit(1)
-		
+
     filename = 'loki_%s_%s.log' % (getHostname(os_platform), datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
     if args.logfolder and args.l:
         print('Must specify either log folder with --logfolder, which uses the default filename, or log file with -l. Log file can be an absolute path')
@@ -1549,6 +1550,8 @@ def main():
 
 # MAIN ################################################################
 if __name__ == '__main__':
+
+    start_time = time.time()
 
     # Signal handler for CTRL+C
     signal_module.signal(signal_module.SIGINT, signal_handler)
@@ -1661,6 +1664,8 @@ if __name__ == '__main__':
 
     # run plugins
     RunPluginsForPhase(LOKI_PHASE_END)
+
+    logger.log("INFO", "Results", "Scan needed %.2f seconds " % (time.time() - start_time)) 
 
     if not args.dontwait:
         print(" ")

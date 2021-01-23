@@ -26,6 +26,9 @@ tools/*_flo.py
 
 loki\.log
 
+.vs/
+*.swp
+
 *.pyc
 signature-base
 tools/old-results
