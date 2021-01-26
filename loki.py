@@ -19,7 +19,6 @@ Loki combines all IOCs from ReginScanner and SkeletonKeyScanner and is the
 little brother of THOR our full-featured corporate APT Scanner
 
 Florian Roth
-BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
@@ -83,7 +82,7 @@ EVIL_EXTENSIONS = [".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm"
                    ".reg", ".scr", ".sct", ".sys", ".url", ".vb", ".vbe", ".wsc", ".wsf", ".wsh", ".ct", ".t",
                    ".input", ".war", ".jsp", ".jspx", ".php", ".asp", ".aspx", ".doc", ".docx", ".pdf", ".xls", ".xlsx", ".ppt",
                    ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
-                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm"]
+                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm", ".sys"]
 
 SCRIPT_EXTENSIONS = [".asp", ".vbs", ".ps1", ".bas", ".bat", ".js", ".vb", ".vbe", ".wsc", ".wsf",
                      ".wsh", ".jsp", ".jspx", ".php", ".asp", ".aspx", ".psd1", ".psm1", ".ps1xml", ".clixml", ".psc1",
@@ -758,21 +757,21 @@ class Loki(object):
             if path != "none":
                 if name == "smss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "smss.exe path is not System32 %s" % process_info)
-            if name == "smss.exe" and priority is not 11:
+            if name == "smss.exe" and priority != 11:
                 logger.log("WARNING", "ProcessScan", "smss.exe priority is not 11 %s" % process_info)
 
             # Process: csrss.exe
             if path != "none":
                 if name == "csrss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "csrss.exe path is not System32 %s" % process_info)
-            if name == "csrss.exe" and priority is not 13:
+            if name == "csrss.exe" and priority != 13:
                 logger.log("WARNING", "ProcessScan", "csrss.exe priority is not 13 %s" % process_info)
 
             # Process: wininit.exe
             if path != "none":
                 if name == "wininit.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "wininit.exe path is not System32 %s" % process_info)
-            if name == "wininit.exe" and priority is not 13:
+            if name == "wininit.exe" and priority != 13:
                 logger.log("NOTICE", "ProcessScan", "wininit.exe priority is not 13 %s" % process_info)
             # Is parent to other processes - save PID
             if name == "wininit.exe":
@@ -782,7 +781,7 @@ class Loki(object):
             if path != "none":
                 if name == "services.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "services.exe path is not System32 %s" % process_info)
-            if name == "services.exe" and priority is not 9:
+            if name == "services.exe" and priority != 9:
                 logger.log("WARNING", "ProcessScan", "services.exe priority is not 9 %s" % process_info)
             if wininit_pid > 0:
                 if name == "services.exe" and not parent_pid == wininit_pid:
@@ -792,7 +791,7 @@ class Loki(object):
             if path != "none":
                 if name == "lsass.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "lsass.exe path is not System32 %s" % process_info)
-            if name == "lsass.exe" and priority is not 9:
+            if name == "lsass.exe" and priority != 9:
                 logger.log("WARNING", "ProcessScan", "lsass.exe priority is not 9 %s" % process_info)
             if wininit_pid > 0:
                 if name == "lsass.exe" and not parent_pid == wininit_pid:
@@ -807,7 +806,7 @@ class Loki(object):
             if path is not "none":
                 if name == "svchost.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "svchost.exe path is not System32 %s" % process_info)
-            if name == "svchost.exe" and priority is not 8:
+            if name == "svchost.exe" and priority != 8:
                 logger.log("NOTICE", "ProcessScan", "svchost.exe priority is not 8 %s" % process_info)
             # Windows 10 FP
             #if name == "svchost.exe" and not ( self.check_svchost_owner(owner) or "unistacksvcgroup" in cmd.lower()):
@@ -820,7 +819,7 @@ class Loki(object):
             if path != "none":
                 if name == "lsm.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "lsm.exe path is not System32 %s" % process_info)
-            if name == "lsm.exe" and priority is not 8:
+            if name == "lsm.exe" and priority != 8:
                 logger.log("NOTICE", "ProcessScan", "lsm.exe priority is not 8 %s" % process_info)
             if name == "lsm.exe" and not ( owner.startswith("NT ") or owner.startswith("LO") or owner.startswith("SYSTEM")  or owner.startswith(u"система")):
                 logger.log(u"WARNING", "ProcessScan", "lsm.exe process owner is suspicious %s" % process_info)
@@ -829,7 +828,7 @@ class Loki(object):
                     logger.log("WARNING", "ProcessScan", "lsm.exe parent PID is not the one of wininit.exe %s" % process_info)
 
             # Process: winlogon.exe
-            if name == "winlogon.exe" and priority is not 13:
+            if name == "winlogon.exe" and priority != 13:
                 logger.log("WARNING", "ProcessScan", "winlogon.exe priority is not 13 %s" % process_info)
             if re.search("(Windows 7|Windows Vista)", getPlatformFull()):
                 if name == "winlogon.exe" and parent_pid > 0:
