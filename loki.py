@@ -89,11 +89,11 @@ EVIL_EXTENSIONS = [".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm"
                    ".reg", ".scr", ".sct", ".sys", ".url", ".vb", ".vbe", ".wsc", ".wsf", ".wsh", ".ct", ".t",
                    ".input", ".war", ".jsp", ".jspx", ".php", ".asp", ".aspx", ".doc", ".docx", ".pdf", ".xls", ".xlsx", ".ppt",
                    ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
-                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm"]
+                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm", ".py" ]
 
 SCRIPT_EXTENSIONS = [".asp", ".vbs", ".ps1", ".bas", ".bat", ".js", ".vb", ".vbe", ".wsc", ".wsf",
                      ".wsh", ".jsp", ".jspx", ".php", ".asp", ".aspx", ".psd1", ".psm1", ".ps1xml", ".clixml", ".psc1",
-                     ".pssc", ".pl"]
+                     ".pssc", ".pl", ".py" ]
 
 SCRIPT_TYPES = ["VBS", "PHP", "JSP", "ASP", "BATCH"]
 
@@ -374,9 +374,9 @@ class Loki(object):
                         matchType = None
                         matchDesc = None
                         matchHash = None
-                        md5 = 0
-                        sha1 = 0
-                        sha256 = 0
+                        md5 = ""
+                        sha1 = ""
+                        sha256 = ""
 
                         md5, sha1, sha256 = generateHashes(fileData)
                         md5_num=int(md5, 16)
@@ -1440,7 +1440,7 @@ def updateLoki(sigsOnly):
     if os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.exe')) and os_platform == "windows":
         pArgs.append('loki-upgrader.exe')
     elif os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.py')):
-        pArgs.append('python')
+        pArgs.append('python3')
         pArgs.append('loki-upgrader.py')
     else:
         logger.log("ERROR", "Update", "Cannot find neither thor-upgrader.exe nor thor-upgrader.py in the current workign directory.")
