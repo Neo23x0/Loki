@@ -7,6 +7,7 @@ try:
  from urllib2 import urlopen
 except ImportError:
  from urllib.request import urlopen #For python 3.5
+import io
 import json
 import zipfile
 import shutil
@@ -90,7 +91,9 @@ class LOKIUpdater(object):
 
                 # Read ZIP file
                 try:
-                    zipUpdate = zipfile.ZipFile(StringIO(response.read()))
+                    # py2->py3
+                    zipUpdate = zipfile.ZipFile(io.BytesIO(response.read()))
+                    #zipUpdate = zipfile.ZipFile(StringIO(response.read()))
                     for zipFilePath in zipUpdate.namelist():
                         sigName = os.path.basename(zipFilePath)
                         if zipFilePath.endswith("/"):
@@ -195,7 +198,7 @@ class LOKIUpdater(object):
                 if self.debug:
                     traceback.print_exc()
                 self.logger.log("ERROR", "Upgrader",
-                                "Error while extracting the signature files from the download package")
+                                "Error while extracting the signature files from the download package" +e )
                 sys.exit(1)
 
         except Exception as e:
