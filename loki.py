@@ -19,7 +19,6 @@ Loki combines all IOCs from ReginScanner and SkeletonKeyScanner and is the
 little brother of THOR our full-featured corporate APT Scanner
 
 Florian Roth
-BSK Consulting GmbH
 
 DISCLAIMER - USE AT YOUR OWN RISK.
 """
@@ -89,7 +88,7 @@ EVIL_EXTENSIONS = [".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm"
                    ".reg", ".scr", ".sct", ".sys", ".url", ".vb", ".vbe", ".wsc", ".wsf", ".wsh", ".ct", ".t",
                    ".input", ".war", ".jsp", ".jspx", ".php", ".asp", ".aspx", ".doc", ".docx", ".pdf", ".xls", ".xlsx", ".ppt",
                    ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
-                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm", ".py" ]
+                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm", ".py", ".sys" ]
 
 SCRIPT_EXTENSIONS = [".asp", ".vbs", ".ps1", ".bas", ".bat", ".js", ".vb", ".vbe", ".wsc", ".wsf",
                      ".wsh", ".jsp", ".jspx", ".php", ".asp", ".aspx", ".psd1", ".psm1", ".ps1xml", ".clixml", ".psc1",
@@ -113,7 +112,7 @@ class Loki(object):
     # Yara rule directories
     yara_rule_directories = []
 
-    # Excludes (list of regex that match within the whole path) (user-defined via excluces.cfg)
+    # Excludes (list of regex that match within the whole path) (user-defined via excludes.cfg)
     fullExcludes = []
     # Platform specific excludes (match the beginning of the full path) (not user-defined)
     startExcludes = []
