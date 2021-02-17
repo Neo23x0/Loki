@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: iso-8859-1 -*-
 # -*- coding: utf-8 -*-
 #
@@ -8,7 +8,6 @@
 import sys
 import hashlib
 import binascii
-import pylzma
 import zlib
 import struct
 import socket
@@ -27,6 +26,7 @@ import time
 import threading
 import subprocess
 import signal
+import codecs
 
 # Helper Functions -------------------------------------------------------------
 
@@ -80,9 +80,12 @@ def removeNonAsciiDrop(string):
     #print "CON: ", string
     try:
         # Generate a new string without disturbing characters
+        # convert string to str in case it's bytes (for python3)
+        # TODO: check if that gives the same results as in py2
+        string = string.decode("utf-8", errors='ignore')
         nonascii = "".join(i for i in string if ord(i)<127 and ord(i)>31)
 
-    except Exception, e:
+    except Exception as e:
         traceback.print_exc()
         pass
     #print "NON: ", nonascii
@@ -93,7 +96,7 @@ def getPlatformFull():
     type_info = ""
     try:
         type_info = "%s PROC: %s ARCH: %s" % ( " ".join(platform.win32_ver()), platform.processor(), " ".join(platform.architecture()))
-    except Exception, e:
+    except Exception as e:
         type_info = " ".join(platform.win32_ver())
     return type_info
 
@@ -105,7 +108,7 @@ def setNice(logger):
         logger.log("INFO", "Init", "Setting LOKI process with PID: %s to priority IDLE" % pid)
         p.nice(psutil.IDLE_PRIORITY_CLASS)
         return 1
-    except Exception, e:
+    except Exception as e:
         if logger.debug:
             traceback.print_exc()
         logger.log("ERROR", "Init", "Error setting nice value of THOR process")
@@ -128,31 +131,10 @@ def getExcludedMountpoints():
     return excludes
 
 
-def decompressSWFData(in_data):
-    try:
-        ver = in_data[3]
-
-        if in_data[0] == 'C':
-            # zlib SWF
-            decompressData = zlib.decompress(in_data[8:])
-        elif in_data[0] == 'Z':
-            # lzma SWF
-            decompressData = pylzma.decompress(in_data[12:])
-        elif in_data[0] == 'F':
-            # uncompressed SWF
-            decompressData = in_data[8:]
-
-        header = list(struct.unpack("<8B", in_data[0:8]))
-        header[0] = ord('F')
-        return True, struct.pack("<8B", *header) + decompressData
-
-    except Exception as e:
-        traceback.print_exc()
-        return False, "Decompression error"
-
-
 def removeBinaryZero(string):
-    return re.sub(r'\x00','',string)
+    #return re.sub(r'\x00','',string)
+    # py2 => py3:
+    return string.replace(b'\x00',b'')
 
 
 def printProgress(i):
@@ -210,9 +192,9 @@ def get_file_type(filePath, filetype_sigs, max_filetype_magics, logger):
         res_full = open(filePath, 'rb', os.O_RDONLY).read(max_filetype_magics)
         # Checking sigs
         for sig in filetype_sigs:
-            bytes_to_read = len(str(sig)) / 2
+            bytes_to_read = int(len(str(sig)) / 2) 
             res = res_full[:bytes_to_read]
-            if res == sig.decode('hex'):
+            if res == bytes.fromhex(sig):
                 return filetype_sigs[sig]
         return "UNKNOWN"
     except Exception as e:
@@ -224,17 +206,25 @@ def get_file_type(filePath, filetype_sigs, max_filetype_magics, logger):
 def removeNonAscii(string, stripit=False):
     nonascii = "error"
 
+
     try:
         try:
             # Handle according to the type
-            if isinstance(string, unicode) and not stripit:
-                nonascii = string.encode('unicode-escape')
-            elif isinstance(string, str) and not stripit:
+            # py2 => py3
+            #if isinstance(string, unicode) and not stripit:
+            if isinstance(string, str) and not stripit:
+                # hmmm, the original version didn't do what the function name says: "remove non ascii":
+                #nonascii = string.encode('unicode-escape')
+                # ... so this should be ok? to avoid the problem, that any kind of python3 encode messes up the regexes, e.g. \. => \\.
+                nonascii = string
+            # py2 => py3
+            #elif isinstance(string, str) and not stripit:
+            elif isinstance(string, bytes) and not stripit:
                 nonascii = string.decode('utf-8', 'replace').encode('unicode-escape')
             else:
                 try:
                     nonascii = string.encode('raw_unicode_escape')
-                except Exception, e:
+                except Exception as e:
                     nonascii = str("%s" % string)
 
         except Exception as e:

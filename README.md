@@ -48,7 +48,7 @@ Download the latest version of LOKI from the [releases](https://github.com/Neo23
     2. Search the web for the filename
     3. Search the web for keywords from the rule name (e.g. EQUATIONGroupMalware_1 > search for "Equation Group")
     4. Search the web for the MD5 hash of the sample
-    5. Search in my [customer APT search engine](https://cse.google.com/cse/publicurl?cx=003248445720253387346:turlh5vi4xc) for file names or identifiers
+    5. Search in my [custom APT search engine](https://cse.google.com/cse/publicurl?cx=003248445720253387346:turlh5vi4xc) for file names or identifiers
   - Please report back false positives via the [Issues](https://github.com/Neo23x0/Loki/issues) section (mention the false positive indicator like a hash and/or filename and the rule name that triggered)
 
 ## Update
@@ -127,10 +127,9 @@ If you want to build LOKI yourself:
 
 ### Windows
 
-- [yara](https://github.com/VirusTotal/yara/) : It's recommended to use the most recent version of the compiled packages for Windows (e.g. yara-python-3.5.0.0.win32-py2.7.exe - Download it from here: https://github.com/VirusTotal/yara/releases
-- [pywin32](http://sourceforge.net/projects/pywin32/) : path conversions (PyInstaller [issue](https://github.com/pyinstaller/pyinstaller/issues/1282); Windows only)
-- Microsoft Visual C++ 2010 Redistributable Package (https://www.microsoft.com/en-US/download/details.aspx?id=5555)
-- Microsoft Visual C++ Compiler for Python 2.7 (https://www.microsoft.com/en-us/download/details.aspx?id=44266): for pylzma
+- [yara-python](https://github.com/VirusTotal/yara-python/releases)
+- [pywin32](https://github.com/mhammond/pywin32/releases)
+- Microsoft Visual C++ 2015 Redistributable Package (https://www.microsoft.com/en-us/download/details.aspx?id=48145)
 
 ```
 c:\Python27[-x64]\python.exe -m pip install --upgrade pip

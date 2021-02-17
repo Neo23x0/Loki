@@ -39,14 +39,19 @@ from collections import Counter
 import datetime
 from bisect import bisect_left
 
+# for python2/3 compatibility
+from builtins import str
+import codecs
+
+
 # LOKI Modules
+from lib.helpers import *
 from lib.lokilogger import *
 from lib.levenshtein import LevCheck
 
-# Private Rules Support
-from lib.privrules import *
 
-sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+if sys.version_info[0] < 3:
+    sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 from lib.helpers import *
 from lib.pesieve import PESieve
@@ -69,8 +74,9 @@ if os_platform == "windows":
         import win32api
         from win32com.shell import shell
     except Exception as e:
-        print("Linux System - deactivating process memory check ...")
-        os_platform = "linux" # crazy guess
+        print("Please use pip to install wmi, win32api and win32com")
+        sys.exit(1)
+        
 
 if os_platform == "":
     print("Unable to determine platform - LOKI is lost.")
@@ -82,21 +88,18 @@ EVIL_EXTENSIONS = [".vbs", ".ps", ".ps1", ".rar", ".tmp", ".bas", ".bat", ".chm"
                    ".reg", ".scr", ".sct", ".sys", ".url", ".vb", ".vbe", ".wsc", ".wsf", ".wsh", ".ct", ".t",
                    ".input", ".war", ".jsp", ".jspx", ".php", ".asp", ".aspx", ".doc", ".docx", ".pdf", ".xls", ".xlsx", ".ppt",
                    ".pptx", ".tmp", ".log", ".dump", ".pwd", ".w", ".txt", ".conf", ".cfg", ".conf", ".config", ".psd1",
-                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm", ".sys"]
+                   ".psm1", ".ps1xml", ".clixml", ".psc1", ".pssc", ".pl", ".www", ".rdp", ".jar", ".docm", ".py", ".sys" ]
 
 SCRIPT_EXTENSIONS = [".asp", ".vbs", ".ps1", ".bas", ".bat", ".js", ".vb", ".vbe", ".wsc", ".wsf",
                      ".wsh", ".jsp", ".jspx", ".php", ".asp", ".aspx", ".psd1", ".psm1", ".ps1xml", ".clixml", ".psc1",
-                     ".pssc", ".pl"]
+                     ".pssc", ".pl", ".py" ]
 
 SCRIPT_TYPES = ["VBS", "PHP", "JSP", "ASP", "BATCH"]
 
-def ioc_contains(sorted_list, value):
-    # returns true if sorted_list contains value
-    index = bisect_left(sorted_list, value)
-    return index != len(sorted_list) and sorted_list[index] == value
-
 class Loki(object):
 
+
+    # move all class variables into the instances or they won't be passed on to do_scan() in python3 anymore
     # Signatures
     yara_rules = []
     filename_iocs = []
@@ -200,7 +203,8 @@ class Loki(object):
         # Counter
         c = 0
 
-        for root, directories, files in os.walk(unicode(path), onerror=walk_error, followlinks=False):
+        #for root, directories, files in os.walk(unicode(path), onerror=walk_error, followlinks=False):
+        for root, directories, files in os.walk(str(path), onerror=walk_error, followlinks=False):
 
             # Skip paths that start with ..
             newDirectories = []
@@ -220,8 +224,12 @@ class Loki(object):
                     newDirectories.append(dir)
             directories[:] = newDirectories
 
+            # This not the perfect position in the code for distributing the workload since loki will have to wait for the last file in the directory to go to the 
+            # next one, but that also doesn't totally clog the machine
             # Loop through files
+
             for filename in files:
+
                 try:
                     # Findings
                     reasons = []
@@ -234,8 +242,8 @@ class Loki(object):
                     # Clean the values for YARA matching
                     # > due to errors when Unicode characters are passed to the match function as
                     #   external variables
-                    filePathCleaned = fpath.encode('ascii', errors='replace')
-                    fileNameCleaned = filename.encode('ascii', errors='replace')
+                    filePathCleaned = fpath.encode('ascii', errors='replace').decode('ascii')
+                    fileNameCleaned = filename.encode('ascii', errors='replace').decode('ascii')
 
                     # Get Extension
                     extension = os.path.splitext(filePath)[1].lower()
@@ -357,20 +365,23 @@ class Loki(object):
                         fileData = self.get_file_data(filePath)
 
                         # First bytes
-                        firstBytesString = "%s / %s" % (fileData[:20].encode('hex'), removeNonAsciiDrop(fileData[:20]) )
+                        # py2 => 3
+                        #firstBytesString = "%s / %s" % (fileData[:20].encode('hex'), removeNonAsciiDrop(fileData[:20]) )
+                        firstBytesString = "%s / %s" % (str((codecs.getencoder('hex')(fileData[:20])[0]), 'utf-8'), removeNonAsciiDrop(fileData[:20]) )
 
                         # Hash Eval
                         matchType = None
                         matchDesc = None
                         matchHash = None
-                        md5 = 0
-                        sha1 = 0
-                        sha256 = 0
+                        md5 = ""
+                        sha1 = ""
+                        sha256 = ""
 
                         md5, sha1, sha256 = generateHashes(fileData)
                         md5_num=int(md5, 16)
                         sha1_num=int(sha1, 16)
                         sha256_num=int(sha256, 16)
+
 
                         # False Positive Hash
                         if md5_num in self.false_hashes.keys() or sha1_num in self.false_hashes.keys() or sha256_num in self.false_hashes.keys():
@@ -419,13 +430,6 @@ class Loki(object):
                         if fileType == "MDMP":
                             logger.log("INFO", "FileScan", "Scanning memory dump file %s" % fileNameCleaned)
 
-                        # Umcompressed SWF scan
-                        if fileType == "ZWS" or fileType == "CWS":
-                            logger.log("INFO", "FileScan", "Scanning decompressed SWF file %s" % fileNameCleaned)
-                            success, decompressedData = decompressSWFData(fileData)
-                            if success:
-                               fileData = decompressedData
-
                         # Scan the read data
                         try:
                             for (score, rule, description, reference, matched_strings) in \
@@ -468,9 +472,12 @@ class Loki(object):
                     message_body = fileInfo
                     for i, r in enumerate(reasons):
                         if i < 2 or args.allreasons:
-                            message_body += "REASON_{0}: {1}".format(i+1, r.encode('ascii', errors='replace'))
+                            # py2 -> 3
+                            #message_body += "REASON_{0}: {1}".format(i+1, r.encode('ascii', errors='replace'))
+                            message_body += "REASON_{0}: {1}".format(i+1, str(removeNonAscii(r)))
 
                     logger.log(message_type, "FileScan", message_body)
+
 
                 except Exception as e:
                     if logger.debug:
@@ -544,7 +551,7 @@ class Loki(object):
 
             string_num = 1
             for string in string_matches:
-                matching_strings += " Str" + str(string_num) + ": " + removeNonAscii(removeBinaryZero(string))
+                matching_strings += " Str" + str(string_num) + ": " + str(removeNonAscii(removeBinaryZero(string)), 'utf-8')
                 string_num += 1
 
             # Limit string
@@ -803,7 +810,7 @@ class Loki(object):
                     logger.log("WARNING", "ProcessScan", "lsass.exe count is higher than 1 %s" % process_info)
 
             # Process: svchost.exe
-            if path is not "none":
+            if path != "none":
                 if name == "svchost.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "svchost.exe path is not System32 %s" % process_info)
             if name == "svchost.exe" and priority != 8:
@@ -1385,6 +1392,8 @@ class Loki(object):
         return "", 0
 
 
+
+
 def get_application_path():
     try:
         if getattr(sys, 'frozen', False):
@@ -1430,7 +1439,7 @@ def updateLoki(sigsOnly):
     if os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.exe')) and os_platform == "windows":
         pArgs.append('loki-upgrader.exe')
     elif os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.py')):
-        pArgs.append('python')
+        pArgs.append('python3')
         pArgs.append('loki-upgrader.py')
     else:
         logger.log("ERROR", "Update", "Cannot find neither thor-upgrader.exe nor thor-upgrader.py in the current workign directory.")
@@ -1464,6 +1473,11 @@ def signal_handler(signal_name, frame):
         print('LOKI\'s work has been interrupted by a human. Returning to Asgard.')
     sys.exit(0)
 
+def ioc_contains(sorted_list, value):
+    # returns true if sorted_list contains value
+    index = bisect_left(sorted_list, value)
+    return index != len(sorted_list) and sorted_list[index] == value
+
 def main():
     """
     Argument parsing function
@@ -1486,7 +1500,7 @@ def main():
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
     parser.add_argument('--nolevcheck', action='store_true', help='Skip the Levenshtein distance check', default=False)
     parser.add_argument('--scriptanalysis', action='store_true', help='Statistical analysis for scripts to detect obfuscated code (beta)', default=False)
-    parser.add_argument('--rootkit', action='store_true', help='Skip the rootkit check', default=False)
+    parser.add_argument('--rootkit', action='store_true', help='Run the rootkit check', default=False)
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
     parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
     parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
@@ -1504,16 +1518,17 @@ def main():
     parser.add_argument('--nolisten', action='store_true', help='Dot not show listening connections', default=False)
     parser.add_argument('--excludeprocess', action='append', help='Specify an executable name to exclude from scans, can be used multiple times', default=[])
 
+    global args
     args = parser.parse_args()
 
     if args.syslogtcp and not args.r:
         print('Syslog logging set to TCP with --syslogtcp, but syslog logging not enabled with -r')
         sys.exit(1)
-		
+
     if args.nolog and (args.l or args.logfolder):
         print('The --logfolder and -l directives are not compatible with --nolog')
         sys.exit(1)
-		
+
     filename = 'loki_%s_%s.log' % (getHostname(os_platform), datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
     if args.logfolder and args.l:
         print('Must specify either log folder with --logfolder, which uses the default filename, or log file with -l. Log file can be an absolute path')
@@ -1535,6 +1550,8 @@ def main():
 # MAIN ################################################################
 if __name__ == '__main__':
 
+    start_time = time.time()
+
     # Signal handler for CTRL+C
     signal_module.signal(signal_module.SIGINT, signal_handler)
 
@@ -1550,9 +1567,14 @@ if __name__ == '__main__':
     pathLokiInit, statusLokiInit = CheckLokiInit(get_application_path())
     if statusLokiInit == 'present':
         try:
-            execfile(pathLokiInit, globals(), locals())
+            #execfile(pathLokiInit, globals(), locals())
+            # python3 way:
+            with open(pathLokiInit) as f:
+                code = compile(f.read(), pathLokiInit, 'exec')
+                exec(code, globals(), locals())
         except:
             statusLokiInit = str(sys.exc_info()[1])
+
     logger = LokiLogger(args.nolog, args.l, getHostname(os_platform), args.r, int(args.t), args.syslogtcp, args.csv, args.onlyrelevant, args.debug,
                         platform=os_platform, caller='main', customformatter=LokiCustomFormatter)
 
@@ -1642,6 +1664,8 @@ if __name__ == '__main__':
     # run plugins
     RunPluginsForPhase(LOKI_PHASE_END)
 
+    logger.log("INFO", "Results", "Scan needed %.2f seconds " % (time.time() - start_time)) 
+
     if not args.dontwait:
         print(" ")
-        raw_input("Press Enter to exit ...")
+        input("Press Enter to exit ...")

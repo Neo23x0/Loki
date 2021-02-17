@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: iso-8859-1 -*-
 # -*- coding: utf-8 -*-
 #
@@ -7,6 +7,7 @@ try:
  from urllib2 import urlopen
 except ImportError:
  from urllib.request import urlopen #For python 3.5
+import io
 import json
 import zipfile
 import shutil
@@ -25,7 +26,7 @@ if _platform == "win32":
         import wmi
         import win32api
         from win32com.shell import shell
-    except Exception, e:
+    except Exception as e:
         platform = "linux"  # crazy guess
 
 
@@ -90,7 +91,9 @@ class LOKIUpdater(object):
 
                 # Read ZIP file
                 try:
-                    zipUpdate = zipfile.ZipFile(StringIO(response.read()))
+                    # py2->py3
+                    zipUpdate = zipfile.ZipFile(io.BytesIO(response.read()))
+                    #zipUpdate = zipfile.ZipFile(StringIO(response.read()))
                     for zipFilePath in zipUpdate.namelist():
                         sigName = os.path.basename(zipFilePath)
                         if zipFilePath.endswith("/"):
@@ -122,7 +125,7 @@ class LOKIUpdater(object):
 
                         # Extract file
                         source = zipUpdate.open(zipFilePath)
-                        target = file(targetFile, "wb")
+                        target = open(targetFile, "wb")
                         with source, target:
                             shutil.copyfileobj(source, target)
 
@@ -181,7 +184,7 @@ class LOKIUpdater(object):
 
                     try:
                         # Create target file
-                        target = file(targetFile, "wb")
+                        target = open(targetFile, "wb")
                         with source, target:
                             shutil.copyfileobj(source, target)
                             if self.debug:
@@ -195,7 +198,7 @@ class LOKIUpdater(object):
                 if self.debug:
                     traceback.print_exc()
                 self.logger.log("ERROR", "Upgrader",
-                                "Error while extracting the signature files from the download package")
+                                "Error while extracting the signature files from the download package" +e )
                 sys.exit(1)
 
         except Exception as e:
