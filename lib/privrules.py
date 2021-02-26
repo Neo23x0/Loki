@@ -37,7 +37,7 @@ def read_rules_from_dir(directory):
                 'md5': dummy,
             })
             print("Adding rule file %s ..." % rulefile)
-        except Exception, e:
+        except Exception as e:
             print("Error compiling rule %s (%s)" % (rulefile, e))
             sys.exit(-1)
 
@@ -54,8 +54,8 @@ def read_rules_from_dir(directory):
             'filetype': dummy,
             'md5': dummy,
         })
-    except Exception, e:
-        print "Error compiling composed ruleset (%s)" % e
+    except Exception as e:
+        print("Error compiling composed ruleset (%s)" % e)
         sys.exit(-1)
 
     return compiled_rules

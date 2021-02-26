@@ -39,7 +39,7 @@ def main():
     n = export_RSA_key(rsakey, "%s.key" % args.target)
 
     if decrypt_rules(args.target) == None:
-        print "unable to decrypt package"
+        print("unable to decrypt package")
         sys.exit(-1)
 
 

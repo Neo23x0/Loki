@@ -43,11 +43,6 @@ from bisect import bisect_left
 from lib.lokilogger import *
 from lib.levenshtein import LevCheck
 
-# Private Rules Support
-from lib.privrules import *
-
-sys.stdout = codecs.getwriter('utf8')(sys.stdout)
-
 from lib.helpers import *
 from lib.pesieve import PESieve
 from lib.doublepulsar import DoublePulsar
@@ -90,10 +85,12 @@ SCRIPT_EXTENSIONS = [".asp", ".vbs", ".ps1", ".bas", ".bat", ".js", ".vb", ".vbe
 
 SCRIPT_TYPES = ["VBS", "PHP", "JSP", "ASP", "BATCH"]
 
+
 def ioc_contains(sorted_list, value):
     # returns true if sorted_list contains value
     index = bisect_left(sorted_list, value)
     return index != len(sorted_list) and sorted_list[index] == value
+
 
 class Loki(object):
 
@@ -200,7 +197,7 @@ class Loki(object):
         # Counter
         c = 0
 
-        for root, directories, files in os.walk(unicode(path), onerror=walk_error, followlinks=False):
+        for root, directories, files in os.walk(path, onerror=walk_error, followlinks=False):
 
             # Skip paths that start with ..
             newDirectories = []
@@ -310,8 +307,8 @@ class Loki(object):
                             total_score += 60
 
                     # Access check (also used for magic header detection)
-                    firstBytes = ""
-                    firstBytesString = "-"
+                    firstBytes = b""
+                    firstBytesString = b"-"
                     hashString = ""
                     try:
                         with open(filePath, 'rb') as f:
@@ -357,7 +354,7 @@ class Loki(object):
                         fileData = self.get_file_data(filePath)
 
                         # First bytes
-                        firstBytesString = "%s / %s" % (fileData[:20].encode('hex'), removeNonAsciiDrop(fileData[:20]) )
+                        firstBytesString = "%s / %s" % (fileData[:20].hex(), removeNonAsciiDrop(fileData[:20]))
 
                         # Hash Eval
                         matchType = None
@@ -419,13 +416,6 @@ class Loki(object):
                         if fileType == "MDMP":
                             logger.log("INFO", "FileScan", "Scanning memory dump file %s" % fileNameCleaned)
 
-                        # Umcompressed SWF scan
-                        if fileType == "ZWS" or fileType == "CWS":
-                            logger.log("INFO", "FileScan", "Scanning decompressed SWF file %s" % fileNameCleaned)
-                            success, decompressedData = decompressSWFData(fileData)
-                            if success:
-                               fileData = decompressedData
-
                         # Scan the read data
                         try:
                             for (score, rule, description, reference, matched_strings) in \
@@ -468,7 +458,7 @@ class Loki(object):
                     message_body = fileInfo
                     for i, r in enumerate(reasons):
                         if i < 2 or args.allreasons:
-                            message_body += "REASON_{0}: {1}".format(i+1, r.encode('ascii', errors='replace'))
+                            message_body += "REASON_{0}: {1}".format(i+1, r)
 
                     logger.log(message_type, "FileScan", message_body)
 
@@ -477,7 +467,7 @@ class Loki(object):
                         traceback.print_exc()
                         sys.exit(1)
 
-    def scan_data(self, fileData, fileType="-", fileName="-", filePath="-", extension="-", md5="-"):
+    def scan_data(self, fileData, fileType="-", fileName=b"-", filePath=b"-", extension=b"-", md5="-"):
 
         # Scan parameters
         #print fileType, fileName, filePath, extension, md5
@@ -488,8 +478,8 @@ class Loki(object):
                 # Yara Rule Match
                 matches = rules.match(data=fileData,
                                       externals={
-                                          'filename': fileName,
-                                          'filepath': filePath,
+                                          'filename': fileName.decode('utf-8'),
+                                          'filepath': filePath.decode('utf-8'),
                                           'extension': extension,
                                           'filetype': fileType,
                                           'md5': md5
@@ -544,7 +534,7 @@ class Loki(object):
 
             string_num = 1
             for string in string_matches:
-                matching_strings += " Str" + str(string_num) + ": " + removeNonAscii(removeBinaryZero(string))
+                matching_strings += " Str" + str(string_num) + ": " + string.decode('utf-8')
                 string_num += 1
 
             # Limit string
@@ -803,7 +793,7 @@ class Loki(object):
                     logger.log("WARNING", "ProcessScan", "lsass.exe count is higher than 1 %s" % process_info)
 
             # Process: svchost.exe
-            if path is not "none":
+            if path != "none":
                 if name == "svchost.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
                     logger.log("WARNING", "ProcessScan", "svchost.exe path is not System32 %s" % process_info)
             if name == "svchost.exe" and priority != 8:
@@ -1160,15 +1150,6 @@ class Loki(object):
             # Add as Lokis YARA rules
             self.yara_rules.append(compiledRules)
 
-            # Add private rules
-            logger.log("INFO", "Init", "Reading private rules from binary ...")
-            if hasattr(sys, '_MEIPASS'):
-                privrules_path = os.path.join(sys._MEIPASS, "rules")
-                if os.path.exists(privrules_path):
-                    private_rules = decrypt_rules(privrules_path)
-                    self.yara_rules.append(private_rules)
-                    logger.log("INFO", "Init", "Initialized private rules")
-
         except Exception as e:
             logger.log("ERROR", "Init", "Error reading signature folder /signatures/")
             if logger.debug:
@@ -1321,7 +1302,7 @@ class Loki(object):
             logger.log("ALERT", "Rootkit", "Regin Virtual Filesystem MATCH: %s" % filePath)
 
     def get_file_data(self, filePath):
-        fileData = ""
+        fileData = b''
         try:
             # Read file complete
             with open(filePath, 'rb') as f:
@@ -1445,14 +1426,10 @@ def updateLoki(sigsOnly):
 
 
 def walk_error(err):
-    try:
-        if "Error 3" in str(err):
-            logger.log('ERROR', "FileScan", removeNonAsciiDrop(str(err)))
-        elif args.debug:
-            print("Directory walk error")
-            sys.exit(1)
-    except UnicodeError as e:
-        print("Unicode decode error in walk error message")
+    if "Error 3" in str(err):
+        logging.error(str(err))
+        print("Directory walk error")
+    traceback.print_exc()
 
 
 # CTRL+C Handler --------------------------------------------------------------
@@ -1641,7 +1618,3 @@ if __name__ == '__main__':
 
     # run plugins
     RunPluginsForPhase(LOKI_PHASE_END)
-
-    if not args.dontwait:
-        print(" ")
-        raw_input("Press Enter to exit ...")

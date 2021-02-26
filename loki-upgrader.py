@@ -25,11 +25,11 @@ if _platform == "win32":
         import wmi
         import win32api
         from win32com.shell import shell
-    except Exception, e:
+    except Exception as e:
         platform = "linux"  # crazy guess
 
 
-from lib.lokilogger import *
+from .lib.lokilogger import *
 
 # Platform
 platform = ""
@@ -122,9 +122,11 @@ class LOKIUpdater(object):
 
                         # Extract file
                         source = zipUpdate.open(zipFilePath)
-                        target = file(targetFile, "wb")
+                        target = open(targetFile, "wb")
                         with source, target:
                             shutil.copyfileobj(source, target)
+                        target.close()
+                        source.close()
 
                 except Exception as e:
                     if self.debug:
@@ -181,11 +183,12 @@ class LOKIUpdater(object):
 
                     try:
                         # Create target file
-                        target = file(targetFile, "wb")
+                        target = open(targetFile, "wb")
                         with source, target:
                             shutil.copyfileobj(source, target)
                             if self.debug:
                                 self.logger.log("DEBUG", "Upgrader", "Successfully extracted '%s'" % targetFile)
+                        target.close()
                     except Exception as e:
                         self.logger.log("ERROR", "Upgrader", "Cannot extract '%s'" % targetFile)
                         if self.debug:

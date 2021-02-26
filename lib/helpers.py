@@ -7,11 +7,8 @@
 
 import sys
 import hashlib
-import binascii
-import pylzma
-import zlib
+import string
 import struct
-import socket
 import traceback
 import os
 import re
@@ -21,7 +18,6 @@ try:
 except ImportError:
     from io import StringIO
 import netaddr
-import datetime
 import platform
 import time
 import threading
@@ -75,17 +71,15 @@ def generateHashes(filedata):
         return 0, 0, 0
 
 
-def removeNonAsciiDrop(string):
+def removeNonAsciiDrop(s):
     nonascii = "error"
-    #print "CON: ", string
     try:
         # Generate a new string without disturbing characters
-        nonascii = "".join(i for i in string if ord(i)<127 and ord(i)>31)
-
-    except Exception, e:
+        printable = set(string.printable)
+        nonascii = filter(lambda x: x in printable, s)
+    except Exception as e:
         traceback.print_exc()
         pass
-    #print "NON: ", nonascii
     return nonascii
 
 
@@ -93,7 +87,7 @@ def getPlatformFull():
     type_info = ""
     try:
         type_info = "%s PROC: %s ARCH: %s" % ( " ".join(platform.win32_ver()), platform.processor(), " ".join(platform.architecture()))
-    except Exception, e:
+    except Exception as e:
         type_info = " ".join(platform.win32_ver())
     return type_info
 
@@ -105,7 +99,7 @@ def setNice(logger):
         logger.log("INFO", "Init", "Setting LOKI process with PID: %s to priority IDLE" % pid)
         p.nice(psutil.IDLE_PRIORITY_CLASS)
         return 1
-    except Exception, e:
+    except Exception as e:
         if logger.debug:
             traceback.print_exc()
         logger.log("ERROR", "Init", "Error setting nice value of THOR process")
@@ -126,29 +120,6 @@ def getExcludedMountpoints():
     finally:
         mtab.close()
     return excludes
-
-
-def decompressSWFData(in_data):
-    try:
-        ver = in_data[3]
-
-        if in_data[0] == 'C':
-            # zlib SWF
-            decompressData = zlib.decompress(in_data[8:])
-        elif in_data[0] == 'Z':
-            # lzma SWF
-            decompressData = pylzma.decompress(in_data[12:])
-        elif in_data[0] == 'F':
-            # uncompressed SWF
-            decompressData = in_data[8:]
-
-        header = list(struct.unpack("<8B", in_data[0:8]))
-        header[0] = ord('F')
-        return True, struct.pack("<8B", *header) + decompressData
-
-    except Exception as e:
-        traceback.print_exc()
-        return False, "Decompression error"
 
 
 def removeBinaryZero(string):
@@ -210,9 +181,9 @@ def get_file_type(filePath, filetype_sigs, max_filetype_magics, logger):
         res_full = open(filePath, 'rb', os.O_RDONLY).read(max_filetype_magics)
         # Checking sigs
         for sig in filetype_sigs:
-            bytes_to_read = len(str(sig)) / 2
+            bytes_to_read = int(len(str(sig)) / 2)
             res = res_full[:bytes_to_read]
-            if res == sig.decode('hex'):
+            if res == bytes.fromhex(sig):
                 return filetype_sigs[sig]
         return "UNKNOWN"
     except Exception as e:
@@ -227,14 +198,12 @@ def removeNonAscii(string, stripit=False):
     try:
         try:
             # Handle according to the type
-            if isinstance(string, unicode) and not stripit:
-                nonascii = string.encode('unicode-escape')
-            elif isinstance(string, str) and not stripit:
+            if isinstance(string, str) and not stripit:
                 nonascii = string.decode('utf-8', 'replace').encode('unicode-escape')
             else:
                 try:
                     nonascii = string.encode('raw_unicode_escape')
-                except Exception, e:
+                except Exception as e:
                     nonascii = str("%s" % string)
 
         except Exception as e:

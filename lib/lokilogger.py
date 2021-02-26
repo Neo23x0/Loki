@@ -2,7 +2,8 @@
 #
 # LOKI Logger
 
-import sys, re
+import sys
+import re
 from colorama import Fore, Back, Style
 from colorama import init
 import codecs
@@ -12,13 +13,13 @@ import rfc5424logging
 import logging
 from logging import handlers
 import socket
-from helpers import removeNonAsciiDrop
+from .helpers import removeNonAsciiDrop
 
-__version__ = '0.33.0'
+__version__ = '0.40.0'
 
 
 # Logger Class -----------------------------------------------------------------
-class LokiLogger():
+class LokiLogger:
 
     STDOUT_CSV = 0
     STDOUT_LINE = 1
@@ -52,9 +53,6 @@ class LokiLogger():
         if "windows" in platform.lower():
             self.linesep = "\r\n"
 
-        reload(sys)
-        sys.setdefaultencoding('utf8')
-
         # Colorization ----------------------------------------------------
         init()
 
@@ -69,7 +67,9 @@ class LokiLogger():
                 self.remote_logger = logging.getLogger('LOKI')
                 self.remote_logger.setLevel(logging.DEBUG)
                 socket_type = socket.SOCK_STREAM if syslog_tcp else socket.SOCK_DGRAM
-                remote_syslog_handler = rfc5424logging.Rfc5424SysLogHandler(address=(remote_host, remote_port), facility=handlers.SysLogHandler.LOG_LOCAL3, socktype=socket_type)
+                remote_syslog_handler = rfc5424logging.Rfc5424SysLogHandler(address=(remote_host, remote_port),
+                                                                            facility=handlers.SysLogHandler.LOG_LOCAL3,
+                                                                            socktype=socket_type)
                 self.remote_logger.addHandler(remote_syslog_handler)
                 self.remote_logging = True
             except Exception as e:
@@ -104,10 +104,10 @@ class LokiLogger():
 
         # to stdout
         try:
-            self.log_to_stdout(message.encode('ascii', errors='replace'), mes_type)
+            self.log_to_stdout(message, mes_type)
         except Exception as e:
             print ("Cannot print certain characters to command line - see log file for full unicode encoded log line")
-            self.log_to_stdout(removeNonAsciiDrop(message), mes_type)
+            self.log_to_stdout(message, mes_type)
 
         # to syslog server
         if self.remote_logging:
@@ -120,25 +120,15 @@ class LokiLogger():
             return self.CustomFormatter(type, message, args)
 
     def log_to_stdout(self, message, mes_type):
-        # check tty encoding
-        encoding = ""
-        if sys.stdout.encoding is not None:
-            encoding = sys.stdout.encoding
-        else:
-            # fallback on utf-8
-            encoding = "utf-8"
 
         # Prepare Message
-        codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
-        message = message.encode(encoding, errors='replace')
+        #codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
 
         if self.csv:
-            print (self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, mes_type, message))
+            print(self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, mes_type, message))
 
         else:
-
             try:
-
                 key_color = Fore.WHITE
                 base_color = Fore.WHITE+Back.BLACK
                 high_color = Fore.WHITE+Back.BLACK
@@ -194,7 +184,7 @@ class LokiLogger():
                 if self.debug:
                     traceback.print_exc()
                     sys.exit(1)
-                print ("Cannot print to cmd line - formatting error")
+                print("Cannot print to cmd line - formatting error")
 
     def log_to_file(self, message, mes_type, module):
         try:
@@ -236,37 +226,39 @@ class LokiLogger():
     def print_welcome(self):
 
         if self.caller == 'main':
-            print(Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN)
+            print(str(Back.GREEN))
+            print(" ".ljust(79) + Back.BLACK + Fore.GREEN)
 
             print("      __   ____  __ ______                            ")
-            print ("     / /  / __ \/ //_/  _/                            ")
-            print ("    / /__/ /_/ / ,< _/ /                              ")
-            print ("   /____/\____/_/|_/___/                              ")
-            print ("      ________  _____  ____                           ")
-            print ("     /  _/ __ \/ ___/ / __/______ ____  ___  ___ ____ ")
-            print ("    _/ // /_/ / /__  _\ \/ __/ _ `/ _ \/ _ \/ -_) __/ ")
-            print ("   /___/\____/\___/ /___/\__/\_,_/_//_/_//_/\__/_/    ")
+            print("     / /  / __ \\/ //_/  _/                            ")
+            print("    / /__/ /_/ / ,< _/ /                              ")
+            print("   /____/\\____/_/|_/___/                              ")
+            print("      ________  _____  ____                           ")
+            print("     /  _/ __ \\/ ___/ / __/______ ____  ___  ___ ____ ")
+            print("    _/ // /_/ / /__  _\\ \\/ __/ _ `/ _ \\/ _ \\/ -_) __/ ")
+            print("   /___/\\____/\\___/ /___/\\__/\\_,_/_//_/_//_/\\__/_/    ")
 
-            print (Fore.WHITE)
-            print ("   Copyright by Florian Roth, Released under the GNU General Public License")
-            print ("   Version %s" % __version__)
-            print ("  ")
-            print ("   DISCLAIMER - USE AT YOUR OWN RISK")
-            print ("   Please report false positives via https://github.com/Neo23x0/Loki/issues")
-            print ("  ")
-            print (Back.GREEN + " ".ljust(79) + Back.BLACK)
-            print (Fore.WHITE+''+Back.BLACK)
+            print(Fore.WHITE)
+            print("   Copyright by Florian Roth, Released under the GNU General Public License")
+            print("   Version %s" % __version__)
+            print("  ")
+            print("   DISCLAIMER - USE AT YOUR OWN RISK")
+            print("   Please report false positives via https://github.com/Neo23x0/Loki/issues")
+            print("  ")
+            print(Back.GREEN + " ".ljust(79) + Back.BLACK)
+            print(Fore.WHITE+''+Back.BLACK)
 
         else:
-            print ("  ")
-            print (Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN)
+            print("  ")
+            print(Back.GREEN + " ".ljust(79) + Back.BLACK + Fore.GREEN)
 
-            print ("  ")
-            print ("  LOKI UPGRADER ")
+            print("  ")
+            print("  LOKI UPGRADER ")
 
-            print ("  ")
-            print (Back.GREEN + " ".ljust(79) + Back.BLACK)
-            print (Fore.WHITE + '' + Back.BLACK)
+            print("  ")
+            print(Back.GREEN + " ".ljust(79) + Back.BLACK)
+            print(Fore.WHITE + '' + Back.BLACK)
+
 
 def getSyslogTimestamp():
     date_obj = datetime.datetime.utcnow()
