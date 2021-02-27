@@ -1094,9 +1094,12 @@ class Loki(object):
                             if extension != ".yar" and extension != ".yara":
                                 continue
 
+                            with open(yaraRuleFile, 'r') as yfile:
+                                yara_rule_data = yfile.read()
+
                             # Test Compile
                             try:
-                                compiledRules = yara.compile(yaraRuleFile, externals={
+                                compiledRules = yara.compile(source=yara_rule_data, externals={
                                     'filename': dummy,
                                     'filepath': dummy,
                                     'extension': dummy,
@@ -1113,15 +1116,13 @@ class Loki(object):
                                 continue
 
                             # Add the rule
-                            with open(yaraRuleFile, 'r') as rulefile:
-                                data = rulefile.read()
-                                yaraRules += data
+                            yaraRules += yara_rule_data
 
                         except Exception as e:
                             logger.log("ERROR", "Init", "Error reading signature file %s ERROR: %s" % (yaraRuleFile, sys.exc_info()[1]))
                             if logger.debug:
                                 traceback.print_exc()
-                                sys.exit(1)
+                                # sys.exit(1)
 
             # Compile
             try:
