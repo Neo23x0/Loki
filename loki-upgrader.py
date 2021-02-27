@@ -10,10 +10,7 @@ except ImportError:
 import json
 import zipfile
 import shutil
-try:
- from StringIO import StringIO
-except ImportError:
- from io import StringIO
+import io
 import os
 import argparse
 import traceback
@@ -29,7 +26,7 @@ if _platform == "win32":
         platform = "linux"  # crazy guess
 
 
-from .lib.lokilogger import *
+from lib.lokilogger import *
 
 # Platform
 platform = ""
@@ -90,7 +87,7 @@ class LOKIUpdater(object):
 
                 # Read ZIP file
                 try:
-                    zipUpdate = zipfile.ZipFile(StringIO(response.read()))
+                    zipUpdate = zipfile.ZipFile(io.BytesIO(response.read()))
                     for zipFilePath in zipUpdate.namelist():
                         sigName = os.path.basename(zipFilePath)
                         if zipFilePath.endswith("/"):
@@ -162,7 +159,7 @@ class LOKIUpdater(object):
 
             # Read ZIP file
             try:
-                zipUpdate = zipfile.ZipFile(StringIO(response_zip.read()))
+                zipUpdate = zipfile.ZipFile(io.BytesIO(response_zip.read()))
                 for zipFilePath in zipUpdate.namelist():
                     if zipFilePath.endswith("/") or "/config/" in zipFilePath or "/loki-upgrader.exe" in zipFilePath:
                         continue
@@ -175,7 +172,8 @@ class LOKIUpdater(object):
                     try:
                         # Create file if not present
                         if not os.path.exists(os.path.dirname(targetFile)):
-                            os.makedirs(os.path.dirname(targetFile))
+                            if os.path.dirname(targetFile) != '':
+                                os.makedirs(os.path.dirname(targetFile))
                     except Exception as e:
                         if self.debug:
                             self.logger.log("DEBUG", "Upgrader", "Cannot create dir name '%s'" % os.path.dirname(targetFile))

@@ -56,15 +56,17 @@ class PESieve(object):
         # Compose command
         command = [self.peSieve, '/pid', str(pid), '/ofilter', '2', '/quiet', '/json'] + (['/shellc'] if pesieveshellc else [])
         # Run PE-Sieve on given process
-        output, returnCode = runProcess(command)
-
+        (output, returnCode) = runProcess(command)
+        # Debug output
+        if self.logger.debug:
+            print("PE-Sieve JSON output: %s" % output)
+        if output == '' or not output:
+            return results
         try:
-            # Debug output
             results_raw = json.loads(output)
             results = results_raw["scanned"]["modified"]
-            if self.logger.debug:
-                print(results)
         except ValueError as v:
+            traceback.print_exc()
             self.logger.log("DEBUG", "PESieve", "Couldn't parse the JSON output.")
         except Exception as e:
             traceback.print_exc()

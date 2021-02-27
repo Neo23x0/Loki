@@ -78,10 +78,6 @@ class LokiLogger:
 
     def log(self, mes_type, module, message):
 
-        # Remove all non-ASCII characters
-        # message = removeNonAsciiDrop(message)
-        codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
-
         if not self.debug and mes_type == "DEBUG":
             return
 
@@ -114,23 +110,21 @@ class LokiLogger:
             self.log_to_remotesys(message, mes_type, module)
 
     def Format(self, type, message, *args):
-        if self.CustomFormatter == None:
+        if not self.CustomFormatter:
             return message.format(*args)
         else:
             return self.CustomFormatter(type, message, args)
 
     def log_to_stdout(self, message, mes_type):
 
-        # Prepare Message
-        #codecs.register(lambda message: codecs.lookup('utf-8') if message == 'cp65001' else None)
-
         if self.csv:
             print(self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, mes_type, message))
 
         else:
             try:
+                reset_all = Style.NORMAL+Fore.RESET
                 key_color = Fore.WHITE
-                base_color = Fore.WHITE+Back.BLACK
+                base_color = Back.BLACK+Fore.WHITE
                 high_color = Fore.WHITE+Back.BLACK
 
                 if mes_type == "NOTICE":
@@ -175,10 +169,10 @@ class LokiLogger:
                 # Print to console
                 if mes_type == "RESULT":
                     res_message = "\b\b%s %s" % (mes_type, message)
-                    print (base_color+' '+res_message+' '+Back.BLACK)
-                    print (Fore.WHITE+' '+Style.NORMAL)
+                    print(base_color+' '+res_message+' '+Back.BLACK)
+                    print(Fore.WHITE+' '+Style.NORMAL)
                 else:
-                    sys.stdout.write("%s\b\b%s %s%s%s%s\n" % (base_color, mes_type, message, Back.BLACK,Fore.WHITE,Style.NORMAL))
+                    sys.stdout.write("%s%s\b\b%s %s%s%s%s\n" % (reset_all, base_color, mes_type, message, Back.BLACK,Fore.WHITE,Style.NORMAL))
 
             except Exception as e:
                 if self.debug:
@@ -226,26 +220,21 @@ class LokiLogger:
     def print_welcome(self):
 
         if self.caller == 'main':
-            print(str(Back.GREEN))
-            print(" ".ljust(79) + Back.BLACK + Fore.GREEN)
+            print(str(Back.WHITE))
+            print(" ".ljust(79) + Back.BLACK + Style.BRIGHT)
 
-            print("      __   ____  __ ______                            ")
-            print("     / /  / __ \\/ //_/  _/                            ")
-            print("    / /__/ /_/ / ,< _/ /                              ")
-            print("   /____/\\____/_/|_/___/                              ")
-            print("      ________  _____  ____                           ")
-            print("     /  _/ __ \\/ ___/ / __/______ ____  ___  ___ ____ ")
-            print("    _/ // /_/ / /__  _\\ \\/ __/ _ `/ _ \\/ _ \\/ -_) __/ ")
-            print("   /___/\\____/\\___/ /___/\\__/\\_,_/_//_/_//_/\\__/_/    ")
-
-            print(Fore.WHITE)
-            print("   Copyright by Florian Roth, Released under the GNU General Public License")
-            print("   Version %s" % __version__)
+            print("      __   ____  __ ______  ")
+            print("     / /  / __ \\/ //_/  _/  ")
+            print("    / /__/ /_/ / ,< _/ /    ")
+            print("   /____/\\____/_/|_/___/    ")
+            print("   YARA and IOC Scanner     ")
+            print("  ")
+            print("   by Florian Roth, GNU General Public License")
+            print("   version %s (Python 3 release)" % __version__)
             print("  ")
             print("   DISCLAIMER - USE AT YOUR OWN RISK")
-            print("   Please report false positives via https://github.com/Neo23x0/Loki/issues")
-            print("  ")
-            print(Back.GREEN + " ".ljust(79) + Back.BLACK)
+            print(str(Back.WHITE))
+            print(" ".ljust(79) + Back.BLACK + Fore.GREEN)
             print(Fore.WHITE+''+Back.BLACK)
 
         else:

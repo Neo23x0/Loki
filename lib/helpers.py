@@ -256,27 +256,30 @@ def runProcess(command, timeout=10):
     returnCode = 0
 
     # Kill check
-    kill_check = threading.Event()
-    def _kill_process_after_a_timeout(pid):
-        os.kill(pid, signal.SIGTERM)
-        kill_check.set() # tell the main routine that we had to kill
-        print("timeout hit - killing pid {0}".format(pid))
-        # use SIGKILL if hard to kill...
-        return "", 1
     try:
-        p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    except subprocess.CalledProcessError as e:
-        returnCode = e.returncode
+        kill_check = threading.Event()
+        def _kill_process_after_a_timeout(pid):
+            os.kill(pid, signal.SIGTERM)
+            kill_check.set() # tell the main routine that we had to kill
+            print("timeout hit - killing pid {0}".format(pid))
+            # use SIGKILL if hard to kill...
+            return "", 1
+        try:
+            p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError as e:
+            returnCode = e.returncode
+            traceback.print_exc()
+        #print p.communicate()[0]
+        pid = p.pid
+        watchdog = threading.Timer(timeout, _kill_process_after_a_timeout, args=(pid, ))
+        watchdog.start()
+        (stdout, stderr) = p.communicate()
+        output = "{0}{1}".format(stdout.decode('utf-8'), stderr.decode('utf-8'))
+        watchdog.cancel() # if it's still waiting to run
+        success = not kill_check.isSet()
+        kill_check.clear()
+    except Exception as e:
         traceback.print_exc()
-    #print p.communicate()[0]
-    pid = p.pid
-    watchdog = threading.Timer(timeout, _kill_process_after_a_timeout, args=(pid, ))
-    watchdog.start()
-    (stdout, stderr) = p.communicate()
-    output = "{0} {1}".format(stdout, stderr)
-    watchdog.cancel() # if it's still waiting to run
-    success = not kill_check.isSet()
-    kill_check.clear()
 
     return output, returnCode
 

@@ -46,7 +46,6 @@ from lib.levenshtein import LevCheck
 from lib.helpers import *
 from lib.pesieve import PESieve
 from lib.doublepulsar import DoublePulsar
-from lib.pluginframework import *
 
 # Platform
 os_platform = ""
@@ -65,7 +64,7 @@ if os_platform == "windows":
         from win32com.shell import shell
     except Exception as e:
         print("Linux System - deactivating process memory check ...")
-        os_platform = "linux" # crazy guess
+        os_platform = "linux"  # crazy guess
 
 if os_platform == "":
     print("Unable to determine platform - LOKI is lost.")
@@ -395,12 +394,6 @@ class Loki(object):
                             matchType, matchHash, matchDesc))
                             total_score += 100
 
-                        # Regin .EVT FS Check
-                        if len(fileData) > 11 and args.reginfs:
-
-                            # Check if file is Regin virtual .evt file system
-                            self.scan_regin_fs(fileData, filePath)
-
                         # Script Anomalies Check
                         if args.scriptanalysis:
                             if extension in SCRIPT_EXTENSIONS or type in SCRIPT_TYPES:
@@ -414,7 +407,7 @@ class Loki(object):
 
                         # Memory Dump Scan
                         if fileType == "MDMP":
-                            logger.log("INFO", "FileScan", "Scanning memory dump file %s" % fileNameCleaned)
+                            logger.log("INFO", "FileScan", "Scanning memory dump file %s" % fileNameCleaned.decode('utf-8'))
 
                         # Scan the read data
                         try:
@@ -566,7 +559,6 @@ class Loki(object):
             return ( owner.upper().startswith("NT ") or owner.upper().startswith("NET") or
                 owner.upper().startswith("LO") or
                 owner.upper().startswith("SYSTEM"))
-
 
     def scan_processes(self, nopesieve, nolisten, excludeprocess, pesieveshellc):
         # WMI Handler
@@ -1272,34 +1264,6 @@ class Loki(object):
                 traceback.print_exc()
             logger.log("NOTICE", "Init", "Error reading excludes file: %s" % excludes_file)
 
-    def scan_regin_fs(self, fileData, filePath):
-
-        # Code section by Paul Rascagneres, G DATA Software
-        # Adapted to work with the fileData already read to avoid
-        # further disk I/O
-
-        fp = StringIO(fileData)
-        SectorSize=fp.read(2)[::-1]
-        MaxSectorCount=fp.read(2)[::-1]
-        MaxFileCount=fp.read(2)[::-1]
-        FileTagLength=fp.read(1)[::-1]
-        CRC32custom=fp.read(4)[::-1]
-
-        # original code:
-        # fp.close()
-        # fp = open(filePath, 'r')
-
-        # replaced with the following:
-        fp.seek(0)
-
-        data=fp.read(0x7)
-        crc = binascii.crc32(data, 0x45)
-        crc2 = '%08x' % (crc & 0xffffffff)
-
-        logger.log("DEBUG", "Rootkit", "Regin FS Check CRC2: %s" % crc2.encode('hex'))
-
-        if CRC32custom.encode('hex') == crc2:
-            logger.log("ALERT", "Rootkit", "Regin Virtual Filesystem MATCH: %s" % filePath)
 
     def get_file_data(self, filePath):
         fileData = b''
@@ -1313,6 +1277,7 @@ class Loki(object):
             logger.log("DEBUG", "FileScan", "Cannot open file %s (access denied)" % filePath)
         finally:
             return fileData
+
 
     def script_stats_analysis(self, data):
         """
@@ -1465,7 +1430,6 @@ def main():
     parser.add_argument('--scriptanalysis', action='store_true', help='Statistical analysis for scripts to detect obfuscated code (beta)', default=False)
     parser.add_argument('--rootkit', action='store_true', help='Skip the rootkit check', default=False)
     parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
-    parser.add_argument('--reginfs', action='store_true', help='Do check for Regin virtual file system', default=False)
     parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
     parser.add_argument('--intense', action='store_true', help='Intense scan mode (also scan unknown file types and all extensions)', default=False)
     parser.add_argument('--csv', action='store_true', help='Write CSV log format to STDOUT (machine processing)', default=False)
@@ -1473,7 +1437,7 @@ def main():
     parser.add_argument('--nolog', action='store_true', help='Don\'t write a local log file', default=False)
     parser.add_argument('--update', action='store_true', default=False, help='Update the signatures from the "signature-base" sub repository')
     parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
-    parser.add_argument('--maxworkingset', type=int, default=100, help='Maximum working set size of processes to scan (in MB, default 100 MB)')
+    parser.add_argument('--maxworkingset', type=int, default=200, help='Maximum working set size of processes to scan (in MB, default 100 MB)')
     parser.add_argument('--syslogtcp', action='store_true', default=False, help='Use TCP instead of UDP for syslog logging')
     parser.add_argument('--logfolder', help='Folder to use for logging when log file is not specified', metavar='log-folder', default='')
     parser.add_argument('--nopesieve', action='store_true', help='Do not perform pe-sieve scans', default=False)
@@ -1524,12 +1488,6 @@ if __name__ == '__main__':
 
     # Logger
     LokiCustomFormatter = None
-    pathLokiInit, statusLokiInit = CheckLokiInit(get_application_path())
-    if statusLokiInit == 'present':
-        try:
-            execfile(pathLokiInit, globals(), locals())
-        except:
-            statusLokiInit = str(sys.exc_info()[1])
     logger = LokiLogger(args.nolog, args.l, getHostname(os_platform), args.r, int(args.t), args.syslogtcp, args.csv, args.onlyrelevant, args.debug,
                         platform=os_platform, caller='main', customformatter=LokiCustomFormatter)
 
@@ -1540,16 +1498,6 @@ if __name__ == '__main__':
 
     logger.log("NOTICE", "Init", "Starting Loki Scan VERSION: {3} SYSTEM: {0} TIME: {1} PLATFORM: {2}".format(
         getHostname(os_platform), getSyslogTimestamp(), getPlatformFull(), logger.version))
-
-    if statusLokiInit == 'notpresent':
-        pass
-    elif statusLokiInit == 'present':
-        logger.log('INFO', 'Init', '%s loaded' % FILENAME_LOKI_INIT)
-    else:
-        logger.log('ERROR', 'Init', '%s load error %s' % (FILENAME_LOKI_INIT, statusLokiInit))
-
-    # Load plugins
-    LoadPlugins(globals(), locals())
 
     # Loki
     loki = Loki(args.intense)
@@ -1573,9 +1521,6 @@ if __name__ == '__main__':
     if os_platform == "windows":
         setNice(logger)
 
-    # run plugins
-    RunPluginsForPhase(LOKI_PHASE_BEFORE_SCANS)
-
     # Scan Processes --------------------------------------------------
     resultProc = False
     if not args.noprocscan and os_platform == "windows":
@@ -1598,9 +1543,6 @@ if __name__ == '__main__':
     if not args.nofilescan:
         loki.scan_path(defaultPath)
 
-    # run plugins
-    RunPluginsForPhase(LOKI_PHASE_AFTER_SCANS)
-
     # Result ----------------------------------------------------------
     logger.log("NOTICE", "Results", "Results: {0} alerts, {1} warnings, {2} notices".format(logger.alerts, logger.warnings, logger.notices))
     if logger.alerts:
@@ -1616,5 +1558,3 @@ if __name__ == '__main__':
     logger.log("INFO", "Results", "Please report false positives via https://github.com/Neo23x0/signature-base")
     logger.log("NOTICE", "Results", "Finished LOKI Scan SYSTEM: %s TIME: %s" % (getHostname(os_platform), getSyslogTimestamp()))
 
-    # run plugins
-    RunPluginsForPhase(LOKI_PHASE_END)
