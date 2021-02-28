@@ -71,18 +71,6 @@ def generateHashes(filedata):
         return 0, 0, 0
 
 
-def removeNonAsciiDrop(s):
-    nonascii = "error"
-    try:
-        # Generate a new string without disturbing characters
-        printable = set(string.printable)
-        nonascii = filter(lambda x: x in printable, s)
-    except Exception as e:
-        traceback.print_exc()
-        pass
-    return nonascii
-
-
 def getPlatformFull():
     type_info = ""
     try:
@@ -192,31 +180,34 @@ def get_file_type(filePath, filetype_sigs, max_filetype_magics, logger):
         return "UNKNOWN"
 
 
-def removeNonAscii(string, stripit=False):
+def removeNonAscii(s, stripit=False):
     nonascii = "error"
-
     try:
         try:
-            # Handle according to the type
-            if isinstance(string, str) and not stripit:
-                nonascii = string.decode('utf-8', 'replace').encode('unicode-escape')
-            else:
-                try:
-                    nonascii = string.encode('raw_unicode_escape')
-                except Exception as e:
-                    nonascii = str("%s" % string)
-
+            printable = set(string.printable)
+            filtered_string = filter(lambda x: x in printable, s.decode('utf-8'))
+            nonascii = ''.join(filtered_string)
         except Exception as e:
-            # traceback.print_exc()
-            # print "All methods failed - removing characters"
-            # Generate a new string without disturbing characters
-            nonascii = "".join(i for i in string if ord(i)<127 and ord(i)>31)
-
+            traceback.print_exc()
+            nonascii = s.hex()
     except Exception as e:
         traceback.print_exc()
         pass
 
     return nonascii
+
+
+def removeNonAsciiDrop(s):
+    nonascii = "error"
+    try:
+        # Generate a new string without disturbing characters
+        printable = set(string.printable)
+        nonascii = filter(lambda x: x in printable, s)
+    except Exception as e:
+        traceback.print_exc()
+        pass
+    return nonascii
+
 
 def getAge(filePath):
     try:

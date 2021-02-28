@@ -527,7 +527,7 @@ class Loki(object):
 
             string_num = 1
             for string in string_matches:
-                matching_strings += " Str" + str(string_num) + ": " + string.decode('utf-8')
+                matching_strings += " Str" + str(string_num) + ": " + removeNonAscii(string)
                 string_num += 1
 
             # Limit string
@@ -1559,3 +1559,4 @@ if __name__ == '__main__':
     logger.log("INFO", "Results", "Please report false positives via https://github.com/Neo23x0/signature-base")
     logger.log("NOTICE", "Results", "Finished LOKI Scan SYSTEM: %s TIME: %s" % (getHostname(os_platform), getSyslogTimestamp()))
 
+sys.exit(0)
