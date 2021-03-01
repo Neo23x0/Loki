@@ -1395,7 +1395,6 @@ def walk_error(err):
     if "Error 3" in str(err):
         logging.error(str(err))
         print("Directory walk error")
-    traceback.print_exc()
 
 
 # CTRL+C Handler --------------------------------------------------------------
