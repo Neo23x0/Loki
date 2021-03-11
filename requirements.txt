@@ -1,4 +1,4 @@
 netaddr
 psutil
-pylzma
 yara-python
+rfc5424-logging-handler
