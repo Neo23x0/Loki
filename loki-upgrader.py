@@ -41,7 +41,7 @@ elif _platform == "win32":
 class LOKIUpdater(object):
 
     # Incompatible signatures
-    INCOMPATIBLE_RULES = ['blocklist.yara']
+    INCOMPATIBLE_RULES = []
 
     UPDATE_URL_SIGS = [
         "https://github.com/Neo23x0/signature-base/archive/master.zip",
