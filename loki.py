@@ -49,10 +49,11 @@ from lib.doublepulsar import DoublePulsar
 
 # Platform
 os_platform = ""
+
 if _platform == "linux" or _platform == "linux2":
     os_platform = "linux"
 elif _platform == "darwin":
-    os_platform = "osx"
+    os_platform = "macos"
 elif _platform == "win32":
     os_platform = "windows"
 
@@ -115,7 +116,7 @@ class Loki(object):
     max_filetype_magics = 0
 
     # Predefined paths to skip (Linux platform)
-    LINUX_PATH_SKIPS_START = set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux" ])
+    LINUX_PATH_SKIPS_START = set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux", "/volumes"])
     LINUX_PATH_SKIPS_END = set(["/initctl"])
 
     def __init__(self, intense_mode):
@@ -140,11 +141,12 @@ class Loki(object):
         self.initialize_excludes(os.path.join(self.app_path, "config/excludes.cfg".replace("/", os.sep)))
 
         # Linux excludes from mtab
-        if os_platform == "linux":
-            self.startExcludes = self.LINUX_PATH_SKIPS_START | set(getExcludedMountpoints())
-        # OSX excludes like Linux until we get some field data
-        if os_platform == "osx":
-            self.startExcludes = self.LINUX_PATH_SKIPS_START
+        if not args.force:
+            if os_platform == "linux":
+                self.startExcludes = self.LINUX_PATH_SKIPS_START | set(getExcludedMountpoints())
+            # macos excludes like Linux until we get some field data
+            if os_platform == "macos":
+                self.startExcludes = self.LINUX_PATH_SKIPS_START
 
         # Set IOC path
         self.ioc_path = os.path.join(self.app_path, "signature-base/iocs/".replace("/", os.sep))
@@ -209,7 +211,7 @@ class Loki(object):
                 # Platform specific excludes
                 for skip in self.startExcludes:
                     if completePath.startswith(skip):
-                        logger.log("INFO", "FileScan", "Skipping %s directory" % skip)
+                        logger.log("INFO", "FileScan", "Skipping %s directory (force scanning this directory with --force)" % skip)
                         skipIt = True
 
                 if not skipIt:
@@ -250,7 +252,7 @@ class Loki(object):
                             skipIt = True
 
                     # Linux directory skip
-                    if os_platform == "linux" or os_platform == "osx":
+                    if os_platform == "linux" or os_platform == "macos":
 
                         # Skip paths that end with ..
                         for skip in self.LINUX_PATH_SKIPS_END:
@@ -1444,6 +1446,8 @@ def main():
     parser.add_argument('--pesieveshellc', action='store_true', help='Perform pe-sieve shellcode scan', default=False)
     parser.add_argument('--nolisten', action='store_true', help='Dot not show listening connections', default=False)
     parser.add_argument('--excludeprocess', action='append', help='Specify an executable name to exclude from scans, can be used multiple times', default=[])
+    parser.add_argument('--force', action='store_true',
+                        help='Force the scan on a certain folder (even if excluded with hard exclude in LOKI\'s code', default=False)
 
     args = parser.parse_args()
 
@@ -1536,7 +1540,7 @@ if __name__ == '__main__':
     # Scan Path -------------------------------------------------------
     # Set default
     defaultPath = args.p
-    if (os_platform == "linux" or os_platform == "osx") and defaultPath == "C:\\":
+    if (os_platform == "linux" or os_platform == "macos") and defaultPath == "C:\\":
         defaultPath = "/"
 
     resultFS = False

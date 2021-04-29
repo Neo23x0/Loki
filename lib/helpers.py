@@ -280,7 +280,7 @@ def getHostname(os_platform):
     :return:
     """
     # Computername
-    if os_platform == "linux" or os_platform == "osx":
+    if os_platform == "linux" or os_platform == "macos":
         return os.uname()[1]
     else:
         return os.environ['COMPUTERNAME']
