@@ -1,5 +1,7 @@
+colorama
+future
 netaddr
 psutil
-yara-python
+pylzma
 rfc5424-logging-handler
-colorama
+yara-python
