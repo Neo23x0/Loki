@@ -3,7 +3,7 @@ python:
   - 3.8
 cache: pip
 install:
-  - pip install colorama flake8 netaddr psutil rfc5424-logging-handler yara-python  
+  - pip install colorama flake8 future netaddr psutil rfc5424-logging-handler yara-python  
 
 script:
   - flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
