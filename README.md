@@ -79,7 +79,7 @@ If you want to build it yourself:
       --dontwait      Do not wait on exit
       --intense       Intense scan mode (also scan unknown file types and all
                       extensions)
-      --csv           Write CSV log format to STDOUT (machine prcoessing)
+      --csv           Write CSV log format to STDOUT (machine processing)
       --onlyrelevant  Only print warnings or alerts
       --nolog         Don't write a local log file
       --update        Update the signatures from the "signature-base" sub
@@ -106,7 +106,7 @@ Filename as Regex;Description [Reference]
 
 # User-Defined Scan Excludes
 
-Since version v0.16.2 LOKI supports the definition of user-defined excludes via "excludes.cfg" in the new "./config" folder. Each line represents a regular expression thats gets applied to the full file path during the directory walk. This way you can exclude certain directories regardless of their drive name, file extensions in certain folders and all files and directories that belong to a product that is sensitive to antivirus scanning. 
+Since version v0.16.2 LOKI supports the definition of user-defined excludes via "excludes.cfg" in the new "./config" folder. Each line represents a regular expression that gets applied to the full file path during the directory walk. This way you can exclude certain directories regardless of their drive name, file extensions in certain folders and all files and directories that belong to a product that is sensitive to antivirus scanning. 
 
 The '''exclude.cfg''' looks like this:
 
@@ -135,7 +135,7 @@ The '''exclude.cfg''' looks like this:
 
 # Threat Intel Receivers
 
-Since version v0.10 LOKI includes various threat intel receivers using the public APIs of these services to retrieve and store the IOCs in a format that LOKI understands. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no preformance impact)
+Since version v0.10 LOKI includes various threat intel receivers using the public APIs of these services to retrieve and store the IOCs in a format that LOKI understands. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no performance impact)
 
 The threat intel receivers have also been moved to the [signature-base](https://github.com/Neo23x0/signature-base) sub repository with version 0.15 and can be found in "./signature-base/threatintel".   
 
@@ -226,7 +226,7 @@ This will create a `loki.exe` in the subfolder `./loki/dist`.
 
 ## Pro Tip (optional)
 
-To include the msvcr100.dll to improve the target os compatibility change the line in the file `./loki/loki.spec` that contains `a.bianries,` to the following:
+To include the msvcr100.dll to improve the target os compatibility change the line in the file `./loki/loki.spec` that contains `a.binaries,` to the following:
 
     a.binaries + [('msvcr100.dll', 'C:\Windows\System32\msvcr100.dll', 'BINARY')],
     

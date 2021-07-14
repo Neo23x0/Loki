@@ -1382,7 +1382,7 @@ def updateLoki(sigsOnly):
         pArgs.append('python')
         pArgs.append('loki-upgrader.py')
     else:
-        logger.log("ERROR", "Update", "Cannot find neither thor-upgrader.exe nor thor-upgrader.py in the current workign directory.")
+        logger.log("ERROR", "Update", "Cannot find neither thor-upgrader.exe nor thor-upgrader.py in the current working directory.")
 
     if sigsOnly:
         pArgs.append('--sigsonly')
