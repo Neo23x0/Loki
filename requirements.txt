@@ -2,6 +2,5 @@ colorama
 future
 netaddr
 psutil
-pylzma
 rfc5424-logging-handler
 yara-python
