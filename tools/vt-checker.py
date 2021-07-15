@@ -1,5 +1,6 @@
 #!/usr/bin/env python2.7
 """Checks Hashes read from an input file on Virustotal"""
+from __future__ import print_function
 
 __AUTHOR__ = 'Florian Roth'
 __VERSION__ = "0.10 September 2017"
@@ -58,7 +59,7 @@ def print_highlighted(line, hl_color=Back.WHITE):
     # Standard
     colorer = re.compile('([A-Z_]{2,}:)\s', re.VERBOSE)
     line = colorer.sub(Fore.BLACK + hl_color + r'\1' + Style.RESET_ALL + ' ', line)
-    print line
+    print(line)
 
 
 def process_permalink(url, debug=False):
@@ -111,7 +112,7 @@ def process_permalink(url, debug=False):
         # Microsoft Software
         if "This file belongs to the Microsoft Corporation software catalogue." in source_code:
             info['mssoft'] = True
-    except Exception, e:
+    except Exception as e:
         if debug:
             traceback.print_exc()
     finally:
@@ -139,7 +140,7 @@ def loadCache(fileName):
     try:
         with open(fileName, 'rb') as fh:
             return pickle.load(fh), True
-    except Exception, e:
+    except Exception as e:
         # traceback.print_exc()
         return {}, False
 
@@ -150,14 +151,14 @@ def removeNonAsciiDrop(string):
     try:
         # Generate a new string without disturbing characters and allow new lines
         nonascii = "".join(i for i in string if (ord(i) < 127 and ord(i) > 31) or ord(i) == 10 or ord(i) == 13)
-    except Exception, e:
+    except Exception as e:
         traceback.print_exc()
         pass
     return nonascii
 
 
 def signal_handler(signal, frame):
-    print "\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c)
+    print("\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c))
     saveCache(cache, args.c)
     sys.exit(0)
 
@@ -205,7 +206,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
             try:
                 response_dict = requests.get(URL, params=parameters).json()
                 success = True
-            except Exception, e:
+            except Exception as e:
                 if debug:
                     traceback.print_exc()
                     # print "Error requesting VT results"
@@ -268,7 +269,7 @@ def process_lines(lines, result_file, nocsv=False, dups=False, debug=False):
                 res_color = Back.RED
             # Get more information with permalink
             if debug:
-                print "[D] Processing permalink {0}".format(response_dict.get("permalink"))
+                print("[D] Processing permalink {0}".format(response_dict.get("permalink")))
             info = process_permalink(response_dict.get("permalink"), debug)
             # File Names
             filenames = removeNonAsciiDrop(", ".join(info['filenames'][:5]).replace(';', '_'))
@@ -337,17 +338,17 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, signal_handler)
     init(autoreset=False)
 
-    print Style.RESET_ALL
-    print Fore.WHITE + Back.BLUE
-    print " ".ljust(80)
-    print "   _   ________  _______           __           ".ljust(80)
-    print "  | | / /_  __/ / ___/ /  ___ ____/ /_____ ____ ".ljust(80)
-    print "  | |/ / / /   / /__/ _ \/ -_) __/  '_/ -_) __/ ".ljust(80)
-    print "  |___/ /_/    \___/_//_/\\__/\__/_/\_\\__/_/    ".ljust(80)
-    print "                                               ".ljust(80)
-    print ("  " + __AUTHOR__ + " - " + __VERSION__ + "").ljust(80)
-    print " ".ljust(80) + Style.RESET_ALL
-    print Style.RESET_ALL + " "
+    print(Style.RESET_ALL)
+    print(Fore.WHITE + Back.BLUE)
+    print(" ".ljust(80))
+    print("   _   ________  _______           __           ".ljust(80))
+    print("  | | / /_  __/ / ___/ /  ___ ____/ /_____ ____ ".ljust(80))
+    print("  | |/ / / /   / /__/ _ \/ -_) __/  '_/ -_) __/ ".ljust(80))
+    print("  |___/ /_/    \___/_//_/\\__/\__/_/\_\\__/_/    ".ljust(80))
+    print("                                               ".ljust(80))
+    print(("  " + __AUTHOR__ + " - " + __VERSION__ + "").ljust(80))
+    print(" ".ljust(80) + Style.RESET_ALL)
+    print(Style.RESET_ALL + " ")
 
     parser = argparse.ArgumentParser(description='Virustotal Online Checker')
     parser.add_argument('-f', help='File to process (hash line by line OR csv with hash in each line - auto-detects '
@@ -363,19 +364,19 @@ if __name__ == '__main__':
 
     # Check API Key
     if API_KEY == '':
-        print "[E] No API Key set"
-        print "    Include your API key in the header section of the script (API_KEY)\n"
-        print "    More info:"
-        print "    https://www.virustotal.com/en/faq/#virustotal-api\n"
+        print("[E] No API Key set")
+        print("    Include your API key in the header section of the script (API_KEY)\n")
+        print("    More info:")
+        print("    https://www.virustotal.com/en/faq/#virustotal-api\n")
         sys.exit(1)
 
     # Check input file
     if args.f == '':
-        print "[E] Please provide an input file with '-f inputfile'\n"
+        print("[E] Please provide an input file with '-f inputfile'\n")
         parser.print_help()
         sys.exit(1)
     if not os.path.exists(args.f):
-        print "[E] Cannot find input file {0}".format(args.f)
+        print("[E] Cannot find input file {0}".format(args.f))
         sys.exit(1)
 
     # Caches
@@ -384,18 +385,18 @@ if __name__ == '__main__':
     if not args.nocache:
         cache, success = loadCache(args.c)
         if success:
-            print "[+] {0} cache entries read from cache database: {1}".format(len(cache), args.c)
+            print("[+] {0} cache entries read from cache database: {1}".format(len(cache), args.c))
         else:
-            print "[-] No cache database found"
-            print "[+] Analyzed hashes will be written to cache database: {0}".format(args.c)
-        print "[+] You can always interrupt the scan by pressing CTRL+C without losing the scan state"
+            print("[-] No cache database found")
+            print("[+] Analyzed hashes will be written to cache database: {0}".format(args.c))
+        print("[+] You can always interrupt the scan by pressing CTRL+C without losing the scan state")
 
     # Open input file
     try:
         with open(args.f, 'rU') as fh:
             lines = fh.readlines()
-    except Exception, e:
-        print "[E] Cannot read input file "
+    except Exception as e:
+        print("[E] Cannot read input file ")
         sys.exit(1)
 
     # Result file
@@ -403,24 +404,24 @@ if __name__ == '__main__':
     if not args.nocsv:
         result_file = "check-results_{0}.csv".format(os.path.splitext(os.path.basename(args.f))[0])
         if os.path.exists(result_file):
-            print "[+] Found results CSV from previous run: {0}".format(result_file)
-            print "[+] Appending results to file: {0}".format(result_file)
+            print("[+] Found results CSV from previous run: {0}".format(result_file))
+            print("[+] Appending results to file: {0}".format(result_file))
         else:
-            print "[+] Writing results to new file: {0}".format(result_file)
+            print("[+] Writing results to new file: {0}".format(result_file))
             try:
                 with open(result_file, 'w') as fh_results:
                     fh_results.write("Lookup Hash;Rating;Comment;Positives;Virus;File Names;First Submitted;"
                                      "Last Submitted;MD5;SHA1;SHA256;ImpHash;Harmless;Signed;Revoked;Expired;"
                                      "{0}\n".format(";".join(VENDORS)))
-            except Exception, e:
-                print "[E] Cannot write export file {0}".format(result_file)
+            except Exception as e:
+                print("[E] Cannot write export file {0}".format(result_file))
 
     # Process the input lines
     process_lines(lines, result_file, args.nocsv, args.dups, args.debug)
 
     # Write Cache
-    print "\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c)
+    print("\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c))
     saveCache(cache, args.c)
 
-    print Style.RESET_ALL
+    print(Style.RESET_ALL)
 

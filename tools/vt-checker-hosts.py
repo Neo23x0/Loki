@@ -1,5 +1,6 @@
 #!/usr/bin/env python2.7
 """Checks IPs and Hosts read from an input file on Virustotal"""
+from __future__ import print_function
 
 __AUTHOR__ = 'Florian Roth'
 __VERSION__ = "0.2 July 2017"
@@ -75,7 +76,7 @@ def is_resolvable(domain):
     try:
         socket.gethostbyname(domain)
         return True
-    except Exception, e:
+    except Exception as e:
         # traceback.print_exc()
         return False
 
@@ -94,7 +95,7 @@ def is_pingable(ip):
                                 stderr=subprocess.STDOUT,
                                 shell=True)
         return True
-    except Exception, e:
+    except Exception as e:
         # traceback.print_exc()
         return False
 
@@ -119,7 +120,7 @@ def loadCache(fileName):
     try:
         with open(fileName, 'rb') as fh:
             return pickle.load(fh), True
-    except Exception, e:
+    except Exception as e:
         # traceback.print_exc()
         return {}, False
 
@@ -137,8 +138,8 @@ def print_highlighted(line, hl_color=Back.WHITE):
         # Keyword highlight
         colorer = re.compile(r'([A-Z_]{2,}:)\s', re.VERBOSE)
         line = colorer.sub(Fore.BLACK + hl_color + r'\1' + Style.RESET_ALL + ' ', line)
-        print line
-    except Exception, e:
+        print(line)
+    except Exception as e:
         pass
 
 
@@ -160,9 +161,9 @@ def process_lines(lines, debug=False):
         ips, domains = fetch_ip_and_domains(line)
         if debug:
             if len(ips):
-                print "[D] IPs: {0}".format(', '.join(ips))
+                print("[D] IPs: {0}".format(', '.join(ips)))
             if len(domains):
-                print "[D] Domains: {0}".format(', '.join(domains))
+                print("[D] Domains: {0}".format(', '.join(domains)))
 
         # Line number
         linenr += 1
@@ -211,7 +212,7 @@ def process_elements(elements, result_file, max_items, nocsv=False, dups=False, 
                 if debug:
                     # Add to cache
                     cache[value] = 'skipped'
-                    print "[D] IP {0} is a private IP - skipping".format(value)
+                    print("[D] IP {0} is a private IP - skipping".format(value))
                 continue
             # Skip unreachable systems
             if ping:
@@ -219,7 +220,7 @@ def process_elements(elements, result_file, max_items, nocsv=False, dups=False, 
                     # Add to cache
                     cache[value] = 'skipped'
                     if debug:
-                        print "[D] IP {0} ping failed - skipping".format(value)
+                        print("[D] IP {0} ping failed - skipping".format(value))
                     continue
 
         # White lists
@@ -258,19 +259,19 @@ def process_elements(elements, result_file, max_items, nocsv=False, dups=False, 
             try:
                 parameters = {cat: value, 'apikey': API_KEY}
                 if debug:
-                    print "URL: %s" % URLS[cat]
-                    print "PARAMS: %s" % parameters
+                    print("URL: %s" % URLS[cat])
+                    print("PARAMS: %s" % parameters)
 
                 response = urllib.urlopen('%s?%s' % (URLS[cat], urllib.urlencode(parameters))).read()
                 response_dict = simplejson.loads(response)
                 success = True
-            except Exception, e:
+            except Exception as e:
                 if debug:
                     traceback.print_exc()
                     # print "Error requesting VT results"
                 pass
         if debug:
-            print json.dumps(response_dict, indent=4, sort_keys=True)
+            print(json.dumps(response_dict, indent=4, sort_keys=True))
 
         # Process results --------------------------------------------------------------------------------------
         result = "- / -"
@@ -440,7 +441,7 @@ def download_url(host_id, url):
     output = StringIO.StringIO()
     header = StringIO.StringIO()
 
-    print "[>] Trying to download URL: %s" % url
+    print("[>] Trying to download URL: %s" % url)
     # Download file
     try:
         # 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)')
@@ -455,7 +456,7 @@ def download_url(host_id, url):
         c.perform()
         # Header parsing
         header_info = header_function(header.getvalue())
-    except Exception, e:
+    except Exception as e:
         if args.debug:
             traceback.print_exc()
         print_highlighted("[-] Error MESSAGE: %s" % str(e))
@@ -479,10 +480,10 @@ def download_url(host_id, url):
             with open(out_filename, 'wb') as f:
                 f.write(output.getvalue())
                 print_highlighted("[+] Successfully saved to FILE: %s" % out_filename)
-        except Exception, e:
+        except Exception as e:
             if args.debug:
                 traceback.print_exc()
-            print "[-] Failed to write file %s (use --debug for more info)" % out_filename
+            print("[-] Failed to write file %s (use --debug for more info)" % out_filename)
     else:
         try:
             print_highlighted("[i] Response CODE: %s MIME_TYPE: %s SIZE: %s" % (
@@ -490,7 +491,7 @@ def download_url(host_id, url):
                                   header_info['content-type'],
                                   header_info['content-length'])
                               )
-        except Exception, e:
+        except Exception as e:
             print_highlighted("[-] Response CODE: %s" % str(c.getinfo(c.RESPONSE_CODE)))
 
     output.close()
@@ -539,7 +540,7 @@ def header_function(header_raw):
 
 
 def signal_handler(signal, frame):
-    print "\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c)
+    print("\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c))
     saveCache(cache, args.c)
     sys.exit(0)
 
@@ -549,17 +550,17 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, signal_handler)
     init(autoreset=False)
 
-    print Style.RESET_ALL + Fore.WHITE + Back.BLUE
-    print " ".ljust(80)
-    print "   _   ________  _______           __           ".ljust(80)
-    print "  | | / /_  __/ / ___/ /  ___ ____/ /_____ ____ ".ljust(80)
-    print "  | |/ / / /   / /__/ _ \/ -_) __/  '_/ -_) __/ ".ljust(80)
-    print "  |___/ /_/    \___/_//_/\\__/\__/_/\_\\__/_/    ".ljust(80)
-    print " ".ljust(80)
-    print "  IP and Domain Version                        ".ljust(80)
-    print ("  " + __AUTHOR__ + " - " + __VERSION__ + "").ljust(80)
-    print " ".ljust(80) + Style.RESET_ALL
-    print Style.RESET_ALL + " "
+    print(Style.RESET_ALL + Fore.WHITE + Back.BLUE)
+    print(" ".ljust(80))
+    print("   _   ________  _______           __           ".ljust(80))
+    print("  | | / /_  __/ / ___/ /  ___ ____/ /_____ ____ ".ljust(80))
+    print("  | |/ / / /   / /__/ _ \/ -_) __/  '_/ -_) __/ ".ljust(80))
+    print("  |___/ /_/    \___/_//_/\\__/\__/_/\_\\__/_/    ".ljust(80))
+    print(" ".ljust(80))
+    print("  IP and Domain Version                        ".ljust(80))
+    print(("  " + __AUTHOR__ + " - " + __VERSION__ + "").ljust(80))
+    print(" ".ljust(80) + Style.RESET_ALL)
+    print(Style.RESET_ALL + " ")
 
     parser = argparse.ArgumentParser(description='Virustotal Online Checker (IP/Domain)')
     parser.add_argument('-f', help='File to process (hash line by line OR csv with hash in each line - auto-detects '
@@ -588,19 +589,19 @@ if __name__ == '__main__':
 
     # Check API Key
     if API_KEY == '':
-        print "[E] No API Key set"
-        print "    Include your API key in the header section of the script (API_KEY)\n"
-        print "    More info:"
-        print "    https://www.virustotal.com/en/faq/#virustotal-api\n"
+        print("[E] No API Key set")
+        print("    Include your API key in the header section of the script (API_KEY)\n")
+        print("    More info:")
+        print("    https://www.virustotal.com/en/faq/#virustotal-api\n")
         sys.exit(1)
 
     # Check input file
     if args.f == '':
-        print "[E] Please provide an input file with '-f inputfile'\n"
+        print("[E] Please provide an input file with '-f inputfile'\n")
         parser.print_help()
         sys.exit(1)
     if not os.path.exists(args.f):
-        print "[E] Cannot find input file {0}".format(args.f)
+        print("[E] Cannot find input file {0}".format(args.f))
         sys.exit(1)
 
     # Caches
@@ -609,34 +610,34 @@ if __name__ == '__main__':
     if not args.nocache:
         cache, success = loadCache(args.c)
         if success:
-            print "[+] {0} cache entries read from cache database: {1}".format(len(cache), args.c)
+            print("[+] {0} cache entries read from cache database: {1}".format(len(cache), args.c))
         else:
-            print "[-] No cache database found"
-            print "[+] Analyzed IPs/domains will be written to cache database: {0}".format(args.c)
-        print "[+] You can always interrupt the scan by pressing CTRL+C without losing the scan state"
+            print("[-] No cache database found")
+            print("[+] Analyzed IPs/domains will be written to cache database: {0}".format(args.c))
+        print("[+] You can always interrupt the scan by pressing CTRL+C without losing the scan state")
 
     # Open input file
     try:
         with open(args.f, 'r') as fh_input:
             lines = fh_input.readlines()
-    except Exception, e:
-        print "[E] Cannot read input file"
+    except Exception as e:
+        print("[E] Cannot read input file")
         sys.exit(1)
 
     # Result file
     if not args.nocsv:
         result_file = "check-results_{0}.csv".format(os.path.splitext(os.path.basename(args.f))[0])
         if os.path.exists(result_file):
-            print "[+] Found results CSV from previous run: {0}".format(result_file)
-            print "[+] Appending results to file: {0}".format(result_file)
+            print("[+] Found results CSV from previous run: {0}".format(result_file))
+            print("[+] Appending results to file: {0}".format(result_file))
         else:
-            print "[+] Writing results to new file: {0}".format(result_file)
+            print("[+] Writing results to new file: {0}".format(result_file))
             try:
                 with open(result_file, 'w') as fh_results:
                     fh_results.write(
                         "IP;Rating;Owner;Country Code;Log Line No;Positives;Total;Malicious Samples;Hosts\n")
-            except Exception, e:
-                print "[E] Cannot write CSV export file: {0}".format(result_file)
+            except Exception as e:
+                print("[E] Cannot write CSV export file: {0}".format(result_file))
 
     # Process the input lines
     elements = process_lines(lines, args.debug)
@@ -646,7 +647,7 @@ if __name__ == '__main__':
                      args.debug)
 
     # Write Cache
-    print "\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c)
+    print("\n[+] Saving {0} cache entries to file {1}".format(len(cache), args.c))
     saveCache(cache, args.c)
 
-    print Style.RESET_ALL
+    print(Style.RESET_ALL)
