@@ -11,6 +11,8 @@ import hashlib
 import sys
 
 def ScanWMI():
+    global logger  # logger is defined on loki.py.__main__
+
     if sys.platform in ("win32", "cygwin"):
         try:
             import wmi
