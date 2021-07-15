@@ -34,7 +34,7 @@ IF EXIST %PACKAGE%\signature-base (
 )
 
 :ERROR
-ECHO An error occured. Build interrupted.
+ECHO An error occurred. Build interrupted.
 
 :END
 

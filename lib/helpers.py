@@ -146,7 +146,7 @@ def replaceEnvVars(path):
         env_var_full = res.group(1)
         env_var = env_var_full.replace("%", "").replace("@", "")
 
-        # Check environment varibales if there is a matching var
+        # Check environment variables if there is a matching var
         if env_var in os.environ:
             if os.environ[env_var]:
                 new_path = path.replace(env_var_full, re.escape(os.environ[env_var]))
