@@ -681,8 +681,8 @@ class Loki(object):
                                         # print match.rule
                                         alerts.append("Yara Rule MATCH: %s %s" % (match.rule, process_info))
 
-                        if len(alerts) > 3:
-                            logger.log("INFO", "ProcessScan", "Too many matches on process memory - most likely a false positive %s" % process_info)
+                        if len(alerts) > 5:
+                            logger.log("WARNING", "ProcessScan", "Too many matches on process memory - most likely a false positive %s" % process_info)
                         elif len(alerts) > 0:
                             for alert in alerts:
                                 logger.log("ALERT", "ProcessScan", alert)
