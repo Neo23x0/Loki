@@ -69,4 +69,5 @@ def ScanWMI():
         for ActiveScriptEventConsumer in lActiveScriptEventConsumer:
             logger.log("INFO", "WMIScan", repr(str(ActiveScriptEventConsumer)))
 
-LokiRegisterPlugin("PluginWMI", ScanWMI, 1)
+
+LokiRegisterPlugin("PluginWMI", ScanWMI, 1)  # noqa: F821 undefined name 'LokiRegisterPlugin'
