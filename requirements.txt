@@ -4,3 +4,4 @@ netaddr
 psutil
 rfc5424-logging-handler
 yara-python
+wmi
