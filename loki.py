@@ -1527,14 +1527,6 @@ if __name__ == '__main__':
     if os_platform == "windows":
         setNice(logger)
 
-    # Scan Processes --------------------------------------------------
-    resultProc = False
-    if not args.noprocscan and os_platform == "windows":
-        if isAdmin:
-            loki.scan_processes(args.nopesieve, args.nolisten, args.excludeprocess, args.pesieveshellc)
-        else:
-            logger.log("NOTICE", "Init", "Skipping process memory check. User has no admin rights.")
-
     # Scan for Rootkits -----------------------------------------------
     if args.rootkit and os_platform == "windows":
         loki.check_rootkit()
@@ -1543,6 +1535,14 @@ if __name__ == '__main__':
     if not args.novulnchecks and os_platform == "windows":
         VChecker = VulnChecker(logger)
         VChecker.run()
+
+    # Scan Processes --------------------------------------------------
+    resultProc = False
+    if not args.noprocscan and os_platform == "windows":
+        if isAdmin:
+            loki.scan_processes(args.nopesieve, args.nolisten, args.excludeprocess, args.pesieveshellc)
+        else:
+            logger.log("NOTICE", "Init", "Skipping process memory check. User has no admin rights.")
 
     # Scan Path -------------------------------------------------------
     # Set default
