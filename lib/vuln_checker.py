@@ -34,7 +34,7 @@ class VulnChecker():
         except subprocess.CalledProcessError as e:
             pass
         # Check the output
-        if r'BUILTIN\Users:(I)(RX)' in output.decode('utf-8'):
+        if r'BUILTIN\Users:(I)(RX)' in output.decode('latin1', errors='ignore'):
             self.logger.log("WARNING", "VulnChecker",
                             "The Security Account Manager (SAM) database file C:\\Windows\\System32\\config\\SAM is "
                             "readable by every user. This is caused by the Hive Permission Bug, which is problematic "
