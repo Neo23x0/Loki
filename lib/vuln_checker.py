@@ -37,8 +37,10 @@ class VulnChecker():
         if r'BUILTIN\Users:(I)(RX)' in output.decode('utf-8'):
             self.logger.log("WARNING", "VulnChecker",
                             "The Security Account Manager (SAM) database file C:\\Windows\\System32\\config\\SAM is "
-                            "readable by every user (Hive Permission Bug, "
-                            "see https://twitter.com/jeffmcjunkin/status/1417281315016122372")
+                            "readable by every user. This is caused by the Hive Permission Bug, which is problematic "
+                            "on systems that have System Protection configured for drive C: (see "
+                            "https://doublepulsar.com/hivenightmare-aka-serioussam-anybody-can-read-the-registry-in-"
+                            "windows-10-7a871c465fa5)")
             return True
         else:
             self.logger.log("DEBUG", "VulnChecker", "SAM Database isn't readable by every user.")
