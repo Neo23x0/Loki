@@ -41,5 +41,5 @@ class VulnChecker():
                             "see https://twitter.com/jeffmcjunkin/status/1417281315016122372")
             return True
         else:
-            self.logger.log("DEBUG", "VulnChecker", "SAM Database isn't readble by every user.")
+            self.logger.log("DEBUG", "VulnChecker", "SAM Database isn't readable by every user.")
         return False
