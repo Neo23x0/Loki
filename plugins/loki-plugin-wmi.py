@@ -11,6 +11,8 @@ import hashlib
 import sys
 
 def ScanWMI():
+    global logger  # logger is defined in loki.py.__main__
+
     if sys.platform in ("win32", "cygwin"):
         try:
             import wmi
@@ -67,4 +69,5 @@ def ScanWMI():
         for ActiveScriptEventConsumer in lActiveScriptEventConsumer:
             logger.log("INFO", "WMIScan", repr(str(ActiveScriptEventConsumer)))
 
-LokiRegisterPlugin("PluginWMI", ScanWMI, 1)
+
+LokiRegisterPlugin("PluginWMI", ScanWMI, 1)  # noqa: F821 undefined name 'LokiRegisterPlugin'
