@@ -1429,7 +1429,7 @@ def main():
     parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
     parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
-    parser.add_argument('--novulnchecks', action='store_true', help='Skip the vulnerability checks', default=False)
+    parser.add_argument('--vulnchecks', action='store_true', help='Run the vulnerability checks', default=False)
     parser.add_argument('--nolevcheck', action='store_true', help='Skip the Levenshtein distance check', default=False)
     parser.add_argument('--scriptanalysis', action='store_true', help='Statistical analysis for scripts to detect obfuscated code (beta)', default=False)
     parser.add_argument('--rootkit', action='store_true', help='Skip the rootkit check', default=False)
@@ -1532,7 +1532,7 @@ if __name__ == '__main__':
         loki.check_rootkit()
 
     # Scan for Vulnerabilities
-    if not args.novulnchecks and os_platform == "windows":
+    if args.vulnchecks and os_platform == "windows":
         VChecker = VulnChecker(logger)
         VChecker.run()
 
