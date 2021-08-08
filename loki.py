@@ -1380,7 +1380,7 @@ def updateLoki(sigsOnly):
     if os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.exe')) and os_platform == "windows":
         pArgs.append('loki-upgrader.exe')
     elif os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.py')):
-        pArgs.append(pargs.python)
+        pArgs.append(args.python)
         pArgs.append('loki-upgrader.py')
     else:
         logger.log("ERROR", "Update", "Cannot find neither thor-upgrader.exe nor thor-upgrader.py in the current working directory.")
