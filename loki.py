@@ -414,7 +414,7 @@ class Loki(object):
 
                         # Scan the read data
                         try:
-                            for (score, rule, description, reference, matched_strings) in \
+                            for (score, rule, description, reference, matched_strings, author) in \
                                     self.scan_data(fileData=fileData,
                                                    fileType=fileType,
                                                    fileName=fileNameCleaned,
@@ -423,8 +423,8 @@ class Loki(object):
                                                    md5=md5  # legacy rule support
                                                    ):
                                 # Message
-                                message = "Yara Rule MATCH: %s SUBSCORE: %s DESCRIPTION: %s REF: %s" % \
-                                          (rule, score, description, reference)
+                                message = "Yara Rule MATCH: %s SUBSCORE: %s DESCRIPTION: %s REF: %s AUTHOR: %s" % \
+                                          (rule, score, description, reference, author)
                                 # Matches
                                 if matched_strings:
                                     message += " MATCHES: %s" % matched_strings
@@ -488,6 +488,7 @@ class Loki(object):
                         score = 70
                         description = "not set"
                         reference = "-"
+                        author = "-"
 
                         # Built-in rules have meta fields (cannot be expected from custom rules)
                         if hasattr(match, 'meta'):
@@ -501,6 +502,8 @@ class Loki(object):
                                 reference = match.meta['reference']
                             if 'viz_url' in match.meta:
                                 reference = match.meta['viz_url']
+                            if 'author' in match.meta:
+                                author = match.meta['author']
 
                             # If a score is given
                             if 'score' in match.meta:
@@ -512,7 +515,7 @@ class Loki(object):
                             # Get matching strings
                             matched_strings = self.get_string_matches(match.strings)
 
-                        yield score, match.rule, description, reference, matched_strings
+                        yield score, match.rule, description, reference, matched_strings, author
 
         except Exception as e:
             if logger.debug:
