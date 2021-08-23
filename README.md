@@ -133,52 +133,6 @@ The '''exclude.cfg''' looks like this:
     Sysvol\\Staging\\Nntfrs_cmp
     \\System Volume Information\\DFSR
 
-# Threat Intel Receivers
-
-Since version v0.10 LOKI includes various threat intel receivers using the public APIs of these services to retrieve and store the IOCs in a format that LOKI understands. It is no problem if these indicators overlap with the ones already included. Loki uses a filename regex or hash only once. (no performance impact)
-
-The threat intel receivers have also been moved to the [signature-base](https://github.com/Neo23x0/signature-base) sub repository with version 0.15 and can be found in "./signature-base/threatintel".   
-
-Provide your API key via ```-k APIKEY``` or set it in the script header.  
-
-## Open Threat Exchange (OTX) Receiver
-
-It's a simple script that downloads your subscribed events/iocs from [Alienvault OTX](https://otx.alienvault.com) and stores them in the correct format in the './iocs' subfolder. The script is located in the "./threatintel" folder and is named "get-otx-iocs.py". (see requirements above)
-
-```
-usage: get-otx-iocs.py [-h] [-k APIKEY] [-o dir] [--verifycert] [--debug]
-
-OTX IOC Receiver
-
-optional arguments:
-  -h, --help    show this help message and exit
-  -k APIKEY     OTX API key
-  -o dir        Output directory
-  --verifycert  Verify the server certificate
-  --debug       Debug output
-```
-
-## MISP Receiver
-
-A simple script that downloads your subscribed events/iocs from a custom [MISP](https://github.com/MISP/MISP) instance and stores them in the correct format in the './iocs' subfolder. YARA rules stored in MISP will be written to the './iocs/yara' subfolder and automatically initialized during startup. The script is located in the "./threatintel" folder and is named "get-misp-iocs.py". (see requirements above)
-
-```
-usage: get-misp-iocs.py [-h] [-u URL] [-k APIKEY] [-l tframe] [-o dir]
-                        [-y yara-dir] [--verifycert] [--debug]
-
-MISP IOC Receiver
-
-optional arguments:
-  -h, --help    show this help message and exit
-  -u URL        MISP URL
-  -k APIKEY     MISP API key
-  -l tframe     Time frame (e.g. 2d, 12h - default=30d)
-  -o dir        Output directory
-  -y yara-dir   YARA rule output directory
-  --verifycert  Verify the server certificate
-  --debug       Debug output
-```
-
 # Screenshots
 
 Loki Scan
