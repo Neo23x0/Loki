@@ -4,4 +4,5 @@ netaddr
 psutil
 rfc5424-logging-handler
 wmi ; sys_platform == 'win32'
+pywin32 ; sys_platform == 'win32'
 yara-python
