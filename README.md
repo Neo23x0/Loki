@@ -59,32 +59,68 @@ If you want to build it yourself:
 
 # Usage
 
-    usage: loki.exe [-h] [-p path] [-s kilobyte] [-l log-file] [--printAll]
-                    [--noprocscan] [--nofilescan] [--noindicator] [--reginfs]
-                    [--dontwait] [--intense] [--csv] [--onlyrelevant] [--nolog]
-                    [--update] [--debug]
-
+    usage: loki.py [-h] [-p path] [-s kilobyte] [-l log-file] [-r remote-loghost]
+                   [-t remote-syslog-port] [-a alert-level] [-w warning-level]
+                   [-n notice-level] [--allhds] [--alldrives] [--printall]
+                   [--allreasons] [--noprocscan] [--nofilescan] [--vulnchecks]
+                   [--nolevcheck] [--scriptanalysis] [--rootkit] [--noindicator]
+                   [--dontwait] [--intense] [--csv] [--onlyrelevant] [--nolog]
+                   [--update] [--debug] [--maxworkingset MAXWORKINGSET]
+                   [--syslogtcp] [--logfolder log-folder] [--nopesieve]
+                   [--pesieveshellc] [--nolisten]
+                   [--excludeprocess EXCLUDEPROCESS] [--force]
+    
     Loki - Simple IOC Scanner
-
+    
     optional arguments:
-      -h, --help      show this help message and exit
-      -p path         Path to scan
-      -s kilobyte     Maximum file size to check in KB (default 2048 KB)
-      -l log-file     Log file
-      --printAll      Print all files that are scanned
-      --noprocscan    Skip the process scan
-      --nofilescan    Skip the file scan
-      --noindicator   Do not show a progress indicator
-      --reginfs       Do check for Regin virtual file system
-      --dontwait      Do not wait on exit
-      --intense       Intense scan mode (also scan unknown file types and all
-                      extensions)
-      --csv           Write CSV log format to STDOUT (machine processing)
-      --onlyrelevant  Only print warnings or alerts
-      --nolog         Don't write a local log file
-      --update        Update the signatures from the "signature-base" sub
-                      repository
-      --debug         Debug output
+      -h, --help            show this help message and exit
+      -p path               Path to scan
+      -s kilobyte           Maximum file size to check in KB (default 5000 KB)
+      -l log-file           Log file
+      -r remote-loghost     Remote syslog system
+      -t remote-syslog-port
+                            Remote syslog port
+      -a alert-level        Alert score
+      -w warning-level      Warning score
+      -n notice-level       Notice score
+      --allhds              Scan all local hard drives
+      --alldrives           Scan all drives (including network drives and
+                            removable media)
+      --printall            Print all files that are scanned
+      --allreasons          Print all reasons that caused the score
+      --noprocscan          Skip the process scan
+      --nofilescan          Skip the file scan
+      --vulnchecks          Run the vulnerability checks
+      --nolevcheck          Skip the Levenshtein distance check
+      --scriptanalysis      Statistical analysis for scripts to detect obfuscated
+                            code (beta)
+      --rootkit             Skip the rootkit check
+      --noindicator         Do not show a progress indicator
+      --dontwait            Do not wait on exit
+      --intense             Intense scan mode (also scan unknown file types and
+                            all extensions)
+      --csv                 Write CSV log format to STDOUT (machine processing)
+      --onlyrelevant        Only print warnings or alerts
+      --nolog               Don't write a local log file
+      --update              Update the signatures from the "signature-base" sub
+                            repository
+      --debug               Debug output
+      --maxworkingset MAXWORKINGSET
+                            Maximum working set size of processes to scan (in MB,
+                            default 100 MB)
+      --syslogtcp           Use TCP instead of UDP for syslog logging
+      --logfolder log-folder
+                            Folder to use for logging when log file is not
+                            specified
+      --nopesieve           Do not perform pe-sieve scans
+      --pesieveshellc       Perform pe-sieve shellcode scan
+      --nolisten            Dot not show listening connections
+      --excludeprocess EXCLUDEPROCESS
+                            Specify an executable name to exclude from scans, can
+                            be used multiple times
+      --force               Force the scan on a certain folder (even if excluded
+                            with hard exclude in LOKI's code
+
 
 ## Signature and IOCs
 
