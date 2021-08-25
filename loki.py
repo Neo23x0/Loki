@@ -202,6 +202,12 @@ class Loki(object):
 
         # Startup
         logger.log("INFO", "FileScan", "Scanning Path %s ...  " % path)
+        # Platform specific excludes
+        for skip in self.startExcludes:
+            if path.startswith(skip):
+                logger.log("INFO", "FileScan",
+                           "Skipping %s directory [fixed excludes] (try using --force, --allhds or --alldrives)" % skip)
+                return
 
         # Counter
         c = 0
@@ -219,7 +225,7 @@ class Loki(object):
                 # Platform specific excludes
                 for skip in self.startExcludes:
                     if completePath.startswith(skip):
-                        logger.log("INFO", "FileScan", "Skipping %s directory (force scanning this directory with --force)" % skip)
+                        logger.log("INFO", "FileScan", "Skipping %s directory [fixed excludes] (try using --force, --allhds or --alldrives)" % skip)
                         skipIt = True
 
                 if not skipIt:
@@ -1435,7 +1441,7 @@ def main():
     parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
     parser.add_argument('-w', help='Warning score', metavar='warning-level', default=60)
     parser.add_argument('-n', help='Notice score', metavar='notice-level', default=40)
-    parser.add_argument('--allhds', action='store_true', help='Scan all local hard drives', default=False)
+    parser.add_argument('--allhds', action='store_true', help='Scan all local hard drives (Windows only)', default=False)
     parser.add_argument('--alldrives', action='store_true', help='Scan all drives (including network drives and removable media)', default=False)
     parser.add_argument('--printall', action='store_true', help='Print all files that are scanned', default=False)
     parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
