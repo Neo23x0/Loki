@@ -64,6 +64,7 @@ if os_platform == "windows":
         import wmi
         import win32api
         from win32com.shell import shell
+        import win32file
     except Exception as e:
         print("Linux System - deactivating process memory check ...")
         os_platform = "linux"  # crazy guess
@@ -117,7 +118,8 @@ class Loki(object):
     max_filetype_magics = 0
 
     # Predefined paths to skip (Linux platform)
-    LINUX_PATH_SKIPS_START = set(["/proc", "/dev", "/media", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux", "/volumes"])
+    LINUX_PATH_SKIPS_START = set(["/proc", "/dev", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux"])
+    MOUNTED_DEVICES = set(["/media", "/volumes"])
     LINUX_PATH_SKIPS_END = set(["/initctl"])
 
     def __init__(self, intense_mode):
@@ -129,7 +131,8 @@ class Loki(object):
         self.app_path = get_application_path()
 
         # PESieve
-        self.peSieve = PESieve(self.app_path, is64bit(), logger)
+        if os_platform == "windows":
+            self.peSieve = PESieve(self.app_path, is64bit(), logger)
 
         # Check if signature database is present
         sig_dir = os.path.join(self.app_path, "signature-base")
@@ -141,13 +144,17 @@ class Loki(object):
         # Excludes
         self.initialize_excludes(os.path.join(self.app_path, "config/excludes.cfg".replace("/", os.sep)))
 
-        # Linux excludes from mtab
+        # Linux and macOS static excludes
         if not args.force:
-            if os_platform == "linux":
-                self.startExcludes = self.LINUX_PATH_SKIPS_START | set(getExcludedMountpoints())
-            # macos excludes like Linux until we get some field data
-            if os_platform == "macos":
+            if os_platform == "linux" and args.alldrives:
                 self.startExcludes = self.LINUX_PATH_SKIPS_START
+            elif os_platform == "linux":
+                self.startExcludes = self.LINUX_PATH_SKIPS_START | self.MOUNTED_DEVICES | set(getExcludedMountpoints())
+            # macos excludes like Linux until we get some field data
+            if os_platform == "macos" and args.alldrives:
+                self.startExcludes = self.LINUX_PATH_SKIPS_START
+            elif os_platform == "macos":
+                self.startExcludes = self.LINUX_PATH_SKIPS_START | self.MOUNTED_DEVICES
 
         # Set IOC path
         self.ioc_path = os.path.join(self.app_path, "signature-base/iocs/".replace("/", os.sep))
@@ -1428,6 +1435,8 @@ def main():
     parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
     parser.add_argument('-w', help='Warning score', metavar='warning-level', default=60)
     parser.add_argument('-n', help='Notice score', metavar='notice-level', default=40)
+    parser.add_argument('--allhds', action='store_true', help='Scan all local hard drives', default=False)
+    parser.add_argument('--alldrives', action='store_true', help='Scan all drives (including network drives and removable media)', default=False)
     parser.add_argument('--printall', action='store_true', help='Print all files that are scanned', default=False)
     parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
     parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
@@ -1548,14 +1557,31 @@ if __name__ == '__main__':
             logger.log("NOTICE", "Init", "Skipping process memory check. User has no admin rights.")
 
     # Scan Path -------------------------------------------------------
-    # Set default
-    defaultPath = args.p
-    if (os_platform == "linux" or os_platform == "macos") and defaultPath == "C:\\":
-        defaultPath = "/"
-
-    resultFS = False
     if not args.nofilescan:
-        loki.scan_path(defaultPath)
+        # Set default
+        defaultPath = args.p
+        if (os_platform == "linux" or os_platform == "macos") and args.p == "C:\\":
+            defaultPath = "/"
+
+        # Drives evaluation
+        if os_platform == "windows":
+            # Evaluate drives
+            drives = win32api.GetLogicalDriveStrings().split("\x00")
+            # All hard drives (without removable drives)
+            if args.allhds:
+                for drive in drives:
+                    if win32file.GetDriveType(drive) == win32file.DRIVE_FIXED:
+                        loki.scan_path(drive)
+            # All drives (including removable drives)
+            elif args.alldrives:
+                for drive in drives:
+                    loki.scan_path(drive)
+            else:
+                loki.scan_path(defaultPath)
+
+        # Linux & macOS
+        else:
+           loki.scan_path(defaultPath)
 
     # Result ----------------------------------------------------------
     logger.log("NOTICE", "Results", "Results: {0} alerts, {1} warnings, {2} notices".format(logger.alerts, logger.warnings, logger.notices))
