@@ -83,7 +83,7 @@ If you want to build it yourself:
       -a alert-level        Alert score
       -w warning-level      Warning score
       -n notice-level       Notice score
-      --allhds              Scan all local hard drives
+      --allhds              Scan all local hard drives (Windows only)
       --alldrives           Scan all drives (including network drives and
                             removable media)
       --printall            Print all files that are scanned
