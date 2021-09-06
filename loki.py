@@ -491,7 +491,8 @@ class Loki(object):
                                           'filepath': filePath.decode('utf-8'),
                                           'extension': extension,
                                           'filetype': fileType,
-                                          'md5': md5
+                                          'md5': md5,
+                                          'owner': "dummy"
                                       })
 
                 # If matched
@@ -1124,6 +1125,7 @@ class Loki(object):
                                     'extension': dummy,
                                     'filetype': dummy,
                                     'md5': dummy,
+                                    'owner': dummy,
                                 })
                                 logger.log("DEBUG", "Init", "Initializing Yara rule %s" % file)
                                 rule_count += 1
@@ -1151,7 +1153,8 @@ class Loki(object):
                     'filepath': dummy,
                     'extension': dummy,
                     'filetype': dummy,
-                    'md5': dummy
+                    'md5': dummy,
+                    'owner': dummy,
                 })
                 logger.log("INFO", "Init", "Initialized %d Yara rules" % rule_count)
             except Exception as e:
