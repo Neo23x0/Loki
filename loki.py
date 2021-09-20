@@ -1027,6 +1027,10 @@ class Loki(object):
 
                         # Last Comment Line
                         last_comment = ""
+                        # Initialize score variable
+                        score = 0
+                        # Initialize empty description
+                        desc = ""
 
                         for line in lines:
                             try:
