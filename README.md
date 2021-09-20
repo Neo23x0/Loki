@@ -137,7 +137,8 @@ Hash;Description [Reference]
 
 For Filename IOCs (divided by newline)
 ```
-Filename as Regex;Description [Reference]
+# (optional) Description [Reference]
+Filename as Regex[;Score as integer[;False-positive as Regex]]
 ```
 
 # User-Defined Scan Excludes
