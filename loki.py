@@ -1403,7 +1403,7 @@ def updateLoki(sigsOnly):
     if os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.exe')) and os_platform == "windows":
         pArgs.append('loki-upgrader.exe')
     elif os.path.exists(os.path.join(get_application_path(), 'loki-upgrader.py')):
-        pArgs.append('python')
+        pArgs.append(args.python)
         pArgs.append('loki-upgrader.py')
     else:
         logger.log("ERROR", "Update", "Cannot find neither thor-upgrader.exe nor thor-upgrader.py in the current working directory.")
@@ -1471,6 +1471,7 @@ def main():
     parser.add_argument('--logfolder', help='Folder to use for logging when log file is not specified', metavar='log-folder', default='')
     parser.add_argument('--nopesieve', action='store_true', help='Do not perform pe-sieve scans', default=False)
     parser.add_argument('--pesieveshellc', action='store_true', help='Perform pe-sieve shellcode scan', default=False)
+    parser.add_argument('--python', action='store', help='Override default python path', default='python')
     parser.add_argument('--nolisten', action='store_true', help='Dot not show listening connections', default=False)
     parser.add_argument('--excludeprocess', action='append', help='Specify an executable name to exclude from scans, can be used multiple times', default=[])
     parser.add_argument('--force', action='store_true',
