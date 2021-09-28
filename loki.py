@@ -346,7 +346,7 @@ class Loki(object):
 
                     # Evaluations -------------------------------------------------------
                     # Evaluate size
-                    if fileSize > int((args.s * 1024)):
+                    if fileSize > (int(args.s) * 1024):
                         # Print files
                         do_intense_check = False
 
