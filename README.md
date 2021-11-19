@@ -162,6 +162,13 @@ The '''exclude.cfg''' looks like this:
     #   Matches: /var/log/test.log
     #   Not Matches: /var/log/test.gz
     #
+    # Excluded by hash
+    #
+    # - add hash MD5, SHA1 or SHA256 to exclude file from the scan
+    #   e.g.:
+    #   md5sum:d41d8cd98f00b204e9800998ecf8427e
+    #   sha1sum:da39a3ee5e6b4b0d3255bfef95601890afd80709
+    #   sha256sum:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     
     # Useful examples
     \\Ntfrs\\
