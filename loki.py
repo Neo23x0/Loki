@@ -662,9 +662,9 @@ class Loki(object):
             for fioc in self.filename_iocs:
                 match = fioc['regex'].search(cmd)
                 if match:
-                    if fioc['score'] > 70:
+                    if int(fioc['score']) > 70:
                         logger.log("ALERT", "ProcessScan", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (fioc['regex'].pattern, fioc['description'], cmd))
-                    elif fioc['score'] > 40:
+                    elif int(fioc['score']) > 40:
                         logger.log("WARNING", "ProcessScan", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (fioc['regex'].pattern, fioc['description'], cmd))
 
             # Suspicious waitfor - possible backdoor https://twitter.com/subTee/status/872274262769500160
