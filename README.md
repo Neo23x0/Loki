@@ -1,3 +1,5 @@
+[![Actively Maintained](https://img.shields.io/badge/Maintenance%20Level-Actively%20Maintained-green.svg)](https://gist.github.com/cheerfulstoic/d107229326a01ff0f333a1d3476e068d)
+
 ![Logo](/lokiicon.jpg)
 # Loki - Simple IOC and YARA Scanner
 
@@ -230,7 +232,7 @@ To include the msvcr100.dll to improve the target os compatibility change the li
     
 # Use LOKI on Mac OS X
 
-- Download Yara sources from [here](https://github.com/plusvic/yara/releases/)
+- Download Yara sources from [here](https://github.com/VirusTotal/yara/releases)
 - Change to folder ```yara-python``` 
 - Run ```python setup.py install```
 - Also install the requirement mentioned above by ```sudo pip install colorama```

@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[scripts]
+loki = "python loki.py"
+
+[packages]
+wheel = "*"
+colorama = "*"
+future = "*"
+netaddr = "*"
+psutil = "*"
+rfc5424-logging-handler = "*"
+pywin32 = { version="*", sys_platform="== 'win32'" }
+yara-python = "*"
+WMI = {version="*",sys_platform="== 'win32'" }
+
+[dev-packages]
+
+[requires]
+python_version = "3"

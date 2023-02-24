@@ -669,9 +669,9 @@ class Loki(object):
             for fioc in self.filename_iocs:
                 match = fioc['regex'].search(cmd)
                 if match:
-                    if fioc['score'] > 70:
+                    if int(fioc['score']) > 70:
                         logger.log("ALERT", "ProcessScan", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (fioc['regex'].pattern, fioc['description'], cmd))
-                    elif fioc['score'] > 40:
+                    elif int(fioc['score']) > 40:
                         logger.log("WARNING", "ProcessScan", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (fioc['regex'].pattern, fioc['description'], cmd))
 
             # Suspicious waitfor - possible backdoor https://twitter.com/subTee/status/872274262769500160
@@ -1494,6 +1494,7 @@ def main():
     parser.add_argument('--excludeprocess', action='append', help='Specify an executable name to exclude from scans, can be used multiple times', default=[])
     parser.add_argument('--force', action='store_true',
                         help='Force the scan on a certain folder (even if excluded with hard exclude in LOKI\'s code', default=False)
+    parser.add_argument('--version', action='store_true', help='Shows welcome text and version of loki, then exit', default=False)
 
     args = parser.parse_args()
 
@@ -1540,6 +1541,10 @@ if __name__ == '__main__':
     LokiCustomFormatter = None
     logger = LokiLogger(args.nolog, args.l, getHostname(os_platform), args.r, int(args.t), args.syslogtcp, args.csv, args.onlyrelevant, args.debug,
                         platform=os_platform, caller='main', customformatter=LokiCustomFormatter)
+
+    # Show version
+    if args.version:
+        sys.exit(0)
 
     # Update
     if args.update:
