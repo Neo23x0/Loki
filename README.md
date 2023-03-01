@@ -223,12 +223,16 @@ To include the msvcr100.dll to improve the target os compatibility change the li
 
     a.binaries + [('msvcr100.dll', 'C:\Windows\System32\msvcr100.dll', 'BINARY')],
     
-# Use LOKI on Mac OS X
+# Use LOKI on Mac OS X (Or later) or Linux
 
-- Download Yara sources from [here](https://github.com/VirusTotal/yara/releases)
-- Change to folder ```yara-python``` 
-- Run ```python setup.py install```
-- Also install the requirement mentioned above by ```sudo pip install colorama```
+- Install libraries ```sudo pip install colorama yara-python psutil rfc5424-logging-handler netaddr```
+- Run loki-upgrader.py ```sudo python loki-upgrader.py```
+- Run loki ```sudo python loki.py```
+
+# Yara sources
+
+Download Yara sources from [here](https://github.com/VirusTotal/yara/releases)
+
 
 # Antivirus - False Positives
 
