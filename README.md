@@ -1,5 +1,9 @@
 [![Inactively Maintained](https://img.shields.io/badge/Maintenance%20Level-Inactively%20Maintained-yellowgreen.svg)](https://gist.github.com/cheerfulstoic/d107229326a01ff0f333a1d3476e068d)
 
+## Important Note
+
+This project is inactively maintained. This means that I merge pull request for bug fixes and issues that can be easily integrated but I don't have the time to add new features or extend existing ones. For years, I've been working on a much more sohpisticated scanner called THOR. There is a free version of THOR Lite available. You can find a comparison of the open source, free and commercial scanner [here](https://www.nextron-systems.com/thor-lite/). I've also started working on a Rust-based version of LOKI called [LOKI 2](https://github.com/Neo23x0/Loki2) but I have no idea when it's in a state that reflects the current feature set of LOKI. A while ago I made a [flow chart](https://twitter.com/cyb3rops/status/1361980419223207936) to help you with the decision which scanner to use.
+
 ![Logo](/lokiicon.jpg)
 # Loki - Simple IOC and YARA Scanner
 
