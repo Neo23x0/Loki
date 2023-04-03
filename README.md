@@ -2,7 +2,7 @@
 
 ## Important Note
 
-This project is inactively maintained. This means that I merge pull request for bug fixes and issues that can be easily integrated but I don't have the time to add new features or extend existing ones. For years, I've been working on a much more sohpisticated scanner called THOR. There is a free version of THOR Lite available. You can find a comparison of the open source, free and commercial scanner [here](https://www.nextron-systems.com/thor-lite/). I've also started working on a Rust-based version of LOKI called [LOKI 2](https://github.com/Neo23x0/Loki2) but I have no idea when it's in a state that reflects the current feature set of LOKI. A while ago I made a [flow chart](https://twitter.com/cyb3rops/status/1361980419223207936) to help you with the decision which scanner to use.
+This project is only inactively maintained. This means that I merge pull request for bug fixes and issues that can be easily integrated but I don't have the time to add new features or extend existing ones. For years, I've been working on a much more sohpisticated scanner called THOR. There is a free version of THOR Lite available. THOR Lite is faster, more stable, tested in our CI environments and simply the better solution. You can find a comparison of the open source, free and commercial scanner [here](https://www.nextron-systems.com/thor-lite/). I've also started working on a Rust-based version of LOKI called [LOKI 2](https://github.com/Neo23x0/Loki2) but I have no idea when it's in a state that reflects the current feature set of LOKI. A while ago I made a [flow chart](https://twitter.com/cyb3rops/status/1361980419223207936) to help you with the decision which scanner to use.
 
 ![Logo](/lokiicon.jpg)
 # Loki - Simple IOC and YARA Scanner
