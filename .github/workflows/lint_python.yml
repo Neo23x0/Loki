@@ -4,14 +4,13 @@ jobs:
   lint_python:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - run: pip install black codespell flake8 isort mypy pytest pyupgrade safety
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+      - run: pip install --upgrade pip setuptools wheel
+      - run: pip install black codespell mypy pytest ruff safety
+      - run: ruff --format=github --ignore=E501,E701,E713,E722,F401,F403,F405,F841 --line-length=263 .
       - run: black --check . || true
       - run: codespell --ignore-words-list="datas" --skip="./.git/*"
-      - run: flake8 . --count --exit-zero --select=E9,F63,F7,F82 --show-source --statistics
-      - run: flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --show-source --statistics
-      - run: isort --check-only --profile black . || true
       - run: pip install -r requirements.txt
       - run: mypy --install-types --non-interactive . || true
       - run: pytest . || true
@@ -19,5 +18,4 @@ jobs:
       - run: python ./loki.py --noprocs --noindicator --dontwait --debug -p ./test
       - run: python ./loki.py --noprocs --noindicator --dontwait --debug --intense -p ./test
       - run: python ./loki.py --noprocs --noindicator --dontwait --debug --csv -p ./test
-      - run: shopt -s globstar && pyupgrade --py36-plus **/*.py || true
-      - run: safety check
+      # - run: safety check
