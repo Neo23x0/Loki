@@ -102,6 +102,7 @@ class Loki(object):
     hashes_md5 = {}
     hashes_sha1 = {}
     hashes_sha256 = {}
+    hashes_scores = {}
     false_hashes = {}
     c2_server = {}
 
@@ -389,26 +390,30 @@ class Loki(object):
                             continue
 
                         # Malware Hash
+                        matchScore = 100
                         if ioc_contains(self.hashes_md5_list, md5_num):
                             matchType = "MD5"
                             matchDesc = self.hashes_md5[md5_num]
                             matchHash = md5
+                            matchScore = self.hashes_scores[md5_num]
                         if ioc_contains(self.hashes_sha1_list, sha1_num):
                             matchType = "SHA1"
                             matchDesc = self.hashes_sha1[sha1_num]
                             matchHash = sha1
+                            matchScore = self.hashes_scores[sha1_num]
                         if ioc_contains(self.hashes_sha256_list, sha256_num):
                             matchType = "SHA256"
                             matchDesc = self.hashes_sha256[sha256_num]
                             matchHash = sha256
+                            matchScore = self.hashes_scores[sha256_num]
 
                         # Hash string
                         hashString = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
 
                         if matchType:
-                            reasons.append("Malware Hash TYPE: %s HASH: %s SUBSCORE: 100 DESC: %s" % (
-                            matchType, matchHash, matchDesc))
-                            total_score += 100
+                            reasons.append("Malware Hash TYPE: %s HASH: %s SUBSCORE: %d DESC: %s" % (
+                            matchType, matchHash, matchScore, matchDesc))
+                            total_score += matchScore
 
                         # Script Anomalies Check
                         if args.scriptanalysis:
@@ -1202,12 +1207,19 @@ class Loki(object):
                                 if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
                                     continue
                                 row = line.split(';')
-                                hash = row[0].lower()
-                                comment = row[1].rstrip(" ").rstrip("\n")
+                                # Handle 2 and 3 column IOCs
+                                if len(row) == 2:
+                                    hash = row[0].lower()
+                                    comment = row[1].rstrip(" ").rstrip("\n")
+                                elif len(low) == 3:
+                                    hash = row[0].lower()
+                                    score = int(row[1])
+                                    comment = row[2].rstrip(" ").rstrip("\n")
                                 # Empty File Hash
                                 if hash in HASH_WHITELIST:
                                     continue
                                 # Else - check which type it is
+                                self.hashes_scores[int(hash, 16)] = score
                                 if len(hash) == 32:
                                     self.hashes_md5[int(hash, 16)] = comment
                                 if len(hash) == 40:

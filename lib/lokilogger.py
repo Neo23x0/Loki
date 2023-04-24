@@ -15,7 +15,7 @@ from logging import handlers
 import socket
 from .helpers import removeNonAsciiDrop
 
-__version__ = '0.44.2'
+__version__ = '0.45.0'
 
 
 # Logger Class -----------------------------------------------------------------
