@@ -89,7 +89,7 @@ class LOKIUpdater(object):
     def update_signatures(self, clean=False):
         try:
             for sig_url in self.UPDATE_URL_SIGS:
-                if needs_update(sig_url) == True:
+                if needs_update(sig_url):
                     # Downloading current repository
                     try:
                         self.logger.log("INFO", "Upgrader", "Downloading %s ..." % sig_url)
