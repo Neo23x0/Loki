@@ -1208,13 +1208,14 @@ class Loki(object):
                                     continue
                                 row = line.split(';')
                                 # Handle 2 and 3 column IOCs
-                                if len(row) == 2:
-                                    hash = row[0].lower()
-                                    comment = row[1].rstrip(" ").rstrip("\n")
-                                elif len(low) == 3:
+                                if len(row) == 3 and row[1].isdigit():
                                     hash = row[0].lower()
                                     score = int(row[1])
                                     comment = row[2].rstrip(" ").rstrip("\n")
+                                else:
+                                    hash = row[0].lower()
+                                    comment = row[1].rstrip(" ").rstrip("\n")
+                                    score = 100
                                 # Empty File Hash
                                 if hash in HASH_WHITELIST:
                                     continue
@@ -1229,6 +1230,8 @@ class Loki(object):
                                 if false_positive:
                                     self.false_hashes[int(hash, 16)] = comment
                             except Exception as e:
+                                if logger.debug:
+                                    traceback.print_exc()
                                 logger.log("ERROR", "Init", "Cannot read line: %s" % line)
 
                     # Debug
