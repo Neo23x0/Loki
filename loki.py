@@ -1488,6 +1488,7 @@ def main():
     parser.add_argument('--excludeprocess', action='append', help='Specify an executable name to exclude from scans, can be used multiple times', default=[])
     parser.add_argument('--force', action='store_true',
                         help='Force the scan on a certain folder (even if excluded with hard exclude in LOKI\'s code', default=False)
+    parser.add_argument('--version', action='store_true', help='Shows welcome text and version of loki, then exit', default=False)
 
     args = parser.parse_args()
 
@@ -1534,6 +1535,10 @@ if __name__ == '__main__':
     LokiCustomFormatter = None
     logger = LokiLogger(args.nolog, args.l, getHostname(os_platform), args.r, int(args.t), args.syslogtcp, args.csv, args.onlyrelevant, args.debug,
                         platform=os_platform, caller='main', customformatter=LokiCustomFormatter)
+
+    # Show version
+    if args.version:
+        sys.exit(0)
 
     # Update
     if args.update:
