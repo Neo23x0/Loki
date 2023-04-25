@@ -391,6 +391,7 @@ class Loki(object):
 
                         # Malware Hash
                         matchScore = 100
+                        matchLevel = "Malware"
                         if ioc_contains(self.hashes_md5_list, md5_num):
                             matchType = "MD5"
                             matchDesc = self.hashes_md5[md5_num]
@@ -407,12 +408,16 @@ class Loki(object):
                             matchHash = sha256
                             matchScore = self.hashes_scores[sha256_num]
 
+                        # If score is low change the description
+                        if matchScore < 80:
+                            matchLevel = "Suspicious"
+
                         # Hash string
                         hashString = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
 
                         if matchType:
-                            reasons.append("Malware Hash TYPE: %s HASH: %s SUBSCORE: %d DESC: %s" % (
-                            matchType, matchHash, matchScore, matchDesc))
+                            reasons.append("%s Hash TYPE: %s HASH: %s SUBSCORE: %d DESC: %s" % (
+                            matchLevel, matchType, matchHash, matchScore, matchDesc))
                             total_score += matchScore
 
                         # Script Anomalies Check
