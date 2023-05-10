@@ -12,10 +12,10 @@ RMDIR /S /Q build
 
 :: BUILD LOKI
 ECHO Compiling LOKI ...
-%PYI% --noupx loki.spec
+%PYI% loki.spec
 if !errorlevel! neq 0 GOTO ERROR
 ECHO Compiling LOKI UPGRADER ...
-%PYI% --noupx loki-upgrader.spec
+%PYI% loki-upgrader.spec
 if !errorlevel! neq 0 GOTO ERROR
 
 :: Copy Executables and other files to the package folder
