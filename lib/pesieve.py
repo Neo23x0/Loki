@@ -64,7 +64,7 @@ class PESieve(object):
             return results
         try:
             results_raw = json.loads(output)
-            results = results_raw["scanned"]["modified"]
+            results = results_raw["scan_report"]["scanned"]["modified"]
         except ValueError as v:
             traceback.print_exc()
             self.logger.log("DEBUG", "PESieve", "Couldn't parse the JSON output.")
