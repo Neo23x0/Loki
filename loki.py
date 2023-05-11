@@ -449,13 +449,15 @@ class Loki(object):
                                 message = "Yara Rule MATCH: %s SUBSCORE: %s DESCRIPTION: %s REF: %s AUTHOR: %s" % \
                                           (rule, score, description, reference, author)
                                 # Matches
-                                if matched_strings:
-                                    message += " MATCHES: %s" % matched_strings
+                                if len(matched_strings) > 0:
+                                    message += " MATCHES: %s" % ", ".join(matched_strings)
 
                                 total_score += score
                                 reasons.append(message)
 
                         except Exception as e:
+                            if logger.debug:
+                                traceback.print_exc()
                             logger.log("ERROR", "FileScan", "Cannot YARA scan file: %s" % filePathCleaned)
 
                     # Info Line -----------------------------------------------------------------------
@@ -534,7 +536,7 @@ class Loki(object):
                                 score = int(match.meta['score'])
 
                         # Matching strings
-                        matched_strings = ""
+                        matched_strings = []
                         if hasattr(match, 'strings'):
                             # Get matching strings
                             matched_strings = self.get_string_matches(match.strings)
@@ -547,24 +549,14 @@ class Loki(object):
 
     def get_string_matches(self, strings):
         try:
-            string_matches = []
-            matching_strings = ""
+            matching_strings = []
             for string in strings:
-                # print string
-                extract = string[2]
-                if not extract in string_matches:
-                    string_matches.append(extract)
-
-            string_num = 1
-            for string in string_matches:
-                matching_strings += " Str" + str(string_num) + ": " + removeNonAscii(string)
-                string_num += 1
-
-            # Limit string
-            if len(matching_strings) > 140:
-                matching_strings = matching_strings[:140] + " ... (truncated)"
-
-            return matching_strings.lstrip(" ")
+                # Limit string
+                string_value = str(string.instances[0]).replace("'", '\\')
+                if len(string_value) > 140:
+                    string_value = string_value[:140] + " ... (truncated)"
+                matching_strings.append("{0}: '{1}'".format(string.identifier, string_value))
+            return matching_strings
         except:
             traceback.print_exc()
 
