@@ -369,7 +369,7 @@ class Loki(object):
                             logger.log("INFO", "FileScan", "Checking %s TYPE: %s SIZE: %s" % (fileNameCleaned, fileType, fileSize))
 
                     if print_filesize_warning:
-                        logger.log("WARNING", "FileScan", "Skiping file because of file size %s TYPE: %s SIZE: %s CURRENT SIZE LIMIT(kilobytes): %d" % (fileNameCleaned, fileType, fileSize, fileSizeLimit))
+                        logger.log("WARNING", "FileScan", "Skipping file because of file size %s TYPE: %s SIZE: %s CURRENT SIZE LIMIT(kilobytes): %d" % (fileNameCleaned, fileType, fileSize, fileSizeLimit))
 
                     # Hash Check -------------------------------------------------------
                     # Do the check
