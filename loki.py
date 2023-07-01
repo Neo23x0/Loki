@@ -345,7 +345,7 @@ class Loki(object):
                     # Set fileData to an empty value
                     fileData = ""
 
-                    print_filesize_warning = False
+                    print_filesize_info = False
 
                     # Evaluations -------------------------------------------------------
                     # Evaluate size
@@ -353,12 +353,12 @@ class Loki(object):
                     if fileSize > fileSizeLimit:
                         # Print files
                         do_intense_check = False
-                        print_filesize_warning = True
+                        print_filesize_info = True
 
                     # Some file types will force intense check
                     if fileType == "MDMP":
                         do_intense_check = True
-                        print_filesize_warning = False
+                        print_filesize_info = False
 
                     # Intense Check switch
                     if do_intense_check:
@@ -368,8 +368,8 @@ class Loki(object):
                         if args.printall:
                             logger.log("INFO", "FileScan", "Checking %s TYPE: %s SIZE: %s" % (fileNameCleaned, fileType, fileSize))
 
-                    if print_filesize_warning:
-                        logger.log("WARNING", "FileScan", "Skipping file because of file size %s TYPE: %s SIZE: %s CURRENT SIZE LIMIT(kilobytes): %d" % (fileNameCleaned, fileType, fileSize, fileSizeLimit))
+                    if print_filesize_info and args.printall:
+                        logger.log("INFO", "FileScan", "Skipping file because of file size: %s TYPE: %s SIZE: %s CURRENT SIZE LIMIT(kilobytes): %d" % (fileNameCleaned, fileType, fileSize, fileSizeLimit))
 
                     # Hash Check -------------------------------------------------------
                     # Do the check
