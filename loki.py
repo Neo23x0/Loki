@@ -119,7 +119,8 @@ class Loki(object):
     max_filetype_magics = 0
 
     # Predefined paths to skip (Linux platform)
-    LINUX_PATH_SKIPS_START = set(["/proc", "/dev", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux"])
+    LINUX_PATH_SKIPS_START = set(
+        ["/proc", "/dev", "/sys/kernel/debug", "/sys/kernel/slab", "/sys/devices", "/usr/src/linux"])
     MOUNTED_DEVICES = set(["/media", "/volumes"])
     LINUX_PATH_SKIPS_END = set(["/initctl"])
 
@@ -143,14 +144,16 @@ class Loki(object):
             updateLoki(sigsOnly=True)
 
         # Excludes
-        self.initialize_excludes(os.path.join(self.app_path, "config/excludes.cfg".replace("/", os.sep)))
+        self.initialize_excludes(os.path.join(
+            self.app_path, "config/excludes.cfg".replace("/", os.sep)))
 
         # Linux and macOS static excludes
         if not args.force:
             if os_platform == "linux" and args.alldrives:
                 self.startExcludes = self.LINUX_PATH_SKIPS_START
             elif os_platform == "linux":
-                self.startExcludes = self.LINUX_PATH_SKIPS_START | self.MOUNTED_DEVICES | set(getExcludedMountpoints())
+                self.startExcludes = self.LINUX_PATH_SKIPS_START | self.MOUNTED_DEVICES | set(
+                    getExcludedMountpoints())
             # macos excludes like Linux until we get some field data
             if os_platform == "macos" and args.alldrives:
                 self.startExcludes = self.LINUX_PATH_SKIPS_START
@@ -158,47 +161,58 @@ class Loki(object):
                 self.startExcludes = self.LINUX_PATH_SKIPS_START | self.MOUNTED_DEVICES
 
         # Set IOC path
-        self.ioc_path = os.path.join(self.app_path, "signature-base/iocs/".replace("/", os.sep))
+        self.ioc_path = os.path.join(
+            self.app_path, "signature-base/iocs/".replace("/", os.sep))
 
         # Yara rule directories
-        self.yara_rule_directories.append(os.path.join(self.app_path, "signature-base/yara".replace("/", os.sep)))
-        self.yara_rule_directories.append(os.path.join(self.app_path, "signature-base/iocs/yara".replace("/", os.sep)))
-        self.yara_rule_directories.append(os.path.join(self.app_path, "signature-base/3rdparty".replace("/", os.sep)))
+        self.yara_rule_directories.append(os.path.join(
+            self.app_path, "signature-base/yara".replace("/", os.sep)))
+        self.yara_rule_directories.append(os.path.join(
+            self.app_path, "signature-base/iocs/yara".replace("/", os.sep)))
+        self.yara_rule_directories.append(os.path.join(
+            self.app_path, "signature-base/3rdparty".replace("/", os.sep)))
 
         # Read IOCs -------------------------------------------------------
         # File Name IOCs (all files in iocs that contain 'filename')
         self.initialize_filename_iocs(self.ioc_path)
-        logger.log("INFO", "Init", "File Name Characteristics initialized with %s regex patterns" % len(self.filename_iocs))
+        logger.log("INFO", "Init", "File Name Characteristics initialized with %s regex patterns" % len(
+            self.filename_iocs))
 
         # C2 based IOCs (all files in iocs that contain 'c2')
         self.initialize_c2_iocs(self.ioc_path)
-        logger.log("INFO", "Init", "C2 server indicators initialized with %s elements" % len(self.c2_server.keys()))
+        logger.log("INFO", "Init", "C2 server indicators initialized with %s elements" % len(
+            self.c2_server.keys()))
 
         # Hash based IOCs (all files in iocs that contain 'hash')
         self.initialize_hash_iocs(self.ioc_path)
-        logger.log("INFO", "Init", "Malicious MD5 Hashes initialized with %s hashes" % len(self.hashes_md5.keys()))
-        logger.log("INFO", "Init", "Malicious SHA1 Hashes initialized with %s hashes" % len(self.hashes_sha1.keys()))
-        logger.log("INFO", "Init", "Malicious SHA256 Hashes initialized with %s hashes" % len(self.hashes_sha256.keys()))
+        logger.log("INFO", "Init", "Malicious MD5 Hashes initialized with %s hashes" % len(
+            self.hashes_md5.keys()))
+        logger.log("INFO", "Init", "Malicious SHA1 Hashes initialized with %s hashes" % len(
+            self.hashes_sha1.keys()))
+        logger.log("INFO", "Init", "Malicious SHA256 Hashes initialized with %s hashes" % len(
+            self.hashes_sha256.keys()))
 
         # Hash based False Positives (all files in iocs that contain 'hash' and 'falsepositive')
         self.initialize_hash_iocs(self.ioc_path, false_positive=True)
-        logger.log("INFO", "Init", "False Positive Hashes initialized with %s hashes" % len(self.false_hashes.keys()))
+        logger.log("INFO", "Init", "False Positive Hashes initialized with %s hashes" % len(
+            self.false_hashes.keys()))
 
         # Compile Yara Rules
         self.initialize_yara_rules()
 
         # Initialize File Type Magic signatures
-        self.initialize_filetype_magics(os.path.join(self.app_path, 'signature-base/misc/file-type-signatures.txt'.replace("/", os.sep)))
+        self.initialize_filetype_magics(os.path.join(
+            self.app_path, 'signature-base/misc/file-type-signatures.txt'.replace("/", os.sep)))
 
         # Levenshtein Checker
         self.LevCheck = LevCheck()
-
 
     def scan_path(self, path):
 
         # Check if path exists
         if not os.path.exists(path):
-            logger.log("ERROR", "FileScan", "None Existing Scanning Path %s ...  " % path)
+            logger.log("ERROR", "FileScan",
+                       "None Existing Scanning Path %s ...  " % path)
             return
 
         # Startup
@@ -226,7 +240,8 @@ class Loki(object):
                 # Platform specific excludes
                 for skip in self.startExcludes:
                     if completePath.startswith(skip):
-                        logger.log("INFO", "FileScan", "Skipping %s directory [fixed excludes] (try using --force, --allhds or --alldrives)" % skip)
+                        logger.log(
+                            "INFO", "FileScan", "Skipping %s directory [fixed excludes] (try using --force, --allhds or --alldrives)" % skip)
                         skipIt = True
 
                 if not skipIt:
@@ -248,7 +263,8 @@ class Loki(object):
                     # > due to errors when Unicode characters are passed to the match function as
                     #   external variables
                     filePathCleaned = fpath.encode('ascii', errors='replace')
-                    fileNameCleaned = filename.encode('ascii', errors='replace')
+                    fileNameCleaned = filename.encode(
+                        'ascii', errors='replace')
 
                     # Get Extension
                     extension = os.path.splitext(filePath)[1].lower()
@@ -257,13 +273,14 @@ class Loki(object):
                     skipIt = False
 
                     # Unicode error test
-                    #if 1 > 0:
+                    # if 1 > 0:
                     #    walk_error(OSError("[Error 3] No such file or directory"))
 
                     # User defined excludes
                     for skip in self.fullExcludes:
                         if skip.search(filePath):
-                            logger.log("DEBUG", "FileScan", "Skipping element %s" % filePath)
+                            logger.log("DEBUG", "FileScan",
+                                       "Skipping element %s" % filePath)
                             skipIt = True
 
                     # Linux directory skip
@@ -273,7 +290,8 @@ class Loki(object):
                         for skip in self.LINUX_PATH_SKIPS_END:
                             if filePath.endswith(skip):
                                 if self.LINUX_PATH_SKIPS_END[skip] == 0:
-                                    logger.log("INFO", "FileScan", "Skipping %s element" % skip)
+                                    logger.log("INFO", "FileScan",
+                                               "Skipping %s element" % skip)
                                     self.LINUX_PATH_SKIPS_END[skip] = 1
                                     skipIt = True
 
@@ -295,7 +313,8 @@ class Loki(object):
                     # Skip program directory
                     # print appPath.lower() +" - "+ filePath.lower()
                     if self.app_path.lower() in filePath.lower():
-                        logger.log("DEBUG", "FileScan", "Skipping file in program directory FILE: %s" % filePathCleaned)
+                        logger.log(
+                            "DEBUG", "FileScan", "Skipping file in program directory FILE: %s" % filePathCleaned)
                         continue
 
                     fileSize = os.stat(filePath).st_size
@@ -311,7 +330,8 @@ class Loki(object):
                                 if match_fp:
                                     continue
                             # Create Reason
-                            reasons.append("File Name IOC matched PATTERN: %s SUBSCORE: %s DESC: %s" % (fioc['regex'].pattern, fioc['score'], fioc['description']))
+                            reasons.append("File Name IOC matched PATTERN: %s SUBSCORE: %s DESC: %s" % (
+                                fioc['regex'].pattern, fioc['score'], fioc['description']))
                             total_score += int(fioc['score'])
 
                     # Levenshtein Check
@@ -330,16 +350,19 @@ class Loki(object):
                         with open(filePath, 'rb') as f:
                             firstBytes = f.read(4)
                     except Exception as e:
-                        logger.log("DEBUG", "FileScan", "Cannot open file %s (access denied)" % filePathCleaned)
+                        logger.log(
+                            "DEBUG", "FileScan", "Cannot open file %s (access denied)" % filePathCleaned)
 
                     # Evaluate Type
-                    fileType = get_file_type(filePath, self.filetype_magics, self.max_filetype_magics, logger)
+                    fileType = get_file_type(
+                        filePath, self.filetype_magics, self.max_filetype_magics, logger)
 
                     # Fast Scan Mode - non intense
                     do_intense_check = True
                     if not self.intense_mode and fileType == "UNKNOWN" and extension not in EVIL_EXTENSIONS:
                         if args.printall:
-                            logger.log("INFO", "FileScan", "Skipping file due to fast scan mode: %s" % fileNameCleaned)
+                            logger.log(
+                                "INFO", "FileScan", "Skipping file due to fast scan mode: %s" % fileNameCleaned)
                         do_intense_check = False
 
                     # Set fileData to an empty value
@@ -358,10 +381,12 @@ class Loki(object):
                     # Intense Check switch
                     if do_intense_check:
                         if args.printall:
-                            logger.log("INFO", "FileScan", "Scanning %s TYPE: %s SIZE: %s" % (fileNameCleaned, fileType, fileSize))
+                            logger.log("INFO", "FileScan", "Scanning %s TYPE: %s SIZE: %s" % (
+                                fileNameCleaned, fileType, fileSize))
                     else:
                         if args.printall:
-                            logger.log("INFO", "FileScan", "Checking %s TYPE: %s SIZE: %s" % (fileNameCleaned, fileType, fileSize))
+                            logger.log("INFO", "FileScan", "Checking %s TYPE: %s SIZE: %s" % (
+                                fileNameCleaned, fileType, fileSize))
 
                     # Hash Check -------------------------------------------------------
                     # Do the check
@@ -370,7 +395,8 @@ class Loki(object):
                         fileData = self.get_file_data(filePath)
 
                         # First bytes
-                        firstBytesString = "%s / %s" % (fileData[:20].hex(), removeNonAsciiDrop(fileData[:20]))
+                        firstBytesString = "%s / %s" % (
+                            fileData[:20].hex(), removeNonAsciiDrop(fileData[:20]))
 
                         # Hash Eval
                         matchType = None
@@ -381,9 +407,9 @@ class Loki(object):
                         sha256 = 0
 
                         md5, sha1, sha256 = generateHashes(fileData)
-                        md5_num=int(md5, 16)
-                        sha1_num=int(sha1, 16)
-                        sha256_num=int(sha256, 16)
+                        md5_num = int(md5, 16)
+                        sha1_num = int(sha1, 16)
+                        sha256_num = int(sha256, 16)
 
                         # False Positive Hash
                         if md5_num in self.false_hashes.keys() or sha1_num in self.false_hashes.keys() or sha256_num in self.false_hashes.keys():
@@ -413,27 +439,32 @@ class Loki(object):
                             matchLevel = "Suspicious"
 
                         # Hash string
-                        hashString = "MD5: %s SHA1: %s SHA256: %s" % ( md5, sha1, sha256 )
+                        hashString = "MD5: %s SHA1: %s SHA256: %s" % (
+                            md5, sha1, sha256)
 
                         if matchType:
                             reasons.append("%s Hash TYPE: %s HASH: %s SUBSCORE: %d DESC: %s" % (
-                            matchLevel, matchType, matchHash, matchScore, matchDesc))
+                                matchLevel, matchType, matchHash, matchScore, matchDesc))
                             total_score += matchScore
 
                         # Script Anomalies Check
                         if args.scriptanalysis:
                             if extension in SCRIPT_EXTENSIONS or type in SCRIPT_TYPES:
-                                logger.log("DEBUG", "FileScan", "Performing character analysis on file %s ... " % filePath)
-                                message, score = self.script_stats_analysis(fileData)
+                                logger.log(
+                                    "DEBUG", "FileScan", "Performing character analysis on file %s ... " % filePath)
+                                message, score = self.script_stats_analysis(
+                                    fileData)
                                 if message:
-                                    reasons.append("%s SCORE: %s" % (message, score))
+                                    reasons.append("%s SCORE: %s" %
+                                                   (message, score))
                                     total_score += score
 
                         # Yara Check -------------------------------------------------------
 
                         # Memory Dump Scan
                         if fileType == "MDMP":
-                            logger.log("INFO", "FileScan", "Scanning memory dump file %s" % fileNameCleaned.decode('utf-8'))
+                            logger.log(
+                                "INFO", "FileScan", "Scanning memory dump file %s" % fileNameCleaned.decode('utf-8'))
 
                         # Scan the read data
                         try:
@@ -447,10 +478,12 @@ class Loki(object):
                                                    ):
                                 # Message
                                 message = "Yara Rule MATCH: %s SUBSCORE: %s DESCRIPTION: %s REF: %s AUTHOR: %s" % \
-                                          (rule, score, description, reference, author)
+                                          (rule, score, description,
+                                           reference, author)
                                 # Matches
                                 if len(matched_strings) > 0:
-                                    message += " MATCHES: %s" % ", ".join(matched_strings)
+                                    message += " MATCHES: %s" % ", ".join(
+                                        matched_strings)
 
                                 total_score += score
                                 reasons.append(message)
@@ -458,7 +491,8 @@ class Loki(object):
                         except Exception as e:
                             if logger.debug:
                                 traceback.print_exc()
-                            logger.log("ERROR", "FileScan", "Cannot YARA scan file: %s" % filePathCleaned)
+                            logger.log(
+                                "ERROR", "FileScan", "Cannot YARA scan file: %s" % filePathCleaned)
 
                     # Info Line -----------------------------------------------------------------------
                     fileInfo = "FILE: %s SCORE: %s TYPE: %s SIZE: %s FIRST_BYTES: %s %s %s " % (
@@ -491,7 +525,7 @@ class Loki(object):
     def scan_data(self, fileData, fileType="-", fileName=b"-", filePath=b"-", extension=b"-", md5="-"):
 
         # Scan parameters
-        #print fileType, fileName, filePath, extension, md5
+        # print fileType, fileName, filePath, extension, md5
         # Scan with yara
         try:
             for rules in self.yara_rules:
@@ -522,7 +556,8 @@ class Loki(object):
                             if 'description' in match.meta:
                                 description = match.meta['description']
                             if 'cluster' in match.meta:
-                                description = "IceWater Cluster {0}".format(match.meta['cluster'])
+                                description = "IceWater Cluster {0}".format(
+                                    match.meta['cluster'])
 
                             if 'reference' in match.meta:
                                 reference = match.meta['reference']
@@ -539,7 +574,8 @@ class Loki(object):
                         matched_strings = []
                         if hasattr(match, 'strings'):
                             # Get matching strings
-                            matched_strings = self.get_string_matches(match.strings)
+                            matched_strings = self.get_string_matches(
+                                match.strings)
 
                         yield score, match.rule, description, reference, matched_strings, author
 
@@ -555,32 +591,33 @@ class Loki(object):
                 string_value = str(string.instances[0]).replace("'", '\\')
                 if len(string_value) > 140:
                     string_value = string_value[:140] + " ... (truncated)"
-                matching_strings.append("{0}: '{1}'".format(string.identifier, string_value))
+                matching_strings.append("{0}: '{1}'".format(
+                    string.identifier, string_value))
             return matching_strings
         except:
             traceback.print_exc()
 
     def check_svchost_owner(self, owner):
-        ## Locale setting
+        # Locale setting
         import ctypes
         import locale
         windll = ctypes.windll.kernel32
-        locale = locale.windows_locale[ windll.GetUserDefaultUILanguage() ]
+        locale = locale.windows_locale[windll.GetUserDefaultUILanguage()]
         if locale == 'fr_FR':
             return (owner.upper().startswith("SERVICE LOCAL") or
-                owner.upper().startswith(u"SERVICE RÉSEAU") or
-                re.match(r"SERVICE R.SEAU", owner) or
-                owner == u"Système"  or
-                owner.upper().startswith(u"AUTORITE NT\Système") or
-                re.match(r"AUTORITE NT\\Syst.me", owner))
+                    owner.upper().startswith(u"SERVICE RÉSEAU") or
+                    re.match(r"SERVICE R.SEAU", owner) or
+                    owner == u"Système" or
+                    owner.upper().startswith(u"AUTORITE NT\Système") or
+                    re.match(r"AUTORITE NT\\Syst.me", owner))
         elif locale == 'ru_RU':
             return (owner.upper().startswith("NET") or
-                owner == u"система" or
-                owner.upper().startswith("LO"))
+                    owner == u"система" or
+                    owner.upper().startswith("LO"))
         else:
-            return ( owner.upper().startswith("NT ") or owner.upper().startswith("NET") or
-                owner.upper().startswith("LO") or
-                owner.upper().startswith("SYSTEM"))
+            return (owner.upper().startswith("NT ") or owner.upper().startswith("NET") or
+                    owner.upper().startswith("LO") or
+                    owner.upper().startswith("SYSTEM"))
 
     def scan_processes(self, nopesieve, nolisten, excludeprocess, pesieveshellc):
         # WMI Handler
@@ -595,7 +632,8 @@ class Loki(object):
 
         # LOKI's processes
         loki_pid = os.getpid()
-        loki_ppid = psutil.Process(os.getpid()).ppid()  # safer way to do this - os.ppid() fails in some envs
+        # safer way to do this - os.ppid() fails in some envs
+        loki_ppid = psutil.Process(os.getpid()).ppid()
 
         for process in processes:
 
@@ -604,7 +642,7 @@ class Loki(object):
                 # Gather Process Information --------------------------------------
                 if process.name.lower() in excludeprocess:
                     continue
-                    
+
                 pid = process.ProcessId
                 name = process.Name
                 cmd = process.CommandLine
@@ -628,7 +666,8 @@ class Loki(object):
                     owner = "unknown"
 
             except Exception as e:
-                logger.log("ALERT", "ProcessScan", "Error getting all process information. Did you run the scanner 'As Administrator'?")
+                logger.log("ALERT", "ProcessScan",
+                           "Error getting all process information. Did you run the scanner 'As Administrator'?")
                 continue
 
             # Is parent to other processes - save PID
@@ -641,42 +680,50 @@ class Loki(object):
                 cmd = path
 
             # Process Info
-            process_info = "PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (str(pid), name, owner, cmd, path)
+            process_info = "PID: %s NAME: %s OWNER: %s CMD: %s PATH: %s" % (
+                str(pid), name, owner, cmd, path)
 
             # Skip some PIDs ------------------------------------------------------
             if pid == 0 or pid == 4:
-                logger.log("INFO", "ProcessScan", "Skipping Process %s" % process_info)
+                logger.log("INFO", "ProcessScan",
+                           "Skipping Process %s" % process_info)
                 continue
 
             # Skip own process ----------------------------------------------------
             if loki_pid == pid or loki_ppid == pid:
-                logger.log("INFO", "ProcessScan", "Skipping LOKI Process %s" % process_info)
+                logger.log("INFO", "ProcessScan",
+                           "Skipping LOKI Process %s" % process_info)
                 continue
 
             # Print info ----------------------------------------------------------
-            logger.log("INFO", "ProcessScan", "Scanning Process %s" % process_info)
+            logger.log("INFO", "ProcessScan",
+                       "Scanning Process %s" % process_info)
 
             # Skeleton Key Malware Process
             if re.search(r'psexec .* [a-fA-F0-9]{32}', cmd, re.IGNORECASE):
-                logger.log("WARNING", "ProcessScan", "Process that looks liks SKELETON KEY psexec execution detected %s" % process_info)
+                logger.log("WARNING", "ProcessScan",
+                           "Process that looks liks SKELETON KEY psexec execution detected %s" % process_info)
 
             # File Name Checks -------------------------------------------------
             for fioc in self.filename_iocs:
                 match = fioc['regex'].search(cmd)
                 if match:
                     if int(fioc['score']) > 70:
-                        logger.log("ALERT", "ProcessScan", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (fioc['regex'].pattern, fioc['description'], cmd))
+                        logger.log("ALERT", "ProcessScan", "File Name IOC matched PATTERN: %s DESC: %s MATCH: %s" % (
+                            fioc['regex'].pattern, fioc['description'], cmd))
                     elif int(fioc['score']) > 40:
-                        logger.log("WARNING", "ProcessScan", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (fioc['regex'].pattern, fioc['description'], cmd))
+                        logger.log("WARNING", "ProcessScan", "File Name Suspicious IOC matched PATTERN: %s DESC: %s MATCH: %s" % (
+                            fioc['regex'].pattern, fioc['description'], cmd))
 
             # Suspicious waitfor - possible backdoor https://twitter.com/subTee/status/872274262769500160
             if name == "waitfor.exe":
-                logger.log("WARNING", "ProcessScan", "Suspicious waitfor.exe process https://twitter.com/subTee/status/872274262769500160 %s" % process_info)
+                logger.log("WARNING", "ProcessScan",
+                           "Suspicious waitfor.exe process https://twitter.com/subTee/status/872274262769500160 %s" % process_info)
 
             # Yara rule match
             # only on processes with a small working set size
             if processExists(pid):
-                if int(ws_size) < ( args.maxworkingset * 1048576 ):
+                if int(ws_size) < (args.maxworkingset * 1048576):
                     try:
                         alerts = []
                         for rules in self.yara_rules:
@@ -693,16 +740,19 @@ class Loki(object):
 
                                         # If a score is given
                                         if 'memory' in match.meta:
-                                            memory_rule = int(match.meta['memory'])
+                                            memory_rule = int(
+                                                match.meta['memory'])
 
                                     # If rule is meant to be applied to process memory as well
                                     if memory_rule == 1:
 
                                         # print match.rule
-                                        alerts.append("Yara Rule MATCH: %s %s" % (match.rule, process_info))
+                                        alerts.append("Yara Rule MATCH: %s %s" % (
+                                            match.rule, process_info))
 
                         if len(alerts) > 5:
-                            logger.log("WARNING", "ProcessScan", "Too many matches on process memory - most likely a false positive %s" % process_info)
+                            logger.log(
+                                "WARNING", "ProcessScan", "Too many matches on process memory - most likely a false positive %s" % process_info)
                         elif len(alerts) > 0:
                             for alert in alerts:
                                 logger.log("ALERT", "ProcessScan", alert)
@@ -710,32 +760,36 @@ class Loki(object):
                         if logger.debug:
                             traceback.print_exc()
                         if path != "none":
-                            logger.log("ERROR", "ProcessScan", "Error during process memory Yara check (maybe the process doesn't exist anymore or access denied) %s" % process_info)
+                            logger.log(
+                                "ERROR", "ProcessScan", "Error during process memory Yara check (maybe the process doesn't exist anymore or access denied) %s" % process_info)
                 else:
-                    logger.log("DEBUG", "ProcessScan", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % ( pid, name, ws_size))
+                    logger.log("DEBUG", "ProcessScan", "Skipped Yara memory check due to the process' big working set size (stability issues) PID: %s NAME: %s SIZE: %s" % (
+                        pid, name, ws_size))
 
             ###############################################################
             # PE-Sieve Checks
             try:
                 if processExists(pid) and self.peSieve.active and not nopesieve:
-                        # If PE-Sieve reports replaced processes
-                        logger.log("DEBUG", "ProcessScan", "PE-Sieve scan of process PID: %s" % pid)
-                        results = self.peSieve.scan(pid, pesieveshellc)
-                        if results["replaced"]:
-                            logger.log("WARNING", "ProcessScan", "PE-Sieve reported replaced process %s REPLACED: %s" %
-                                       (process_info, str(results["replaced"])))
-                        elif results["implanted_pe"] or results["implanted_shc"]:
-                            logger.log("WARNING", "ProcessScan", "PE-Sieve reported implanted process %s "
-                                       "IMPLANTED PE: %s IMPLANTED SHC: %s" % (process_info, str(results["implanted_pe"]),
-                                                                                str(results["implanted_shc"])) )
-                        elif results["patched"]:
-                            logger.log("NOTICE", "ProcessScan", "PE-Sieve reported patched process %s PATCHED: %s" %
-                                       (process_info, str(results["patched"])))
-                        elif results["unreachable_file"]:
-                            logger.log("NOTICE", "ProcessScan", "PE-Sieve reported a process with unreachable exe %s UNREACHABLE: %s" %
-                                       (process_info, str(results["unreachable_file"])))
-                        else:
-                            logger.log("INFO", "ProcessScan", "PE-Sieve reported no anomalies %s" % process_info)
+                    # If PE-Sieve reports replaced processes
+                    logger.log("DEBUG", "ProcessScan",
+                               "PE-Sieve scan of process PID: %s" % pid)
+                    results = self.peSieve.scan(pid, pesieveshellc)
+                    if results["replaced"]:
+                        logger.log("WARNING", "ProcessScan", "PE-Sieve reported replaced process %s REPLACED: %s" %
+                                   (process_info, str(results["replaced"])))
+                    elif results["implanted_pe"] or results["implanted_shc"]:
+                        logger.log("WARNING", "ProcessScan", "PE-Sieve reported implanted process %s "
+                                   "IMPLANTED PE: %s IMPLANTED SHC: %s" % (process_info, str(results["implanted_pe"]),
+                                                                           str(results["implanted_shc"])))
+                    elif results["patched"]:
+                        logger.log("NOTICE", "ProcessScan", "PE-Sieve reported patched process %s PATCHED: %s" %
+                                   (process_info, str(results["patched"])))
+                    elif results["unreachable_file"]:
+                        logger.log("NOTICE", "ProcessScan", "PE-Sieve reported a process with unreachable exe %s UNREACHABLE: %s" %
+                                   (process_info, str(results["unreachable_file"])))
+                    else:
+                        logger.log(
+                            "INFO", "ProcessScan", "PE-Sieve reported no anomalies %s" % process_info)
             except WindowsError as e:
                 if logger.debug:
                     traceback.print_exc()
@@ -753,87 +807,110 @@ class Loki(object):
 
             # Process: System
             if name == "System" and not pid == 4:
-                logger.log("WARNING", "ProcessScan", "System process without PID=4 %s" % process_info)
+                logger.log("WARNING", "ProcessScan",
+                           "System process without PID=4 %s" % process_info)
 
             # Process: smss.exe
             if name == "smss.exe" and not parent_pid == 4:
-                logger.log("WARNING", "ProcessScan", "smss.exe parent PID is != 4 %s" % process_info)
+                logger.log("WARNING", "ProcessScan",
+                           "smss.exe parent PID is != 4 %s" % process_info)
             if path != "none":
-                if name == "smss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "ProcessScan", "smss.exe path is not System32 %s" % process_info)
+                if name == "smss.exe" and not ("system32" in path.lower() or "system32" in cmd.lower()):
+                    logger.log("WARNING", "ProcessScan",
+                               "smss.exe path is not System32 %s" % process_info)
             if name == "smss.exe" and priority != 11:
-                logger.log("WARNING", "ProcessScan", "smss.exe priority is not 11 %s" % process_info)
+                logger.log("WARNING", "ProcessScan",
+                           "smss.exe priority is not 11 %s" % process_info)
 
             # Process: csrss.exe
             if path != "none":
-                if name == "csrss.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "ProcessScan", "csrss.exe path is not System32 %s" % process_info)
+                if name == "csrss.exe" and not ("system32" in path.lower() or "system32" in cmd.lower()):
+                    logger.log("WARNING", "ProcessScan",
+                               "csrss.exe path is not System32 %s" % process_info)
             if name == "csrss.exe" and priority != 13:
-                logger.log("WARNING", "ProcessScan", "csrss.exe priority is not 13 %s" % process_info)
+                logger.log("WARNING", "ProcessScan",
+                           "csrss.exe priority is not 13 %s" % process_info)
 
             # Process: wininit.exe
             if path != "none":
-                if name == "wininit.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "ProcessScan", "wininit.exe path is not System32 %s" % process_info)
+                if name == "wininit.exe" and not ("system32" in path.lower() or "system32" in cmd.lower()):
+                    logger.log("WARNING", "ProcessScan",
+                               "wininit.exe path is not System32 %s" % process_info)
             if name == "wininit.exe" and priority != 13:
-                logger.log("NOTICE", "ProcessScan", "wininit.exe priority is not 13 %s" % process_info)
+                logger.log("NOTICE", "ProcessScan",
+                           "wininit.exe priority is not 13 %s" % process_info)
             # Is parent to other processes - save PID
             if name == "wininit.exe":
                 wininit_pid = pid
 
             # Process: services.exe
             if path != "none":
-                if name == "services.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "ProcessScan", "services.exe path is not System32 %s" % process_info)
+                if name == "services.exe" and not ("system32" in path.lower() or "system32" in cmd.lower()):
+                    logger.log("WARNING", "ProcessScan",
+                               "services.exe path is not System32 %s" % process_info)
             if name == "services.exe" and priority != 9:
-                logger.log("WARNING", "ProcessScan", "services.exe priority is not 9 %s" % process_info)
+                logger.log("WARNING", "ProcessScan",
+                           "services.exe priority is not 9 %s" % process_info)
             if wininit_pid > 0:
                 if name == "services.exe" and not parent_pid == wininit_pid:
-                    logger.log("WARNING", "ProcessScan", "services.exe parent PID is not the one of wininit.exe %s" % process_info)
+                    logger.log("WARNING", "ProcessScan",
+                               "services.exe parent PID is not the one of wininit.exe %s" % process_info)
 
             # Process: lsass.exe
             if path != "none":
-                if name == "lsass.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "ProcessScan", "lsass.exe path is not System32 %s" % process_info)
+                if name == "lsass.exe" and not ("system32" in path.lower() or "system32" in cmd.lower()):
+                    logger.log("WARNING", "ProcessScan",
+                               "lsass.exe path is not System32 %s" % process_info)
             if name == "lsass.exe" and priority != 9:
-                logger.log("WARNING", "ProcessScan", "lsass.exe priority is not 9 %s" % process_info)
+                logger.log("WARNING", "ProcessScan",
+                           "lsass.exe priority is not 9 %s" % process_info)
             if wininit_pid > 0:
                 if name == "lsass.exe" and not parent_pid == wininit_pid:
-                    logger.log("WARNING", "ProcessScan", "lsass.exe parent PID is not the one of wininit.exe %s" % process_info)
+                    logger.log("WARNING", "ProcessScan",
+                               "lsass.exe parent PID is not the one of wininit.exe %s" % process_info)
             # Only a single lsass process is valid - count occurrences
             if name == "lsass.exe":
                 lsass_count += 1
                 if lsass_count > 1:
-                    logger.log("WARNING", "ProcessScan", "lsass.exe count is higher than 1 %s" % process_info)
+                    logger.log("WARNING", "ProcessScan",
+                               "lsass.exe count is higher than 1 %s" % process_info)
 
             # Process: svchost.exe
             if path != "none":
-                if name == "svchost.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "ProcessScan", "svchost.exe path is not System32 %s" % process_info)
+                if name == "svchost.exe" and not ("system32" in path.lower() or "system32" in cmd.lower()):
+                    logger.log("WARNING", "ProcessScan",
+                               "svchost.exe path is not System32 %s" % process_info)
             if name == "svchost.exe" and priority != 8:
-                logger.log("NOTICE", "ProcessScan", "svchost.exe priority is not 8 %s" % process_info)
+                logger.log("NOTICE", "ProcessScan",
+                           "svchost.exe priority is not 8 %s" % process_info)
             # Windows 10 FP
-            #if name == "svchost.exe" and not ( self.check_svchost_owner(owner) or "unistacksvcgroup" in cmd.lower()):
+            # if name == "svchost.exe" and not ( self.check_svchost_owner(owner) or "unistacksvcgroup" in cmd.lower()):
             #    logger.log("WARNING", "ProcessScan", "svchost.exe process owner is suspicious %s" % process_info)
 
             if name == "svchost.exe" and not " -k " in cmd and cmd != "N/A":
-                logger.log("WARNING", "ProcessScan", "svchost.exe process does not contain a -k in its command line %s" % process_info)
+                logger.log("WARNING", "ProcessScan",
+                           "svchost.exe process does not contain a -k in its command line %s" % process_info)
 
             # Process: lsm.exe
             if path != "none":
-                if name == "lsm.exe" and not ( "system32" in path.lower() or "system32" in cmd.lower() ):
-                    logger.log("WARNING", "ProcessScan", "lsm.exe path is not System32 %s" % process_info)
+                if name == "lsm.exe" and not ("system32" in path.lower() or "system32" in cmd.lower()):
+                    logger.log("WARNING", "ProcessScan",
+                               "lsm.exe path is not System32 %s" % process_info)
             if name == "lsm.exe" and priority != 8:
-                logger.log("NOTICE", "ProcessScan", "lsm.exe priority is not 8 %s" % process_info)
-            if name == "lsm.exe" and not ( owner.startswith("NT ") or owner.startswith("LO") or owner.startswith("SYSTEM")  or owner.startswith(u"система")):
-                logger.log(u"WARNING", "ProcessScan", "lsm.exe process owner is suspicious %s" % process_info)
+                logger.log("NOTICE", "ProcessScan",
+                           "lsm.exe priority is not 8 %s" % process_info)
+            if name == "lsm.exe" and not (owner.startswith("NT ") or owner.startswith("LO") or owner.startswith("SYSTEM") or owner.startswith(u"система")):
+                logger.log(u"WARNING", "ProcessScan",
+                           "lsm.exe process owner is suspicious %s" % process_info)
             if wininit_pid > 0:
                 if name == "lsm.exe" and not parent_pid == wininit_pid:
-                    logger.log("WARNING", "ProcessScan", "lsm.exe parent PID is not the one of wininit.exe %s" % process_info)
+                    logger.log("WARNING", "ProcessScan",
+                               "lsm.exe parent PID is not the one of wininit.exe %s" % process_info)
 
             # Process: winlogon.exe
             if name == "winlogon.exe" and priority != 13:
-                logger.log("WARNING", "ProcessScan", "winlogon.exe priority is not 13 %s" % process_info)
+                logger.log("WARNING", "ProcessScan",
+                           "winlogon.exe priority is not 13 %s" % process_info)
             if re.search("(Windows 7|Windows Vista)", getPlatformFull()):
                 if name == "winlogon.exe" and parent_pid > 0:
                     for proc in processes:
@@ -844,11 +921,13 @@ class Loki(object):
             # Process: explorer.exe
             if path != "none":
                 if name == "explorer.exe" and not t_systemroot.lower() in path.lower():
-                    logger.log("WARNING", "ProcessScan", "explorer.exe path is not %%SYSTEMROOT%% %s" % process_info)
+                    logger.log("WARNING", "ProcessScan",
+                               "explorer.exe path is not %%SYSTEMROOT%% %s" % process_info)
             if name == "explorer.exe" and parent_pid > 0:
                 for proc in processes:
                     if parent_pid == proc.ProcessId:
-                        logger.log("NOTICE", "ProcessScan", "explorer.exe has a parent ID but should have none %s" % process_info)
+                        logger.log(
+                            "NOTICE", "ProcessScan", "explorer.exe has a parent ID but should have none %s" % process_info)
 
     def check_process_connections(self, process):
         try:
@@ -883,11 +962,11 @@ class Loki(object):
                 if x.status == 'LISTEN':
                     connection_count += 1
                     logger.log("NOTICE", "ProcessScan", "Listening process PID: %s NAME: %s COMMAND: %s IP: %s PORT: %s" % (
-                        str(pid), name, command, str(x.laddr[0]), str(x.laddr[1]) ))
+                        str(pid), name, command, str(x.laddr[0]), str(x.laddr[1])))
                     if str(x.laddr[1]) == "0":
                         logger.log("WARNING", "ProcessScan",
-                            "Listening on Port 0 PID: %s NAME: %s COMMAND: %s  IP: %s PORT: %s" % (
-                                str(pid), name, command, str(x.laddr[0]), str(x.laddr[1]) ))
+                                   "Listening on Port 0 PID: %s NAME: %s COMMAND: %s  IP: %s PORT: %s" % (
+                                       str(pid), name, command, str(x.laddr[0]), str(x.laddr[1])))
 
                 if x.status == 'ESTABLISHED':
 
@@ -898,18 +977,19 @@ class Loki(object):
                     is_match, description = self.check_c2(str(x.raddr[0]))
                     if is_match:
                         logger.log("ALERT", "ProcessScan",
-                            "Malware Domain/IP match in remote address PID: %s NAME: %s COMMAND: %s IP: %s PORT: %s DESC: %s" % (
-                                str(pid), name, command, str(x.raddr[0]), str(x.raddr[1]), description))
+                                   "Malware Domain/IP match in remote address PID: %s NAME: %s COMMAND: %s IP: %s PORT: %s DESC: %s" % (
+                                       str(pid), name, command, str(x.raddr[0]), str(x.raddr[1]), description))
 
                     # Full list
                     connection_count += 1
                     logger.log("NOTICE", "ProcessScan",
                                "Established connection PID: %s NAME: %s COMMAND: %s LIP: %s LPORT: %s RIP: %s RPORT: %s" % (
-                        str(pid), name, command, str(x.laddr[0]), str(x.laddr[1]), str(x.raddr[0]), str(x.raddr[1]) ))
+                                   str(pid), name, command, str(x.laddr[0]), str(x.laddr[1]), str(x.raddr[0]), str(x.raddr[1])))
 
                 # Maximum connection output
                 if connection_count > MAXIMUM_CONNECTIONS:
-                    logger.log("NOTICE", "ProcessScan", "Connection output threshold reached. Output truncated.")
+                    logger.log(
+                        "NOTICE", "ProcessScan", "Connection output threshold reached. Output truncated.")
                     return
 
         except Exception as e:
@@ -917,7 +997,7 @@ class Loki(object):
                 traceback.print_exc()
                 sys.exit(1)
             logger.log("INFO", "ProcessScan",
-                "Process %s does not exist anymore or cannot be accessed" % str(pid))
+                       "Process %s does not exist anymore or cannot be accessed" % str(pid))
 
     def check_rootkit(self):
 
@@ -925,30 +1005,35 @@ class Loki(object):
 
         dp = DoublePulsar(ip="127.0.0.1", timeout=None, verbose=args.debug)
 
-        logger.log("INFO", "Rootkit", "Checking for Double Pulsar RDP Backdoor")
+        logger.log("INFO", "Rootkit",
+                   "Checking for Double Pulsar RDP Backdoor")
         try:
             dp_rdp_result, message = dp.check_ip_rdp()
             if dp_rdp_result:
                 logger.log("ALERT", message)
             else:
-                logger.log("INFO", "Rootkit", "Double Pulsar RDP check RESULT: %s" % message)
+                logger.log("INFO", "Rootkit",
+                           "Double Pulsar RDP check RESULT: %s" % message)
         except Exception as e:
-            logger.log("INFO", "Rootkit", "Double Pulsar RDP check failed RESULT: Connection failure")
+            logger.log(
+                "INFO", "Rootkit", "Double Pulsar RDP check failed RESULT: Connection failure")
             if args.debug:
                 traceback.print_exc()
 
-        logger.log("INFO", "Rootkit", "Checking for Double Pulsar SMB Backdoor")
+        logger.log("INFO", "Rootkit",
+                   "Checking for Double Pulsar SMB Backdoor")
         try:
             dp_smb_result, message = dp.check_ip_smb()
             if dp_smb_result:
                 logger.log("ALERT", message)
             else:
-                logger.log("INFO", "Rootkit", "Double Pulsar SMB check RESULT: %s" % message)
+                logger.log("INFO", "Rootkit",
+                           "Double Pulsar SMB check RESULT: %s" % message)
         except Exception as e:
-            logger.log("INFO", "Rootkit", "Double Pulsar SMB check failed RESULT: Connection failure")
+            logger.log(
+                "INFO", "Rootkit", "Double Pulsar SMB check failed RESULT: Connection failure")
             if args.debug:
                 traceback.print_exc()
-
 
     def check_c2(self, remote_system):
         # IP - exact match
@@ -968,7 +1053,7 @@ class Loki(object):
                 if c2 in remote_system:
                     return True, self.c2_server[c2]
 
-        return False,""
+        return False, ""
 
     def initialize_c2_iocs(self, ioc_directory):
         try:
@@ -985,7 +1070,8 @@ class Loki(object):
                                 try:
                                     # Comments and empty lines
                                     if re.search(r'^#', line) or re.search(r'^[\s]*$', line):
-                                        last_comment = line.lstrip("#").lstrip(" ").rstrip("\n")
+                                        last_comment = line.lstrip(
+                                            "#").lstrip(" ").rstrip("\n")
                                         continue
 
                                     # Split the IOC line
@@ -1003,21 +1089,23 @@ class Loki(object):
                                     # Check length
                                     if len(c2) < 4:
                                         logger.log("NOTICE", "Init",
-                                                   "C2 server definition is suspiciously short - will not add %s" %c2)
+                                                   "C2 server definition is suspiciously short - will not add %s" % c2)
                                         continue
 
                                     # Add to the LOKI iocs
                                     self.c2_server[c2.lower()] = last_comment
 
                                 except Exception as e:
-                                    logger.log("ERROR", "Init",  "Cannot read line: %s" % line)
+                                    logger.log("ERROR", "Init",
+                                               "Cannot read line: %s" % line)
                                     if logger.debug:
                                         sys.exit(1)
                 except OSError as e:
                     logger.log("ERROR", "Init",  "No such file or directory")
         except Exception as e:
             traceback.print_exc()
-            logger.log("ERROR", "Init", "Error reading Hash file: %s" % ioc_filename)
+            logger.log("ERROR", "Init", "Error reading Hash file: %s" %
+                       ioc_filename)
 
     def initialize_filename_iocs(self, ioc_directory):
 
@@ -1042,7 +1130,8 @@ class Loki(object):
 
                                 # Comments
                                 if re.search(r'^#', line):
-                                    last_comment = line.lstrip("#").lstrip(" ").rstrip("\n")
+                                    last_comment = line.lstrip(
+                                        "#").lstrip(" ").rstrip("\n")
                                     continue
 
                                 # Elements with description
@@ -1069,29 +1158,59 @@ class Loki(object):
                                 if 'regex_fp' in locals():
                                     # Replacements
                                     regex_fp = replaceEnvVars(regex_fp)
-                                    regex_fp = transformOS(regex_fp, os_platform)
+                                    regex_fp = transformOS(
+                                        regex_fp, os_platform)
                                     # String regex as key - value is compiled regex of false positive values
                                     regex_fp_comp = re.compile(regex_fp)
 
                                 # Create dictionary with IOC data
-                                fioc = {'regex': re.compile(regex), 'score': score, 'description': desc, 'regex_fp': regex_fp_comp}
+                                fioc = {'regex': re.compile(
+                                    regex), 'score': score, 'description': desc, 'regex_fp': regex_fp_comp}
                                 self.filename_iocs.append(fioc)
 
                             except Exception as e:
-                                logger.log("ERROR", "Init", "Error reading line: %s" % line)
+                                logger.log("ERROR", "Init",
+                                           "Error reading line: %s" % line)
                                 if logger.debug:
                                     traceback.print_exc()
                                     sys.exit(1)
 
         except Exception as e:
             if 'ioc_filename' in locals():
-                logger.log("ERROR",  "Init", "Error reading IOC file: %s" % ioc_filename)
+                logger.log("ERROR",  "Init",
+                           "Error reading IOC file: %s" % ioc_filename)
             else:
-                logger.log("ERROR",  "Init", "Error reading files from IOC folder: %s" % ioc_directory)  
+                logger.log(
+                    "ERROR",  "Init", "Error reading files from IOC folder: %s" % ioc_directory)
                 logger.log("ERROR",  "Init", "Please make sure that you cloned the repo or downloaded the sub repository: "
                                              "See https://github.com/Neo23x0/Loki/issues/51")
             sys.exit(1)
 
+    def include_callback(self, requested_filename, filename, namespace):
+        
+        logger.log("DEBUG", "Init", f"Requested include: {requested_filename}")
+        try:
+            for yara_rule_directory in self.yara_rule_directories:
+                # Check in the current directory
+                possible_path = os.path.join(yara_rule_directory, requested_filename)
+                if os.path.exists(possible_path):
+                    with open(possible_path, 'r') as file:
+                        logger.log("DEBUG", "Init", f"Found include at: {possible_path}")
+                        return file.read()
+
+                # Check in the 'Commons' subdirectory
+                possible_paths = recursive_file_search(yara_rule_directory, requested_filename)
+                if os.path.exists(possible_paths):
+                    with open(possible_paths, 'r') as file:
+                        logger.log("DEBUG", "Init", f"Found include at: {possible_paths}")
+                        return file.read()
+
+            # Log an error if the included file is not found
+            logger.log("ERROR", "Init", f"Included file {requested_filename} not found in specified directories")
+
+        except Exception as e:
+            logger.log("ERROR", "Init", "Error finding include file: %s" % requested_filename)
+                        
     def initialize_yara_rules(self):
 
         yaraRules = ""
@@ -1102,7 +1221,8 @@ class Loki(object):
             for yara_rule_directory in self.yara_rule_directories:
                 if not os.path.exists(yara_rule_directory):
                     continue
-                logger.log("INFO", "Init", "Processing YARA rules folder {0}".format(yara_rule_directory))
+                logger.log("INFO", "Init", "Processing YARA rules folder {0}".format(
+                    yara_rule_directory))
                 for root, directories, files in os.walk(yara_rule_directory, onerror=walk_error, followlinks=False):
                     for file in files:
                         try:
@@ -1124,19 +1244,27 @@ class Loki(object):
                                 yara_rule_data = yfile.read()
 
                             # Test Compile
+                             # Test Compile
                             try:
-                                compiledRules = yara.compile(source=yara_rule_data, externals={
-                                    'filename': dummy,
-                                    'filepath': dummy,
-                                    'extension': dummy,
-                                    'filetype': dummy,
-                                    'md5': dummy,
-                                    'owner': dummy,
-                                })
-                                logger.log("DEBUG", "Init", "Initializing Yara rule %s" % file)
+                                compiledRules = yara.compile(
+                                filepath=os.path.abspath(yaraRuleFile),  # Use the absolute path
+                                include_callback=self.include_callback,
+                                includes=True,
+                                externals={
+                                        'filename': dummy,
+                                        'filepath': dummy,
+                                        'extension': dummy,
+                                        'filetype': dummy,
+                                        'md5': dummy,
+                                        'owner': dummy,
+                                    }
+                                )
+                                logger.log("DEBUG", "Init",
+                                           "Initializing Yara rule %s" % file)
                                 rule_count += 1
                             except Exception as e:
-                                logger.log("ERROR", "Init", "Error while initializing Yara rule %s ERROR: %s" % (file, sys.exc_info()[1]))
+                                logger.log("ERROR", "Init", "Error while initializing Yara rule %s ERROR: %s" % (
+                                    file, sys.exc_info()[1]))
                                 traceback.print_exc()
                                 if logger.debug:
                                     sys.exit(1)
@@ -1146,51 +1274,60 @@ class Loki(object):
                             yaraRules += yara_rule_data
 
                         except Exception as e:
-                            logger.log("ERROR", "Init", "Error reading signature file %s ERROR: %s" % (yaraRuleFile, sys.exc_info()[1]))
+                            logger.log("ERROR", "Init", "Error reading signature file %s ERROR: %s" % (
+                                yaraRuleFile, sys.exc_info()[1]))
                             if logger.debug:
                                 traceback.print_exc()
                                 # sys.exit(1)
 
             # Compile
             try:
-                logger.log("INFO", "Init", "Initializing all YARA rules at once (composed string of all rule files)")
-                compiledRules = yara.compile(source=yaraRules, externals={
-                    'filename': dummy,
-                    'filepath': dummy,
-                    'extension': dummy,
-                    'filetype': dummy,
-                    'md5': dummy,
-                    'owner': dummy,
-                })
-                logger.log("INFO", "Init", "Initialized %d Yara rules" % rule_count)
+                logger.log(
+                    "INFO", "Init", "Initializing all YARA rules at once (composed string of all rule files)")
+                compiledRules = yara.compile(
+                    filepath=os.path.abspath(yaraRuleFile),  # Use the absolute path
+                    include_callback=self.include_callback,
+                    includes=True,
+                    externals={
+                        'filename': dummy,
+                        'filepath': dummy,
+                        'extension': dummy,
+                        'filetype': dummy,
+                        'md5': dummy,
+                        'owner': dummy,
+                    })
+                logger.log("INFO", "Init",
+                           "Initialized %d Yara rules" % rule_count)
             except Exception as e:
                 traceback.print_exc()
-                logger.log("ERROR", "Init", "Error during YARA rule compilation ERROR: %s - please fix the issue in the rule set" % sys.exc_info()[1])
+                logger.log(
+                    "ERROR", "Init", "Error during YARA rule compilation ERROR: %s - please fix the issue in the rule set" % sys.exc_info()[1])
                 sys.exit(1)
 
             # Add as Lokis YARA rules
             self.yara_rules.append(compiledRules)
 
         except Exception as e:
-            logger.log("ERROR", "Init", "Error reading signature folder /signatures/")
+            logger.log("ERROR", "Init",
+                       "Error reading signature folder /signatures/")
             if logger.debug:
                 traceback.print_exc()
                 sys.exit(1)
 
     def initialize_hash_iocs(self, ioc_directory, false_positive=False):
-        HASH_WHITELIST = [# Empty file
-                          int('d41d8cd98f00b204e9800998ecf8427e', 16),
-                          int('da39a3ee5e6b4b0d3255bfef95601890afd80709', 16),
-                          int('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 16),
-                          # One byte line break file (Unix) 0x0a
-                          int('68b329da9893e34099c7d8ad5cb9c940', 16),
-                          int('adc83b19e793491b1c6ea0fd8b46cd9f32e592fc', 16),
-                          int('01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b', 16),
-                          # One byte line break file (Windows) 0x0d0a
-                          int('81051bcc2cf1bedf378224b0a93e2877', 16),
-                          int('ba8ab5a0280b953aa97435ff8946cbcbb2755a27', 16),
-                          int('7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6', 16),
-                          ]
+        HASH_WHITELIST = [  # Empty file
+            int('d41d8cd98f00b204e9800998ecf8427e', 16),
+            int('da39a3ee5e6b4b0d3255bfef95601890afd80709', 16),
+            int('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 16),
+            # One byte line break file (Unix) 0x0a
+            int('68b329da9893e34099c7d8ad5cb9c940', 16),
+            int('adc83b19e793491b1c6ea0fd8b46cd9f32e592fc', 16),
+            int('01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b', 16),
+            # One byte line break file (Windows) 0x0d0a
+            int('81051bcc2cf1bedf378224b0a93e2877', 16),
+            int('ba8ab5a0280b953aa97435ff8946cbcbb2755a27', 16),
+            int('7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6', 16),
+        ]
         try:
             for ioc_filename in os.listdir(ioc_directory):
                 if 'hash' in ioc_filename:
@@ -1229,14 +1366,15 @@ class Loki(object):
                             except Exception as e:
                                 if logger.debug:
                                     traceback.print_exc()
-                                logger.log("ERROR", "Init", "Cannot read line: %s" % line)
+                                logger.log("ERROR", "Init",
+                                           "Cannot read line: %s" % line)
 
                     # Debug
                     if logger.debug:
                         logger.log("DEBUG", "Init", "Initialized %s hash IOCs from file %s"
                                    % (str(len(self.hashes_md5)+len(self.hashes_sha1)+len(self.hashes_sha256)), ioc_filename))
 
-            # create sorted lists with just the integer values of the hashes for quick binary search 
+            # create sorted lists with just the integer values of the hashes for quick binary search
             self.hashes_md5_list = list(self.hashes_md5.keys())
             self.hashes_md5_list.sort()
             self.hashes_sha1_list = list(self.hashes_sha1.keys())
@@ -1248,7 +1386,8 @@ class Loki(object):
             if logger.debug:
                 traceback.print_exc()
                 sys.exit(1)
-            logger.log("ERROR", "Init", "Error reading Hash file: %s" % ioc_filename)
+            logger.log("ERROR", "Init", "Error reading Hash file: %s" %
+                       ioc_filename)
 
     def initialize_filetype_magics(self, filetype_magics_file):
         try:
@@ -1261,7 +1400,7 @@ class Loki(object):
                     if re.search(r'^#', line) or re.search(r'^[\s]*$', line) or ";" not in line:
                         continue
 
-                    ( sig_raw, description ) = line.rstrip("\n").split(";")
+                    (sig_raw, description) = line.rstrip("\n").split(";")
                     sig = re.sub(r' ', '', sig_raw)
 
                     if len(sig) > self.max_filetype_magics:
@@ -1277,7 +1416,8 @@ class Loki(object):
             if logger.debug:
                 traceback.print_exc()
                 sys.exit(1)
-            logger.log("ERROR", "Init", "Error reading Hash file: %s" % filetype_magics_file)
+            logger.log("ERROR", "Init", "Error reading Hash file: %s" %
+                       filetype_magics_file)
 
     def initialize_excludes(self, excludes_file):
         try:
@@ -1294,15 +1434,16 @@ class Loki(object):
                         regex = re.compile(line, re.IGNORECASE)
                         excludes.append(regex)
                 except Exception as e:
-                    logger.log("ERROR", "Init", "Cannot compile regex: %s" % line)
+                    logger.log("ERROR", "Init",
+                               "Cannot compile regex: %s" % line)
 
             self.fullExcludes = excludes
 
         except Exception as e:
             if logger.debug:
                 traceback.print_exc()
-            logger.log("NOTICE", "Init", "Error reading excludes file: %s" % excludes_file)
-
+            logger.log("NOTICE", "Init",
+                       "Error reading excludes file: %s" % excludes_file)
 
     def get_file_data(self, filePath):
         fileData = b''
@@ -1313,10 +1454,10 @@ class Loki(object):
         except Exception as e:
             if logger.debug:
                 traceback.print_exc()
-            logger.log("DEBUG", "FileScan", "Cannot open file %s (access denied)" % filePath)
+            logger.log("DEBUG", "FileScan",
+                       "Cannot open file %s (access denied)" % filePath)
         finally:
             return fileData
-
 
     def script_stats_analysis(self, data):
         """
@@ -1327,7 +1468,8 @@ class Loki(object):
         """
         anomal_chars = [r'^', r'{', r'}', r'"', r',', r'<', r'>', ';']
         anomal_char_stats = {}
-        char_stats = {"upper": 0, "lower": 0, "numbers": 0, "symbols": 0, "spaces": 0}
+        char_stats = {"upper": 0, "lower": 0,
+                      "numbers": 0, "symbols": 0, "spaces": 0}
         anomalies = []
         c = Counter(data)
         anomaly_score = 0
@@ -1363,7 +1505,8 @@ class Loki(object):
                 anomaly_score += 40
 
         # Generate message
-        message = "Anomaly detected ANOMALIES: '{0}'".format("', '".join(anomalies))
+        message = "Anomaly detected ANOMALIES: '{0}'".format(
+            "', '".join(anomalies))
         if anomaly_score > 40:
             return message, anomaly_score
 
@@ -1373,14 +1516,15 @@ class Loki(object):
 def get_application_path():
     try:
         if getattr(sys, 'frozen', False):
-            application_path = os.path.dirname(os.path.realpath(sys.executable))
+            application_path = os.path.dirname(
+                os.path.realpath(sys.executable))
         else:
             application_path = os.path.dirname(os.path.realpath(__file__))
         if "~" in application_path and os_platform == "windows":
             # print "Trying to translate"
             # print application_path
             application_path = win32api.GetLongPathName(application_path)
-        #if args.debug:
+        # if args.debug:
         #    logger.log("DEBUG", "Init", "Application Path: %s" % application_path)
         return application_path
     except Exception as e:
@@ -1418,7 +1562,8 @@ def updateLoki(sigsOnly):
         pArgs.append(args.python)
         pArgs.append('loki-upgrader.py')
     else:
-        logger.log("ERROR", "Update", "Cannot find neither thor-upgrader.exe nor thor-upgrader.py in the current working directory.")
+        logger.log("ERROR", "Update",
+                   "Cannot find neither thor-upgrader.exe nor thor-upgrader.py in the current working directory.")
 
     if sigsOnly:
         pArgs.append('--sigsonly')
@@ -1439,10 +1584,12 @@ def walk_error(err):
 def signal_handler(signal_name, frame):
     try:
         print("------------------------------------------------------------------------------\n")
-        logger.log('INFO', 'Init', 'LOKI\'s work has been interrupted by a human. Returning to Asgard.')
+        logger.log(
+            'INFO', 'Init', 'LOKI\'s work has been interrupted by a human. Returning to Asgard.')
     except Exception as e:
         print('LOKI\'s work has been interrupted by a human. Returning to Asgard.')
     sys.exit(0)
+
 
 def main():
     """
@@ -1452,55 +1599,90 @@ def main():
 
     # Parse Arguments
     parser = argparse.ArgumentParser(description='Loki - Simple IOC Scanner')
-    parser.add_argument('-p', help='Path to scan', metavar='path', default='C:\\')
-    parser.add_argument('-s', help='Maximum file size to check in KB (default 5000 KB)', metavar='kilobyte', default=5000)
+    parser.add_argument('-p', help='Path to scan',
+                        metavar='path', default='C:\\')
+    parser.add_argument(
+        '-s', help='Maximum file size to check in KB (default 5000 KB)', metavar='kilobyte', default=5000)
     parser.add_argument('-l', help='Log file', metavar='log-file', default='')
-    parser.add_argument('-r', help='Remote syslog system', metavar='remote-loghost', default='')
-    parser.add_argument('-t', help='Remote syslog port', metavar='remote-syslog-port', default=514)
-    parser.add_argument('-a', help='Alert score', metavar='alert-level', default=100)
-    parser.add_argument('-w', help='Warning score', metavar='warning-level', default=60)
-    parser.add_argument('-n', help='Notice score', metavar='notice-level', default=40)
-    parser.add_argument('--allhds', action='store_true', help='Scan all local hard drives (Windows only)', default=False)
-    parser.add_argument('--alldrives', action='store_true', help='Scan all drives (including network drives and removable media)', default=False)
-    parser.add_argument('--printall', action='store_true', help='Print all files that are scanned', default=False)
-    parser.add_argument('--allreasons', action='store_true', help='Print all reasons that caused the score', default=False)
-    parser.add_argument('--noprocscan', action='store_true', help='Skip the process scan', default=False)
-    parser.add_argument('--nofilescan', action='store_true', help='Skip the file scan', default=False)
-    parser.add_argument('--vulnchecks', action='store_true', help='Run the vulnerability checks', default=False)
-    parser.add_argument('--nolevcheck', action='store_true', help='Skip the Levenshtein distance check', default=False)
-    parser.add_argument('--scriptanalysis', action='store_true', help='Statistical analysis for scripts to detect obfuscated code (beta)', default=False)
-    parser.add_argument('--rootkit', action='store_true', help='Skip the rootkit check', default=False)
-    parser.add_argument('--noindicator', action='store_true', help='Do not show a progress indicator', default=False)
-    parser.add_argument('--dontwait', action='store_true', help='Do not wait on exit', default=False)
-    parser.add_argument('--intense', action='store_true', help='Intense scan mode (also scan unknown file types and all extensions)', default=False)
-    parser.add_argument('--csv', action='store_true', help='Write CSV log format to STDOUT (machine processing)', default=False)
-    parser.add_argument('--onlyrelevant', action='store_true', help='Only print warnings or alerts', default=False)
-    parser.add_argument('--nolog', action='store_true', help='Don\'t write a local log file', default=False)
-    parser.add_argument('--update', action='store_true', default=False, help='Update the signatures from the "signature-base" sub repository')
-    parser.add_argument('--debug', action='store_true', default=False, help='Debug output')
-    parser.add_argument('--maxworkingset', type=int, default=200, help='Maximum working set size of processes to scan (in MB, default 100 MB)')
-    parser.add_argument('--syslogtcp', action='store_true', default=False, help='Use TCP instead of UDP for syslog logging')
-    parser.add_argument('--logfolder', help='Folder to use for logging when log file is not specified', metavar='log-folder', default='')
-    parser.add_argument('--nopesieve', action='store_true', help='Do not perform pe-sieve scans', default=False)
-    parser.add_argument('--pesieveshellc', action='store_true', help='Perform pe-sieve shellcode scan', default=False)
-    parser.add_argument('--python', action='store', help='Override default python path', default='python')
-    parser.add_argument('--nolisten', action='store_true', help='Dot not show listening connections', default=False)
-    parser.add_argument('--excludeprocess', action='append', help='Specify an executable name to exclude from scans, can be used multiple times', default=[])
+    parser.add_argument('-r', help='Remote syslog system',
+                        metavar='remote-loghost', default='')
+    parser.add_argument('-t', help='Remote syslog port',
+                        metavar='remote-syslog-port', default=514)
+    parser.add_argument('-a', help='Alert score',
+                        metavar='alert-level', default=100)
+    parser.add_argument('-w', help='Warning score',
+                        metavar='warning-level', default=60)
+    parser.add_argument('-n', help='Notice score',
+                        metavar='notice-level', default=40)
+    parser.add_argument('--allhds', action='store_true',
+                        help='Scan all local hard drives (Windows only)', default=False)
+    parser.add_argument('--alldrives', action='store_true',
+                        help='Scan all drives (including network drives and removable media)', default=False)
+    parser.add_argument('--printall', action='store_true',
+                        help='Print all files that are scanned', default=False)
+    parser.add_argument('--allreasons', action='store_true',
+                        help='Print all reasons that caused the score', default=False)
+    parser.add_argument('--noprocscan', action='store_true',
+                        help='Skip the process scan', default=False)
+    parser.add_argument('--nofilescan', action='store_true',
+                        help='Skip the file scan', default=False)
+    parser.add_argument('--vulnchecks', action='store_true',
+                        help='Run the vulnerability checks', default=False)
+    parser.add_argument('--nolevcheck', action='store_true',
+                        help='Skip the Levenshtein distance check', default=False)
+    parser.add_argument('--scriptanalysis', action='store_true',
+                        help='Statistical analysis for scripts to detect obfuscated code (beta)', default=False)
+    parser.add_argument('--rootkit', action='store_true',
+                        help='Skip the rootkit check', default=False)
+    parser.add_argument('--noindicator', action='store_true',
+                        help='Do not show a progress indicator', default=False)
+    parser.add_argument('--dontwait', action='store_true',
+                        help='Do not wait on exit', default=False)
+    parser.add_argument('--intense', action='store_true',
+                        help='Intense scan mode (also scan unknown file types and all extensions)', default=False)
+    parser.add_argument('--csv', action='store_true',
+                        help='Write CSV log format to STDOUT (machine processing)', default=False)
+    parser.add_argument('--onlyrelevant', action='store_true',
+                        help='Only print warnings or alerts', default=False)
+    parser.add_argument('--nolog', action='store_true',
+                        help='Don\'t write a local log file', default=False)
+    parser.add_argument('--update', action='store_true', default=False,
+                        help='Update the signatures from the "signature-base" sub repository')
+    parser.add_argument('--debug', action='store_true',
+                        default=False, help='Debug output')
+    parser.add_argument('--maxworkingset', type=int, default=200,
+                        help='Maximum working set size of processes to scan (in MB, default 100 MB)')
+    parser.add_argument('--syslogtcp', action='store_true', default=False,
+                        help='Use TCP instead of UDP for syslog logging')
+    parser.add_argument(
+        '--logfolder', help='Folder to use for logging when log file is not specified', metavar='log-folder', default='')
+    parser.add_argument('--nopesieve', action='store_true',
+                        help='Do not perform pe-sieve scans', default=False)
+    parser.add_argument('--pesieveshellc', action='store_true',
+                        help='Perform pe-sieve shellcode scan', default=False)
+    parser.add_argument('--python', action='store',
+                        help='Override default python path', default='python')
+    parser.add_argument('--nolisten', action='store_true',
+                        help='Dot not show listening connections', default=False)
+    parser.add_argument('--excludeprocess', action='append',
+                        help='Specify an executable name to exclude from scans, can be used multiple times', default=[])
     parser.add_argument('--force', action='store_true',
                         help='Force the scan on a certain folder (even if excluded with hard exclude in LOKI\'s code', default=False)
-    parser.add_argument('--version', action='store_true', help='Shows welcome text and version of loki, then exit', default=False)
+    parser.add_argument('--version', action='store_true',
+                        help='Shows welcome text and version of loki, then exit', default=False)
 
     args = parser.parse_args()
 
     if args.syslogtcp and not args.r:
         print('Syslog logging set to TCP with --syslogtcp, but syslog logging not enabled with -r')
         sys.exit(1)
-		
+
     if args.nolog and (args.l or args.logfolder):
         print('The --logfolder and -l directives are not compatible with --nolog')
         sys.exit(1)
-		
-    filename = 'loki_%s_%s.log' % (getHostname(os_platform), datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+
+    filename = 'loki_%s_%s.log' % (getHostname(
+        os_platform), datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
     if args.logfolder and args.l:
         print('Must specify either log folder with --logfolder, which uses the default filename, or log file with -l. Log file can be an absolute path')
         sys.exit(1)
@@ -1513,10 +1695,11 @@ def main():
     if args.nopesieve and args.pesieveshellc:
         print('The --pesieveshellc directive was specified, but pe-sieve scanning was disabled with --nopesieve')
         sys.exit(1)
-        
-    args.excludeprocess = [ x.lower() for x in args.excludeprocess ]
-    
+
+    args.excludeprocess = [x.lower() for x in args.excludeprocess]
+
     return args
+
 
 # MAIN ################################################################
 if __name__ == '__main__':
@@ -1556,15 +1739,18 @@ if __name__ == '__main__':
     if os_platform == "windows":
         if shell.IsUserAnAdmin():
             isAdmin = True
-            logger.log("INFO", "Init", "Current user has admin rights - very good")
+            logger.log("INFO", "Init",
+                       "Current user has admin rights - very good")
         else:
-            logger.log("NOTICE", "Init", "Program should be run 'as Administrator' to ensure all access rights to process memory and file objects.")
+            logger.log(
+                "NOTICE", "Init", "Program should be run 'as Administrator' to ensure all access rights to process memory and file objects.")
     else:
         if os.geteuid() == 0:
             isAdmin = True
             logger.log("INFO", "Init", "Current user is root - very good")
         else:
-            logger.log("NOTICE", "Init", "Program should be run as 'root' to ensure all access rights to process memory and file objects.")
+            logger.log(
+                "NOTICE", "Init", "Program should be run as 'root' to ensure all access rights to process memory and file objects.")
 
     # Set process to nice priority ------------------------------------
     if os_platform == "windows":
@@ -1583,9 +1769,11 @@ if __name__ == '__main__':
     resultProc = False
     if not args.noprocscan and os_platform == "windows":
         if isAdmin:
-            loki.scan_processes(args.nopesieve, args.nolisten, args.excludeprocess, args.pesieveshellc)
+            loki.scan_processes(args.nopesieve, args.nolisten,
+                                args.excludeprocess, args.pesieveshellc)
         else:
-            logger.log("NOTICE", "Init", "Skipping process memory check. User has no admin rights.")
+            logger.log(
+                "NOTICE", "Init", "Skipping process memory check. User has no admin rights.")
 
     # Scan Path -------------------------------------------------------
     if not args.nofilescan:
@@ -1612,21 +1800,25 @@ if __name__ == '__main__':
 
         # Linux & macOS
         else:
-           loki.scan_path(defaultPath)
+            loki.scan_path(defaultPath)
 
     # Result ----------------------------------------------------------
-    logger.log("NOTICE", "Results", "Results: {0} alerts, {1} warnings, {2} notices".format(logger.alerts, logger.warnings, logger.notices))
+    logger.log("NOTICE", "Results", "Results: {0} alerts, {1} warnings, {2} notices".format(
+        logger.alerts, logger.warnings, logger.notices))
     if logger.alerts:
         logger.log("RESULT", "Results", "Indicators detected!")
         logger.log("RESULT", "Results", "Loki recommends checking the elements on virustotal.com or Google and triage with a "
                              "professional tool like THOR https://nextron-systems.com/thor in corporate networks.")
     elif logger.warnings:
         logger.log("RESULT", "Results", "Suspicious objects detected!")
-        logger.log("RESULT", "Results", "Loki recommends a deeper analysis of the suspicious objects.")
+        logger.log("RESULT", "Results",
+                   "Loki recommends a deeper analysis of the suspicious objects.")
     else:
         logger.log("RESULT", "Results", "SYSTEM SEEMS TO BE CLEAN.")
 
-    logger.log("INFO", "Results", "Please report false positives via https://github.com/Neo23x0/signature-base")
-    logger.log("NOTICE", "Results", "Finished LOKI Scan SYSTEM: %s TIME: %s" % (getHostname(os_platform), getSyslogTimestamp()))
+    logger.log("INFO", "Results",
+               "Please report false positives via https://github.com/Neo23x0/signature-base")
+    logger.log("NOTICE", "Results", "Finished LOKI Scan SYSTEM: %s TIME: %s" % (
+        getHostname(os_platform), getSyslogTimestamp()))
 
 sys.exit(0)
