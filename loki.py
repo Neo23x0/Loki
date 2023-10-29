@@ -1198,7 +1198,7 @@ class Loki(object):
                         logger.log("DEBUG", "Init", f"Found include at: {possible_path}")
                         return file.read()
 
-                # Check in the 'Commons' subdirectory
+                # Check in the possible subdirectory paths
                 possible_paths = recursive_file_search(yara_rule_directory, requested_filename)
                 if os.path.exists(possible_paths):
                     with open(possible_paths, 'r') as file:
