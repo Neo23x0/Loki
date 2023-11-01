@@ -13,6 +13,7 @@ import rfc5424logging
 import logging
 from logging import handlers
 import socket
+import csv
 from .helpers import removeNonAsciiDrop
 
 __version__ = '0.51.0'
@@ -29,7 +30,8 @@ class LokiLogger:
 
     no_log_file = False
     log_file = "loki.log"
-    csv = False
+    use_csv = False
+    csv_writer = None
     hostname = "NOTSET"
     alerts = 0
     warnings = 0
@@ -40,12 +42,12 @@ class LokiLogger:
     debug = False
     linesep = "\n"
 
-    def __init__(self, no_log_file, log_file, hostname, remote_host, remote_port, syslog_tcp, csv, only_relevant, debug, platform, caller, customformatter=None):
+    def __init__(self, no_log_file, log_file, hostname, remote_host, remote_port, syslog_tcp, use_csv, only_relevant, debug, platform, caller, customformatter=None):
         self.version = __version__
         self.no_log_file = no_log_file
         self.log_file = log_file
         self.hostname = hostname
-        self.csv = csv
+        self.use_csv = use_csv
         self.only_relevant = only_relevant
         self.debug = debug
         self.caller = caller
@@ -57,8 +59,13 @@ class LokiLogger:
         init()
 
         # Welcome
-        if not self.csv:
+        if not self.use_csv:
             self.print_welcome()
+        else:
+            self.csv_writer = csv.DictWriter(sys.stdout,
+                                         delimiter=',',
+                                         quoting=csv.QUOTE_MINIMAL,
+                                         fieldnames=['Timestamp', 'Hostname', 'Type', 'Message'])
 
         # Syslog server target
         if remote_host:
@@ -117,8 +124,19 @@ class LokiLogger:
 
     def log_to_stdout(self, message, mes_type):
 
-        if self.csv:
-            print(self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, mes_type, message))
+        if self.use_csv:
+            if self.csv_writer:
+                self.csv_writer.writerow({
+                    'Timestamp': getSyslogTimestamp(),
+                    'Hostname': self.hostname,
+                    'Type': mes_type,
+                    'Message': message})
+            else:
+                print(self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}',
+                                  getSyslogTimestamp(),
+                                  self.hostname,
+                                  mes_type,
+                                  message))
 
         else:
             try:
@@ -184,7 +202,7 @@ class LokiLogger:
         try:
             # Write to file
             with codecs.open(self.log_file, "a", encoding='utf-8') as logfile:
-                if self.csv:
+                if self.use_csv:
                     logfile.write(self.Format(self.FILE_CSV, u"{0},{1},{2},{3},{4}{5}", getSyslogTimestamp(), self.hostname, mes_type, module, message, self.linesep))
                 else:
                     logfile.write(self.Format(self.FILE_LINE, u"{0} {1} LOKI: {2}: MODULE: {3} MESSAGE: {4}{5}", getSyslogTimestamp(), self.hostname, mes_type.title(), module, message, self.linesep))
