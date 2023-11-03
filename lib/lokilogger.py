@@ -13,7 +13,6 @@ import rfc5424logging
 import logging
 from logging import handlers
 import socket
-from .helpers import removeNonAsciiDrop
 
 __version__ = '0.51.0'
 
@@ -101,7 +100,7 @@ class LokiLogger:
         # to stdout
         try:
             self.log_to_stdout(message, mes_type)
-        except Exception as e:
+        except Exception:
             print ("Cannot print certain characters to command line - see log file for full unicode encoded log line")
             self.log_to_stdout(message, mes_type)
 
@@ -174,7 +173,7 @@ class LokiLogger:
                 else:
                     sys.stdout.write("%s%s\b\b%s %s%s%s%s\n" % (reset_all, base_color, mes_type, message, Back.BLACK,Fore.WHITE,Style.NORMAL))
 
-            except Exception as e:
+            except Exception:
                 if self.debug:
                     traceback.print_exc()
                     sys.exit(1)
@@ -188,7 +187,7 @@ class LokiLogger:
                     logfile.write(self.Format(self.FILE_CSV, u"{0},{1},{2},{3},{4}{5}", getSyslogTimestamp(), self.hostname, mes_type, module, message, self.linesep))
                 else:
                     logfile.write(self.Format(self.FILE_LINE, u"{0} {1} LOKI: {2}: MODULE: {3} MESSAGE: {4}{5}", getSyslogTimestamp(), self.hostname, mes_type.title(), module, message, self.linesep))
-        except Exception as e:
+        except Exception:
             if self.debug:
                 traceback.print_exc()
                 sys.exit(1)
