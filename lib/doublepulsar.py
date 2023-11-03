@@ -210,7 +210,7 @@ class DoublePulsar(object):
                 return False, "Status Unknown - Response received but length was %d not 288" % (len(ping_response))
 
             s.close()
-        except socket.error as e:
+        except socket.error:
             return False, "No presence of DOUBLEPULSAR RDP implant"
 
 

@@ -24,10 +24,8 @@ from os.path import exists
 # Win32 Imports
 if _platform == "win32":
     try:
-        import wmi
         import win32api
-        from win32com.shell import shell
-    except Exception as e:
+    except Exception:
         platform = "linux"  # crazy guess
 
 
@@ -65,7 +63,7 @@ def needs_update(sig_url):
                 file.write(sha)
                 changed=True
         return changed
-    except Exception as e:
+    except Exception:
         return True
 
 
@@ -94,7 +92,7 @@ class LOKIUpdater(object):
                     try:
                         self.logger.log("INFO", "Upgrader", "Downloading %s ..." % sig_url)
                         response = urlopen(sig_url)
-                    except Exception as e:
+                    except Exception:
                         if self.debug:
                             traceback.print_exc()
                         self.logger.log("ERROR", "Upgrader", "Error downloading the signature database - "
@@ -111,7 +109,7 @@ class LOKIUpdater(object):
                             fullOutDir = os.path.join(sigDir, outDir)
                             if not os.path.exists(fullOutDir):
                                 os.makedirs(fullOutDir)
-                    except Exception as e:
+                    except Exception:
                         if self.debug:
                             traceback.print_exc()
                         self.logger.log("ERROR", "Upgrader", "Error while creating the signature-base directories")
@@ -157,7 +155,7 @@ class LOKIUpdater(object):
                             target.close()
                             source.close()
 
-                    except Exception as e:
+                    except Exception:
                         if self.debug:
                             traceback.print_exc()
                         self.logger.log("ERROR", "Upgrader", "Error while extracting the signature files from the download "
@@ -166,7 +164,7 @@ class LOKIUpdater(object):
                 else:
                     self.logger.log("INFO", "Upgrader", "%s is up to date." % sig_url)
 
-        except Exception as e:
+        except Exception:
             if self.debug:
                 traceback.print_exc()
             return False
@@ -185,7 +183,7 @@ class LOKIUpdater(object):
                 zip_url = data['assets'][0]['browser_download_url']
                 self.logger.log("INFO", "Upgrader", "Downloading latest release %s ..." % zip_url)
                 response_zip = urlopen(zip_url)
-            except Exception as e:
+            except Exception:
                 if self.debug:
                     traceback.print_exc()
                 self.logger.log("ERROR", "Upgrader", "Error downloading the loki update - check your Internet connection")
@@ -208,7 +206,7 @@ class LOKIUpdater(object):
                         if not os.path.exists(os.path.dirname(targetFile)):
                             if os.path.dirname(targetFile) != '':
                                 os.makedirs(os.path.dirname(targetFile))
-                    except Exception as e:
+                    except Exception:
                         if self.debug:
                             self.logger.log("DEBUG", "Upgrader", "Cannot create dir name '%s'" % os.path.dirname(targetFile))
                             traceback.print_exc()
@@ -221,19 +219,19 @@ class LOKIUpdater(object):
                             if self.debug:
                                 self.logger.log("DEBUG", "Upgrader", "Successfully extracted '%s'" % targetFile)
                         target.close()
-                    except Exception as e:
+                    except Exception:
                         self.logger.log("ERROR", "Upgrader", "Cannot extract '%s'" % targetFile)
                         if self.debug:
                             traceback.print_exc()
 
-            except Exception as e:
+            except Exception:
                 if self.debug:
                     traceback.print_exc()
                 self.logger.log("ERROR", "Upgrader",
                                 "Error while extracting the signature files from the download package")
                 sys.exit(1)
 
-        except Exception as e:
+        except Exception:
             if self.debug:
                 traceback.print_exc()
             return False
@@ -253,7 +251,7 @@ def get_application_path():
         #if args.debug:
         #    logger.log("DEBUG", "Init", "Application Path: %s" % application_path)
         return application_path
-    except Exception as e:
+    except Exception:
         print("Error while evaluation of application path")
         traceback.print_exc()
 
