@@ -34,7 +34,7 @@ import psutil
 import platform
 import signal as signal_module
 from sys import platform as _platform
-from subprocess import Popen, PIPE
+from subprocess import Popen
 from collections import Counter
 import datetime
 from bisect import bisect_left
@@ -65,7 +65,7 @@ if os_platform == "windows":
         import win32api
         from win32com.shell import shell
         import win32file
-    except Exception as e:
+    except Exception:
         print("Linux System - deactivating process memory check ...")
         os_platform = "linux"  # crazy guess
 
@@ -329,7 +329,7 @@ class Loki(object):
                     try:
                         with open(filePath, 'rb') as f:
                             firstBytes = f.read(4)
-                    except Exception as e:
+                    except Exception:
                         logger.log("DEBUG", "FileScan", "Cannot open file %s (access denied)" % filePathCleaned)
 
                     # Evaluate Type
@@ -345,15 +345,20 @@ class Loki(object):
                     # Set fileData to an empty value
                     fileData = ""
 
+                    print_filesize_info = False
+
                     # Evaluations -------------------------------------------------------
                     # Evaluate size
-                    if fileSize > (int(args.s) * 1024):
+                    fileSizeLimit = int(args.s) * 1024
+                    if fileSize > fileSizeLimit:
                         # Print files
                         do_intense_check = False
+                        print_filesize_info = True
 
                     # Some file types will force intense check
                     if fileType == "MDMP":
                         do_intense_check = True
+                        print_filesize_info = False
 
                     # Intense Check switch
                     if do_intense_check:
@@ -362,6 +367,9 @@ class Loki(object):
                     else:
                         if args.printall:
                             logger.log("INFO", "FileScan", "Checking %s TYPE: %s SIZE: %s" % (fileNameCleaned, fileType, fileSize))
+
+                    if print_filesize_info and args.printall:
+                        logger.log("INFO", "FileScan", "Skipping file due to file size: %s TYPE: %s SIZE: %s CURRENT SIZE LIMIT(kilobytes): %d" % (fileNameCleaned, fileType, fileSize, fileSizeLimit))
 
                     # Hash Check -------------------------------------------------------
                     # Do the check
@@ -455,7 +463,7 @@ class Loki(object):
                                 total_score += score
                                 reasons.append(message)
 
-                        except Exception as e:
+                        except Exception:
                             if logger.debug:
                                 traceback.print_exc()
                             logger.log("ERROR", "FileScan", "Cannot YARA scan file: %s" % filePathCleaned)
@@ -483,7 +491,7 @@ class Loki(object):
 
                     logger.log(message_type, "FileScan", message_body)
 
-                except Exception as e:
+                except Exception:
                     if logger.debug:
                         traceback.print_exc()
                         sys.exit(1)
@@ -543,7 +551,7 @@ class Loki(object):
 
                         yield score, match.rule, description, reference, matched_strings, author
 
-        except Exception as e:
+        except Exception:
             if logger.debug:
                 traceback.print_exc()
 
@@ -622,12 +630,12 @@ class Loki(object):
                 try:
                     owner_raw = process.GetOwner()
                     owner = owner_raw[2]
-                except Exception as e:
+                except Exception:
                     owner = "unknown"
                 if not owner:
                     owner = "unknown"
 
-            except Exception as e:
+            except Exception:
                 logger.log("ALERT", "ProcessScan", "Error getting all process information. Did you run the scanner 'As Administrator'?")
                 continue
 
@@ -637,7 +645,7 @@ class Loki(object):
 
             # Special Checks ------------------------------------------------------
             # better executable path
-            if not "\\" in cmd and path != "none":
+            if "\\" not in cmd and path != "none":
                 cmd = path
 
             # Process Info
@@ -706,7 +714,7 @@ class Loki(object):
                         elif len(alerts) > 0:
                             for alert in alerts:
                                 logger.log("ALERT", "ProcessScan", alert)
-                    except Exception as e:
+                    except Exception:
                         if logger.debug:
                             traceback.print_exc()
                         if path != "none":
@@ -736,7 +744,7 @@ class Loki(object):
                                        (process_info, str(results["unreachable_file"])))
                         else:
                             logger.log("INFO", "ProcessScan", "PE-Sieve reported no anomalies %s" % process_info)
-            except WindowsError as e:
+            except WindowsError:
                 if logger.debug:
                     traceback.print_exc()
                 logger.log("ERROR", "ProcessScan",
@@ -816,7 +824,7 @@ class Loki(object):
             #if name == "svchost.exe" and not ( self.check_svchost_owner(owner) or "unistacksvcgroup" in cmd.lower()):
             #    logger.log("WARNING", "ProcessScan", "svchost.exe process owner is suspicious %s" % process_info)
 
-            if name == "svchost.exe" and not " -k " in cmd and cmd != "N/A":
+            if name == "svchost.exe" and " -k " not in cmd and cmd != "N/A":
                 logger.log("WARNING", "ProcessScan", "svchost.exe process does not contain a -k in its command line %s" % process_info)
 
             # Process: lsm.exe
@@ -843,7 +851,7 @@ class Loki(object):
 
             # Process: explorer.exe
             if path != "none":
-                if name == "explorer.exe" and not t_systemroot.lower() in path.lower():
+                if name == "explorer.exe" and t_systemroot.lower() not in path.lower():
                     logger.log("WARNING", "ProcessScan", "explorer.exe path is not %%SYSTEMROOT%% %s" % process_info)
             if name == "explorer.exe" and parent_pid > 0:
                 for proc in processes:
@@ -866,7 +874,7 @@ class Loki(object):
             # Get psutil info about the process
             try:
                 p = psutil.Process(pid)
-            except Exception as e:
+            except Exception:
                 if logger.debug:
                     traceback.print_exc()
                 return
@@ -912,7 +920,7 @@ class Loki(object):
                     logger.log("NOTICE", "ProcessScan", "Connection output threshold reached. Output truncated.")
                     return
 
-        except Exception as e:
+        except Exception:
             if args.debug:
                 traceback.print_exc()
                 sys.exit(1)
@@ -932,7 +940,7 @@ class Loki(object):
                 logger.log("ALERT", message)
             else:
                 logger.log("INFO", "Rootkit", "Double Pulsar RDP check RESULT: %s" % message)
-        except Exception as e:
+        except Exception:
             logger.log("INFO", "Rootkit", "Double Pulsar RDP check failed RESULT: Connection failure")
             if args.debug:
                 traceback.print_exc()
@@ -944,7 +952,7 @@ class Loki(object):
                 logger.log("ALERT", message)
             else:
                 logger.log("INFO", "Rootkit", "Double Pulsar SMB check RESULT: %s" % message)
-        except Exception as e:
+        except Exception:
             logger.log("INFO", "Rootkit", "Double Pulsar SMB check failed RESULT: Connection failure")
             if args.debug:
                 traceback.print_exc()
@@ -1009,13 +1017,13 @@ class Loki(object):
                                     # Add to the LOKI iocs
                                     self.c2_server[c2.lower()] = last_comment
 
-                                except Exception as e:
+                                except Exception:
                                     logger.log("ERROR", "Init",  "Cannot read line: %s" % line)
                                     if logger.debug:
                                         sys.exit(1)
-                except OSError as e:
+                except OSError:
                     logger.log("ERROR", "Init",  "No such file or directory")
-        except Exception as e:
+        except Exception:
             traceback.print_exc()
             logger.log("ERROR", "Init", "Error reading Hash file: %s" % ioc_filename)
 
@@ -1077,13 +1085,13 @@ class Loki(object):
                                 fioc = {'regex': re.compile(regex), 'score': score, 'description': desc, 'regex_fp': regex_fp_comp}
                                 self.filename_iocs.append(fioc)
 
-                            except Exception as e:
+                            except Exception:
                                 logger.log("ERROR", "Init", "Error reading line: %s" % line)
                                 if logger.debug:
                                     traceback.print_exc()
                                     sys.exit(1)
 
-        except Exception as e:
+        except Exception:
             if 'ioc_filename' in locals():
                 logger.log("ERROR",  "Init", "Error reading IOC file: %s" % ioc_filename)
             else:
@@ -1135,7 +1143,7 @@ class Loki(object):
                                 })
                                 logger.log("DEBUG", "Init", "Initializing Yara rule %s" % file)
                                 rule_count += 1
-                            except Exception as e:
+                            except Exception:
                                 logger.log("ERROR", "Init", "Error while initializing Yara rule %s ERROR: %s" % (file, sys.exc_info()[1]))
                                 traceback.print_exc()
                                 if logger.debug:
@@ -1145,7 +1153,7 @@ class Loki(object):
                             # Add the rule
                             yaraRules += yara_rule_data
 
-                        except Exception as e:
+                        except Exception:
                             logger.log("ERROR", "Init", "Error reading signature file %s ERROR: %s" % (yaraRuleFile, sys.exc_info()[1]))
                             if logger.debug:
                                 traceback.print_exc()
@@ -1163,7 +1171,7 @@ class Loki(object):
                     'owner': dummy,
                 })
                 logger.log("INFO", "Init", "Initialized %d Yara rules" % rule_count)
-            except Exception as e:
+            except Exception:
                 traceback.print_exc()
                 logger.log("ERROR", "Init", "Error during YARA rule compilation ERROR: %s - please fix the issue in the rule set" % sys.exc_info()[1])
                 sys.exit(1)
@@ -1171,7 +1179,7 @@ class Loki(object):
             # Add as Lokis YARA rules
             self.yara_rules.append(compiledRules)
 
-        except Exception as e:
+        except Exception:
             logger.log("ERROR", "Init", "Error reading signature folder /signatures/")
             if logger.debug:
                 traceback.print_exc()
@@ -1226,7 +1234,7 @@ class Loki(object):
                                     self.hashes_sha256[int(hash, 16)] = comment
                                 if false_positive:
                                     self.false_hashes[int(hash, 16)] = comment
-                            except Exception as e:
+                            except Exception:
                                 if logger.debug:
                                     traceback.print_exc()
                                 logger.log("ERROR", "Init", "Cannot read line: %s" % line)
@@ -1244,7 +1252,7 @@ class Loki(object):
             self.hashes_sha256_list = list(self.hashes_sha256.keys())
             self.hashes_sha256_list.sort()
 
-        except Exception as e:
+        except Exception:
             if logger.debug:
                 traceback.print_exc()
                 sys.exit(1)
@@ -1270,10 +1278,10 @@ class Loki(object):
                     # print "%s - %s" % ( sig, description )
                     self.filetype_magics[sig] = description
 
-                except Exception as e:
+                except Exception:
                     logger.log("ERROR", "Init", "Cannot read line: %s" % line)
 
-        except Exception as e:
+        except Exception:
             if logger.debug:
                 traceback.print_exc()
                 sys.exit(1)
@@ -1293,12 +1301,12 @@ class Loki(object):
                     if re.search(r'\w', line):
                         regex = re.compile(line, re.IGNORECASE)
                         excludes.append(regex)
-                except Exception as e:
+                except Exception:
                     logger.log("ERROR", "Init", "Cannot compile regex: %s" % line)
 
             self.fullExcludes = excludes
 
-        except Exception as e:
+        except Exception:
             if logger.debug:
                 traceback.print_exc()
             logger.log("NOTICE", "Init", "Error reading excludes file: %s" % excludes_file)
@@ -1310,7 +1318,7 @@ class Loki(object):
             # Read file complete
             with open(filePath, 'rb') as f:
                 fileData = f.read()
-        except Exception as e:
+        except Exception:
             if logger.debug:
                 traceback.print_exc()
             logger.log("DEBUG", "FileScan", "Cannot open file %s (access denied)" % filePath)
@@ -1383,7 +1391,7 @@ def get_application_path():
         #if args.debug:
         #    logger.log("DEBUG", "Init", "Application Path: %s" % application_path)
         return application_path
-    except Exception as e:
+    except Exception:
         print("Error while evaluation of application path")
         traceback.print_exc()
         if args.debug:
@@ -1440,7 +1448,7 @@ def signal_handler(signal_name, frame):
     try:
         print("------------------------------------------------------------------------------\n")
         logger.log('INFO', 'Init', 'LOKI\'s work has been interrupted by a human. Returning to Asgard.')
-    except Exception as e:
+    except Exception:
         print('LOKI\'s work has been interrupted by a human. Returning to Asgard.')
     sys.exit(0)
 

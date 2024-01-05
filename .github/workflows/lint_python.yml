@@ -8,7 +8,7 @@ jobs:
       - uses: actions/setup-python@v4
       - run: pip install --upgrade pip setuptools wheel
       - run: pip install black codespell mypy pytest ruff safety
-      - run: ruff --format=github --ignore=E501,E701,E713,E722,F401,F403,F405,F841 --line-length=263 .
+      - run: ruff --output-format=github --ignore=E501,E701,E713,E722,F401,F403,F405,F841 --line-length=263 .
       - run: black --check . || true
       - run: codespell --ignore-words-list="datas" --skip="./.git/*"
       - run: pip install -r requirements.txt

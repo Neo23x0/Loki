@@ -3,7 +3,6 @@
 # PE-Sieve Integration by @hasherezade
 
 import os
-import sys
 import json
 import traceback
 
@@ -64,12 +63,12 @@ class PESieve(object):
             return results
         try:
             results_raw = json.loads(output)
-            results = results_raw["scan_report"]["scanned"]["modified"]
-            #results = results_raw["scanned"]["modified"]
-        except ValueError as v:
+            #results = results_raw["scan_report"]["scanned"]["modified"]
+            results = results_raw["scanned"]["modified"]
+        except ValueError:
             traceback.print_exc()
             self.logger.log("DEBUG", "PESieve", "Couldn't parse the JSON output.")
-        except Exception as e:
+        except Exception:
             traceback.print_exc()
             self.logger.log("ERROR", "PESieve", "Something went wrong during PE-Sieve scan.")
         return results
