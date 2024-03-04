@@ -1342,15 +1342,16 @@ class Loki(object):
 
         # Check the characters
         for char in c.most_common():
-            if char[0] in anomal_chars:
-                anomal_char_stats[char[0]] = char[1]
-            if char[0].isupper():
+            char_str = str(char[0])
+            if char_str in anomal_chars:
+                anomal_char_stats[char_str] = char[1]
+            if char_str.isupper():
                 char_stats["upper"] += char[1]
-            elif char[0].islower():
+            elif char_str.islower():
                 char_stats["lower"] += char[1]
-            elif char[0].isdigit():
+            elif char_str.isdigit():
                 char_stats["numbers"] += char[1]
-            elif char[0].isspace():
+            elif char_str.isspace():
                 char_stats["spaces"] += char[1]
             else:
                 char_stats["symbols"] += char[1]
