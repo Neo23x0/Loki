@@ -113,7 +113,9 @@ class Loki(object):
     fullExcludes = []
     # Platform specific excludes (match the beginning of the full path) (not user-defined)
     startExcludes = []
-
+    # Excludes hash (md5, sha1 and sha256)
+    excludes_hash = []    
+    
     # File type magics
     filetype_magics = {}
     max_filetype_magics = 0
@@ -395,6 +397,11 @@ class Loki(object):
 
                         # False Positive Hash
                         if md5_num in self.false_hashes.keys() or sha1_num in self.false_hashes.keys() or sha256_num in self.false_hashes.keys():
+                            continue
+
+                        # Skip exclude hash
+                        if md5 in self.excludes_hash or sha1 in self.excludes_hash or sha256 in self.excludes_hash:
+                            logger.log("DEBUG", "FileScan", "Skipping element %s by hash %s" % filePath % self.excludes_hash)
                             continue
 
                         # Malware Hash
@@ -1290,6 +1297,8 @@ class Loki(object):
     def initialize_excludes(self, excludes_file):
         try:
             excludes = []
+            excludes_hash = []            
+
             with open(excludes_file, 'r') as config:
                 lines = config.read().splitlines()
 
@@ -1297,14 +1306,23 @@ class Loki(object):
                 if re.search(r'^[\s]*#', line):
                     continue
                 try:
+                    # If the line contains md5sum
+                    if re.search(r'^md5sum:', line):
+                        excludes_hash.append(line.replace('md5sum:',''))
+                    # If the line contains sha1sum
+                    elif re.search(r'^sha1sum:', line):
+                        excludes_hash.append(line.replace('sha1sum:', ''))
+                    elif re.search(r'^sha256sum:', line):
+                        excludes_hash.append(line.replace('sha256sum:', ''))
                     # If the line contains something
-                    if re.search(r'\w', line):
+                    elif re.search(r'\w', line):
                         regex = re.compile(line, re.IGNORECASE)
                         excludes.append(regex)
                 except Exception:
                     logger.log("ERROR", "Init", "Cannot compile regex: %s" % line)
 
             self.fullExcludes = excludes
+            self.excludes_hash = excludes_hash
 
         except Exception:
             if logger.debug:
