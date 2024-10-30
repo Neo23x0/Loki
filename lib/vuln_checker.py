@@ -5,7 +5,6 @@
 # Different vulnerability checks
 
 import subprocess
-import traceback
 
 class VulnChecker():
 
@@ -27,11 +26,11 @@ class VulnChecker():
         output = b''
         try:
             output += subprocess.check_output([r'icacls.exe', r'C:\Windows\System32\config\sam'], stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as e:
+        except subprocess.CalledProcessError:
             pass
         try:
             output += subprocess.check_output([r'icacls.exe', r'C:\Windows\SysNative\config\sam'], stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as e:
+        except subprocess.CalledProcessError:
             pass
         # Check the output
         try:
@@ -45,6 +44,6 @@ class VulnChecker():
                 return True
             else:
                 self.logger.log("DEBUG", "VulnChecker", "SAM Database isn't readable by every user.")
-        except UnicodeDecodeError as e:
+        except UnicodeDecodeError:
             self.logger.log("ERROR", "VulnChecker", "Unicode decode error in SAM check")
         return False
