@@ -8,8 +8,9 @@ jobs:
     - name: PyInstaller Windows
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
+        spec: loki.spec
         path: .
     - uses: actions/upload-artifact@v4
       with:
         name: loki.exe
-        path: src/dist/windows # or path/to/artifact
+        path: dist/windows
