@@ -6,7 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: PyInstaller Windows
-      uses: JackMcKew/pyinstaller-action-windows@python3-10-pyinstaller-5-3
+      uses: JackMcKew/pyinstaller-action-windows@main
       with:
         path: .
     - uses: actions/upload-artifact@v4
