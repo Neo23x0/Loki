@@ -231,11 +231,12 @@ To include the msvcr100.dll to improve the target os compatibility change the li
     
 # Use LOKI on Mac OS X (Or later) or Linux
 
-- Create a separate Python environment using [virtualenv](https://docs.python.org/3/library/venv.html)
-- Activate the virtual Python environment ```source .env/bin/activate```
-- Install libraries ```pip install colorama yara-python psutil rfc5424-logging-handler netaddr```
-- Run loki-upgrader.py ```python loki-upgrader.py```
-- Run loki ```python loki.py```
+
+- Initialize a Python virtual environment for loki. To do this you have to make sure you have the Python module `venv` then run `python -m venv path/to/venv` where `path/to/venv` is the path to your virtual environment. Test your virtual environment by running `path/to/venv/bin/python --version`.
+Upgrade your virtual environment modules for `pip`, `setuptools`, and `wheel` by running `path/to/venv/bin/python -m pip install --upgrade pip setuptools wheel`.
+- Install libraries ```path/to/venv/bin/python -m pip install colorama yara-python psutil rfc5424-logging-handler netaddr```
+- Run loki-upgrader.py ```path/to/venv/bin/python path/to/loki/loki-upgrader.py``` where `path/to/loki` is the path of the Loki repository.
+- Run loki ```sudo path/to/venv/bin/python loki.py```
 
 # Yara sources
 
