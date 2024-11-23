@@ -1,15 +1,14 @@
+name: binary_creation
+on: [pull_request, push]
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: PyInstaller Windows
       uses: JackMcKew/pyinstaller-action-windows@python3-10-pyinstaller-5-3
       with:
         path: .
-
     - uses: actions/upload-artifact@v4
       with:
         name: loki.exe
