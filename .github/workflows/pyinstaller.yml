@@ -16,7 +16,7 @@ jobs:
         spec: loki-upgrader.spec
         path: .
     - name: copy additional files
-      run: cp tools/pe-sieve*.exe dist/windows
+      run: cp tools/pe-sieve*.exe dist/windows/tools
     - name: zip files
       uses: edgarrc/action-7z@v1
       with:
