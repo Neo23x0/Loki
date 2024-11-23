@@ -15,6 +15,8 @@ jobs:
       with:
         spec: loki-upgrader.spec
         path: .
+    - name: create subdir
+      run: mkdir dist/windows/tools
     - name: copy additional files
       run: cp tools/pe-sieve*.exe dist/windows/tools
     - name: zip files
