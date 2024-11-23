@@ -15,11 +15,10 @@ jobs:
       with:
         spec: loki-upgrader.spec
         path: .
-    - uses: actions/upload-artifact@v4
+    - name: copy additional files
+      run: copy .\tools\pe-sieve*.exe dist/windows
+    - name: upload files
+      uses: actions/upload-artifact@v4
       with:
-        name: loki.exe
-        path: dist/windows
-    - uses: actions/upload-artifact@v4
-      with:
-        name: loki-upgrader.exe
+        name: loki-binaries
         path: dist/windows
