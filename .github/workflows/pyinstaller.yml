@@ -1,0 +1,16 @@
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: PyInstaller Windows
+      uses: JackMcKew/pyinstaller-action-windows@python3-10-pyinstaller-5-3
+      with:
+        path: .
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: loki.exe
+        path: src/dist/windows # or path/to/artifact
