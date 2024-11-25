@@ -61,7 +61,6 @@ from lib.helpers import (
     setNice,
     transformOS
 )
-
 from lib.pesieve import PESieve
 from lib.doublepulsar import DoublePulsar
 from lib.vuln_checker import VulnChecker
