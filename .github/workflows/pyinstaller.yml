@@ -1,0 +1,30 @@
+name: binary_creation
+on: [pull_request, push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: generate loki.exe
+      uses: JackMcKew/pyinstaller-action-windows@main
+      with:
+        spec: loki.spec
+        path: .
+    - name: generate loki-uprader.exe
+      uses: JackMcKew/pyinstaller-action-windows@main
+      with:
+        spec: loki-upgrader.spec
+        path: .
+    - name: create subdir
+      run: mkdir dist/windows/tools
+    - name: copy additional files
+      run: cp tools/pe-sieve*.exe dist/windows/tools
+    - name: zip files
+      uses: edgarrc/action-7z@v1
+      with:
+        args: 7z a -tzip -mm=Deflate -mmt=off -mx5 -mfb=32 -mpass=1 -sccUTF-8 -mem=AES256 build.7z dist/windows
+    - name: upload files
+      uses: actions/upload-artifact@v4
+      with:
+        name: loki-binaries
+        path: dist/windows
