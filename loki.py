@@ -565,7 +565,7 @@ class Loki(object):
                     string_value = string_value[:140] + " ... (truncated)"
                 matching_strings.append("{0}: '{1}'".format(string.identifier, string_value))
             return matching_strings
-        except:
+        except Exception:
             traceback.print_exc()
 
     def check_svchost_owner(self, owner):
