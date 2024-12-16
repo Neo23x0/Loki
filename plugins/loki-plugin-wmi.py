@@ -10,6 +10,8 @@ Author: @DidierStevens
 import hashlib
 import sys
 
+from utils.enums import MesType 
+
 def ScanWMI():
     global logger  # logger is defined in loki.py.__main__
 
@@ -18,7 +20,7 @@ def ScanWMI():
             import wmi
         except ImportError:
             wmi = None
-            logger.log("CRITICAL", "WMIScan", "Unable to import wmi")
+            logger.log(MesType.CRITICAL, "WMIScan", "Unable to import wmi")
             print("Unable to import wmi")
         oWMI = wmi.WMI(namespace=r'root\subscription')
 
@@ -31,43 +33,43 @@ def ScanWMI():
         try:
             leventFilter = oWMI.__eventFilter()
         except:
-            logger.log("WARNING", "WMIScan", 'Error retrieving __eventFilter')
+            logger.log(MesType.WARNING, "WMIScan", 'Error retrieving __eventFilter')
         try:
             lFilterToConsumerBinding = oWMI.__FilterToConsumerBinding()
         except:
-            logger.log("WARNING", "WMIScan", 'Error retrieving __FilterToConsumerBinding')
+            logger.log(MesType.WARNING, "WMIScan", 'Error retrieving __FilterToConsumerBinding')
         try:
             lCommandLineEventConsumer = oWMI.CommandLineEventConsumer()
         except:
-            logger.log("WARNING", "WMIScan", 'Error retrieving CommandLineEventConsumer')
+            logger.log(MesType.WARNING, "WMIScan", 'Error retrieving CommandLineEventConsumer')
         try:
             lActiveScriptEventConsumer = oWMI.ActiveScriptEventConsumer()
         except:
-            logger.log("WARNING", "WMIScan", 'Error retrieving ActiveScriptEventConsumer')
+            logger.log(MesType.WARNING, "WMIScan", 'Error retrieving ActiveScriptEventConsumer')
 
         for eventFilter in leventFilter:
             try:
                 hashEntry = hashlib.md5(str(eventFilter)).hexdigest()
                 if hashEntry not in knownHashes:
-                    logger.log("WARNING", "WMIScan", 'CLASS: __eventFilter MD5: %s NAME: %s QUERY: %s' % (hashEntry, eventFilter.wmi_property('Name').value, eventFilter.wmi_property('Query').value))
+                    logger.log(MesType.WARNING, "WMIScan", 'CLASS: __eventFilter MD5: %s NAME: %s QUERY: %s' % (hashEntry, eventFilter.wmi_property('Name').value, eventFilter.wmi_property('Query').value))
             except:
-                logger.log("INFO", "WMIScan", repr(str(eventFilter)))
+                logger.log(MesType.INFO, "WMIScan", repr(str(eventFilter)))
         for FilterToConsumerBinding in lFilterToConsumerBinding:
             try:
                 hashEntry = hashlib.md5(str(FilterToConsumerBinding)).hexdigest()
                 if hashEntry not in knownHashes:
-                    logger.log("WARNING", "WMIScan", 'CLASS: __FilterToConsumerBinding MD5: %s CONSUMER: %s FILTER: %s' % (hashEntry, FilterToConsumerBinding.wmi_property('Consumer').value, FilterToConsumerBinding.wmi_property('Filter').value))
+                    logger.log(MesType.WARNING, "WMIScan", 'CLASS: __FilterToConsumerBinding MD5: %s CONSUMER: %s FILTER: %s' % (hashEntry, FilterToConsumerBinding.wmi_property('Consumer').value, FilterToConsumerBinding.wmi_property('Filter').value))
             except:
-                logger.log("INFO", "WMIScan", repr(str(FilterToConsumerBinding)))
+                logger.log(MesType.INFO, "WMIScan", repr(str(FilterToConsumerBinding)))
         for CommandLineEventConsumer in lCommandLineEventConsumer:
             try:
                 hashEntry = hashlib.md5(str(CommandLineEventConsumer)).hexdigest()
                 if hashEntry not in knownHashes:
-                    logger.log("WARNING", "WMIScan", 'CLASS: CommandLineEventConsumer MD5: %s NAME: %s COMMANDLINETEMPLATE: %s' % (hashEntry, CommandLineEventConsumer.wmi_property('Name').value, CommandLineEventConsumer.wmi_property('CommandLineTemplate').value))
+                    logger.log(MesType.WARNING, "WMIScan", 'CLASS: CommandLineEventConsumer MD5: %s NAME: %s COMMANDLINETEMPLATE: %s' % (hashEntry, CommandLineEventConsumer.wmi_property('Name').value, CommandLineEventConsumer.wmi_property('CommandLineTemplate').value))
             except:
-                logger.log("INFO", "WMIScan", repr(str(CommandLineEventConsumer)))
+                logger.log(MesType.INFO, "WMIScan", repr(str(CommandLineEventConsumer)))
         for ActiveScriptEventConsumer in lActiveScriptEventConsumer:
-            logger.log("INFO", "WMIScan", repr(str(ActiveScriptEventConsumer)))
+            logger.log(MesType.INFO, "WMIScan", repr(str(ActiveScriptEventConsumer)))
 
 
 LokiRegisterPlugin("PluginWMI", ScanWMI, 1)  # noqa: F821 undefined name 'LokiRegisterPlugin'

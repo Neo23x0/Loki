@@ -6,6 +6,8 @@
 
 import subprocess
 
+from utils.enums import MesType
+
 class VulnChecker():
 
     def __init__(self, logger):
@@ -14,7 +16,7 @@ class VulnChecker():
         pass
 
     def run(self):
-        self.logger.log("INFO", "VulnChecker", "Starting vulnerability checks ...")
+        self.logger.log(MesType.INFO, "VulnChecker", "Starting vulnerability checks ...")
         self.check_sam_readable()
 
     def check_sam_readable(self):
@@ -35,7 +37,7 @@ class VulnChecker():
         # Check the output
         try:
             if r'BUILTIN\Users:(I)(RX)' in output.decode('latin1', errors='ignore'):
-                self.logger.log("WARNING", "VulnChecker",
+                self.logger.log(MesType.WARNING, "VulnChecker",
                                 "The Security Account Manager (SAM) database file C:\\Windows\\System32\\config\\SAM is "
                                 "readable by every user. This is caused by the Hive Permission Bug, which is problematic "
                                 "on systems that have System Protection configured for drive C: (see "
@@ -43,7 +45,7 @@ class VulnChecker():
                                 "windows-10-7a871c465fa5)")
                 return True
             else:
-                self.logger.log("DEBUG", "VulnChecker", "SAM Database isn't readable by every user.")
+                self.logger.log(MesType.DEBUG, "VulnChecker", "SAM Database isn't readable by every user.")
         except UnicodeDecodeError:
-            self.logger.log("ERROR", "VulnChecker", "Unicode decode error in SAM check")
+            self.logger.log(MesType.ERROR, "VulnChecker", "Unicode decode error in SAM check")
         return False

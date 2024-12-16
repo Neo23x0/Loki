@@ -14,6 +14,9 @@ import logging
 from logging import handlers
 import socket
 
+# LOKI Modules
+from utils.enums import MesType
+
 __version__ = '0.51.1'
 
 
@@ -77,20 +80,20 @@ class LokiLogger:
 
     def log(self, mes_type, module, message):
 
-        if not self.debug and mes_type == "DEBUG":
+        if not self.debug and mes_type == MesType.DEBUG:
             return
 
         # Counter
-        if mes_type == "ALERT":
+        if mes_type == MesType.ALERT:
             self.alerts += 1
-        if mes_type == "WARNING":
+        if mes_type == MesType.WARNING:
             self.warnings += 1
-        if mes_type == "NOTICE":
+        if mes_type == MesType.NOTICE:
             self.notices += 1
         self.messagecount += 1
 
         if self.only_relevant:
-            if mes_type not in ('ALERT', 'WARNING'):
+            if mes_type not in (MesType.ALERT, MesType.WARNING):
                 return
 
         # to file
@@ -117,7 +120,7 @@ class LokiLogger:
     def log_to_stdout(self, message, mes_type):
 
         if self.csv:
-            print(self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, mes_type, message))
+            print(self.Format(self.STDOUT_CSV, '{0},{1},{2},{3}', getSyslogTimestamp(), self.hostname, str(mes_type), message))
 
         else:
             try:
@@ -126,25 +129,25 @@ class LokiLogger:
                 base_color = Back.BLACK+Fore.WHITE
                 high_color = Fore.WHITE+Back.BLACK
 
-                if mes_type == "NOTICE":
+                if mes_type == MesType.NOTICE:
                     base_color = Fore.CYAN+''+Back.BLACK
                     high_color = Fore.BLACK+''+Back.CYAN
-                elif mes_type == "INFO":
+                elif mes_type == MesType.INFO:
                     base_color = Fore.GREEN+''+Back.BLACK
                     high_color = Fore.BLACK+''+Back.GREEN
-                elif mes_type == "WARNING":
+                elif mes_type == MesType.WARNING:
                     base_color = Fore.YELLOW+''+Back.BLACK
                     high_color = Fore.BLACK+''+Back.YELLOW
-                elif mes_type == "ALERT":
+                elif mes_type == MesType.ALERT:
                     base_color = Fore.RED+''+Back.BLACK
                     high_color = Fore.BLACK+''+Back.RED
-                elif mes_type == "DEBUG":
+                elif mes_type == MesType.DEBUG:
                     base_color = Fore.WHITE+''+Back.BLACK
                     high_color = Fore.BLACK+''+Back.WHITE
-                elif mes_type == "ERROR":
+                elif mes_type == MesType.ERROR:
                     base_color = Fore.MAGENTA+''+Back.BLACK
                     high_color = Fore.WHITE+''+Back.MAGENTA
-                elif mes_type == "RESULT":
+                elif mes_type == MesType.RESULT:
                     if "clean" in message.lower():
                         high_color = Fore.BLACK+Back.GREEN
                         base_color = Fore.GREEN+Back.BLACK
@@ -157,7 +160,7 @@ class LokiLogger:
 
                 # Colorize Type Word at the beginning of the line
                 type_colorer = re.compile(r'([A-Z]{3,})', re.VERBOSE)
-                mes_type = type_colorer.sub(high_color+r'[\1]'+base_color, mes_type)
+                styled_mes = type_colorer.sub(high_color+r'[\1]'+base_color, str(mes_type))
                 # Break Line before REASONS
                 linebreaker = re.compile('(MD5:|SHA1:|SHA256:|MATCHES:|FILE:|FIRST_BYTES:|DESCRIPTION:|REASON_[0-9]+)', re.VERBOSE)
                 message = linebreaker.sub(r'\n\1', message)
@@ -166,12 +169,12 @@ class LokiLogger:
                 message = colorer.sub(key_color+Style.BRIGHT+r'\1 '+base_color+Style.NORMAL, message)
 
                 # Print to console
-                if mes_type == "RESULT":
-                    res_message = "\b\b%s %s" % (mes_type, message)
+                if mes_type == MesType.RESULT:
+                    res_message = "\b\b%s %s" % (styled_mes, message)
                     print(base_color+' '+res_message+' '+Back.BLACK)
                     print(Fore.WHITE+' '+Style.NORMAL)
                 else:
-                    sys.stdout.write("%s%s\b\b%s %s%s%s%s\n" % (reset_all, base_color, mes_type, message, Back.BLACK,Fore.WHITE,Style.NORMAL))
+                    sys.stdout.write("%s%s\b\b%s %s%s%s%s\n" % (reset_all, base_color, styled_mes, message, Back.BLACK,Fore.WHITE,Style.NORMAL))
 
             except Exception:
                 if self.debug:
@@ -184,9 +187,9 @@ class LokiLogger:
             # Write to file
             with codecs.open(self.log_file, "a", encoding='utf-8') as logfile:
                 if self.csv:
-                    logfile.write(self.Format(self.FILE_CSV, u"{0},{1},{2},{3},{4}{5}", getSyslogTimestamp(), self.hostname, mes_type, module, message, self.linesep))
+                    logfile.write(self.Format(self.FILE_CSV, u"{0},{1},{2},{3},{4}{5}", getSyslogTimestamp(), self.hostname, str(mes_type), module, message, self.linesep))
                 else:
-                    logfile.write(self.Format(self.FILE_LINE, u"{0} {1} LOKI: {2}: MODULE: {3} MESSAGE: {4}{5}", getSyslogTimestamp(), self.hostname, mes_type.title(), module, message, self.linesep))
+                    logfile.write(self.Format(self.FILE_LINE, u"{0} {1} LOKI: {2}: MODULE: {3} MESSAGE: {4}{5}", getSyslogTimestamp(), self.hostname, str(mes_type).title(), module, message, self.linesep))
         except Exception:
             if self.debug:
                 traceback.print_exc()
@@ -195,20 +198,20 @@ class LokiLogger:
 
     def log_to_remotesys(self, message, mes_type, module):
         # Preparing the message
-        syslog_message = self.Format(self.SYSLOG_LINE, "LOKI: {0}: MODULE: {1} MESSAGE: {2}", mes_type.title(), module, message)
+        syslog_message = self.Format(self.SYSLOG_LINE, "LOKI: {0}: MODULE: {1} MESSAGE: {2}", str(mes_type).title(), module, message)
         try:
             # Mapping LOKI's levels to the syslog levels
-            if mes_type == "NOTICE":
+            if mes_type == MesType.NOTICE:
                 self.remote_logger.info(syslog_message, extra={'msgid': str(self.messagecount)})
-            elif mes_type == "INFO":
+            elif mes_type == MesType.INFO:
                 self.remote_logger.info(syslog_message, extra={'msgid': str(self.messagecount)})
-            elif mes_type == "WARNING":
+            elif mes_type == MesType.WARNING:
                 self.remote_logger.warning(syslog_message, extra={'msgid': str(self.messagecount)})
-            elif mes_type == "ALERT":
+            elif mes_type == MesType.ALERT:
                 self.remote_logger.critical(syslog_message, extra={'msgid': str(self.messagecount)})
-            elif mes_type == "DEBUG":
+            elif mes_type == MesType.DEBUG:
                 self.remote_logger.debug(syslog_message, extra={'msgid': str(self.messagecount)})
-            elif mes_type == "ERROR":
+            elif mes_type == MesType.ERROR:
                 self.remote_logger.error(syslog_message, extra={'msgid': str(self.messagecount)})
         except Exception as e:
             if self.debug:

@@ -9,6 +9,8 @@ import traceback
 from lib.lokilogger import *
 from lib.helpers import runProcess
 
+from utils.enums import MesType
+
 class PESieve(object):
     """
     PESieve class makes use of hasherezade's PE-Sieve tool to scans a given process,
@@ -27,10 +29,10 @@ class PESieve(object):
 
         if self.isAvailable():
             self.active = True
-            self.logger.log("NOTICE", "PESieve", "PE-Sieve successfully initialized BINARY: {0} "
+            self.logger.log(MesType.NOTICE, "PESieve", "PE-Sieve successfully initialized BINARY: {0} "
                                       "SOURCE: https://github.com/hasherezade/pe-sieve".format(self.peSieve))
         else:
-            self.logger.log("NOTICE", "PESieve", "Cannot find PE-Sieve in expected location {0} "
+            self.logger.log(MesType.NOTICE, "PESieve", "Cannot find PE-Sieve in expected location {0} "
                                       "SOURCE: https://github.com/hasherezade/pe-sieve".format(self.peSieve))
 
     def isAvailable(self):
@@ -39,7 +41,7 @@ class PESieve(object):
         :return:
         """
         if not os.path.exists(self.peSieve):
-            self.logger.log("DEBUG", "PESieve", "PE-Sieve not found in location '{0}' - "
+            self.logger.log(MesType.DEBUG, "PESieve", "PE-Sieve not found in location '{0}' - "
                                      "feature will not be active".format(self.peSieve))
             return False
         return True
@@ -63,12 +65,12 @@ class PESieve(object):
             return results
         try:
             results_raw = json.loads(output)
-            #results = results_raw["scan_report"]["scanned"]["modified"]
-            results = results_raw["scanned"]["modified"]
+            results = results_raw["scan_report"]["scanned"]["modified"]
+            #results = results_raw["scanned"]["modified"]
         except ValueError:
             traceback.print_exc()
-            self.logger.log("DEBUG", "PESieve", "Couldn't parse the JSON output.")
+            self.logger.log(MesType.DEBUG, "PESieve", "Couldn't parse the JSON output.")
         except Exception:
             traceback.print_exc()
-            self.logger.log("ERROR", "PESieve", "Something went wrong during PE-Sieve scan.")
+            self.logger.log(MesType.ERROR, "PESieve", "Something went wrong during PE-Sieve scan.")
         return results
