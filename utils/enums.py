@@ -12,6 +12,7 @@ class MesType(Enum):
 
     def __str__(self):
         return {
+            MesType.NOTICE: "NOTICE",
             MesType.INFO: "INFO",
             MesType.WARNING: "WARNING",
             MesType.ALERT: "ALERT",
