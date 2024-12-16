@@ -23,6 +23,8 @@ import threading
 import subprocess
 import signal
 
+from utils.enums import MesType
+
 # Helper Functions -------------------------------------------------------------
 
 def is_ip(string):
@@ -83,13 +85,13 @@ def setNice(logger):
     try:
         pid = os.getpid()
         p = psutil.Process(pid)
-        logger.log("INFO", "Init", "Setting LOKI process with PID: %s to priority IDLE" % pid)
+        logger.log(MesType.INFO, "Init", "Setting LOKI process with PID: %s to priority IDLE" % pid)
         p.nice(psutil.IDLE_PRIORITY_CLASS)
         return 1
     except Exception:
         if logger.debug:
             traceback.print_exc()
-        logger.log("ERROR", "Init", "Error setting nice value of THOR process")
+        logger.log(MesType.ERROR, "Init", "Error setting nice value of THOR process")
         return 0
 
 
