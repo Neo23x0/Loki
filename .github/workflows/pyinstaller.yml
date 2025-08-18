@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: generate loki.exe
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
