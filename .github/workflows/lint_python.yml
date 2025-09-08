@@ -4,8 +4,8 @@ jobs:
   lint_python:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
       - run: pip install --upgrade pip setuptools wheel
       - run: pip install codespell mypy pytest ruff safety
       - run: ruff check --output-format=github --ignore=E501,E701,E713,E722,F401,F403,F405,F841 --line-length=263 .
