@@ -1,6 +1,6 @@
 [![Not Maintained](https://img.shields.io/badge/Maintenance%20Level-Abandoned-orange.svg)](https://gist.github.com/cheerfulstoic/d107229326a01ff0f333a1d3476e068d)
 
-I wrote a new Open Source YARA scanner called [LOKI RS](https://github.com/Neo23x0/Loki-RS).
+I wrote a new Open Source YARA scanner called [LOKI RS](https://github.com/Neo23x0/Loki-RS) (Rust).
 LOKI (Python) is now officially deprecated. 
 
 ## Important Note
