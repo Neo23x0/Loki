@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: generate loki.exe
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
@@ -24,7 +24,7 @@ jobs:
       with:
         args: 7z a -tzip -mm=Deflate -mmt=off -mx5 -mfb=32 -mpass=1 -sccUTF-8 -mem=AES256 build.7z dist/windows
     - name: upload files
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: loki-binaries
         path: dist/windows
