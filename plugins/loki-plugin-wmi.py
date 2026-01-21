@@ -30,19 +30,19 @@ def ScanWMI():
         lActiveScriptEventConsumer = []
         try:
             leventFilter = oWMI.__eventFilter()
-        except:
+        except Exception:
             logger.log("WARNING", "WMIScan", 'Error retrieving __eventFilter')
         try:
             lFilterToConsumerBinding = oWMI.__FilterToConsumerBinding()
-        except:
+        except Exception:
             logger.log("WARNING", "WMIScan", 'Error retrieving __FilterToConsumerBinding')
         try:
             lCommandLineEventConsumer = oWMI.CommandLineEventConsumer()
-        except:
+        except Exception:
             logger.log("WARNING", "WMIScan", 'Error retrieving CommandLineEventConsumer')
         try:
             lActiveScriptEventConsumer = oWMI.ActiveScriptEventConsumer()
-        except:
+        except Exception:
             logger.log("WARNING", "WMIScan", 'Error retrieving ActiveScriptEventConsumer')
 
         for eventFilter in leventFilter:
@@ -50,21 +50,21 @@ def ScanWMI():
                 hashEntry = hashlib.md5(str(eventFilter)).hexdigest()
                 if hashEntry not in knownHashes:
                     logger.log("WARNING", "WMIScan", 'CLASS: __eventFilter MD5: %s NAME: %s QUERY: %s' % (hashEntry, eventFilter.wmi_property('Name').value, eventFilter.wmi_property('Query').value))
-            except:
+            except Exception:
                 logger.log("INFO", "WMIScan", repr(str(eventFilter)))
         for FilterToConsumerBinding in lFilterToConsumerBinding:
             try:
                 hashEntry = hashlib.md5(str(FilterToConsumerBinding)).hexdigest()
                 if hashEntry not in knownHashes:
                     logger.log("WARNING", "WMIScan", 'CLASS: __FilterToConsumerBinding MD5: %s CONSUMER: %s FILTER: %s' % (hashEntry, FilterToConsumerBinding.wmi_property('Consumer').value, FilterToConsumerBinding.wmi_property('Filter').value))
-            except:
+            except Exception:
                 logger.log("INFO", "WMIScan", repr(str(FilterToConsumerBinding)))
         for CommandLineEventConsumer in lCommandLineEventConsumer:
             try:
                 hashEntry = hashlib.md5(str(CommandLineEventConsumer)).hexdigest()
                 if hashEntry not in knownHashes:
                     logger.log("WARNING", "WMIScan", 'CLASS: CommandLineEventConsumer MD5: %s NAME: %s COMMANDLINETEMPLATE: %s' % (hashEntry, CommandLineEventConsumer.wmi_property('Name').value, CommandLineEventConsumer.wmi_property('CommandLineTemplate').value))
-            except:
+            except Exception:
                 logger.log("INFO", "WMIScan", repr(str(CommandLineEventConsumer)))
         for ActiveScriptEventConsumer in lActiveScriptEventConsumer:
             logger.log("INFO", "WMIScan", repr(str(ActiveScriptEventConsumer)))

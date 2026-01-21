@@ -32,27 +32,23 @@ def is_ip(string):
         if netaddr.valid_ipv6(string):
             return True
         return False
-    except:
+    except Exception:
         traceback.print_exc()
         return False
 
 
 def is_cidr(string):
     try:
-        if netaddr.IPNetwork(string) and "/" in string:
-            return True
-        return False
-    except:
+        return netaddr.IPNetwork(string) and "/" in string
+    except Exception:
         return False
 
 
 def ip_in_net(ip, network):
     try:
         # print "Checking if ip %s is in network %s" % (ip, network)
-        if netaddr.IPAddress(ip) in netaddr.IPNetwork(network):
-            return True
-        return False
-    except:
+        return netaddr.IPAddress(ip) in netaddr.IPNetwork(network)
+    except Exception:
         return False
 
 
