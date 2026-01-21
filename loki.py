@@ -1100,6 +1100,30 @@ class Loki(object):
                                              "See https://github.com/Neo23x0/Loki/issues/51")
             sys.exit(1)
 
+    def include_callback(self, requested_filename, filename, namespace):
+        logger.log("DEBUG", "Init", f"Requested include: {requested_filename}")
+        try:
+            for yara_rule_directory in self.yara_rule_directories:
+                # Check in the current directory
+                possible_path = os.path.join(yara_rule_directory, requested_filename)
+                if os.path.exists(possible_path):
+                    with open(possible_path, 'r') as file:
+                        logger.log("DEBUG", "Init", f"Found include at: {possible_path}")
+                        return file.read()
+
+                # Check in the possible subdirectory paths
+                possible_paths = recursive_file_search(yara_rule_directory, requested_filename)
+                if os.path.exists(possible_paths):
+                    with open(possible_paths, 'r') as file:
+                        logger.log("DEBUG", "Init", f"Found include at: {possible_paths}")
+                        return file.read()
+
+            # Log an error if the included file is not found
+            logger.log("ERROR", "Init", f"Included file {requested_filename} not found in specified directories")
+
+        except Exception as e:
+            logger.log("ERROR", "Init", "Error finding include file: %s" % requested_filename)
+            
     def initialize_yara_rules(self):
 
         yaraRules = ""
@@ -1110,7 +1134,8 @@ class Loki(object):
             for yara_rule_directory in self.yara_rule_directories:
                 if not os.path.exists(yara_rule_directory):
                     continue
-                logger.log("INFO", "Init", "Processing YARA rules folder {0}".format(yara_rule_directory))
+                logger.log("INFO", "Init", "Processing YARA rules folder {0}".format(
+                    yara_rule_directory))
                 for root, directories, files in os.walk(yara_rule_directory, onerror=walk_error, followlinks=False):
                     for file in files:
                         try:
@@ -1132,19 +1157,28 @@ class Loki(object):
                                 yara_rule_data = yfile.read()
 
                             # Test Compile
+                             # Test Compile
                             try:
-                                compiledRules = yara.compile(source=yara_rule_data, externals={
-                                    'filename': dummy,
-                                    'filepath': dummy,
-                                    'extension': dummy,
-                                    'filetype': dummy,
-                                    'md5': dummy,
-                                    'owner': dummy,
-                                })
-                                logger.log("DEBUG", "Init", "Initializing Yara rule %s" % file)
+                                compiledRules = yara.compile(
+                                filepath=os.path.abspath(yaraRuleFile),  # Use the absolute path
+                                include_callback=self.include_callback,
+                                includes=True,
+                                externals={
+                                        'filename': dummy,
+                                        'filepath': dummy,
+                                        'extension': dummy,
+                                        'filetype': dummy,
+                                        'md5': dummy,
+                                        'owner': dummy,
+                                    }
+                                )
+                                logger.log("DEBUG", "Init",
+                                           "Initializing Yara rule %s" % file)
                                 rule_count += 1
-                            except Exception:
-                                logger.log("ERROR", "Init", "Error while initializing Yara rule %s ERROR: %s" % (file, sys.exc_info()[1]))
+
+                            except Exception as e:
+                                logger.log("ERROR", "Init", "Error while initializing Yara rule %s ERROR: %s" % (
+                                    file, sys.exc_info()[1]))
                                 traceback.print_exc()
                                 if logger.debug:
                                     sys.exit(1)
@@ -1153,27 +1187,35 @@ class Loki(object):
                             # Add the rule
                             yaraRules += yara_rule_data
 
-                        except Exception:
-                            logger.log("ERROR", "Init", "Error reading signature file %s ERROR: %s" % (yaraRuleFile, sys.exc_info()[1]))
+                        except Exception as e:
+                            logger.log("ERROR", "Init", "Error reading signature file %s ERROR: %s" % (
+                                yaraRuleFile, sys.exc_info()[1]))
                             if logger.debug:
                                 traceback.print_exc()
                                 # sys.exit(1)
 
             # Compile
             try:
-                logger.log("INFO", "Init", "Initializing all YARA rules at once (composed string of all rule files)")
-                compiledRules = yara.compile(source=yaraRules, externals={
-                    'filename': dummy,
-                    'filepath': dummy,
-                    'extension': dummy,
-                    'filetype': dummy,
-                    'md5': dummy,
-                    'owner': dummy,
-                })
-                logger.log("INFO", "Init", "Initialized %d Yara rules" % rule_count)
-            except Exception:
+                logger.log(
+                    "INFO", "Init", "Initializing all YARA rules at once (composed string of all rule files)")
+                compiledRules = yara.compile(
+                    filepath=os.path.abspath(yaraRuleFile),  # Use the absolute path
+                    include_callback=self.include_callback,
+                    includes=True,
+                    externals={
+                        'filename': dummy,
+                        'filepath': dummy,
+                        'extension': dummy,
+                        'filetype': dummy,
+                        'md5': dummy,
+                        'owner': dummy,
+                    })
+                logger.log("INFO", "Init",
+                           "Initialized %d Yara rules" % rule_count)
+            except Exception as e:
                 traceback.print_exc()
-                logger.log("ERROR", "Init", "Error during YARA rule compilation ERROR: %s - please fix the issue in the rule set" % sys.exc_info()[1])
+                logger.log(
+                    "ERROR", "Init", "Error during YARA rule compilation ERROR: %s - please fix the issue in the rule set" % sys.exc_info()[1])
                 sys.exit(1)
 
             # Add as Lokis YARA rules

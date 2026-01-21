@@ -45,6 +45,11 @@ def is_cidr(string):
     except:
         return False
 
+def recursive_file_search(directory, filename):
+    for root, dirs, files in os.walk(directory):
+        if filename in files:
+            return os.path.join(root, filename)
+    return None
 
 def ip_in_net(ip, network):
     try:
