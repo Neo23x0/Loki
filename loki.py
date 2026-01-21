@@ -1557,6 +1557,8 @@ if __name__ == '__main__':
     logger.log("NOTICE", "Init", "Starting Loki Scan VERSION: {3} SYSTEM: {0} TIME: {1} PLATFORM: {2}".format(
         getHostname(os_platform), getSyslogTimestamp(), getPlatformFull(), logger.version))
 
+    logger.log("NOTICE", "Init", "Passed arguments: {}".format(sys.argv))
+
     # Loki
     loki = Loki(args.intense)
 
