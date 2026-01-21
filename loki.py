@@ -26,6 +26,8 @@ DISCLAIMER - USE AT YOUR OWN RISK.
 import sys
 import os
 import argparse
+import codecs
+import logging
 import traceback
 import yara         # install 'yara-python' module not the outdated 'yara' module
 import re
@@ -40,10 +42,25 @@ import datetime
 from bisect import bisect_left
 
 # LOKI Modules
-from lib.lokilogger import *
+from lib.lokilogger import LokiLogger, getSyslogTimestamp
 from lib.levenshtein import LevCheck
 
-from lib.helpers import *
+from lib.helpers import (
+    generateHashes,
+    get_file_type,
+    getAgeString,
+    getExcludedMountpoints,
+    getHostname,
+    getPlatformFull,
+    ip_in_net,
+    is_cidr,
+    is_ip,
+    printProgress,
+    removeNonAsciiDrop,
+    replaceEnvVars,
+    setNice,
+    transformOS
+)
 from lib.pesieve import PESieve
 from lib.doublepulsar import DoublePulsar
 from lib.vuln_checker import VulnChecker

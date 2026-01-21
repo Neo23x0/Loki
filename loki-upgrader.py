@@ -13,6 +13,7 @@ import shutil
 import io
 import os
 import argparse
+import sys
 import traceback
 from sys import platform as _platform
 try:
@@ -29,7 +30,7 @@ if _platform == "win32":
         platform = "linux"  # crazy guess
 
 
-from lib.lokilogger import *
+from lib.lokilogger import LokiLogger
 
 # Platform
 platform = ""

@@ -6,7 +6,6 @@ import os
 import json
 import traceback
 
-from lib.lokilogger import *
 from lib.helpers import runProcess
 
 class PESieve(object):
