@@ -83,7 +83,7 @@ def setNice(logger):
     try:
         pid = os.getpid()
         p = psutil.Process(pid)
-        logger.log("INFO", "Init", "Setting LOKI process with PID: %s to priority IDLE" % pid)
+        logger.log("INFO", "Init", "Setting STRELA process with PID: %s to priority IDLE" % pid)
         p.nice(psutil.IDLE_PRIORITY_CLASS)
         return 1
     except Exception:
